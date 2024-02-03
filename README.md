@@ -19,7 +19,7 @@ SecondLife is the platform we made for those who needed the changes for a sustai
 
 Welcome to SecondLife.
 
-This project made by: Eka Parima Saragih, Ratu Esther Eldi, Regina Rosa Maria, Wynne Priscillia Johan
+This project made by: Eka Parima Saragih, Ratu Esther Eldi, Regina Rosa Maria, Wynne Priscillia Johan. Student of Information System batch 2021.
 
 © Copyright Rachajiwin-2024. All Rights Reserved.
 SecondLife
