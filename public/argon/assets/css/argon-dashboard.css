@@ -30,8 +30,8 @@
     --bs-gray-700: #495057;
     --bs-gray-800: #343a40;
     --bs-gray-900: #212529;
-    --bs-primary: #8DB596;
-    --bs-secondary: #8392ab;
+    --bs-primary: #282872;
+    --bs-secondary: #F27FFA;
     --bs-success: #2dce89;
     --bs-info: #11cdef;
     --bs-warning: #fb6340;
@@ -78,7 +78,7 @@
 
 body {
     margin: 0;
-    font-family: var(--bs-body-font-family) !important;
+    /* font-family: var(--bs-body-font-family) !important; */
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
     line-height: var(--bs-body-line-height);
@@ -9947,11 +9947,11 @@ fieldset:disabled .btn {
 /* rtl:end:remove */
 
 .text-primary {
-    color: #8DB596 !important;
+    color: #F27FFA !important;
 }
 
 .text-secondary {
-    color: #8392ab !important;
+    color: #282872 !important;
 }
 
 .text-success {
@@ -10019,11 +10019,11 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-    background-color: #8DB596 !important;
+    background-color: #F27FFA !important;
 }
 
 .bg-secondary {
-    background-color: #92817A !important;
+    background-color: #282872 !important;
 }
 
 .bg-success {

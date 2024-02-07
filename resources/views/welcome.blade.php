@@ -6,7 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SecondLife - Barter Platform</title>
-
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/argon/assets/css/argon-dashboard.css">
   <!--
     - favicon
   -->
@@ -36,12 +37,9 @@
     - MODAL
   -->
 
-  <div class="modal" data-modal>
-
+  {{-- <div class="modal" data-modal>
     <div class="modal-close-overlay" data-modal-overlay></div>
-
     <div class="modal-content">
-
       <button class="modal-close-btn" data-modal-close>
         <ion-icon name="close-outline"></ion-icon>
       </button>
@@ -51,30 +49,19 @@
       </div>
 
       <div class="newsletter">
-
         <form action="#">
-
           <div class="newsletter-header">
-
             <h3 class="newsletter-title">Subscribe Newsletter.</h3>
-
             <p class="newsletter-desc">
               Subscribe the <b>Anon</b> to get latest products and discount update.
             </p>
-
           </div>
-
           <input type="email" name="email" class="email-field" placeholder="Email Address" required>
-
           <button type="submit" class="btn-newsletter">Subscribe</button>
-
         </form>
-
       </div>
-
     </div>
-
-  </div>
+  </div> --}}
 
 
 
@@ -85,31 +72,24 @@
   -->
 
   <div class="notification-toast" data-toast>
-
     <button class="toast-close-btn" data-toast-close>
       <ion-icon name="close-outline"></ion-icon>
     </button>
-
     <div class="toast-banner">
       <img src="asset/website-master/assets/images/products/jewellery-1.jpg" alt="Rose Gold Earrings" width="80" height="70">
     </div>
 
     <div class="toast-detail">
-
       <p class="toast-message">
         Someone in new just bought
       </p>
-
       <p class="toast-title">
         Rose Gold Earrings
       </p>
-
       <p class="toast-meta">
         <time datetime="PT2M">2 Minutes</time> ago
       </p>
-
     </div>
-
   </div>
 
 
@@ -122,11 +102,13 @@
 
   <header>
 
-    <div class="header-top">
+    {{-- NANTI DIULIK LAGI --}}
+    {{-- <div class="header-top">
 
       <div class="container">
 
-        <ul class="header-social-container">
+        {{-- nanti diulik lagi --}}
+        {{-- <ul class="header-social-container">
 
           <li>
             <a href="#" class="social-link">
@@ -152,16 +134,16 @@
             </a>
           </li>
 
-        </ul>
+        </ul> --}}
 
-        <div class="header-alert-news">
+        {{-- <div class="header-alert-news">
           <p>
             <b>Free Shipping</b>
             This Week Order Over - $55
           </p>
-        </div>
+        </div> --}}
 
-        <div class="header-top-actions">
+        {{-- <div class="header-top-actions">
 
           <select name="currency">
 
@@ -178,18 +160,18 @@
 
           </select>
 
-        </div>
-
+        </div> --}}
+{{-- 
       </div>
 
-    </div>
+    </div> --}} 
 
     <div class="header-main">
 
       <div class="container">
 
         <a href="#" class="header-logo">
-          <img src="asset/website-master/assets/images/logo/logo.svg" alt="Anon's logo" width="120" height="36">
+          <img src="asset/img/mini-logo.png" alt="SecondLife's logo" width="120" style="margin-top: -40px; margin-bottom: -40px; margin-right: -25px;">
         </a>
 
         <div class="header-search-container">
@@ -204,18 +186,18 @@
 
         <div class="header-user-actions">
 
-          <button class="action-btn">
-            <ion-icon name="person-outline"></ion-icon>
+          <button class="action-btn" title="Profile">
+            <i class="fa fa-user text-secondary" aria-hidden="true"></i>
           </button>
 
-          <button class="action-btn">
-            <ion-icon name="heart-outline"></ion-icon>
-            <span class="count">0</span>
+          <button class="action-btn" title="Wishlist">
+            <i class="fa fa-heart text-secondary" aria-hidden="true"></i>
+            <span class="count" id="wishlist-count">0</span>
           </button>
 
-          <button class="action-btn">
-            <ion-icon name="bag-handle-outline"></ion-icon>
-            <span class="count">0</span>
+          <button class="action-btn" title="Cart">
+            <i class="fa fa-shopping-bag text-secondary" aria-hidden="true"></i>
+            <span class="count" id="cart-count">0</span>
           </button>
 
         </div>
@@ -225,53 +207,40 @@
     </div>
 
     <nav class="desktop-navigation-menu">
-
       <div class="container">
-
         <ul class="desktop-menu-category-list">
-
           <li class="menu-category">
-            <a href="#" class="menu-title">Home</a>
+            <a href="#" class="menu-title">Explore</a>
           </li>
 
           <li class="menu-category">
             <a href="#" class="menu-title">Categories</a>
-
             <div class="dropdown-panel">
-
               <ul class="dropdown-panel-list">
-
                 <li class="menu-title">
                   <a href="#">Electronics</a>
                 </li>
-
                 <li class="panel-list-item">
                   <a href="#">Desktop</a>
                 </li>
-
                 <li class="panel-list-item">
                   <a href="#">Laptop</a>
                 </li>
-
                 <li class="panel-list-item">
                   <a href="#">Camera</a>
                 </li>
-
                 <li class="panel-list-item">
                   <a href="#">Tablet</a>
                 </li>
-
                 <li class="panel-list-item">
                   <a href="#">Headphone</a>
                 </li>
-
                 <li class="panel-list-item">
                   <a href="#">
                     <img src="asset/website-master/assets/images/electronics-banner-1.jpg" alt="headphone collection" width="250"
                       height="119">
                   </a>
                 </li>
-
               </ul>
 
               <ul class="dropdown-panel-list">
