@@ -9,7 +9,7 @@
                     </script>,
                     made with <i class="fa fa-heart"></i> by
                     <a href="https://www.linkedin.com/in/ekasaragih/" class="font-weight-bold" target="_blank">Eka Parima Saragih </a>
-                    for Final Project.
+                    for Final Project. 
                 </div>
             </div>
         </div>
