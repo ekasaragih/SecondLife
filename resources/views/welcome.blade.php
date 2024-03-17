@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SecondLife - JIJI HHAHAHA</title>
+  <title>SecondLife - OCHA LAH KEREN HHAHAHA</title>
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/argon/assets/css/argon-dashboard.css">
   <!--
