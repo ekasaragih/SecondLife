@@ -1,4 +1,5 @@
 <head>
+    @vite('resources/css/app.css')
     <link rel="stylesheet" href="/argon/assets/css/argon-dashboard.css">
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,7 +62,7 @@
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row d-flex align-items-center justify-content-center h-100">
-                <div class="col-md-8 col-lg-7 col-xl-6">
+                <div class="col-md-8 col-lg-7 col-xl-6 w-full">
                     <img src="asset/img/login-base.png"
                         class="img-fluid" alt="Login Image">
                 </div>
@@ -70,7 +71,7 @@
                         {{-- <img src="img/logo-login.png" width="400" style="margin-top: -140px;" /> --}}
                         <h5>Login to your Account</h5>
                         <h5 class="mt-1 text-primary">See what is going on with your business</h5>
-                        <div class="container m-5">
+                        <div class="m-5">
                             <div class="row align-items-center">
                                 <div class="col">
                                     <hr class="line">
