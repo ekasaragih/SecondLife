@@ -11,7 +11,8 @@
   <!--
     - favicon
   -->
-  <link rel="shortcut icon" href="asset/website-master/assets/images/logo/favicon.ico" type="image/x-icon">
+  {{--
+  <link rel="shortcut icon" href="asset/website-master/assets/images/logo/favicon.ico" type="image/x-icon"> --}}
 
   <!--
     - custom css link
