@@ -1,353 +1,259 @@
-@extends('layouts.navbar.sidebar')
-
-@section('head')
-<style>
-    .badge {
-        display: inline-block;
-        padding: 0.25em 0.5em;
-        font-size: 75%;
-        font-weight: 700;
-        line-height: 1;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: baseline;
-        border-radius: 0.25rem;
-    }
-
-    .badge-warning {
-        background-color: #ffc107;
-        color: #fff;
-    }
-
-    .badge-soft-warning {
-        color: #f1b44c;
-        background-color: rgba(241, 180, 76, .18);
-    }
-
-    .badge-success {
-        background-color: #2dce89;
-        color: #fff;
-    }
-
-    .badge-soft-success {
-        color: #34c38f;
-        background-color: rgba(52, 195, 143, .18);
-    }
-
-    .badge-warn-subtle {
-        color: #e9bc18;
-        background-color: #fcf5dc;
-    }
-
-    .badge-info-subtle {
-        color: #179faa;
-        background-color: #dcf1f2;
-    }
-
-    .badge-secondary-subtle {
-        color: #438eff;
-        background-color: #e3eeff;
-    }
-
-    .badge-primary-subtle {
-        color: #5a58eb;
-        background-color: #e6e6fc;
-    }
-
-    .badge-danger-subtle {
-        color: #f9554c;
-        background-color: #fee6e4;
-    }
-
-    .rounded-pill {
-        border-radius: 50rem;
-    }
-
-    .d-inline {
-        display: inline;
-    }
-</style>
-@endsection
-
-@section('content')
-@include('layouts.navbar.topnav', ['title' => 'Dashboard'])
+@include('layouts.navbar.topnav')
 <div class="container">
-    <div class="header-main">
 
+    <nav class="desktop-navigation-menu">
         <div class="container">
+            <ul class="desktop-menu-category-list">
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Explore</a>
+                </li>
 
-            <a href="#" class="header-logo">
-                <img src="asset/img/mini-logo.png" alt="SecondLife's logo" width="120"
-                    style="margin-top: -40px; margin-bottom: -40px; margin-right: -25px;">
-            </a>
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Categories</a>
+                    <div class="dropdown-panel">
+                        <ul class="dropdown-panel-list">
+                            <li class="menu-title">
+                                <a href="#">Electronics</a>
+                            </li>
+                            <li class="panel-list-item">
+                                <a href="#">Desktop</a>
+                            </li>
+                            <li class="panel-list-item">
+                                <a href="#">Laptop</a>
+                            </li>
+                            <li class="panel-list-item">
+                                <a href="#">Camera</a>
+                            </li>
+                            <li class="panel-list-item">
+                                <a href="#">Tablet</a>
+                            </li>
+                            <li class="panel-list-item">
+                                <a href="#">Headphone</a>
+                            </li>
+                            <li class="panel-list-item">
+                                <a href="#">
+                                    <img src="asset/website-master/assets/images/electronics-banner-1.jpg"
+                                        alt="headphone collection" width="250" height="119">
+                                </a>
+                            </li>
+                        </ul>
 
-            <div class="header-search-container">
+                        <ul class="dropdown-panel-list">
 
-                <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
+                            <li class="menu-title">
+                                <a href="#">Men's</a>
+                            </li>
 
-                <button class="search-btn">
-                    <ion-icon name="search-outline"></ion-icon>
-                </button>
+                            <li class="panel-list-item">
+                                <a href="#">Formal</a>
+                            </li>
 
-            </div>
+                            <li class="panel-list-item">
+                                <a href="#">Casual</a>
+                            </li>
 
-            <div class="header-user-actions">
+                            <li class="panel-list-item">
+                                <a href="#">Sports</a>
+                            </li>
 
-                <button class="action-btn" title="Profile">
-                    <i class="fa fa-user text-secondary" aria-hidden="true"></i>
-                </button>
+                            <li class="panel-list-item">
+                                <a href="#">Jacket</a>
+                            </li>
 
-                <button class="action-btn" title="Wishlist">
-                    <i class="fa fa-heart text-secondary" aria-hidden="true"></i>
-                    <span class="count" id="wishlist-count">0</span>
-                </button>
+                            <li class="panel-list-item">
+                                <a href="#">Sunglasses</a>
+                            </li>
 
-                <button class="action-btn" title="Cart">
-                    <i class="fa fa-shopping-bag text-secondary" aria-hidden="true"></i>
-                    <span class="count" id="cart-count">0</span>
-                </button>
+                            <li class="panel-list-item">
+                                <a href="#">
+                                    <img src="asset/website-master/assets/images/mens-banner.jpg" alt="men's fashion"
+                                        width="250" height="119">
+                                </a>
+                            </li>
 
-            </div>
+                        </ul>
+
+                        <ul class="dropdown-panel-list">
+
+                            <li class="menu-title">
+                                <a href="#">Women's</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Formal</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Casual</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Perfume</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Cosmetics</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Bags</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">
+                                    <img src="asset/website-master/assets/images/womens-banner.jpg"
+                                        alt="women's fashion" width="250" height="119">
+                                </a>
+                            </li>
+
+                        </ul>
+
+                        <ul class="dropdown-panel-list">
+
+                            <li class="menu-title">
+                                <a href="#">Electronics</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Smart Watch</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Smart TV</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Keyboard</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Mouse</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">Microphone</a>
+                            </li>
+
+                            <li class="panel-list-item">
+                                <a href="#">
+                                    <img src="asset/website-master/assets/images/electronics-banner-2.jpg"
+                                        alt="mouse collection" width="250" height="119">
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </li>
+
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Men's</a>
+
+                    <ul class="dropdown-list">
+
+                        <li class="dropdown-item">
+                            <a href="#">Shirt</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Shorts & Jeans</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Safety Shoes</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Wallet</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Women's</a>
+
+                    <ul class="dropdown-list">
+
+                        <li class="dropdown-item">
+                            <a href="#">Dress & Frock</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Earrings</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Necklace</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Makeup Kit</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Jewelry</a>
+
+                    <ul class="dropdown-list">
+
+                        <li class="dropdown-item">
+                            <a href="#">Earrings</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Couple Rings</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Necklace</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Bracelets</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Perfume</a>
+
+                    <ul class="dropdown-list">
+
+                        <li class="dropdown-item">
+                            <a href="#">Clothes Perfume</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Deodorant</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Flower Fragrance</a>
+                        </li>
+
+                        <li class="dropdown-item">
+                            <a href="#">Air Freshener</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Blog</a>
+                </li>
+
+                <li class="menu-category">
+                    <a href="#" class="menu-title">Hot Offers</a>
+                </li>
+
+            </ul>
 
         </div>
 
-    </div>
-
-    @include('layouts.footer.footer')
+    </nav>
+    {{-- @include('layouts.footer.footer') --}}
 </div>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
-<script src="/js/moment.js"></script>
-
-{{-- Datatable project draft --}}
-<script>
-    $(document).ready( function () {
-           var dataTable;
-   
-           function loadProjectTable() {
-                       $.ajax({
-                           url: '{{ route("getAllProjects") }}',
-                           type: 'GET',
-                           dataType: 'json',
-                           success: function (projects) {
-                               
-                               var tableBody = $('#projectTableBody');
-                               tableBody.empty();
-   
-                               var draftProjects = projects.filter(function (project) {
-                                   return project.Status === 'Draft';
-                               });
-   
-                               draftProjects.forEach(function (project) {
-                               var row = '<tr>' +
-                                   '<td>' + project.CreatedAt + '</td>' +
-                                   '<td>' + (project.ProjectNumber ? project.ProjectNumber.toUpperCase() : '') + '</td>' +
-                                    '<td>' + (project.ProdNum ? project.ProdNum.toUpperCase() : '') + '</td>' +
-                                   '<td>' + project.ProdDesc + '</td>' +
-                                   '<td>' + project.Categories + '</td>' +
-                                   '<td>' + project.ProductEngineer + '</td>' +
-                                   '<td>' + project.Status + '</td>' +
-                                   '<td>' + (project.FPRMeetDate ? moment(project.FPRMeetDate).format('MM-DD-YY') : '') + '</td>' +
-                                  
-                                   '</tr>';
-                               tableBody.append(row);
-                           });
-   
-                           if (!dataTable) {
-                               dataTable = $('#projectTable').DataTable({
-                                   paging: true,
-                                   searching: true,
-                                   "language": {
-                                       "paginate": {
-                                           "previous": '<i class="fa fa-angle-left text-center" style="margin-top: 7px;"></i>',
-                                           "next": '<i class="fa fa-angle-right text-center" style="margin-top: 7px;"></i>',
-                                       },
-                                       "search": "",
-                                       "searchPlaceholder": "Search"
-                                   },
-                                   ordering: true,
-                                   info: true,
-                                   responsive: true,
-                                   order: [
-                                       [0, 'desc']
-                                   ],
-                                   columns: [{
-                                           data: 'CreatedAt',
-                                           title: 'Created At',
-                                           visible: false
-                                       },
-                                       {
-                                           data: 'ProjectNumber',
-                                           title: 'Project #'
-                                       },
-                                       {
-                                           data: 'ProdNum',
-                                           title: 'Product #'
-                                       },
-                                       {
-                                           data: 'ProdDesc',
-                                           title: 'Product'
-                                       },
-                                       {
-                                           data: 'Categories',
-                                           title: 'Categories'
-                                       },
-                                       {
-                                           data: 'ProductEngineer',
-                                           title: 'Product Eng'
-                                       },
-                                       {
-                                           data: 'Status',
-                                           title: 'Status',
-                                           render: function(data, type, row) {
-                                               if (data === 'Draft') {
-                                                   return '<span class="badge badge-soft-warning rounded-pill d-inline">' + data + '</span>';
-                                               } else if (data === 'Ongoing') {
-                                                   return '<span class="badge badge-soft-success rounded-pill d-inline">' + data + '</span>';
-                                               } else if (data === 'Preliminary' || data === 'BOM Input' || data === 'Prep 1st Cost' || data === '1st Cost') {
-                                                   return '<span class="badge badge-primary-subtle rounded-pill d-inline">' + data + '</span>';
-                                               } else if (data === 'CR Cost Done' || data === 'FPR Cost Done') {
-                                                   return '<span class="badge badge-success rounded-pill d-inline">' + data + '</span>';
-                                               } else if (data === 'Prep CR Model' || data === 'Prep FPR Model') {
-                                                   return '<span class="badge badge-warn-subtle rounded-pill d-inline">' + data + '</span>';
-                                               } else if (data === 'CR Approval' || data === 'FPR Approval') {
-                                                   return '<span class="badge badge-secondary-subtle rounded-pill d-inline">' + data + '</span>';
-                                               } else if (data === 'CR Approved' || data === 'FPR Approved' || data === 'CR/FPR Approved') {
-                                                   return '<span class="badge badge-info-subtle rounded-pill d-inline">' + data + '</span>';
-                                               } else if (data === 'Drop' || data === 'Change Source' || data === 'Re-ICR') {
-                                                   return '<span class="badge badge-danger-subtle rounded-pill d-inline">' + data + '</span>';
-                                               } else {
-                                                   return data;
-                                               }
-                                           }
-                                       },
-                                       {
-                                           data: 'FPRMeetDate',
-                                           title: 'FPR',
-                                           render: function(data, type, row) {
-                                               return data ? data : '';
-                                           }
-                                       },
-   
-                                   ]
-                               });
-   
-                           } else {
-                               dataTable.clear().draw();
-                           }
-                           },
-                           error: function(xhr, status, error) {
-                           console.log("Error:", error);
-                           alert('Error loading project table. See console for details.');
-                           }
-                           });
-                           }
-   
-                           loadProjectTable();
-                           });
-</script>
-
-{{-- Datatable project lead time --}}
-<script>
-    $(document).ready( function () {
-        var dataTable;
-
-        function loadProjectTable() {
-                    $.ajax({
-                        url: '{{ route("getAllProjects") }}',
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function (projects) {
-                            
-                            var tableBody = $('#ltTableBody');
-                            tableBody.empty();
-
-                            projects.forEach(function (project) {
-                            var row = '<tr>' +
-                                    '<td>' + project.CreatedAt + '</td>' +
-                                    '<td>' + (project.ProjectNumber ? project.ProjectNumber.toUpperCase() : '') + '</td>' +
-                                    '<td>' + (project.ProdNum ? project.ProdNum.toUpperCase() : '') + '</td>' +
-                                    '<td>' + project.ProdDesc + '</td>' +
-                                    '<td>' + (isValidDate(project.DSPFDate) ? moment(project.DSPFDate).format('MM-DD-YY') : '') + '</td>' +
-                                    '<td>' + (isValidDate(project.FPRMeetDate) ? moment(project.FPRMeetDate).format('MM-DD-YY') : '') + '</td>' +
-                                    '<td></td>' +
-                                    '</tr>';
-                            tableBody.append(row);
-                        });
-
-                        function isValidDate(date) {
-                                return date && moment(date, moment.ISO_8601, true).isValid();
-                            }
-
-                            if (!dataTable) {
-                                dataTable = $('#ltTable').DataTable({
-                                    paging: true,
-                                    searching: true,
-                                        "language": {
-                                            "paginate": {
-                                            "previous": '<i class="fa fa-angle-left text-center" style="margin-top: 7px;"></i>',
-                                            "next": '<i class="fa fa-angle-right text-center" style="margin-top: 7px;"></i>',
-                                            },
-                                            "search": "",
-                                            "searchPlaceholder": "Search"
-                                        },
-                                    ordering: true,
-                                    info: true,
-                                    responsive: true,
-                                    order: [[0, 'desc']],
-                                    columns: [
-                                                { data: 'CreatedAt', title: 'Created At', visible: false },
-                                                { data: 'ProjectNumber', title: 'Project #' },
-                                                { data: 'ProdNum', title: 'Product #' },
-                                                { data: 'ProdDesc', title: 'Product' },
-                                                {
-                                                    data: 'DSPFDate',
-                                                    title: 'DSP (F)',
-                                                    render: function(data, type, row) {
-                                                        return data ? data : '';
-                                                    }
-                                                },
-                                                {
-                                                    data: 'FPRMeetDate',
-                                                    title: 'FPR',
-                                                    render: function(data, type, row) {
-                                                        return data ? data : '';
-                                                    }
-                                                },
-                                                {
-                                                    data: null,
-                                                    title: 'LT',
-                                                    render: function (data, type, row) {
-                                                        var dspDate = moment(row.DSPFDate, 'MM-DD-YY');
-                                                        var fprDate = moment(row.FPRMeetDate, 'MM-DD-YY');
-                                                        
-                                                        if (dspDate.isValid() && fprDate.isValid()) {
-                                                            var weeksDifference = fprDate.diff(dspDate, 'weeks', true);
-                                                            var formattedDifference = Math.ceil(weeksDifference) >= 0 ? Math.ceil(weeksDifference) + ' weeks' : '';
-                                                            return formattedDifference;
-                                                        } else {
-                                                            return '';
-                                                        }
-                                                    }
-                                                }
-                                            ],
-                                        });
-            
-                            } else {
-                                dataTable.clear().draw();
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.log("Error:", error);
-                            alert('Error loading project table. See console for details.');
-                        }
-                    });
-                }
-
-                loadProjectTable();
-        });
-</script>
-@endsection
