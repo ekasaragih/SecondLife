@@ -3,15 +3,15 @@
 @section('head')
 <style>
     .badge {
-    display: inline-block;
-    padding: 0.25em 0.5em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25rem;
+        display: inline-block;
+        padding: 0.25em 0.5em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
     }
 
     .badge-warning {
@@ -21,7 +21,7 @@
 
     .badge-soft-warning {
         color: #f1b44c;
-        background-color: rgba(241,180,76,.18);
+        background-color: rgba(241, 180, 76, .18);
     }
 
     .badge-success {
@@ -31,7 +31,7 @@
 
     .badge-soft-success {
         color: #34c38f;
-        background-color: rgba(52,195,143,.18);
+        background-color: rgba(52, 195, 143, .18);
     }
 
     .badge-warn-subtle {
@@ -71,236 +71,60 @@
 
 @section('content')
 @include('layouts.navbar.topnav', ['title' => 'Dashboard'])
-    <div class="container">
-        <div class="row">
-            <div class="card" style="background-color: #CBE2C9;">
-                <div class="card-body" style="padding: 5px;">
-                    <div class="row">
-                  <div class="col-sm-3">
-                    <img src="./img/elemen1.png" height="200" alt="main_logo">
-                  </div>
-                  <div class="col-sm-5 p-5 pb-3">
-                    @auth
-                        @if(isset($userName))
-                            @if($userName === 'Super User')
-                                <h6>Hello, <i>{{ $userName }}!</i></h6>
-                                <p>Welcome to Project Alchemist! You have admin privileges.</p>
-                                <span><a href="{{ route('dashboard_admin') }}" class="btn btn-secondary">User List</a></span>
-                            @else
-                                <h6>Hello, <i>{{ $userName }}!</i></h6>
-                                <p>Welcome to Project Alchemist! Don’t forget to track and update your project.</p>
-                                <span><a href="{{ route('add_new_project') }}" class="btn btn-secondary">Add New Project</a></span>
-                                <span><a href="{{ route('project_list') }}" class="btn btn-secondary">Project List</a></span>
-                            @endif
-                        @else
-                            <!-- Handle case where $userName is not set -->
-                            <h6>Hello, User!</h6>
-                            <p>Welcome to Project Alchemist! Please log in.</p>
-                            <span><a href="{{ route('login') }}" class="btn btn-secondary">Login</a></span>
-                        @endif
-                    @endauth
-                </div>                           
-                </div>
-                </div>
-              </div>
+<div class="container">
+    <div class="header-main">
+
+        <div class="container">
+
+            <a href="#" class="header-logo">
+                <img src="asset/img/mini-logo.png" alt="SecondLife's logo" width="120"
+                    style="margin-top: -40px; margin-bottom: -40px; margin-right: -25px;">
+            </a>
+
+            <div class="header-search-container">
+
+                <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
+
+                <button class="search-btn">
+                    <ion-icon name="search-outline"></ion-icon>
+                </button>
+
+            </div>
+
+            <div class="header-user-actions">
+
+                <button class="action-btn" title="Profile">
+                    <i class="fa fa-user text-secondary" aria-hidden="true"></i>
+                </button>
+
+                <button class="action-btn" title="Wishlist">
+                    <i class="fa fa-heart text-secondary" aria-hidden="true"></i>
+                    <span class="count" id="wishlist-count">0</span>
+                </button>
+
+                <button class="action-btn" title="Cart">
+                    <i class="fa fa-shopping-bag text-secondary" aria-hidden="true"></i>
+                    <span class="count" id="cart-count">0</span>
+                </button>
+
+            </div>
+
         </div>
 
-        {{-- Total Project - Project In Progress - Project Draft - Project Completed --}}
-        <div class="row">
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h5 class="card-title mb-4">Project Preview</h5>
-                    <div class="row">
-                        <div class="col">
-                            <div class="card bg-secondary">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="{{ route('project_list') }}" class="text-white">Total Project</a></h5>
-                                    <h1 class="card-text text-center text-primary p-5">{{ $totalProjects }} <span style="font-size: 13px;" class="text-dark">Project(s)</span></h1>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="col">
-                            <div class="card bg-secondary">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="{{ route('project_draft') }}" class="text-white">In Draft</a></h5>
-                                    <h1 class="card-text text-center text-primary p-5">{{ $projectsDraft }} <span style="font-size: 13px;" class="text-dark">Project(s)</span></h1>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="card bg-secondary">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="{{ route('schedule_view') }}" class="text-white">In Progress</a></h5>
-                                    <h1 class="card-text text-center text-primary p-5">{{ $projectsInProgress }} <span style="font-size: 13px;" class="text-dark">Project(s)</span></h1>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="col">
-                            <div class="card bg-secondary">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="{{ route('project_complete') }}" class="text-white">Completed</a></h5>
-                                    <h1 class="card-text text-center text-primary p-5">{{ $projectsCompleted }} <span style="font-size: 13px;" class="text-dark">Project(s)</span></h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- Categories Review --}}
-        <div class="row">
-            <div class="card mt-4">
-                <div class="card-body">
-                <h5 class="card-title mb-4">Category Review</h5>
-                    <div class="row">
-                        <div class="col">
-                            <div class="card bg-secondary bg-opacity-50">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="#" class="text-white">Upper Body Clothing</a></h5>
-                                    <h1 class="card-text text-center text-primary p-5">{{ $upperBodyClothingCount }} <span style="font-size: 13px;" class="text-dark">Project(s)</span></h1>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="col">
-                            <div class="card bg-secondary bg-opacity-50">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="#" class="text-white">Lower Body Clothing</a></h5>
-                                    <h1 class="card-text text-center text-primary p-5">{{ $lowerBodyClothingCount }} <span style="font-size: 13px;" class="text-dark">Project(s)</span></h1>
-                                    {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="card bg-secondary bg-opacity-50">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="#" class="text-white">Undergarments</a></h5>
-                                    <h1 class="card-text text-center text-primary p-5">{{ $undergarmentsCount }} <span style="font-size: 13px;" class="text-dark">Project(s)</span></h1>
-                                    {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="col">
-                            <div class="card bg-secondary bg-opacity-50">
-                                <div class="card-body">
-                                    <h5 class="card-title"><a href="#" class="text-white">Swimwear</a></h5>
-                                    <h1 class="card-text text-center text-primary p-5">{{ $swimwearCount }} <span style="font-size: 13px;" class="text-dark">Project(s)</span></h1>
-                                    {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- Lead Time Table - Progress Bar --}}
-        <div class="row mt-4">
-            <div class="col-lg-8">
-                <div class="card mb-4">
-                    <h4 class="card-header text-center" style="color: #707070;">
-                        Project Lead Time
-                        <hr class="bg-dark">
-                      </h4>
-                      
-                {{-- Table for Project Draft --}}
-                    <div>
-                        <div class="card-body px-3 pt-2 pb-3">
-                            <div class="table-responsive p-0">
-                                <table id="ltTable" class="display table">
-                                    <thead class="text-white bg-primary"></thead>
-                                    <tbody id="ltTableBody"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-5">Summary</h5>
-                        <div class="mb-5">
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ $percentComplete }}%" aria-valuenow="{{ $percentComplete }}" aria-valuemin="0" aria-valuemax="100">{{ $percentComplete }}%</div>
-                            </div>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ $percentOnGoing }}%" aria-valuenow="{{ $percentOnGoing }}" aria-valuemin="0" aria-valuemax="100">{{ $percentOnGoing }}%</div>
-                            </div>
-                            <div class="progress mb-3">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $percentDraft }}%" aria-valuenow="{{ $percentDraft }}" aria-valuemin="0" aria-valuemax="100">{{ $percentDraft }}%</div>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $percentDrop }}%" aria-valuenow="{{ $percentDrop }}" aria-valuemin="0" aria-valuemax="100">{{ $percentDrop }}%</div>
-                            </div>                            
-                        </div>
-
-                        <div class="mt-5 ml-5 mb-2">
-                            <p class="badge rounded-pill bg-success">Complete</p> <br>
-                            <p class="badge rounded-pill bg-info text-dark">On-going</p> <br>
-                            <p class="badge rounded-pill bg-warning text-white">Draft</p> <br>
-                            <p class="badge rounded-pill bg-danger">Drop</p> <br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- Project Draft --}}
-        <div class="row mt-4">
-            <div class="col-lg-4">
-                <div class="mb-4">
-                    <center>
-                    <iframe src="https://giphy.com/embed/13nsB5xdeepzdS" style="padding: 10px; pointer-events: none;" width="315" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-                    </center>
-                </div>
-            </div>
-
-            <div class="col-lg-8">
-                <div class="card mb-4">
-                        <div class="card-header text-danger">
-                            <b><i class="fa fa-calendar-check-o text-dark" aria-hidden="true"></i></b>
-                            Check your in <a href="{{ route("project_draft") }}" class="text-danger"><i><u>Draft</u></i></a> project.
-                            <hr class="bg-dark">
-                        </div>
-                        
-                    {{-- Table for Project Draft --}}
-                    <div>
-                        <center>
-                            <h5 style="color: #707070;">My Draft</h5>
-                        </center>
-                        <div class="card-body px-3 pt-2 pb-3">
-                            <div class="table-responsive p-0">
-                                <table id="projectTable" class="display">
-                                    <thead class="text-white" style="background-color: #707070;"></thead>
-                                    <tbody id="projectTableBody"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        @include('layouts.footer.footer')
     </div>
 
-        
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
-    <script src="/js/moment.js"></script>
+    @include('layouts.footer.footer')
+</div>
 
-    {{-- Datatable project draft --}}
-    <script>	
-        $(document).ready( function () {
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+<script src="/js/moment.js"></script>
+
+{{-- Datatable project draft --}}
+<script>
+    $(document).ready( function () {
            var dataTable;
    
            function loadProjectTable() {
@@ -424,11 +248,11 @@
    
                            loadProjectTable();
                            });
-    </script>
+</script>
 
-    {{-- Datatable project lead time --}}
-    <script>	
-        $(document).ready( function () {
+{{-- Datatable project lead time --}}
+<script>
+    $(document).ready( function () {
         var dataTable;
 
         function loadProjectTable() {
@@ -525,5 +349,5 @@
 
                 loadProjectTable();
         });
-    </script>
+</script>
 @endsection

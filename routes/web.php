@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::get('/register', [AuthorizationController::class, 'register'])->name('reg
 | Pages
 |--------------------------------------------------------------------------
 */
-
+Route::get('/explore', [PageController::class, 'explore'])->name('explore');
 
 
 
