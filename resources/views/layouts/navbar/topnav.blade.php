@@ -6,32 +6,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </head>
 
-<div class="container mx-auto flex justify-between items-center pb-4">
-    <a href="#" class="header-logo">
-        <img src="asset/img/mini-logo.png" alt="SecondLife's logo" width="120" class="mt-[-40px] mb-[-40px] mr-[-25px]">
-    </a>
+<div class="container mx-auto flex items-center justify-between gap-10">
+    <div class="">
+        <a href="explore" class="header-logo">
+            <img src="asset/img/mini-logo.png" alt="SecondLife's logo" class="h-28 w-32">
+        </a>
+    </div>
 
-    <div class="header-search-container flex-1">
-        <input type="search" name="search" class="search-field p-2 border border-gray-300 rounded-lg"
-            placeholder="Enter your product name...">
-        <button class="search-btn ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg">
+    <div class="items-center flex-1 relative">
+        <input type="search" name="search" class="p-3 border border-gray-300 rounded-lg w-full"
+            placeholder="Find product here..">
+        <button
+            class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
             <ion-icon name="search-outline"></ion-icon>
         </button>
     </div>
 
-    <div class="header-user-actions">
-        <button class="action-btn" title="Profile">
-            <i class="fa fa-user text-secondary" aria-hidden="true"></i>
+    <div class="flex items-center gap-4">
+        <button class="relative text-2xl text-gray-700">
+            <i class="fa fa-user" aria-hidden="true"></i>
         </button>
-        <button class="action-btn" title="Wishlist">
-            <i class="fa fa-heart text-secondary" aria-hidden="true"></i>
-            <span class="count" id="wishlist-count">0</span>
+
+        <button class="relative text-2xl text-gray-700">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+            <span
+                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
         </button>
-        <button class="action-btn" title="Cart">
-            <i class="fa fa-shopping-bag text-secondary" aria-hidden="true"></i>
-            <span class="count" id="cart-count">0</span>
+
+        <button class="relative text-2xl text-gray-700">
+            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+            <span
+                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
         </button>
     </div>
 </div>
