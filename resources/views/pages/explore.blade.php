@@ -1,6 +1,6 @@
 @include('layouts.navbar.topnav')
 <div class="container">
-
+    <p>RARA BAUK INGUS</p>
     <nav class="desktop-navigation-menu">
         <div class="container">
             <ul class="desktop-menu-category-list">
