@@ -1,67 +1,71 @@
-<style>
-    .tombolback {
-        margin: 0px;
-        background-color: #8DB596 !important;
-        color: white !important;
-        border: solid 2px white !important;
-    }
+<head>
+    <link href="https://unpkg.com/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
 
-    .tombolforward {
-        margin: 0px;
-        background-color: #8392ab !important;
-        color: white !important;
-        border: solid 2px white !important;
-    }
-</style>
+<div class="container mx-auto flex items-center justify-between gap-10">
+    <div class="">
+        <a href="explore" class="header-logo">
+            <img src="asset/img/mini-logo.png" alt="SecondLife's logo" class="h-28 w-32">
+        </a>
+    </div>
 
-<!-- Navbar -->
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl
-        {{ str_contains(Request::url(), 'virtual-reality') == true ? ' mt-3 mx-3 bg-primary' : '' }}" id="navbarBlur"
-        data-scroll="false">
-    <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-            <div class="mt-2 mb-2">
-                <button class="btn btn-round tombolback" id="backButton" onclick="goBack()"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-                <button class="btn btn-round tombolforward" id="forwardButton" onclick="goForward()"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-            </div>
-            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-                <li class="breadcrumb-item text-sm text-white active" aria-current="page">{{ $title }}</li>
-            </ol>
-            <h6 class="font-weight-bolder text-white mb-0">{{ $title }}</h6>
-        </nav>
-        
-            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                {{-- <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                    <div class="input-group">
-                        <span class="input-group-text text-body"><i class="fa fa-search" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" placeholder="Type here...">
-                    </div>
-                </div> --}}
-                    {{-- <ul class="navbar-nav justify-content-end">
-                        <li class="nav-item d-flex align-items-center">
-                            <form role="form" method="post" action="{{ route('logout') }}" id="logout-form">
-                                @csrf
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                    class="nav-link text-white font-weight-bold px-0">
-                                    <i class="fa fa-user me-sm-1"></i>
-                                    <span class="d-sm-inline d-none">Log out</span>
-                                </a>
-                            </form>
-                        </li>
-                    </ul> --}}
-            </div>
+    <div class="items-center flex-1 relative">
+        <input type="search" name="search" class="p-3 border border-gray-300 rounded-lg w-full"
+            placeholder="Find product here..">
+        <button
+            class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
+            <ion-icon name="search-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="flex items-center gap-4">
+
+        <button class="relative text-3xl text-gray-700" title="Wishlist">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+            <span
+                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
+        </button>
+
+        <button class="relative text-3xl text-gray-700" title="Cart">
+            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+            <span
+                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
+        </button>
+
+        <button class="relative text-3xl text-gray-700" title="Messages">
+            <i class="fa fa-comments-o" aria-hidden="true"></i>
+            <span
+                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
+        </button>
+
+        <button class="relative text-3xl text-gray-700" title="My Profile">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
+<nav class="hidden md:block">
+    <div class="container">
+        <ul class="flex justify-center gap-45">
+            <li class="relative">
+                <a href="#" class="text-onyx font-semibold uppercase transition duration-300">Explore</a>
+            </li>
+
+            <li class="relative">
+                <a href="#" class="text-onyx font-semibold uppercase transition duration-300">Categories</a>
+            </li>
+
+            <li class="relative">
+                <a href="#" class="text-onyx font-semibold uppercase transition duration-300">Communities</a>
+            </li>
+        </ul>
     </div>
 </nav>
-<!-- End Navbar -->
-
-<script>
-    function goBack() {
-        history.go(-1);
-    }
-
-    function goForward() {
-        history.go(1);
-    }
-</script>
