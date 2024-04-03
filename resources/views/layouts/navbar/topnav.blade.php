@@ -27,11 +27,6 @@
     </div>
 
     <div class="flex items-center gap-4">
-        <button class="relative text-3xl text-gray-700" title="Messages">
-            <i class="fa fa-comments-o" aria-hidden="true"></i>
-            <span
-                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
-        </button>
 
         <button class="relative text-3xl text-gray-700" title="Wishlist">
             <i class="fa fa-heart" aria-hidden="true"></i>
@@ -45,8 +40,32 @@
                 class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
         </button>
 
+        <button class="relative text-3xl text-gray-700" title="Messages">
+            <i class="fa fa-comments-o" aria-hidden="true"></i>
+            <span
+                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
+        </button>
+
         <button class="relative text-3xl text-gray-700" title="My Profile">
             <i class="fa fa-user-circle" aria-hidden="true"></i>
         </button>
     </div>
 </div>
+
+<nav class="hidden md:block">
+    <div class="container">
+        <ul class="flex justify-center gap-45">
+            <li class="relative">
+                <a href="#" class="text-onyx font-semibold uppercase transition duration-300">Explore</a>
+            </li>
+
+            <li class="relative">
+                <a href="#" class="text-onyx font-semibold uppercase transition duration-300">Categories</a>
+            </li>
+
+            <li class="relative">
+                <a href="#" class="text-onyx font-semibold uppercase transition duration-300">Communities</a>
+            </li>
+        </ul>
+    </div>
+</nav>
