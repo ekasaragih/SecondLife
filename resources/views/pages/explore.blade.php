@@ -8,7 +8,7 @@
                     <a href="#" class="menu-title">Explore</a>
                 </li>
 
-                <li class="menu-category">
+                {{-- <li class="menu-category">
                     <a href="#" class="menu-title">Categories</a>
                     <div class="dropdown-panel">
                         <ul class="dropdown-panel-list">
@@ -144,7 +144,7 @@
                         </ul>
 
                     </div>
-                </li>
+                </li> --}}
 
                 <li class="menu-category">
                     <a href="#" class="menu-title">Men's</a>
