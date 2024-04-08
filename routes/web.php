@@ -11,7 +11,7 @@ use App\Http\Controllers\PageController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages/explore');
 });
 
 Route::get('/login', [AuthorizationController::class, 'login'])->name('login');

@@ -1,8 +1,6 @@
 <head>
-    {{--
-    <link href="https://unpkg.com/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./tailwind.css">
+    <link rel="stylesheet" href="tailwind.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
@@ -10,12 +8,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    {{-- @vite('resources/css/app.css') --}}
 </head>
 
 <div class="container mx-auto flex items-center justify-between gap-10">
     <div class="">
-        <a href="explore" class="header-logo">
+        <a href="/" class="header-logo">
             <img src="asset/img/mini-logo.png" alt="SecondLife's logo" class="h-28 w-32">
         </a>
     </div>
@@ -56,20 +53,20 @@
 </div>
 
 <nav class="hidden md:block">
-    <div class="container">
-        <ul class="flex justify-center gap-24">
-            <li class="relative">
-                <a href="#"
-                    class="text-onyx font-semibold uppercase transition duration-300 hover:text-primary">Explore</a>
-            </li>
+    <ul class="flex justify-center gap-24">
+        <li class="relative">
+            <a href="#"
+                class="font-semibold uppercase transition duration-300 hover:text-primary focus:text-secondary">Explore</a>
+        </li>
 
-            <li class="relative">
-                <a href="#" class="text-onyx font-semibold uppercase transition duration-300">Categories</a>
-            </li>
+        <li class="relative">
+            <a href="#"
+                class="font-semibold uppercase transition duration-300 hover:text-primary focus:text-secondary">Categories</a>
+        </li>
 
-            <li class="relative">
-                <a href="#" class="text-onyx font-semibold uppercase transition duration-300">Communities</a>
-            </li>
-        </ul>
-    </div>
+        <li class="relative">
+            <a href="#"
+                class="font-semibold uppercase transition duration-300 hover:text-primary focus:text-secondary">Communities</a>
+        </li>
+    </ul>
 </nav>
