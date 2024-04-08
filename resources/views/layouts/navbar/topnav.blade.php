@@ -1,18 +1,21 @@
 <head>
-    <link href="https://unpkg.com/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="tailwind.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/asset/img/mini-logo.png" type="image/x-icon">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    @yield('head')
 </head>
 
 <div class="container mx-auto flex items-center justify-between gap-10">
     <div class="">
-        <a href="explore" class="header-logo">
+        <a href="/" class="header-logo">
             <img src="asset/img/mini-logo.png" alt="SecondLife's logo" class="h-28 w-32">
         </a>
     </div>
@@ -27,20 +30,46 @@
     </div>
 
     <div class="flex items-center gap-4">
-        <button class="relative text-2xl text-gray-700">
-            <i class="fa fa-user" aria-hidden="true"></i>
-        </button>
 
-        <button class="relative text-2xl text-gray-700">
+        <button class="relative text-3xl text-gray-700" title="Wishlist">
             <i class="fa fa-heart" aria-hidden="true"></i>
             <span
                 class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
         </button>
 
-        <button class="relative text-2xl text-gray-700">
+        <button class="relative text-3xl text-gray-700" title="Cart">
             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             <span
                 class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
         </button>
+
+        <button class="relative text-3xl text-gray-700" title="Messages">
+            <i class="fa fa-comments-o" aria-hidden="true"></i>
+            <span
+                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
+        </button>
+
+        <button class="relative text-3xl text-gray-700" title="My Profile">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </button>
     </div>
 </div>
+
+<nav class="hidden xl:block lg:block">
+    <ul class="flex justify-center gap-24">
+        <li class="relative text-xl">
+            <a href="{{ url('/') }}"
+                class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->is('/') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Explore</a>
+        </li>
+
+        <li class="relative text-xl">
+            <a href="{{ route('categories') }}"
+                class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->routeIs('categories') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Categories</a>
+        </li>
+
+        <li class="relative text-xl">
+            <a href="{{ route('communities') }}"
+                class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->routeIs('communities') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Communities</a>
+        </li>
+    </ul>
+</nav>
