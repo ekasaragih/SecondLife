@@ -22,7 +22,8 @@ Route::get('/register', [AuthorizationController::class, 'register'])->name('reg
 | Pages
 |--------------------------------------------------------------------------
 */
-Route::get('/explore', [PageController::class, 'explore'])->name('explore');
+Route::get('/categories', [PageController::class, 'categories'])->name('categories');
+Route::get('/communities', [PageController::class, 'communities'])->name('communities');
 
 
 
