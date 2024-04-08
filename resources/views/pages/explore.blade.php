@@ -3,7 +3,7 @@
 @section('head')
 @endsection
 
-<div class="flex justify-center h-screen mt-10">
+<div class="flex justify-center h-screen pt-52">
     <div class="container w-4/5">
         @include('pages.swape')
         @include('pages.recommendation_location')
