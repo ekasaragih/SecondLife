@@ -1,5 +1,3 @@
-@include('layouts.navbar.topnav')
-<div class="container">
-
-    {{-- @include('layouts.footer.footer') --}}
+<div class="my-10">
+    {{-- insert code here --}}
 </div>
