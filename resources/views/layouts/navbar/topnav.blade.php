@@ -13,63 +13,65 @@
     @yield('head')
 </head>
 
-<div class="container mx-auto flex items-center justify-between gap-10">
-    <div class="">
-        <a href="/" class="header-logo">
-            <img src="asset/img/mini-logo.png" alt="SecondLife's logo" class="h-28 w-32">
-        </a>
+<div class="fixed top-0 left-0 w-full bg-white shadow-xl z-50">
+    <div class="container mx-auto flex items-center justify-between gap-10">
+        <div class="">
+            <a href="/" class="header-logo">
+                <img src="asset/img/mini-logo.png" alt="SecondLife's logo" class="h-28 w-32">
+            </a>
+        </div>
+
+        <div class="items-center flex-1 relative">
+            <input type="search" name="search" class="p-3 border border-gray-300 rounded-lg w-full"
+                placeholder="Find product here..">
+            <button
+                class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
+                <ion-icon name="search-outline"></ion-icon>
+            </button>
+        </div>
+
+        <div class="flex items-center gap-4">
+
+            <button class="relative text-3xl text-gray-700" title="Wishlist">
+                <i class="fa fa-heart" aria-hidden="true"></i>
+                <span
+                    class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
+            </button>
+
+            <button class="relative text-3xl text-gray-700" title="Cart">
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                <span
+                    class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
+            </button>
+
+            <button class="relative text-3xl text-gray-700" title="Messages">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                <span
+                    class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
+            </button>
+
+            <button class="relative text-3xl text-gray-700" title="My Profile">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
 
-    <div class="items-center flex-1 relative">
-        <input type="search" name="search" class="p-3 border border-gray-300 rounded-lg w-full"
-            placeholder="Find product here..">
-        <button
-            class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
-            <ion-icon name="search-outline"></ion-icon>
-        </button>
-    </div>
+    <nav class="hidden xl:block lg:block mb-5">
+        <ul class="flex justify-center gap-24">
+            <li class="relative text-xl">
+                <a href="{{ url('/') }}"
+                    class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->is('/') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Explore</a>
+            </li>
 
-    <div class="flex items-center gap-4">
+            <li class="relative text-xl">
+                <a href="{{ route('categories') }}"
+                    class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->routeIs('categories') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Categories</a>
+            </li>
 
-        <button class="relative text-3xl text-gray-700" title="Wishlist">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span
-                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
-        </button>
-
-        <button class="relative text-3xl text-gray-700" title="Cart">
-            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-            <span
-                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
-        </button>
-
-        <button class="relative text-3xl text-gray-700" title="Messages">
-            <i class="fa fa-comments-o" aria-hidden="true"></i>
-            <span
-                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
-        </button>
-
-        <button class="relative text-3xl text-gray-700" title="My Profile">
-            <i class="fa fa-user-circle" aria-hidden="true"></i>
-        </button>
-    </div>
+            <li class="relative text-xl">
+                <a href="{{ route('communities') }}"
+                    class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->routeIs('communities') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Communities</a>
+            </li>
+        </ul>
+    </nav>
 </div>
-
-<nav class="hidden xl:block lg:block">
-    <ul class="flex justify-center gap-24">
-        <li class="relative text-xl">
-            <a href="{{ url('/') }}"
-                class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->is('/') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Explore</a>
-        </li>
-
-        <li class="relative text-xl">
-            <a href="{{ route('categories') }}"
-                class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->routeIs('categories') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Categories</a>
-        </li>
-
-        <li class="relative text-xl">
-            <a href="{{ route('communities') }}"
-                class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->routeIs('communities') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Communities</a>
-        </li>
-    </ul>
-</nav>
