@@ -10,4 +10,14 @@ class PageController extends Controller
     {
         return view("pages.explore");
     }
+
+    public function categories()
+    {
+        return view("pages.categories");
+    }
+
+    public function communities()
+    {
+        return view("pages.communities");
+    }
 }
