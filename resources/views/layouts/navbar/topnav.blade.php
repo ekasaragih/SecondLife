@@ -50,9 +50,9 @@
                     class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
             </button>
 
-            <button class="relative text-3xl text-gray-700" title="My Profile">
+            <a href="{{ route('user_profile') }}" title="My Profile" class="relative text-3xl text-gray-700">
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
-            </button>
+            </a>
         </div>
     </div>
 
