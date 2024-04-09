@@ -8,4 +8,4 @@
     </div>
 </div>
 
-{{-- @include('layouts.footer.footer') --}}
+@include('layouts.footer.footer')

@@ -1,16 +1,18 @@
-<!doctype html>
-<html>
+<nav class="hidden xl:block lg:block mb-5">
+    <ul class="flex justify-center gap-24">
+        <li class="relative text-xl">
+            <a href="{{ url('/') }}"
+                class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->is('/') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Explore</a>
+        </li>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite('resources/css/app.css')
-</head>
+        <li class="relative text-xl">
+            <a href="{{ route('categories') }}"
+                class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->routeIs('categories') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Categories</a>
+        </li>
 
-<body>
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
-</body>
-
-</html>
+        <li class="relative text-xl">
+            <a href="{{ route('communities') }}"
+                class="font-semibold uppercase transition duration-300 hover:text-primary-content {{ request()->routeIs('communities') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">Communities</a>
+        </li>
+    </ul>
+</nav>
