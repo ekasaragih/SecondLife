@@ -11,7 +11,7 @@ use App\Http\Controllers\PageController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages/explore');
 });
 
 Route::get('/login', [AuthorizationController::class, 'login'])->name('login');
@@ -22,7 +22,8 @@ Route::get('/register', [AuthorizationController::class, 'register'])->name('reg
 | Pages
 |--------------------------------------------------------------------------
 */
-Route::get('/explore', [PageController::class, 'explore'])->name('explore');
+Route::get('/categories', [PageController::class, 'categories'])->name('categories');
+Route::get('/communities', [PageController::class, 'communities'])->name('communities');
 
 
 
