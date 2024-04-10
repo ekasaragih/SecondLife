@@ -1,4 +1,4 @@
-<footer class="bg-primary-content bg-opacity-25 rounded-lg shadow-xl dark:bg-gray-900 m-4">
+<footer class="bg-black rounded-lg shadow-xl dark:bg-gray-900 m-4">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div class="sm:flex sm:items-center sm:justify-between">
             <a href="/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
@@ -25,7 +25,4 @@
             <script>
                 document.write(new Date().getFullYear())
             </script>
-            <a href="/" class="hover:underline">SecondLife™</a>. All Rights Reserved.
-        </span>
-    </div>
-</footer>
+            <a href="/" class="hover:un
