@@ -20,31 +20,32 @@
                             value="" placeholder="081234567890" required="">
                     </div>
                     <div class="w-full">
-                        <label for="username"
+                        <label for="address"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Province,
                             City, District, Postal Code</label>
-                        <input type="text" name="username" id="username"
+                        <input type="text" name="address" id="address"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            value="" placeholder="Type username" required="">
+                            value="" placeholder="Type address" required="">
                     </div>
                     <div class="w-full">
-                        <label for="username"
+                        <label for="additional_add"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Street
                             Name, Building, House No.</label>
-                        <input type="text" name="username" id="username"
+                        <input type="text" name="additional_add" id="additional_add"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            value="" placeholder="Type username" required="">
+                            value="" placeholder="Type address" required="">
                     </div>
                     <div class="w-full">
-                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Other
+                        <label for="detail_add"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Other
                             Details (e.g. Block/Unit No., Landmarks)
                         </label>
-                        <input type="text" name="username" id="username"
+                        <input type="text" name="detail_add" id="detail_add"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            value="" placeholder="Type username" required="">
+                            value="" placeholder="Type detail address" required="">
                     </div>
                     <div class="w-full">
-                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Label
+                        <label for="label" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Label
                             As:
                         </label>
                         <ul class="grid w-full gap-6 md:grid-cols-2">
