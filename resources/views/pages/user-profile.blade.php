@@ -239,14 +239,14 @@
         const editProfileCollapseMenu = document.getElementById("editProfileCollapseMenu");
         const changeAddressCollapseMenu = document.getElementById("changeAddressCollapseMenu");
 
-        // Toggle collapse menu visibility when change address button is clicked
-        editProfileButton.addEventListener("click", function () {
+         editProfileButton.addEventListener("click", function () {
             editProfileCollapseMenu.classList.toggle("hidden");
+            changeAddressCollapseMenu.classList.add("hidden");
         });
 
-        // Toggle collapse menu visibility when change address collapse button is clicked
         changeAddressButton.addEventListener("click", function () {
             changeAddressCollapseMenu.classList.toggle("hidden");
+            editProfileCollapseMenu.classList.add("hidden");
         });
     });
 </script>
