@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         /* Custom styles */
         .carousel-item-caption {
@@ -22,7 +16,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
+
 
 <div class="grid grid-cols-4 gap-4">
 
@@ -34,17 +28,20 @@
         </div>
         <div class="mt-6 text-gray-600">Find your perfect match now!</div>
         <div class="mt-4">
-             <img src="https://png.pngtree.com/png-clipart/20200707/ourlarge/pngtree-mobile-phone-like-3d-element-png-image_2285401.jpg" class="w-40 h-40 rounded-full border-2 border-white" alt="Your Image">
+            <img src="https://png.pngtree.com/png-clipart/20200707/ourlarge/pngtree-mobile-phone-like-3d-element-png-image_2285401.jpg"
+                class="w-40 h-40 rounded-full border-2 border-white" alt="Your Image">
         </div>
     </div>
 
-    <div class="col-span-3 place-items-center p-6 bg-white border border-black rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+    <div
+        class="col-span-3 place-items-center p-6 bg-white border border-black rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
         <div id="carousel-example" class="relative w-full">
 
             <div class="relative h-64 overflow-hidden rounded-lg sm:h-64 xl:h-80 2xl:h-96">
                 <div id="carousel-item-1" class="duration-700 ease-in-out transition-transform">
                     <img src="https://i.pinimg.com/474x/1f/30/3f/1f303fa4b944cceb075fd97c73c5866f.jpg"
-                        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full" alt="..." />
+                        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
+                        alt="..." />
                     <div class="carousel-item-caption">
                         <p>Product 1</p>
                     </div>
@@ -52,7 +49,8 @@
 
                 <div id="carousel-item-2" class="duration-700 ease-in-out transition-transform hidden">
                     <img src="https://i.pinimg.com/474x/11/eb/0b/11eb0bf731fd8065ab42141b61993190.jpg"
-                        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full" alt="..." />
+                        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
+                        alt="..." />
                     <div class="carousel-item-caption">
                         <p>Product 2</p>
                     </div>
@@ -60,7 +58,8 @@
 
                 <div id="carousel-item-3" class="duration-700 ease-in-out transition-transform hidden">
                     <img src="https://i.pinimg.com/474x/b1/ca/d8/b1cad8824753b38e9652369c0cbb7dce.jpg"
-                        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full" alt="..." />
+                        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
+                        alt="..." />
                     <div class="carousel-item-caption">
                         <p>Product 3</p>
                     </div>
@@ -68,7 +67,8 @@
 
                 <div id="carousel-item-4" class="duration-700 ease-in-out transition-transform hidden">
                     <img src="https://i.pinimg.com/474x/4b/2a/a1/4b2aa13f207a44a2f3b76d66cd0a469a.jpg"
-                        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full" alt="..." />
+                        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
+                        alt="..." />
                     <div class="carousel-item-caption">
                         <p>Product 4</p>
                     </div>
@@ -142,5 +142,3 @@
         prevButton.addEventListener("click", showPrevSlide);
     });
 </script>
-</body>
-</html>
