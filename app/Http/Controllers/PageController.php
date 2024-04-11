@@ -20,4 +20,9 @@ class PageController extends Controller
     {
         return view("pages.communities");
     }
+
+    public function user_profile()
+    {
+        return view("pages.user-profile");
+    }
 }

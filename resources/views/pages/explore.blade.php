@@ -1,17 +1,18 @@
-@include('layouts.navbar.topnav')
+@include('utils.layouts.navbar.topnav')
 
-@section('head')
-@endsection
+<head>
+    @yield('head')
+</head>
 
 
 <div class="flex justify-center h-screen pt-52">
     <div class="container w-4/5">
-        @include('pages.swape')
-        @include('pages.recommendation_location')
+        @include('utils.explore.swape')
+        @include('utils.explore.recommendationLocation')
     </div>
 </div>
 
-@include('layouts.footer.footer')
+@include('utils.layouts.footer.footer')
 
 
 {{--
