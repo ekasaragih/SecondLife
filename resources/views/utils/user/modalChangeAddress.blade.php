@@ -1,43 +1,40 @@
 <div class="hidden" id="changeAddressCollapseMenu">
-    <hr class="mt-8 border-gray-300 sm:mx-auto dark:border-gray-700" />
+    <hr class="mt-8 border-gray-300 sm:mx-auto" />
     <section>
         <div class="max-w-2xl px-4 py-8 mx-auto">
             <h2 class="mb-4 text-2xl font-bold text-[#F12E52]">Change address</h2>
             <form action="#">
                 <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
                     <div class="sm:col-span-2">
-                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Full
                             Name</label>
                         <input type="text" name="name" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value="" placeholder="Type full name" required="">
                     </div>
                     <div class="w-full">
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
+                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Phone
                             Number</label>
                         <input type="number" name="phone" id="phone"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value="" placeholder="081234567890" required="">
                     </div>
                     <div class="w-full">
-                        <label for="address"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Province,
+                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900">Province,
                             City, District, Postal Code</label>
                         <input type="text" name="address" id="address"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value="" placeholder="Type address" required="">
                     </div>
                     <div class="w-full">
-                        <label for="additional_add"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Street
+                        <label for="additional_add" class="block mb-2 text-sm font-medium text-gray-900">Street
                             Name, Building, House No.</label>
                         <input type="text" name="additional_add" id="additional_add"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value="" placeholder="Type address" required="">
                     </div>
                     <div class="w-full">
-                        <label for="detail_add"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Other
+                        <label for="detail_add" class="block mb-2 text-sm font-medium text-gray-900">Other
                             Details (e.g. Block/Unit No., Landmarks)
                         </label>
                         <input type="text" name="detail_add" id="detail_add"
@@ -45,7 +42,7 @@
                             value="" placeholder="Type detail address" required="">
                     </div>
                     <div class="w-full">
-                        <label for="label" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Label
+                        <label for="label" class="block mb-2 text-sm font-medium text-gray-900">Label
                             As:
                         </label>
                         <ul class="grid w-full gap-6 md:grid-cols-2">
