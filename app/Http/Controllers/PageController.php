@@ -34,10 +34,18 @@ class PageController extends Controller
         return view("pages.explore");
     }
 
+    // Categories Section
     public function categories()
     {
         return view("pages.categories");
     }
+
+    public function electronic()
+    {
+        return view("utils.categories.electronic");
+    }
+
+    // End of Categories Section
 
     public function communities()
     {

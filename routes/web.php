@@ -23,6 +23,10 @@ Route::get('/register', [AuthorizationController::class, 'register'])->name('reg
 |--------------------------------------------------------------------------
 */
 Route::get('/categories', [PageController::class, 'categories'])->name('categories');
+Route::get('/electronic', [PageController::class, 'electronic'])->name('electronic');
+
+
+
 Route::get('/communities', [PageController::class, 'communities'])->name('communities');
 Route::get('/profile', [PageController::class, 'user_profile'])->name('user_profile');
 

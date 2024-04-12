@@ -7,7 +7,7 @@
         {{-- insert code here --}}
         <br>
         @include('utils.categories.product')
-        @include('utils.categories.productdisplay')
+        @include('utils.categories.electronicdisplay')
     </div>
 </div>
 
