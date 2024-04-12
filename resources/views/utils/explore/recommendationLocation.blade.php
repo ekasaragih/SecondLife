@@ -132,7 +132,6 @@
         });
     }
 
-    // Fungsi untuk menggeser slide ke kiri
     function slideLeft() {
         if (startIndex > 0) {
             startIndex--;
@@ -142,7 +141,6 @@
         }
     }
 
-    // Fungsi untuk menggeser slide ke kanan
     function slideRight() {
         if (endIndex < filteredProducts.length - 1) {
             startIndex++;
