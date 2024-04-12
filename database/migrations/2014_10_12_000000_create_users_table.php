@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('us_age')->nullable();
             $table->string('us_email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('us_password');
+            $table->string('password');
             $table->dateTime('password_updated_at');
             $table->string('us_stat')->nullable();
             $table->rememberToken();

@@ -15,7 +15,9 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [AuthorizationController::class, 'login'])->name('login');
+Route::post('/login',  [AuthorizationController::class, 'authenticate'])->name('auth_authenticate');
 Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
+Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store');
 
 /*
 |--------------------------------------------------------------------------
