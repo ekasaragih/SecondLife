@@ -26,7 +26,8 @@
                     <div class="flex-1 border-b border-gray-300"></div>
                 </div>
             </div>
-            <form action="#" method="POST" class="space-y-4">
+            <form action="{{ route('login') }}" method="POST" class="space-y-4">
+                @csrf
                 <div>
                     <label for="login" class="block text-sm font-medium text-gray-700">Email or Username</label>
                     <input type="text" id="login" name="login"
