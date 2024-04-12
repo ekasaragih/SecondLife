@@ -7,10 +7,20 @@
 # 5. Generate application key
 # 6. Migrate the database fresh
 
+setup-mac:
+	composer install
+	cp .env.example .env
+	sed -i '' 's/^DB_DATABASE=.*/DB_DATABASE=secondlife/' .env
+	sed -i '' 's/^DB_PORT=.*/DB_PORT=3307/' .env
+	php artisan key:generate
+	php artisan migrate:fresh
+	php artisan db:seed --class=RoleSeeder
+	php artisan db:seed --class=UserSeeder
+
 setup:
 	composer install
 	cp .env.example .env
-	sed -i '' 's/^DB_DATABASE=.*/DB_DATABASE=bnp-laravel/' .env
+	sed -i '' 's/^DB_DATABASE=.*/DB_DATABASE=secondlife/' .env
 	sed -i '' 's/^DB_PORT=.*/DB_PORT=3306/' .env
 	php artisan key:generate
 	php artisan migrate:fresh
@@ -21,3 +31,15 @@ refresh:
 	php artisan migrate:fresh
 	php artisan db:seed --class=RoleSeeder
 	php artisan db:seed --class=UserSeeder
+
+migrate:
+	php artisan migrate
+
+rollback:
+	php artisan migrate:rollback
+
+rollback-all:
+	php artisan migrate:reset
+
+seed:
+	php artisan db:seed

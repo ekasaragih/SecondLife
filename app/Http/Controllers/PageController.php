@@ -6,15 +6,40 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+    // Error pages
+    public function not_found()
+    {
+        return view("utils.error.404");
+    }
+
+    public function internal_server_error()
+    {
+        return view("utils.error.500");
+    }
+
+    // Menu
+    public function contact_us()
+    {
+        return view("utils.menu.contactUs");
+    }
+
+    public function privacy_policy()
+    {
+        return view("utils.menu.privacyPolicy");
+    }
+
+    // Main pages
     public function explore()
     {
         return view("pages.explore");
     }
 
+    // Categories Section
     public function categories()
     {
         return view("pages.categories");
     }
+    // End of Categories Section
 
     public function communities()
     {
@@ -23,6 +48,6 @@ class PageController extends Controller
 
     public function user_profile()
     {
-        return view("pages.user-profile");
+        return view("pages.userProfile");
     }
 }
