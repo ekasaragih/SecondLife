@@ -13,7 +13,7 @@
     </div>
 
     <!-- Right Pane -->
-    <div class="w-full lg:w-1/2 flex h-fit items-center justify-center mt-10">
+    <div class="w-full lg:w-1/2 flex items-center justify-center mt-10">
         <div class="max-w-md w-full p-6">
             <h1 class="text-3xl font-semibold mb-6 text-black text-center">Create your account!</h1>
             <h1 class="text-sm font-semibold mb-6 text-gray-500 text-center">

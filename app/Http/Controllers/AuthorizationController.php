@@ -36,10 +36,10 @@ class AuthorizationController extends Controller
             'us_username' => 'required|string|max:12',
             'us_email' => 'required|email:dns|max:250|unique:users',
             'password' => 'required|min:8',
-            'confirm_password' => 'required|same:us_password', 
+            'confirm_password' => 'required|same:password',
         ]);
 
-        User::create([
+        $user = User::create([
             'role_id' => Roles::ROLE_USER,
             'us_name' => $request->us_name,
             'us_username' => $request->us_username,
@@ -48,12 +48,12 @@ class AuthorizationController extends Controller
             'password_updated_at' => now()
         ]);    
 
-        $credentials = $request->only('us_email', 'password');
-        Auth::attempt($credentials);
-
-        $request->session()->regenerate();
-
-        return redirect()->route('login')->withSuccess('You have successfully registered!');
+        if($user) {
+            return redirect()->route('login')->withSuccess('You have successfully registered!');
+        } else {
+            return back()->withError('Failed to register user. Please try again.');
+        }
     }
+
 
 }
