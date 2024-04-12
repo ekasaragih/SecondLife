@@ -6,6 +6,18 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+    // Error pages
+    public function not_found()
+    {
+        return view("utils.error.404");
+    }
+
+    public function internal_server_error()
+    {
+        return view("utils.error.500");
+    }
+
+    // Main pages
     public function explore()
     {
         return view("pages.explore");

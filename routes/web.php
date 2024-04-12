@@ -29,6 +29,19 @@ Route::get('/profile', [PageController::class, 'user_profile'])->name('user_prof
 
 
 
+
+/*
+|--------------------------------------------------------------------------
+| Pages
+|--------------------------------------------------------------------------
+*/
+Route::get('/404-not-found', [PageController::class, 'not_found'])->name('not_found');
+Route::get('/500-server-error', [PageController::class, 'internal_server_error'])->name('internal_server_error');
+
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Post & Get Functions
