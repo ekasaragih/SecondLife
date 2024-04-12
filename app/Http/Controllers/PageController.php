@@ -50,4 +50,8 @@ class PageController extends Controller
     {
         return view("pages.userProfile");
     }
+    public function mygoods()
+    {
+        return view("pages.myGoods");
+    }
 }

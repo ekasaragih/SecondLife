@@ -13,14 +13,20 @@
                         <img class="h-32 w-32 rounded-full border-4 border-white mx-auto my-4"
                             src="https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg" alt="">
                         <div class="flex gap-2 px-2">
-                            <button
-                                class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
-                                My Goods
-                            </button>
-                            <button
-                                class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
-                                My wishlist
-                            </button>
+                            <form method="GET" action="{{ route('mygoods') }}">
+                                @csrf
+                                <button
+                                 class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                                 My Goods
+                                </button>
+                            </form>
+                            <form method="GET" action="">
+                                @csrf
+                                <button
+                                 class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                                 My Wishlist
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

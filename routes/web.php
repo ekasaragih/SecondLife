@@ -36,6 +36,8 @@ Route::get('/profile', [PageController::class, 'user_profile'])->name('user_prof
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
+Route::get('/mygoods', [PageController::class, 'mygoods'])->name('mygoods');
+
 
 
 
