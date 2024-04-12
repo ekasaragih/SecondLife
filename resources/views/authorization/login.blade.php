@@ -28,8 +28,8 @@
             </div>
             <form action="#" method="POST" class="space-y-4">
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="text" id="email" name="email"
+                    <label for="login" class="block text-sm font-medium text-gray-700">Email or Username</label>
+                    <input type="text" id="login" name="login"
                         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <div>

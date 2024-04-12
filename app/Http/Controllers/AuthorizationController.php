@@ -56,4 +56,32 @@ class AuthorizationController extends Controller
     }
 
 
+    public function authenticate(Request $request)
+    {
+        $request->validate([
+            'login' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $loginType = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL ) 
+            ? 'us_email' 
+            : 'us_username';
+
+        $credentials = [
+            $loginType => $request->input('login'),
+            'password' => $request->input('password'),
+        ];
+
+        if(Auth::attempt($credentials))
+        {
+            $request->session()->regenerate();
+            return redirect()->route('home')->withSuccess('You have successfully logged in!');
+        }
+
+        return redirect()->back()->withErrors([
+            'login' => 'Invalid email/username or password!',
+        ]);
+    }
+
+
 }
