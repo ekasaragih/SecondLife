@@ -7,7 +7,6 @@
         {{-- insert code here --}}
         <br>
         @include('utils.categories.product')
-        @include('utils.categories.productdisplay')
     </div>
 </div>
 
