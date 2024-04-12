@@ -1,23 +1,20 @@
 <head>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="tailwind.css">
+    <link rel="shortcut icon" href="/asset/img/mini-logo.png" type="image/x-icon">
+    @yield('head')
 </head>
 
 <body class="bg-white">
 
-    <div class="flex h-screen">
+    <div class="flex">
         <!-- Left Pane -->
-        <div class="h-screen flex justify-start items-center">
+        <div class="h-full flex justify-start items-center">
             <img src="asset/img/login-base.png" class="h-full" alt="Login Image">
         </div>
 
         <!-- Right Pane -->
-        <div class="w-full lg:w-1/2 flex items-center justify-center">
+        <div class="w-full lg:w-1/2 flex h-full items-center justify-center">
             <div class="max-w-md w-full p-6">
                 <h1 class="text-3xl font-semibold mb-6 text-black text-center">Create your account!</h1>
                 <h1 class="text-sm font-semibold mb-6 text-gray-500 text-center">
