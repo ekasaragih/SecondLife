@@ -24,9 +24,10 @@ class User extends Authenticatable
         'us_username',
         'role_id',
         'us_gender',
-        'us_age',
+        'us_DOB',
         'us_email',
-        'us_password',
+        'password',
+        'us_avatar',
         'password_updated_at',
         'us_stat',
     ];
@@ -37,7 +38,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'us_password',
+        'password',
         'remember_token',
     ];
 
@@ -48,7 +49,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'us_password' => 'hashed',
+        'password' => 'hashed',
     ];
 
      public function userRole()

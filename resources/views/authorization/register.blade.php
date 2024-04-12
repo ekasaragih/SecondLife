@@ -73,8 +73,8 @@
                         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <div>
-                    <label for="us_password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" id="us_password" name="us_password" placeholder="********"
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" name="password" placeholder="********"
                         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <div>
@@ -96,10 +96,3 @@
         </div>
     </div>
 </div>
-
-
-{{--
-|--------------------------------------------------------------------------
-| SCRIPTS
-|--------------------------------------------------------------------------
---}}

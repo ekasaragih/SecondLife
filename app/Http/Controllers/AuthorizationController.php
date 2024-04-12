@@ -35,7 +35,7 @@ class AuthorizationController extends Controller
             'us_name' => 'required|string|max:250',
             'us_username' => 'required|string|max:12',
             'us_email' => 'required|email:dns|max:250|unique:users',
-            'us_password' => 'required|min:8',
+            'password' => 'required|min:8',
             'confirm_password' => 'required|same:us_password', 
         ]);
 
@@ -44,14 +44,11 @@ class AuthorizationController extends Controller
             'us_name' => $request->us_name,
             'us_username' => $request->us_username,
             'us_email' => $request->us_email,
-            'us_password' => Hash::make($request->us_password),
+            'password' => Hash::make($request->password),
             'password_updated_at' => now()
         ]);    
 
-        $credentials = $request->only('us_email', 'us_password');
-        $credentials['password'] = $credentials['us_password'];
-        unset($credentials['us_password']);
-
+        $credentials = $request->only('us_email', 'password');
         Auth::attempt($credentials);
 
         $request->session()->regenerate();
