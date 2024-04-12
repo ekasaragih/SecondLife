@@ -39,12 +39,6 @@ class PageController extends Controller
     {
         return view("pages.categories");
     }
-
-    public function electronic()
-    {
-        return view("utils.categories.electronic");
-    }
-
     // End of Categories Section
 
     public function communities()

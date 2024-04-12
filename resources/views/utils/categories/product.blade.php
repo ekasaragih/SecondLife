@@ -1,5 +1,5 @@
 <div class="flex gap-2 px-2">
-    <button class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100" onclick="filterProducts('Electronic')">Electronic</button>
+    <button class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100" onclick="filterProducts('All')">All</button>
     <button class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100" onclick="filterProducts('Fashion')">Fashion</button>
     <button class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100" onclick="filterProducts('Skincare')">Skincare</button>
     <button class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100" onclick="filterProducts('Electronic')">Electronic</button>
@@ -59,15 +59,15 @@
                 [
                     'name' => 'Vaseline Jelly',
                     'price' => '$89.99',
-                    'image' => 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//catalog-image/104/MTA-140397259/brd-94854_the-originote-moisturizer-hyalucera-moisturizer-gel-cica-b5-soothing-moisturizer-brightening-moisturizer_full01-87e7b918.jpg',
+                    'image' => 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//97/MTA-85941142/vaseline_vaseline-petroleum-jelly-100ml-original_full01.jpg',
                     'type' => 'Skincare',
                 ],
             ];
             @endphp
             <div class="flex" id="productCards">
                 @foreach($products as $index => $product)
-                <div class="product-card flex-none w-1/4 border border-gray-300 {{ strtolower($product['type']) }}" data-type="{{ strtolower($product['type']) }}">
-                    <img src="{{ $product['image'] }}" alt="Product Image">
+                <div class="h-11 product-card flex-none w-1/4 border border-gray-300 {{ strtolower($product['type']) }}" data-type="{{ strtolower($product['type']) }}">
+                    <img class="max-w-full h-auto" src="{{ $product['image'] }}" alt="Product Image">
                     <div class="p-4">
                         <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product['name'] }}</h3>
                         <p class="text-sm text-gray-600">{{ $product['type'] }}</p>
@@ -155,6 +155,7 @@
     });
     resetIndexes();
 }
+
 
 </script>
 
