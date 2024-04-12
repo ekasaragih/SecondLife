@@ -15,8 +15,7 @@
             website.
         </p>
 
-        <div
-            class="w-full p-6 mt-8 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+        <div class="w-full p-6 mt-8 bg-white border border-gray-200 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-2">Information We Collect</h2>
 
             <p class="mb-4">
