@@ -27,16 +27,21 @@ Route::get('/communities', [PageController::class, 'communities'])->name('commun
 Route::get('/profile', [PageController::class, 'user_profile'])->name('user_profile');
 
 
+Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
+Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
+
+
 
 
 
 /*
 |--------------------------------------------------------------------------
-| Pages
+| Error Pages
 |--------------------------------------------------------------------------
 */
 Route::get('/404-not-found', [PageController::class, 'not_found'])->name('not_found');
 Route::get('/500-server-error', [PageController::class, 'internal_server_error'])->name('internal_server_error');
+
 
 
 

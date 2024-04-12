@@ -17,6 +17,17 @@ class PageController extends Controller
         return view("utils.error.500");
     }
 
+    // Menu
+    public function contact_us()
+    {
+        return view("utils.menu.contactUs");
+    }
+
+    public function privacy_policy()
+    {
+        return view("utils.menu.privacyPolicy");
+    }
+
     // Main pages
     public function explore()
     {
@@ -35,6 +46,6 @@ class PageController extends Controller
 
     public function user_profile()
     {
-        return view("pages.user-profile");
+        return view("pages.userProfile");
     }
 }
