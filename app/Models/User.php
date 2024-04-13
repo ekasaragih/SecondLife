@@ -27,7 +27,7 @@ class User extends Authenticatable
         'us_DOB',
         'us_email',
         'password',
-        'us_avatar',
+        'avatar',
         'password_updated_at',
         'us_stat',
     ];
