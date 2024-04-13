@@ -1,8 +1,6 @@
 @include('utils.layouts.navbar.topnav')
 
-@section('head')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-@endsection
+
 
 <div class="pt-52 mb-24">
 
@@ -95,10 +93,10 @@
             <!-- Modal body -->
             <div class="p-4 md:p-5 space-y-4">
                 <div class="m-3">
-                    <label for="formFileSm" class="block mb-2 text-sm font-medium text-gray-900">Choose image</label>
+                    <label for="formFileSm" class="block mb-4 text-sm font-medium text-gray-900">Choose image</label>
                     <input
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        id="upload_avatar" type="file" accept="image/*">
+                        class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        id="small_size" type="file">
                 </div>
             </div>
             <!-- Modal footer -->
@@ -121,23 +119,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script>
     import { Modal } from 'flowbite';
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const editProfileButton = document.getElementById("editProfileButton");
-        const changeAddressButton = document.getElementById("changeAddressButton");        
-        const editProfileCollapseMenu = document.getElementById("editProfileCollapseMenu");
-        const changeAddressCollapseMenu = document.getElementById("changeAddressCollapseMenu");
-
-         editProfileButton.addEventListener("click", function () {
-            editProfileCollapseMenu.classList.toggle("hidden");
-            changeAddressCollapseMenu.classList.add("hidden");
-        });
-
-        changeAddressButton.addEventListener("click", function () {
-            changeAddressCollapseMenu.classList.toggle("hidden");
-            editProfileCollapseMenu.classList.add("hidden");
-        });
-    });
 </script>
 
 <script>

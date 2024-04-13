@@ -15,9 +15,30 @@ class ProfileController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request): JsonResponse
     {
-        //
+        $request->validate([
+            'id' => 'nullable|int|exists:users,id',
+        ]);
+
+        $userId = $request->input('id') ?? auth()->id();
+
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $user->role_name = $user->userRole()->value('role');
+        $avatarUrl = $user->avatar ? asset('storage/avatars/' . $user->avatar) : null;
+
+        return response()->json([
+            'message' => 'Profile retrieved successfully',
+            'data' => $user,
+            'avatar_url' => $avatarUrl,
+        ]);
     }
 
  /**
