@@ -96,7 +96,7 @@
         </div>
         @endforeach
     </div>
-</div>
+</div><br>
 
 <!-- Tombol untuk menggeser ke kiri -->
 <button class="product-slider-btn left-0" onclick="slideLeft()">
@@ -128,9 +128,6 @@ function addToWishlist(index, name, price, image, type) {
         localStorage.setItem('wishlist', JSON.stringify(wishlist));
         Swal.fire("Product added to the Wishlist!");
     }
-
-    // Redirect to the wishlist page
-    // window.location.href = '/wishlist';
 }
 
     // Ambil elemen slide dan tombol
@@ -173,14 +170,15 @@ function addToWishlist(index, name, price, image, type) {
         }
     }
 
-    function slideRight() {
-        if (endIndex < filteredProducts.length - 1) {
+        // Fungsi untuk menggeser slide ke kanan
+        function slideRight() {
+        if (endIndex < {{ count($products) }} - 1) {
             startIndex++;
             endIndex++;
             productSlider.scrollLeft += cardWidth;
-            showHideCards(filteredProducts);
+            showHideCards();
         }
-    }
+    }   
 
     function filterProducts(type) {
     productCards.forEach(card => {
@@ -191,9 +189,5 @@ function addToWishlist(index, name, price, image, type) {
         }
     });
     resetIndexes();
-
-    
 }
-
-
 </script>
