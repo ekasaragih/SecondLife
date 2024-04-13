@@ -75,7 +75,7 @@ class AuthorizationController extends Controller
         if(Auth::attempt($credentials))
         {
             $request->session()->regenerate();
-            return redirect('/')->withSuccess('You have successfully logged in!');
+            return redirect()->route('user_explore')->withSuccess('You have successfully logged in!');
         }
 
         return redirect()->back()->withErrors([

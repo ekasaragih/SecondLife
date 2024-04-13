@@ -10,20 +10,24 @@ use App\Http\Controllers\PageController;
 |--------------------------------------------------------------------------
 */
 
+Route::group(['middleware' => ['web']], function () {
 Route::get('/', function () {
-    return view('pages/explore');
-});
+    return view('pages.explore');
+})->name('user_explore');
 
-Route::get('/login', [AuthorizationController::class, 'login'])->name('login');
-Route::post('/login',  [AuthorizationController::class, 'authenticate'])->name('auth_authenticate');
-Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
-Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store');
+
+Route::get('/login', [AuthorizationController::class, 'login'])->name('login')->middleware('guest');
+Route::post('/login',  [AuthorizationController::class, 'authenticate'])->name('auth_authenticate')->middleware('guest');
+Route::get('/register', [AuthorizationController::class, 'register'])->name('register')->middleware('guest');
+Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store')->middleware('guest');
+Route::post('/logout', [AuthorizationController::class, 'logout'])->name('auth_logout');
 
 /*
 |--------------------------------------------------------------------------
 | Pages
 |--------------------------------------------------------------------------
 */
+Route::get('/explore', [PageController::class, 'explore'])->name('explore');
 Route::get('/categories', [PageController::class, 'categories'])->name('categories');
 Route::get('/communities', [PageController::class, 'communities'])->name('communities');
 
@@ -58,3 +62,7 @@ Route::get('/500-server-error', [PageController::class, 'internal_server_error']
 | Post & Get Functions
 |--------------------------------------------------------------------------
 */
+
+
+
+});
