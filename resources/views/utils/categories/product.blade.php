@@ -9,7 +9,7 @@
         class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
         onclick="filterProducts('Skincare')">Skincare</button>
     <button
-        class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+        class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg   hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
         onclick="filterProducts('Electronic')">Electronic</button>
 </div>
 
@@ -86,15 +86,18 @@
                 <p class="text-sm text-gray-600">{{ $product['type'] }}</p>
                 <div class="mt-4 flex justify-between items-center">
                     <span class="text-gray-600">Price: {{ $product['price'] }}</span>
-                    <button
+                    <!-- <button
                         class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300">Add
-                        to Wishlist</button>
+                        to Wishlist</button> -->
+
+                        <button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300" onclick="addToWishlist({{ $index }}, '{{ $product['name'] }}', '{{ $product['price'] }}', '{{ $product['image'] }}', '{{ $product['type'] }}')">Add to Wishlist</button>
                 </div>
             </div>
         </div>
         @endforeach
     </div>
 </div>
+
 <!-- Tombol untuk menggeser ke kiri -->
 <button class="product-slider-btn left-0" onclick="slideLeft()">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -111,6 +114,25 @@
 </div>
 
 <script>
+//Wishlist
+function addToWishlist(index, name, price, image, type) {
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    let product = { index, name, price, image, type };
+
+    if (wishlist.some(item => item.index === index)) {
+        Swal.fire("Product already exists in the wishlist!");
+        // Swal.fire("SweetAlert2 is working!");
+        // alert('Product already exists in the wishlist!');
+    } else {
+        wishlist.push(product);
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        Swal.fire("Product added to the Wishlist!");
+    }
+
+    // Redirect to the wishlist page
+    // window.location.href = '/wishlist';
+}
+
     // Ambil elemen slide dan tombol
     const productSlider = document.querySelector('.product-slider-container');
     const slideLeftBtn = document.querySelector('.product-slider-btn.left-0');
@@ -169,6 +191,8 @@
         }
     });
     resetIndexes();
+
+    
 }
 
 
