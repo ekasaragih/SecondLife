@@ -41,6 +41,13 @@ class PageController extends Controller
     }
     // End of Categories Section
 
+    // wishlist Section
+    public function wishlist()
+    {
+        return view("pages.wishlist");
+    }
+    // End of wishlist Section
+
     public function communities()
     {
         return view("pages.communities");
