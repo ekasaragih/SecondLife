@@ -25,7 +25,7 @@ Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_
 |--------------------------------------------------------------------------
 */
 Route::get('/categories', [PageController::class, 'categories'])->name('categories');
-Route::get('/electronic', [PageController::class, 'electronic'])->name('electronic');
+Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
 
 
 
