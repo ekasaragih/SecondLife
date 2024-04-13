@@ -33,6 +33,8 @@ Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
+Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
+
 
 
 
