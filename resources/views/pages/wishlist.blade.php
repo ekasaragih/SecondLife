@@ -1,22 +1,5 @@
-@include('utils.layouts.navbar.topnav')
-<div class="flex justify-center h-screen pt-52">
-    <div class="container w-4/5">
-
-        <div class="text-3xl text-[#F12E52]"><b>Wishlist</b></div>
-
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wishlist</title>
+<head>
     <style>
-        .wishlist-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
         .product-list {
             display: flex;
             flex-wrap: wrap;
@@ -65,20 +48,27 @@
         }
 
         .footer-spacer {
-            height: 100px; /* Adjust the height as needed */
+            height: 100px;
         }
     </style>
 </head>
-<body>
-    <div class="wishlist-container">
-        <div class="product-list">
-            <!-- Products will be added here -->
-        </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        // Get the wishlist from the local storage
+@include('utils.layouts.navbar.topnav')
+
+<div class="flex justify-center h-screen pt-52">
+    <div class="container w-4/5">
+
+        <div class="text-3xl text-[#F12E52]"><b>Wishlist</b></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="product-list">
+                <!-- Products will be added here -->
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            // Get the wishlist from the local storage
         let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
         // Function to remove a product from the wishlist
@@ -153,9 +143,10 @@
 
         // Display the wishlist on page load
         displayWishlist();
-    </script>
-</body>
-</html>
+        </script>
+        </body>
+
+        </html>
 
     </div>
 </div>
