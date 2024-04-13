@@ -22,7 +22,7 @@
                     'description' => 'Description for Product 2',
                     'price' => '$29.99',
                     'image' => 'https://via.placeholder.com/400',
-                    'location' => 'Jakarta',
+                    'location' => 'Bekasi',
                 ],
                 [
                     'name' => 'Product 3',
@@ -131,22 +131,22 @@
             }
         });
     }
-
-    function slideLeft() {
+ function slideLeft() {
         if (startIndex > 0) {
             startIndex--;
             endIndex--;
             productSlider.scrollLeft -= cardWidth;
-            showHideCards(filteredProducts);
+            showHideCards();
         }
     }
 
+    // Fungsi untuk menggeser slide ke kanan
     function slideRight() {
-        if (endIndex < filteredProducts.length - 1) {
+        if (endIndex < {{ count($products) }} - 1) {
             startIndex++;
             endIndex++;
             productSlider.scrollLeft += cardWidth;
-            showHideCards(filteredProducts);
+            showHideCards();
         }
     }
 
