@@ -18,6 +18,8 @@ Route::get('/login', [AuthorizationController::class, 'login'])->name('login');
 Route::post('/login',  [AuthorizationController::class, 'authenticate'])->name('auth_authenticate');
 Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
 Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store');
+Route::get('/register-optional', [AuthorizationController::class, 'registerSkip'])->name('registerSkip');
+Route::post('/register', [AuthorizationController::class, 'storeSkip'])->name('auth_storeSkip');
 
 /*
 |--------------------------------------------------------------------------
