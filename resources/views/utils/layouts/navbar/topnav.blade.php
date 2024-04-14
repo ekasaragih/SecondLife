@@ -48,7 +48,8 @@
                     class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
             </button>
 
-            @guest
+
+            {{-- @guest
             <!-- Check if the user is a guest (not logged in) -->
             <a href="{{ route('login') }}" title="Sign In"
                 class="relative text-base text-gray-700 hover:text-gray-600 transition-all ease-in duration-300">
@@ -60,7 +61,22 @@
                 class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'user_profile' ? 'text-primary-content' : '' }}">
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </a>
-            @endguest
+            @endguest --}}
+
+            @auth
+            <a href="{{ route('user_profile') }}" title="My Profile"
+                class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'user_profile' ? 'text-primary-content' : '' }}">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </a>
+            <!-- Check if the user is a guest (not logged in) -->
+
+            @else
+            <!-- If the user is logged in -->
+            <a href="{{ route('login') }}" title="Sign In"
+                class="relative text-base text-gray-700 hover:text-gray-600 transition-all ease-in duration-300">
+                Sign In
+            </a>
+            @endauth
 
 
         </div>

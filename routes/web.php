@@ -27,6 +27,10 @@ Route::post('/logout', [AuthorizationController::class, 'logout'])->name('auth_l
 | Pages
 |--------------------------------------------------------------------------
 */
+// Route::group(['middleware' => 'auth'], function () {
+//     Route::get('/', [PageController::class, 'explore'])->name('explore');
+// });
+
 Route::get('/categories', [PageController::class, 'categories'])->name('categories');
 Route::get('/communities', [PageController::class, 'communities'])->name('communities');
 
