@@ -90,7 +90,9 @@
                         class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300">Add
                         to Wishlist</button> -->
 
-                        <button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300" onclick="addToWishlist({{ $index }}, '{{ $product['name'] }}', '{{ $product['price'] }}', '{{ $product['image'] }}', '{{ $product['type'] }}')">Add to Wishlist</button>
+                    <button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
+                        onclick="addToWishlist({{ $index }}, '{{ $product['name'] }}', '{{ $product['price'] }}', '{{ $product['image'] }}', '{{ $product['type'] }}')">Add
+                        to Wishlist</button>
                 </div>
             </div>
         </div>
@@ -114,7 +116,7 @@
 </div>
 
 <script>
-//Wishlist
+    //Wishlist
 function addToWishlist(index, name, price, image, type) {
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
     let product = { index, name, price, image, type };
