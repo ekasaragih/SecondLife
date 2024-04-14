@@ -20,10 +20,10 @@
                 <form action="#" method="post" enctype="multipart/form-data">
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                        <input type="text" id="name" name="name" class="mt-1 p-2 block w-full border-gray-300 rounded-md">
+                        <input type="text" id="name" name="name" placeholder="Enter name of goods" class="mt-1 p-2 block w-full border-gray-300 rounded-md">
                     </div>
-                    <div class="flex">
-                        <div class="mb-4 mr-2">
+                    <div class="w-full flex">
+                        <div class="w-1/2 mb-4 mr-2">
                             <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
                             <select id="category" name="category" class="mt-1 p-2 block w-full border-gray-300 rounded-md">
                                 <option value="electronics">Electronics</option>
@@ -32,7 +32,7 @@
                                 <!-- Add more options as needed -->
                             </select>
                         </div>
-                        <div class="mb-4">
+                        <div class="w-1/2 mb-4">
                             <label for="type" class="block text-sm font-medium text-gray-700">Type</label>
                             <select id="type" name="type" class="mt-1 p-2 block w-full border-gray-300 rounded-md">
                                 <option value="new">New</option>
@@ -41,9 +41,19 @@
                             </select>
                         </div>
                     </div>
+                    <div class="flex">
+                        <div class="mb-4 mr-2">
+                            <label for="category" class="block text-sm font-medium text-gray-700">Original Price</label>
+                            <input type="number" id="originalPrice" name="originalPrice" placeholder="ex: 500000" class="mt-1 p-2 block w-1/2 border-gray-300 rounded-md">
+                        </div>
+                        <div class="mb-4">
+                            <label for="type" class="block text-sm font-medium text-gray-700">Age of Goods (in years)</label>
+                            <input type="number" id="originalPrice" name="originalPrice" placeholder="ex: 1" class="mt-1 p-2 block w-1/2 border-gray-300 rounded-md">
+                        </div>
+                    </div>
                     <div class="mb-4">
                         <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea id="description" name="description" rows="3" class="mt-1 p-2 block w-full border-gray-300 rounded-md"></textarea>
+                        <textarea id="description" name="description" rows="3" placeholder="Give a detail explanation of your goods' condition" class="mt-1 p-2 block w-full border-gray-300 rounded-md"></textarea>
                     </div>
                     <div class="mb-4">
                         <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
@@ -70,6 +80,10 @@
                 <h2 class="text-2xl font-bold">Airpods</h2>
                 <span class=""><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>South Jakarta</span>
                 <p class="text-gray-800">Use it for 3 months and my iphone in broken now so i can't really use it anymore</p>
+                <div class="flex">
+                    <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
+                    <h3 class="text-base text-gray-600 mr-1"> 500,000 </h3>
+                </div>
             </div>
             <div class="relative">
                 <div class="p-2 m-1 bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] shadow-lg rounded-md">
