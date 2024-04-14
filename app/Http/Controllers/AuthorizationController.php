@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Roles;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -75,7 +76,11 @@ class AuthorizationController extends Controller
         if(Auth::attempt($credentials))
         {
             $request->session()->regenerate();
-            return redirect()->route('user_explore')->withSuccess('You have successfully logged in!');
+
+            $userName = Auth::user()->us_name;
+            Session::flash('success', 'You have successfully logged in!');
+            Session::flash('userName', $userName);
+            return redirect()->route('explore');
         }
 
         return redirect()->back()->withErrors([

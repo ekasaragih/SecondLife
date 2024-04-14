@@ -7,7 +7,14 @@
 
 <div class="flex justify-center h-screen pt-52">
     <div class="container w-4/5">
-        {{-- <h2>Welcome, {{ auth()->user()->us_name }}!</h2> --}}
+        @auth
+        <p>Welcome, {{ $userName }}</p>
+        @else
+        <p>Hello!</p>
+        @endauth
+
+
+
         @include('utils.explore.swape')
         @include('utils.explore.recommendationLocation')
     </div>
