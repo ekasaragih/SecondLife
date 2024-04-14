@@ -31,8 +31,7 @@ class PageController extends Controller
     // Main pages
     public function explore()
     {
-        $userName = session('userName');
-        return view('pages.explore', ['userName' => $userName]);
+        return view('pages.explore');
     }
 
     // Categories Section
