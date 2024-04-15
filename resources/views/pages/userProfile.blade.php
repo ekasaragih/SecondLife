@@ -29,7 +29,8 @@
                     <div class="text-3xl font-bold">Ocha Rara Jiji Wini
                         <span
                             class="ml-2 opacity-75 hover:text-secondary cursor-pointer transition-all ease-out duration-300"
-                            title="Edit profile" id="editProfileButton">
+                            title="Edit profile" id="editProfileButton" data-modal-target="modalEditProfile"
+                            data-modal-toggle="modalEditProfile">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </span>
                     </div>
@@ -44,8 +45,9 @@
                             </svg>
                             New York, NY
                             <span
-                                class="ml-2 opacity-75 hover:text-secondary cursor-pointer hover:transition-all hover:ease-out hover:duration-300"
-                                title="Change address" id="changeAddressButton">
+                                class="ml-2 opacity-75 hover:text-secondary cursor-pointer transition-all ease-out duration-300"
+                                title="Edit location" id="editLocationButton" data-modal-target="modalChangeAddress"
+                                data-modal-toggle="modalChangeAddress">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </span>
                         </div>
@@ -61,26 +63,14 @@
 </div>
 
 @include('utils.layouts.footer.footer')
+
+
 {{--
 |--------------------------------------------------------------------------
 | SCRIPTS
 |--------------------------------------------------------------------------
 --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const editProfileButton = document.getElementById("editProfileButton");
-        const changeAddressButton = document.getElementById("changeAddressButton");        
-        const editProfileCollapseMenu = document.getElementById("editProfileCollapseMenu");
-        const changeAddressCollapseMenu = document.getElementById("changeAddressCollapseMenu");
-
-         editProfileButton.addEventListener("click", function () {
-            editProfileCollapseMenu.classList.toggle("hidden");
-            changeAddressCollapseMenu.classList.add("hidden");
-        });
-
-        changeAddressButton.addEventListener("click", function () {
-            changeAddressCollapseMenu.classList.toggle("hidden");
-            editProfileCollapseMenu.classList.add("hidden");
-        });
-    });
+    import { Modal } from 'flowbite';
 </script>
