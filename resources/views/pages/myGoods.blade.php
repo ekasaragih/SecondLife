@@ -4,10 +4,10 @@
 
         <div class="text-3xl text-[#F12E52] mb-5">
             <b>My Goods</b>
-            <a data-modal-target="modalAddGoods" data-modal-toggle="modalAddGoods" class="flex text-lg items-center justify-center m-2 p-2 bg-[#F12E52] hover:bg-white text-white
+            <span data-modal-target="modalAddGoods" data-modal-toggle="modalAddGoods" class="flex text-lg items-center justify-center m-2 p-2 bg-[#F12E52] hover:bg-white text-white
                 hover:text-[#F12E52] shadow-lg rounded-md float-right">
                 <i class="fa fa-plus" aria-hidden="true"></i>
-            </a>
+            </span>
         </div>
 
         <div id="Goods" class="w-full rounded-lg shadow-md p-5 border-2 m-1 float-right flex items-center z-0">
