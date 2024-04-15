@@ -1,4 +1,9 @@
 @include('utils.layouts.navbar.topnav')
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+</head>
+
 <div class="flex justify-center h-screen pt-52">
     <div class="container w-4/5">
 
@@ -9,6 +14,8 @@
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </span>
         </div>
+
+        @include('utils.myGoods.modalAddGoods')
 
         <div id="Goods" class="w-full rounded-lg shadow-md p-5 border-2 m-1 float-right flex items-center z-0">
             <img class="w-32 h-32 rounded-none m-4"
@@ -47,6 +54,7 @@
 
     </div>
 </div>
+
 
 @include('utils.layouts.footer.footer')
 
