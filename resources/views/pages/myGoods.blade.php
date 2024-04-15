@@ -58,24 +58,12 @@
 
 @include('utils.layouts.footer.footer')
 
-
+{{--
+|--------------------------------------------------------------------------
+| SCRIPTS
+|--------------------------------------------------------------------------
+--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script>
     import { Modal } from 'flowbite';
 </script>
-
-{{-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const addGoodsButton = document.getElementById("addGoodsButton");
-        const addGoodsForm = document.getElementById("addGoodsForm");
-        const closeForm = document.getElementById("closeForm");
-
-        addGoodsButton.addEventListener("click", function() {
-            addGoodsForm.classList.remove("hidden");
-        });
-
-        closeForm.addEventListener("click", function() {
-            addGoodsForm.classList.add("hidden");
-        });
-    });
-</script> --}}
