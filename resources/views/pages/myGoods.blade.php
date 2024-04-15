@@ -4,12 +4,14 @@
 
         <div class="text-3xl text-[#F12E52] mb-5">
             <b>My Goods</b>
-            <div id="addGoodsButton" class="flex text-lg items-center justify-center m-2 p-2 bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] shadow-lg rounded-md float-right">
+            <div id="addGoodsButton"
+                class="flex text-lg items-center justify-center m-2 p-2 bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] shadow-lg rounded-md float-right">
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </div>
         </div>
-        
-        <div id="addGoodsForm" class="z-50 hidden fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
+
+        <div id="addGoodsForm"
+            class="z-50 hidden fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
             <div class="max-w-md mx-auto bg-white rounded p-6 shadow-md">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-semibold">Upload Goods</h2>
@@ -20,12 +22,14 @@
                 <form action="#" method="post" enctype="multipart/form-data">
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Enter name of goods" class="mt-1 p-2 block w-full border-gray-300 rounded-md">
+                        <input type="text" id="name" name="name" placeholder="Enter name of goods"
+                            class="mt-1 p-2 block w-full border-gray-300 rounded-md">
                     </div>
                     <div class="w-full flex">
                         <div class="w-1/2 mb-4 mr-2">
                             <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-                            <select id="category" name="category" class="mt-1 p-2 block w-full border-gray-300 rounded-md">
+                            <select id="category" name="category"
+                                class="mt-1 p-2 block w-full border-gray-300 rounded-md">
                                 <option value="electronics">Electronics</option>
                                 <option value="clothing">Clothing</option>
                                 <option value="books">Books</option>
@@ -44,42 +48,49 @@
                     <div class="flex">
                         <div class="mb-4 mr-2">
                             <label for="category" class="block text-sm font-medium text-gray-700">Original Price</label>
-                            <input type="number" id="originalPrice" name="originalPrice" placeholder="ex: 500000" class="mt-1 p-2 block w-1/2 border-gray-300 rounded-md">
+                            <input type="number" id="originalPrice" name="originalPrice" placeholder="ex: 500000"
+                                class="mt-1 p-2 block w-1/2 border-gray-300 rounded-md">
                         </div>
                         <div class="mb-4">
-                            <label for="type" class="block text-sm font-medium text-gray-700">Age of Goods (in years)</label>
-                            <input type="number" id="originalPrice" name="originalPrice" placeholder="ex: 1" class="mt-1 p-2 block w-1/2 border-gray-300 rounded-md">
+                            <label for="type" class="block text-sm font-medium text-gray-700">Age of Goods (in
+                                years)</label>
+                            <input type="number" id="originalPrice" name="originalPrice" placeholder="ex: 1"
+                                class="mt-1 p-2 block w-1/2 border-gray-300 rounded-md">
                         </div>
                     </div>
                     <div class="mb-4">
                         <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea id="description" name="description" rows="3" placeholder="Give a detail explanation of your goods' condition" class="mt-1 p-2 block w-full border-gray-300 rounded-md"></textarea>
+                        <textarea id="description" name="description" rows="3"
+                            placeholder="Give a detail explanation of your goods' condition"
+                            class="mt-1 p-2 block w-full border-gray-300 rounded-md"></textarea>
                     </div>
                     <div class="mb-4">
                         <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
-                        <input type="file" id="image" name="image" class="mt-1 p-2 block w-full border-gray-300 rounded-md">
+                        <input type="file" id="image" name="image"
+                            class="mt-1 p-2 block w-full border-gray-300 rounded-md">
                     </div>
                     <div class="mt-6">
-                        <button type="submit" class="py-2 px-4 bg-[#F12E52] text-white rounded hover:bg-white hover:text-[#F12E52]">Upload</button>
+                        <button type="submit"
+                            class="py-2 px-4 bg-[#F12E52] text-white rounded hover:bg-white hover:text-[#F12E52]">Upload</button>
                     </div>
                 </form>
             </div>
         </div>
-                       
+
 
         <div id="Goods" class="w-full rounded-lg shadow-md p-5 border-2 m-1 float-right flex items-center z-0">
-            <img class="w-32 h-32 rounded-none m-4" 
-                src="https://m.media-amazon.com/images/I/61ZsGQimlQL._AC_UF894,1000_QL80_.jpg" 
-                alt="Goods Image">
+            <img class="w-32 h-32 rounded-none m-4"
+                src="https://m.media-amazon.com/images/I/61ZsGQimlQL._AC_UF894,1000_QL80_.jpg" alt="Goods Image">
             <div class="w-3/4 m-4 pl-3 relative">
                 <div class="flex">
                     <h3 class="text-base text-gray-500 italic mr-1">Electronic</h3>
                     <h3 class="text-base text-gray-500 italic mr-1"> - </h3>
-                    <h3 class="text-base text-gray-500 italic mr-1">Used</h3>    
+                    <h3 class="text-base text-gray-500 italic mr-1">Used</h3>
                 </div>
                 <h2 class="text-2xl font-bold">Airpods</h2>
                 <span class=""><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>South Jakarta</span>
-                <p class="text-gray-800">Use it for 3 months and my iphone in broken now so i can't really use it anymore</p>
+                <p class="text-gray-800">Use it for 3 months and my iphone in broken now so i can't really use it
+                    anymore</p>
                 <div class="flex">
                     <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
                     <h3 class="text-base text-gray-600 mr-1"> 500,000 </h3>
@@ -101,11 +112,17 @@
             <h2 class="text-base text-gray-500 italic">March 24, 2024</h2>
             <p class="text-gray-800 pl-3">YASHH! You're totally missing a lot</p> --}}
         </div>
-        
+
     </div>
 </div>
 
 @include('utils.layouts.footer.footer')
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script>
+    import { Modal } from 'flowbite';
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
