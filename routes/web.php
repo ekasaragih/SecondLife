@@ -29,7 +29,7 @@ Route::post('/register', [AuthorizationController::class, 'storeSkip'])->name('a
 Route::get('/categories', [PageController::class, 'categories'])->name('categories');
 Route::get('/communities', [PageController::class, 'communities'])->name('communities');
 
-Route::get('/profile', [PageController::class, 'user_profile'])->name('user_profile');
+Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
 Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
 
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
