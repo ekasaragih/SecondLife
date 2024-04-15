@@ -55,5 +55,5 @@
         </div>
     </div>
 
-    @include('utils.layouts.navbar.navbar-main')
+    @include('utils.layouts.navbar.navbarMain')
 </div>
