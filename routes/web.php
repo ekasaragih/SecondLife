@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\RecommendationLocationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +38,7 @@ Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
 Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
-
+Route::get('/recommendation', [RecommendationLocationController::class, 'index'])->name('recommendation');
 
 
 

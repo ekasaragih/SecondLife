@@ -7,67 +7,6 @@
             <button class="bg-purple-500 text-white px-4 py-2 mb-5 rounded hover:bg-gray-600 transition duration-300" onclick="filterProducts('All')">All</button>
         </div>
         <div class="product-slider-container overflow-hidden relative">
-            <!-- Product Cards -->
-            @php
-            $products = [
-                [
-                    'name' => 'Product 1',
-                    'description' => 'Description for Product 1',
-                    'price' => '$19.99',
-                    'image' => 'https://via.placeholder.com/400',
-                    'location' => 'Jakarta',
-                ],
-                [
-                    'name' => 'Product 2',
-                    'description' => 'Description for Product 2',
-                    'price' => '$29.99',
-                    'image' => 'https://via.placeholder.com/400',
-                    'location' => 'Bekasi',
-                ],
-                [
-                    'name' => 'Product 3',
-                    'description' => 'Description for Product 3',
-                    'price' => '$39.99',
-                    'image' => 'https://via.placeholder.com/400',
-                    'location' => 'Jakarta',
-                ],
-                [
-                    'name' => 'Product 4',
-                    'description' => 'Description for Product 4',
-                    'price' => '$49.99',
-                    'image' => 'https://via.placeholder.com/400',
-                    'location' => 'Jakarta',
-                ],
-                [
-                    'name' => 'Product 5',
-                    'description' => 'Description for Product 5',
-                    'price' => '$59.99',
-                    'image' => 'https://via.placeholder.com/400',
-                    'location' => 'Jakarta',
-                ],
-                [
-                    'name' => 'Product 6',
-                    'description' => 'Description for Product 6',
-                    'price' => '$69.99',
-                    'image' => 'https://via.placeholder.com/400',
-                    'location' => 'Jakarta',
-                ],
-                [
-                    'name' => 'Product 7',
-                    'description' => 'Description for Product 7',
-                    'price' => '$79.99',
-                    'image' => 'https://via.placeholder.com/400',
-                    'location' => 'Bekasi',
-                ],
-                [
-                    'name' => 'Product 8',
-                    'description' => 'Description for Product 8',
-                    'price' => '$89.99',
-                    'image' => 'https://via.placeholder.com/400',
-                    'location' => 'Bekasi',
-                ],
-            ];
-            @endphp
             <div class="flex" id="productCards">
                 @foreach($products as $index => $product)
                 <div class="product-card flex-none w-1/4 border border-gray-300 {{ strtolower($product['location']) }}" data-location="{{ strtolower($product['location']) }}">
