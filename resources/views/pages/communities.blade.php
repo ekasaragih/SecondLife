@@ -34,8 +34,18 @@
                     <h3>20</h3>
                 </div>
             </div>
-            <div class="w-11/12 float-right flex items-center">
-                <b class="text-lg text-[#F12E52] underline">Replies</b>
+            <div class="w-11/12 float-right">
+                <form>
+                    <b class="text-lg text-[#F12E52] underline">Add Your Replies</b>
+                    <div class="mt-3 mb-3 border-2 rounded-md">
+                        <input type="textarea" id="post" name="post" class="w-full h-20 px-3 py-2 pt-0"
+                            placeholder="Give your replies">
+                    </div>
+                    <button
+                        class="bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] font-bold py-2 px-4 rounded shadow">
+                        Comment
+                    </button>
+                </form>
             </div>
             <div id="replies" class="w-11/12 rounded-lg shadow-md p-5 border-2 m-1 float-right flex items-center">
                 <img class="w-8 h-8 rounded-full mr-4"
