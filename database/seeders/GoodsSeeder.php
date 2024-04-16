@@ -24,7 +24,6 @@ class GoodsSeeder extends Seeder
             'Musical Instruments',
             'Sports and Fitness Equipment',
             'Kitchenware',
-            'Art and Crafts',
         ];
 
         $goods = [];
