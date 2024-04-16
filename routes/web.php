@@ -10,14 +10,15 @@ use App\Http\Controllers\PageController;
 |--------------------------------------------------------------------------
 */
 
-
+Route::group(['middleware' => 'auth'], function () {
 Route::get('/', function () {
     return view('pages.explore');
 })->name('explore');
+});
 
 
 Route::get('/login', [AuthorizationController::class, 'login'])->name('login');
-Route::post('/auth_authenticate',  [AuthorizationController::class, 'authenticate'])->name('auth_authenticate');
+Route::post('/auth_authenticate',  [AuthorizationController::class, 'authenticate'])->name('auth_authenticate')->middleware('guest');
 Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
 Route::post('/auth_store', [AuthorizationController::class, 'store'])->name('auth_store');
 Route::get('/register-optional', [AuthorizationController::class, 'registerSkip'])->name('registerSkip');

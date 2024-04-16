@@ -61,14 +61,6 @@ class AuthorizationController extends Controller
         }
     }
 
-    protected function redirectTo()
-    {
-        $redirectRoute = route('explore');
-        dd("Redirecting to: " . $redirectRoute);
-        return $redirectRoute;
-    }
-
-
     public function authenticate(Request $request)
     {
         $request->validate([
@@ -87,9 +79,9 @@ class AuthorizationController extends Controller
 
         if(Auth::attempt($credentials))
         {
+            dd($credentials);
             $request->session()->regenerate();
-            $user = Auth::user();
-            return redirect()->route('explore')->with('username', $user->us_name);
+            return redirect()->route('explore')->withSuccess('dasdsada');
          
         }
 
