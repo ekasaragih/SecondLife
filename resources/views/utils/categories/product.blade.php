@@ -90,13 +90,15 @@
                         class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300">Add
                         to Wishlist</button> -->
 
-                        <button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300" onclick="addToWishlist({{ $index }}, '{{ $product['name'] }}', '{{ $product['price'] }}', '{{ $product['image'] }}', '{{ $product['type'] }}')">Add to Wishlist</button>
+                    <button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
+                        onclick="addToWishlist({{ $index }}, '{{ $product['name'] }}', '{{ $product['price'] }}', '{{ $product['image'] }}', '{{ $product['type'] }}')">Add
+                        to Wishlist</button>
                 </div>
             </div>
         </div>
         @endforeach
     </div>
-</div>
+</div><br>
 
 <!-- Tombol untuk menggeser ke kiri -->
 <button class="product-slider-btn left-0" onclick="slideLeft()">
@@ -114,7 +116,7 @@
 </div>
 
 <script>
-//Wishlist
+    //Wishlist
 function addToWishlist(index, name, price, image, type) {
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
     let product = { index, name, price, image, type };
@@ -128,10 +130,27 @@ function addToWishlist(index, name, price, image, type) {
         localStorage.setItem('wishlist', JSON.stringify(wishlist));
         Swal.fire("Product added to the Wishlist!");
     }
-
-    // Redirect to the wishlist page
-    // window.location.href = '/wishlist';
 }
+
+    // Get the wishlist count element
+    const wishlistCount = document.getElementById('wishlist-count');
+
+    // Get the wishlist from the local storage
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+    // Update the wishlist count
+    wishlistCount.textContent = wishlist.length;
+
+    // Add an event listener to the remove button to update the wishlist count
+    const removeButtons = document.querySelectorAll('.remove-button');
+    removeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const index = button.dataset.index;
+            wishlist = wishlist.filter(item => item.index !== index);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            wishlistCount.textContent = wishlist.length;
+        });
+    });
 
     // Ambil elemen slide dan tombol
     const productSlider = document.querySelector('.product-slider-container');
@@ -173,14 +192,15 @@ function addToWishlist(index, name, price, image, type) {
         }
     }
 
-    function slideRight() {
-        if (endIndex < filteredProducts.length - 1) {
+        // Fungsi untuk menggeser slide ke kanan
+        function slideRight() {
+        if (endIndex < {{ count($products) }} - 1) {
             startIndex++;
             endIndex++;
             productSlider.scrollLeft += cardWidth;
-            showHideCards(filteredProducts);
+            showHideCards();
         }
-    }
+    }   
 
     function filterProducts(type) {
     productCards.forEach(card => {
@@ -194,6 +214,4 @@ function addToWishlist(index, name, price, image, type) {
 
     
 }
-
-
 </script>

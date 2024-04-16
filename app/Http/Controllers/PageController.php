@@ -53,8 +53,13 @@ class PageController extends Controller
         return view("pages.communities");
     }
 
-    public function user_profile()
+    public function my_profile()
     {
-        return view("pages.userProfile");
+        return view("pages.myProfile");
+    }
+
+    public function my_goods()
+    {
+        return view("pages.myGoods");
     }
 }

@@ -22,6 +22,11 @@ class AuthorizationController extends Controller
         return view("authorization.register");
     }
 
+    public function registerSkip()
+    {
+        return view("authorization.registerSkip");
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();
