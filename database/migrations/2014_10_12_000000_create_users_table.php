@@ -16,12 +16,12 @@ return new class extends Migration
             $table->foreignId('role_id')->nullable();
             $table->string('us_name');
             $table->string('us_username');
+            $table->string('password');
             $table->string('us_avatar')->nullable();
             $table->string('us_gender')->nullable();
             $table->integer('us_age')->nullable();
             $table->string('us_email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
             $table->dateTime('password_updated_at');
             $table->string('us_stat')->nullable();
             $table->rememberToken();
