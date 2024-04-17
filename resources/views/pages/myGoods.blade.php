@@ -5,7 +5,7 @@
 </head>
 
 <div class="flex justify-center h-screen pt-52">
-    <div class="container w-4/5">
+    <div class="w-4/5 container">
 
         <div class="text-3xl text-[#F12E52] mb-5">
             <b>My Goods</b>
