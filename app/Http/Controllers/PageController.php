@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Goods;
 
 class PageController extends Controller
 {
@@ -60,6 +61,7 @@ class PageController extends Controller
 
     public function my_goods()
     {
-        return view("pages.myGoods");
+        $goods = Goods::all();
+        return view("pages.myGoods", compact('goods'));
     }
 }
