@@ -7,6 +7,12 @@
 
 <div class="flex justify-center h-screen pt-52">
     <div class="container w-4/5">
+        <div>
+
+            Welcome, {{ auth()->user()->us_name }}
+
+        </div>
+
         @include('utils.explore.swape')
         @include('utils.explore.recommendationLocation')
     </div>
@@ -21,7 +27,7 @@
 |--------------------------------------------------------------------------
 --}}
 <script>
-     // Get the wishlist count element
+    // Get the wishlist count element
      const wishlistCount = document.getElementById('wishlist-count');
 
     // Get the wishlist from the local storage
