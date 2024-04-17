@@ -17,7 +17,7 @@
             </form>
         </div>
         <div class="text-3xl text-[#F12E52] mt-5 mb-2"><b>See What's ☕ in the town</b></div>
-        <div id="post-card" class="mt-5">
+        <div id="post-card" class="mt-5 mb-12">
             <div id="post" class="rounded-lg shadow-md p-3 border-2 m-1">
                 <div class="flex items-center p-3">
                     <img class="w-8 h-8 rounded-full mr-4"
@@ -63,11 +63,13 @@
                 <p class="text-gray-800 pl-3">I have that, wanna exchange?</p>
             </div>
         </div>
+
+        @include('utils.layouts.footer.footer')
     </div>
 </div>
 
 <script>
-     // Get the wishlist count element
+    // Get the wishlist count element
      const wishlistCount = document.getElementById('wishlist-count');
 
     // Get the wishlist from the local storage
@@ -88,5 +90,3 @@
     });
 
 </script>
-
-@include('utils.layouts.footer.footer')

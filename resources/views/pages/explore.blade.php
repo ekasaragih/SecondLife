@@ -5,14 +5,16 @@
 </head>
 
 
-<div class="flex justify-center h-screen pt-52">
+<div class="flex justify-center h-screen pt-52 pb-64">
     <div class="container w-4/5">
         @include('utils.explore.swape')
         @include('utils.explore.recommendationLocation')
+
+        @include('utils.layouts.footer.footer')
     </div>
 </div>
 
-@include('utils.layouts.footer.footer')
+
 
 
 {{--
@@ -21,7 +23,7 @@
 |--------------------------------------------------------------------------
 --}}
 <script>
-     // Get the wishlist count element
+    // Get the wishlist count element
      const wishlistCount = document.getElementById('wishlist-count');
 
     // Get the wishlist from the local storage
