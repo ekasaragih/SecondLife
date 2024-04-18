@@ -106,37 +106,40 @@
                         <div class="flex-1 border-b border-gray-300"></div>
                     </div>
                 </div>
-                <form action="{{ route('login') }}" method="POST" class="space-y-4" onsubmit="handleSubmit(event)">
-                    @csrf
-                    <div>
-                        <label for="us_username" class="block text-sm font-medium text-gray-700">Username</label>
-                        <input type="text" id="us_username" name="us_username"
-                            class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                {{-- <form action="{{ route('login') }}" method="POST" class="space-y-4" onsubmit="handleSubmit(event)">
+                    --}}
+                    <form action="{{ route('login') }}" method="POST" class="space-y-4">
+                        @csrf
+                        <div>
+                            <label for="us_username" class="block text-sm font-medium text-gray-700">Username</label>
+                            <input type="text" id="us_username" name="us_username"
+                                class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                        </div>
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <input type="password" id="password" name="password"
+                                class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+                        </div>
+                        <div class="flex justify-between items-center mb-6">
+                            <!-- Checkbox -->
+                            {{-- <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+                                <label class="form-check-label" for="form1Example3"> Remember me </label>
+                            </div> --}}
+                            <a href="#" style="color: #EC297B;">Forgot password?</a>
+                        </div>
+                        <div class="mt-10">
+                            <button type="submit"
+                                class="w-full text-white p-2 rounded-md hover:opacity-75 focus:outline-none focus:bg-black focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
+                                style="background-color: #EC297B;">Sign Up</button>
+                        </div>
+                    </form>
+                    <div class="mt-4 text-sm text-gray-600 text-center">
+                        <p>Don't have an account? <a href="register" class="hover:underline"
+                                style="color: #EC297B;">Create
+                                Account</a>
+                        </p>
                     </div>
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="password" name="password"
-                            class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                    </div>
-                    <div class="flex justify-between items-center mb-6">
-                        <!-- Checkbox -->
-                        {{-- <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
-                            <label class="form-check-label" for="form1Example3"> Remember me </label>
-                        </div> --}}
-                        <a href="#" style="color: #EC297B;">Forgot password?</a>
-                    </div>
-                    <div class="mt-10">
-                        <button type="submit"
-                            class="w-full text-white p-2 rounded-md hover:opacity-75 focus:outline-none focus:bg-black focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
-                            style="background-color: #EC297B;">Sign Up</button>
-                    </div>
-                </form>
-                <div class="mt-4 text-sm text-gray-600 text-center">
-                    <p>Don't have an account? <a href="register" class="hover:underline" style="color: #EC297B;">Create
-                            Account</a>
-                    </p>
-                </div>
             </div>
         </div>
     </div>
