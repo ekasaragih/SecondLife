@@ -11,23 +11,11 @@ use Illuminate\Support\Facades\Auth;
 |--------------------------------------------------------------------------
 */
 
-// Route::group(['middleware' => 'auth'], function () {
-// Route::get('/', function () {
-//     return view('pages.explore');
-// })->name('explore');
-// });
 
-Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('explore');
-    } else {
-        return redirect()->route('login');
-    }
-});
 Route::get('/login', [AuthorizationController::class, 'login'])->name('login');
 Route::post('/login', [AuthorizationController::class, 'authenticate']);
 Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
-Route::post('/auth_store', [AuthorizationController::class, 'store'])->name('auth_store');
+Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store');
 Route::get('/register-optional', [AuthorizationController::class, 'registerSkip'])->name('registerSkip');
 Route::post('/register', [AuthorizationController::class, 'storeSkip'])->name('auth_storeSkip');
 
@@ -36,19 +24,16 @@ Route::post('/register', [AuthorizationController::class, 'storeSkip'])->name('a
 | Pages
 |--------------------------------------------------------------------------
 */
-// Route::group(['middleware' => 'auth'], function () {
-//     Route::get('/', [PageController::class, 'explore'])->name('explore');
-// });
+
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/explore', [PageController::class, 'explore'])->name('explore');
+    Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
+    Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
 });
 
+Route::get('/', [PageController::class, 'explore'])->name('explore');
 Route::get('/categories', [PageController::class, 'categories'])->name('categories');
 Route::get('/communities', [PageController::class, 'communities'])->name('communities');
-
-Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
-Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
 
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');

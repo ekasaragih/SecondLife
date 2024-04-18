@@ -63,3 +63,88 @@
         </div>
     </div>
 </body>
+
+{{--
+|--------------------------------------------------------------------------
+| SCRIPTS
+|--------------------------------------------------------------------------
+--}}
+<script>
+    // Function to validate email format
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        // Function to check if password meets criteria
+        function validatePassword(password) {
+            // Password length check
+            if (password.length < 8) {
+                return "Minimum password length is 8 characters";
+            }
+            // Password contains a capital letter check
+            if (!/[A-Z]/.test(password)) {
+                return "Password must contain at least one capital letter";
+            }
+            // Password contains a number check
+            if (!/\d/.test(password)) {
+                return "Password must contain at least one number";
+            }
+
+            // // Password contains an underscore check
+            // if (!/_/.test(password)) {
+            //     return "Password must contain at least one underscore";
+            // }
+
+            // No special characters check
+            if (/[^a-zA-Z0-9_]/.test(password)) {
+                return "Password must not consist of special characters, including (){}[]|`¬¦! \"£$%^&*\"<>:;#~_-+=,@";
+            }
+            return null; // Password meets all criteria
+        }
+
+        // Function to display validation messages
+        function displayValidationMessage(inputId, message) {
+            var inputElement = document.getElementById(inputId);
+            var messageElement = document.createElement('span');
+            messageElement.className = 'text-red-500 text-sm';
+            messageElement.textContent = message;
+            inputElement.parentNode.appendChild(messageElement);
+        }
+
+        // Function to remove validation messages
+        function removeValidationMessage(inputId) {
+            var inputElement = document.getElementById(inputId);
+            var messageElement = inputElement.parentNode.querySelector('.text-red-500');
+            if (messageElement) {
+                messageElement.parentNode.removeChild(messageElement);
+            }
+        }
+
+        // Function to handle form submission
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Reset validation messages
+            removeValidationMessage('login');
+            removeValidationMessage('password');
+
+            // Validate email
+            var email = document.getElementById('login').value;
+            if (!validateEmail(email)) {
+                displayValidationMessage('login', 'Please include an \'@\' in the email address');
+                return; // Stop submission if email is invalid
+            }
+
+            // Validate password
+            var password = document.getElementById('password').value;
+            var passwordValidationMessage = validatePassword(password);
+            if (passwordValidationMessage) {
+                displayValidationMessage('password', passwordValidationMessage);
+                return; // Stop submission if password is invalid
+            }
+
+            // If both email and password are valid, proceed with form submission
+            event.target.submit();
+        }
+</script>
