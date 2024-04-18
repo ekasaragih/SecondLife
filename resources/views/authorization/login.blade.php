@@ -28,7 +28,7 @@
                         <div class="flex-1 border-b border-gray-300"></div>
                     </div>
                 </div>
-                <form action="{{ route('login') }}" method="POST" class="space-y-4">
+                <form action="{{ route('login') }}" method="POST" class="space-y-4" onsubmit="handleSubmit(event)">
                     @csrf
                     <div>
                         <label for="us_username" class="block text-sm font-medium text-gray-700">Username</label>
@@ -126,13 +126,13 @@
             event.preventDefault(); // Prevent form submission
 
             // Reset validation messages
-            removeValidationMessage('login');
+            removeValidationMessage('us_username');
             removeValidationMessage('password');
 
             // Validate email
-            var email = document.getElementById('login').value;
+            var email = document.getElementById('us_username').value;
             if (!validateEmail(email)) {
-                displayValidationMessage('login', 'Please include an \'@\' in the email address');
+                displayValidationMessage('us_username', 'Please include an \'@\' in the email address');
                 return; // Stop submission if email is invalid
             }
 
