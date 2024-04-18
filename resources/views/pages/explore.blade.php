@@ -9,19 +9,11 @@
     <div class="container w-4/5">
 
         @auth
-        @if(isset($userName))
-        @if($userName === 'Admin')
-        <h6>Hello, <i>{{ $userName }}!</i></h6>
-        <p>Welcome to SecondLife!</p>
-        @else
-        <h6>Hello, <i>{{ $userName }}!</i></h6>
-        <p>Welcome to Project SecondLife! Please share your stuff blabla</p>
-        @endif
+        Olla, {{ $user->us_name }}!
         @else
         <h6>Hello, User!</h6>
         <p>Welcome to Project Alchemist! Please log in.</p>
         <span><a href="{{ route('login') }}" class="btn btn-secondary">Login</a></span>
-        @endif
         @endauth
 
         @include('utils.explore.swape')

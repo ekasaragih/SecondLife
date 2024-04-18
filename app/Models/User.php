@@ -28,6 +28,7 @@ class User extends Authenticatable
         'us_gender',
         'us_DOB',
         'us_email',
+        'email_verified_at',
         'password',
         'avatar',
         'password_updated_at',

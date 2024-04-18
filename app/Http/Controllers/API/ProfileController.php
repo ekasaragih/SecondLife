@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Storage;
 class ProfileController extends ApiController
 {
 
-    /**
+/**
      * Display the specified resource.
      */
     public function show(Request $request): JsonResponse
     {
         $request->validate([
-            'id' => 'nullable|int|exists:users,id',
+            'us_ID' => 'nullable|int|exists:users,us_ID',
         ]);
 
-        $userId = $request->input('id') ?? auth()->id();
+        $userId = $request->input('us_ID') ?? auth()->id();
 
         $user = User::find($userId);
 
@@ -31,7 +31,7 @@ class ProfileController extends ApiController
             ], 404);
         }
 
-        $user->role_name = $user->userRole()->value('role');
+        // $user->role_name = $user->userRole()->value('role');
         $avatarUrl = $user->avatar ? asset('storage/avatars/' . $user->avatar) : null;
 
         return response()->json([
@@ -41,7 +41,7 @@ class ProfileController extends ApiController
         ]);
     }
 
- /**
+    /**
      * Update the user's profile.
      *
      * @param  Request  $request
@@ -52,14 +52,14 @@ class ProfileController extends ApiController
         $request->validate([
             'us_name' => 'required|string|max:250',
             'us_username' => 'required|string|max:12',
-            'us_email' => 'required|email|max:250|unique:users,email,' . auth()->id(),
+            'us_email' => 'required|email|max:250|unique:users,us_email,' . auth()->id() . ',us_ID',
             'password' => 'nullable|min:8|confirmed',
             'us_DOB' => 'nullable|date',
             'us_gender' => 'nullable|string',
             'avatar' => 'nullable|image|max:2048',
         ]);
 
-        $user = User::find(auth()->id());
+        $user = User::where('us_ID', auth()->id())->firstOrFail();
 
         $user->fill($request->only(['us_name', 'us_email']));
 
@@ -72,14 +72,13 @@ class ProfileController extends ApiController
             if ($user->avatar) {
                 Storage::delete('public/avatars/' . $user->avatar);
             }
-            $avatarName = 'avatar_' . $user->id . '_' . date('YmdHis') . '.' . $request->file('avatar')->getClientOriginalExtension();
+            $avatarName = 'avatar_' . $user->us_ID . '_' . date('YmdHis') . '.' . $request->file('avatar')->getClientOriginalExtension();
 
             $request->file('avatar')->storeAs('avatars', $avatarName, 'public');
             $user->avatar = $avatarName;
         }
 
         $user->save();
-        $user->grp_name = $user->userRole()->value('role');
 
         return response()->json([
             'message' => 'Profile updated successfully',

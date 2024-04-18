@@ -79,18 +79,15 @@ class AuthorizationController extends Controller
     
         if ($user && password_verify($credentials['password'], $user->password)) {
             if (Auth::loginUsingId($user->us_ID)) {
-                $authenticatedUser = Auth::user();
-                $authenticatedUserName = $authenticatedUser->us_name;
-                $authenticatedUserID = $authenticatedUser->us_ID;
-    
-                session(['authenticatedUserName' => $authenticatedUserName]);
-                session(['authenticatedUserID' => $authenticatedUserID]);
+
+                session([
+                    'authenticatedUser' => $user,
+                ]);
 
                 return redirect()->route('explore');
             }
         }
-    
-        // Authentication failed, redirect back with error message
+
         return redirect()->back()->withErrors(['message' => 'Invalid credentials'])->withInput();
     } 
 

@@ -31,9 +31,9 @@ class PageController extends Controller
     // Main pages
     public function explore()
     {
-        $authenticatedUserName = session('authenticatedUserName');
+        $authenticatedUser = session('authenticatedUser');
         return view('pages.explore', [
-                'userName' => $authenticatedUserName,
+                'user' => $authenticatedUser,
         ]);
     }
 
@@ -58,11 +58,11 @@ class PageController extends Controller
 
     public function my_profile()
     {
-        $authenticatedUserName = session('authenticatedUserName');
-        return view('pages.myProfile', [
-            'userName' => $authenticatedUserName,
-        ]);
+        $authenticatedUser = session('authenticatedUser');
+
+        return view('pages.myProfile', ['user' => $authenticatedUser]);
     }
+
 
     public function my_goods()
     {

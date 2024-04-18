@@ -27,32 +27,36 @@
                                     Name</label>
                                 <input type="text" name="us_name" id="input_name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    value="" placeholder="Type full name" required="" autocomplete="off" autofocus>
+                                    value="{{ $user->us_name }}" placeholder="Type full name" required=""
+                                    autocomplete="off" autofocus>
                             </div>
                             <div class="w-full">
                                 <label for="username"
                                     class="block mb-2 text-sm font-medium text-gray-900">Username</label>
                                 <input type="text" name="us_username" id="input_username"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    value="" placeholder="Type username" required="" autocomplete="off">
+                                    value="{{ $user->us_username }}" placeholder="Type username" required=""
+                                    autocomplete="off">
                             </div>
                             <div class="w-full">
                                 <label for="age" class="block mb-2 text-sm font-medium text-gray-900">Date of
                                     Birth</label>
                                 <input type="date" name="us_DOB" id="input_DOB"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    value="" required="" autocomplete="off">
+                                    value="{{ $user->us_DOB }}" required="" autocomplete="off">
                             </div>
                             <div class="w-full">
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
                                 <input type="email" name="us_email" id="input_email"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    value="" placeholder="admin@user.com" required="" autocomplete="off">
+                                    value="{{ $user->us_email }}" placeholder="admin@user.com" required=""
+                                    autocomplete="off">
                             </div>
                             <div>
                                 <label for="gender" class="block mb-2 text-sm font-medium text-gray-900">Gender</label>
                                 <select id="input_gender"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                    <option selected value="None">{{ $user->us_gender }}</option>
                                     <option selected value="None">None</option>
                                     <option value="Female">Female</option>
                                     <option value="Male">Male</option>

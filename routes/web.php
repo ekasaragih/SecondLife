@@ -42,7 +42,6 @@ Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('
 
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Error Pages
