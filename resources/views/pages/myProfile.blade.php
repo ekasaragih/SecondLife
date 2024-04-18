@@ -33,14 +33,14 @@
 
 
                         <div class="flex gap-2 px-2">
-                            <button
-                                class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                            <a href="{{ route('my_goods') }}" title="My Goods"
+                                class="p-3 text-center flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
                                 My Goods
-                            </button>
-                            <button
-                                class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
-                                My wishlist
-                            </button>
+                            </a>
+                            <a href="" title="My Wishlist"
+                                class="p-3 text-center flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
+                                My Wishlist
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,9 @@
 --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script>
-    import { Modal } from 'flowbite';
+    import {
+        Modal
+    } from 'flowbite';
 </script>
 
 <script>
@@ -110,7 +112,7 @@
         $('#upload_avatar').val('');
     }
 
-    function setProfileData(name, email, role, passwordUpdated, avatar){
+    function setProfileData(name, email, role, passwordUpdated, avatar) {
         console.log(name + " " + email + " " + role + " " + passwordUpdated + " " + avatar);
         $('#user_name').text(name);
         $('#user_email').text(email);
@@ -135,7 +137,8 @@
             processData: false,
             success: function(response) {
                 if (response && response.data) {
-                    setProfileData(response.data.name, response.data.email, response.data.role_name, response.data.password_updated_at, response.data.avatar);
+                    setProfileData(response.data.name, response.data.email, response.data.role_name,
+                        response.data.password_updated_at, response.data.avatar);
 
                     $('#modalUpdateProfile').modal('hide');
 
@@ -157,7 +160,7 @@
         });
     }
 
-    function addAvatar(){
+    function addAvatar() {
         var formData = new FormData();
         formData.append('name', $('#user_name').text());
         formData.append('email', $('#user_email').text());
@@ -174,7 +177,8 @@
             processData: false,
             success: function(response) {
                 if (response && response.data) {
-                    setProfileData(response.data.name, response.data.email, response.data.role_name, response.data.password_updated_at, response.data.avatar);
+                    setProfileData(response.data.name, response.data.email, response.data.role_name,
+                        response.data.password_updated_at, response.data.avatar);
 
                     $('#modalAddAvatar').modal('hide');
 
@@ -196,16 +200,18 @@
         });
     }
 
-    function loadUserDetail(){
+    function loadUserDetail() {
         $.ajax({
             url: '/api/profile/show',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
                 if (response && response.data) {
-                    setProfileData(response.data.name, response.data.email, response.data.role_name, response.data.password_updated_at, response.data.avatar);
+                    setProfileData(response.data.name, response.data.email, response.data.role_name,
+                        response.data.password_updated_at, response.data.avatar);
 
-                    $('#user_avatar').attr('src', response.avatar_url || 'https://img.icons8.com/bubbles/100/000000/user.png');
+                    $('#user_avatar').attr('src', response.avatar_url ||
+                        'https://img.icons8.com/bubbles/100/000000/user.png');
                 } else {
                     console.error('Error: Failed to retrieve user profile data');
                 }
