@@ -8,10 +8,21 @@
 <div class="flex justify-center h-screen pt-52">
     <div class="container w-4/5">
 
-        <div>
-            Welcome, {{ session('username') }}
-            <!-- Display the username here -->
-        </div>
+        @auth
+        @if(isset($userName))
+        @if($userName === 'Admin')
+        <h6>Hello, <i>{{ $userName }}!</i></h6>
+        <p>Welcome to SecondLife!</p>
+        @else
+        <h6>Hello, <i>{{ $userName }}!</i></h6>
+        <p>Welcome to Project SecondLife! Please share your stuff blabla</p>
+        @endif
+        @else
+        <h6>Hello, User!</h6>
+        <p>Welcome to Project Alchemist! Please log in.</p>
+        <span><a href="{{ route('login') }}" class="btn btn-secondary">Login</a></span>
+        @endif
+        @endauth
 
         @include('utils.explore.swape')
         @include('utils.explore.recommendationLocation')
@@ -27,7 +38,7 @@
 |--------------------------------------------------------------------------
 --}}
 <script>
-     // Get the wishlist count element
+    // Get the wishlist count element
      const wishlistCount = document.getElementById('wishlist-count');
 
     // Get the wishlist from the local storage

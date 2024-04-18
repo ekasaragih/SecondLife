@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 'us_name'               => 'Minyons',
                 'us_username'           => 'dminyons',
                 'us_email'              => 'mini@secondlife.com',
-                'password'              => Hash::make('12341234'),
+                'password'              => Hash::make('apaya'),
                 'password_updated_at'   => now(),
                 'created_at'            => now(),
                 'updated_at'            => now(),

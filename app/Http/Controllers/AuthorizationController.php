@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthorizationController extends Controller
 {
@@ -61,34 +62,79 @@ class AuthorizationController extends Controller
         }
     }
 
+    // public function authenticate(Request $request)
+    // {
+    //     $request->validate([
+    //         'login' => 'required|string',
+    //         'password' => 'required|string',
+    //     ]);
+
+    //     $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL ) 
+    //         ? 'us_email' 
+    //         : 'us_username';
+
+    //     if ($loginType == 'email') {
+    //         $request->validate([
+    //             'login' => 'required|email|exists'
+    //         ])
+    //     }
+
+    //     $credentials = [
+    //         $loginType => $request->input('login'),
+    //         'password' => $request->input('password'),
+    //     ];
+
+    //     if(Auth::attempt($credentials))
+    //     {
+    //         dd($credentials);
+    //         $request->session()->regenerate();
+    //         return redirect()->route('explore')->withSuccess('dasdsada');
+         
+    //     }
+
+    //     return redirect()->back()->withErrors([
+    //         'login' => 'Invalid email/username or password!',
+    //     ]);
+    // }
+
     public function authenticate(Request $request)
     {
-        $request->validate([
-            'login' => 'required|string',
-            'password' => 'required|string',
+        $credentials = $request->only('us_username', 'password');
+    
+        // Validate the credentials
+        $validator = Validator::make($credentials, [
+            'us_username' => 'required',
+            'password' => 'required',
         ]);
-
-        $loginType = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL ) 
-            ? 'us_email' 
-            : 'us_username';
-
-        $credentials = [
-            $loginType => $request->input('login'),
-            'password' => $request->input('password'),
-        ];
-
-        if(Auth::attempt($credentials))
-        {
-            dd($credentials);
-            $request->session()->regenerate();
-            return redirect()->route('explore')->withSuccess('dasdsada');
-         
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
+    
+        // Retrieve the user from the database
+        $user = User::where('us_username', $credentials['us_username'])->first();
+    
+        // Check if user exists and password matches
+        if ($user && password_verify($credentials['password'], $user->password)) {
+            // Attempt to authenticate the user
+            if (Auth::loginUsingId($user->us_ID)) {
+                // Authentication passed, fetch the authenticated user data
+                $authenticatedUser = Auth::user();
+                $authenticatedUserName = $authenticatedUser->us_name;
+                $authenticatedUserID = $authenticatedUser->us_ID;
+    
+                // Store the authenticated user's name in the session
+                session(['authenticatedUserName' => $authenticatedUserName]);
+                session(['authenticatedUserID' => $authenticatedUserID]);
 
-        return redirect()->back()->withErrors([
-            'login' => 'Invalid email/username or password!',
-        ]);
-    }
+                // Redirect to dashboard
+                return redirect()->route('explore');
+            }
+        }
+    
+        // Authentication failed, redirect back with error message
+        return redirect()->back()->withErrors(['message' => 'Invalid credentials'])->withInput();
+    } 
 
 
 }

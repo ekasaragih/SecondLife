@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\PageController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,15 +11,21 @@ use App\Http\Controllers\PageController;
 |--------------------------------------------------------------------------
 */
 
-Route::group(['middleware' => 'auth'], function () {
+// Route::group(['middleware' => 'auth'], function () {
+// Route::get('/', function () {
+//     return view('pages.explore');
+// })->name('explore');
+// });
+
 Route::get('/', function () {
-    return view('pages.explore');
-})->name('explore');
+    if (Auth::check()) {
+        return redirect()->route('explore');
+    } else {
+        return redirect()->route('login');
+    }
 });
-
-
 Route::get('/login', [AuthorizationController::class, 'login'])->name('login');
-Route::post('/auth_authenticate',  [AuthorizationController::class, 'authenticate'])->name('auth_authenticate')->middleware('guest');
+Route::post('/login', [AuthorizationController::class, 'authenticate']);
 Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
 Route::post('/auth_store', [AuthorizationController::class, 'store'])->name('auth_store');
 Route::get('/register-optional', [AuthorizationController::class, 'registerSkip'])->name('registerSkip');
@@ -32,6 +39,10 @@ Route::post('/register', [AuthorizationController::class, 'storeSkip'])->name('a
 // Route::group(['middleware' => 'auth'], function () {
 //     Route::get('/', [PageController::class, 'explore'])->name('explore');
 // });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/explore', [PageController::class, 'explore'])->name('explore');
+});
 
 Route::get('/categories', [PageController::class, 'categories'])->name('categories');
 Route::get('/communities', [PageController::class, 'communities'])->name('communities');

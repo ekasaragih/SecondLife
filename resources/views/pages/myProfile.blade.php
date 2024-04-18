@@ -2,6 +2,22 @@
 
 <div class="pt-52 mb-24">
 
+    @auth
+    @if(isset($userName))
+    @if($userName === 'Admin')
+    <h6>Hello, <i>{{ $userName }}!</i></h6>
+    <p>Welcome to SecondLife!</p>
+    @else
+    <h6>Hello, <i>{{ $userName }}!</i></h6>
+    <p>Welcome to Project SecondLife! Please share your stuff blabla</p>
+    @endif
+    @else
+    <h6>Hello, User!</h6>
+    <p>Welcome to Project Alchemist! Please log in.</p>
+    <span><a href="{{ route('login') }}" class="btn btn-secondary">Login</a></span>
+    @endif
+    @endauth
+
     <div class="mx-12 bg-white rounded-lg overflow-hidden shadow-lg">
         <div class="border-b p-4">
             <div class="grid grid-cols-4 gap-4">
