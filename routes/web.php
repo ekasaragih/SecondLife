@@ -29,6 +29,7 @@ Route::post('/register', [AuthorizationController::class, 'storeSkip'])->name('a
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
     Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
+    Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
 });
 
 Route::get('/', [PageController::class, 'explore'])->name('explore');
@@ -37,8 +38,6 @@ Route::get('/communities', [PageController::class, 'communities'])->name('commun
 
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
-
-Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
 
 
 
