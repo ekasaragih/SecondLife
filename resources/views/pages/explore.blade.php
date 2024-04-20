@@ -15,10 +15,11 @@
 
         @include('utils.explore.swape')
         @include('utils.explore.recommendationLocation')
+        @include('utils.explore.trendPrediction', ['products' => $products])
     </div>
 </div>
 
-@include('utils.layouts.footer.footer')
+{{-- @include('utils.layouts.footer.footer') --}}
 
 
 {{--

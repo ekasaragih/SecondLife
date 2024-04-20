@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Goods;
 
 use Illuminate\Http\Request;
 
@@ -31,7 +32,8 @@ class PageController extends Controller
     // Main pages
     public function explore()
     {
-        return view("pages.explore");
+        $products = Goods::all();
+        return view("pages.explore", compact('products'));
     }
 
     // Categories Section
