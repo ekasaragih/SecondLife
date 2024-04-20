@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
+use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
@@ -46,6 +47,8 @@ Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
+Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
+
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
 
 
@@ -70,7 +73,8 @@ Route::get('/500-server-error', [PageController::class, 'internal_server_error']
 | Post & Get Functions
 |--------------------------------------------------------------------------
 */
-
+Route::post('/add-my-goods', [GoodsController::class, 'add_my_goods'])->name('add_my_goods');
 Route::post('/wishlist/add', [ProductController::class, 'addToWishlist'])->name('wishlist.add');
+
 
 

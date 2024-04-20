@@ -5,7 +5,7 @@
 </head>
 
 
-<div class="flex justify-center h-screen pt-52">
+<div class="flex justify-center h-screen pt-52 pb-64">
     <div class="container w-4/5">
 
         @auth
@@ -18,10 +18,12 @@
 
         @include('utils.explore.swape')
         @include('utils.explore.recommendationLocation')
+
+        @include('utils.layouts.footer.footer')
     </div>
 </div>
 
-@include('utils.layouts.footer.footer')
+
 
 
 {{--
