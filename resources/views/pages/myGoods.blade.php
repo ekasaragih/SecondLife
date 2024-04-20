@@ -9,12 +9,11 @@
 
         <div class="text-3xl text-[#F12E52] mb-5">
             <b>My Goods</b>
-            <span data-modal-target="modalAddGoods" data-modal-toggle="modalAddGoods" class="flex text-lg items-center justify-center m-2 p-2 bg-[#F12E52] hover:bg-white text-white
+            <span data-modal-target="modalAddGoods" data-modal-toggle="modalAddGoods" data-bs-target="#modalAddGoods" class="flex text-lg items-center justify-center m-2 p-2 bg-[#F12E52] hover:bg-white text-white
                 hover:text-[#F12E52] shadow-lg rounded-md float-right">
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </span>
         </div>
-
         @include('utils.myGoods.modalAddGoods')
 
         <div id="Goods" class="w-full rounded-lg shadow-md p-5 border-2 m-1 float-right flex items-center z-0">
@@ -51,7 +50,6 @@
             <h2 class="text-base text-gray-500 italic">March 24, 2024</h2>
             <p class="text-gray-800 pl-3">YASHH! You're totally missing a lot</p> --}}
         </div>
-
         @if (count($goods)>0)
          @foreach ($goods as $goods)
          <div id="Goods" class="w-full rounded-lg shadow-md p-5 border-2 m-1 float-right flex items-center z-0">

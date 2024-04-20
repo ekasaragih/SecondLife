@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
+use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\PageController;
 
 /*
@@ -36,6 +37,7 @@ Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
 Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
+Route::post('/add-my-goods', [GoodsController::class, 'add_my_goods'])->name('add_my_goods');
 
 
 
