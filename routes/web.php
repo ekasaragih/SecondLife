@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,8 @@ Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('
 Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
 Route::post('/add-my-goods', [GoodsController::class, 'add_my_goods'])->name('add_my_goods');
 
+Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
+Route::get('/chat', [ChatController::class, 'index'])->name('home_chat');
 
 
 
