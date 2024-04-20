@@ -32,7 +32,10 @@ class PageController extends Controller
     // Main pages
     public function explore()
     {
-        return view("pages.explore");
+        $authenticatedUser = session('authenticatedUser');
+        return view('pages.explore', [
+                'user' => $authenticatedUser,
+        ]);
     }
 
     // Categories Section
@@ -56,8 +59,11 @@ class PageController extends Controller
 
     public function my_profile()
     {
-        return view("pages.myProfile");
+        $authenticatedUser = session('authenticatedUser');
+
+        return view('pages.myProfile', ['user' => $authenticatedUser]);
     }
+
 
     public function my_goods()
     {

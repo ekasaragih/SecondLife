@@ -16,7 +16,7 @@ return new class extends Migration
             $table->dropColumn('us_age');
 
             // Add the new 'us_DOB' column
-            $table->date('us_DOB')->nullable()->after('us_avatar');
+            $table->date('us_DOB')->nullable()->after('avatar');
         });
     }
 
