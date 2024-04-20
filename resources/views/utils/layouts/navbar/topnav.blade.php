@@ -1,6 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="tailwind.css">
@@ -49,10 +50,21 @@
                     class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
             </a>
 
+
+
+            @auth
             <a href="{{ route('my_profile') }}" title="My Profile"
-                class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'my_profile' ? 'text-primary-content' : '' }}">
+                class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'user_profile' ? 'text-primary-content' : '' }}">
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </a>
+            @else
+            <a href="{{ route('login') }}" title="Sign In"
+                class="relative text-base text-gray-700 hover:text-gray-600 transition-all ease-in duration-300">
+                Sign In
+            </a>
+            @endauth
+
+
         </div>
     </div>
 
