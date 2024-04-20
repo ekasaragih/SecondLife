@@ -47,7 +47,7 @@ Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
-
+Route::get('/recommendation-location', [ProductController::class, 'recommendation_location'])->name('recommendation_location');
 
 
 
