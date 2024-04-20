@@ -150,17 +150,16 @@
             startTrendIndex--;
             endTrendIndex--;
             productTrendSlider.scrollLeft -= cardTrendWidth;
-            showHideCards();
+            showHideTrendCards(productTrendCards);
         }
     }
 
-    // Fungsi untuk menggeser slide ke kanan
     function slideTrendRight() {
-        if (startTrendIndex > 0) {
-            startTrendIndex--;
-            endTrendIndex--;
+        if (endTrendIndex < {{ count($products) }} - 1) {
+            startTrendIndex++;
+            endTrendIndex++;
             productTrendSlider.scrollLeft += cardTrendWidth;
-            showHideTrendCards();
+            showHideTrendCards(productTrendCards);
         }
     }
 
