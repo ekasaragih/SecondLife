@@ -29,7 +29,7 @@ class GoodsSeeder extends Seeder
         $goods = [];
 
         for ($i = 1; $i <= 30; $i++) {
-            $type = rand(0, 1) ? 'old' : 'new';
+            $type = rand(0, 1) ? 'Old' : 'New';
             $originalPrice = rand(10000, 1000000);
             $age = rand(1, 10);
             $category = $categories[rand(0, count($categories) - 1)];
