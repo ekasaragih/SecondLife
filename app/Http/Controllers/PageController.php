@@ -32,9 +32,15 @@ class PageController extends Controller
     // Main pages
     public function explore()
     {
+        $authenticatedUser = session('authenticatedUser');
         $products = Goods::all();
-        return view("pages.explore", compact('products'));
+        
+        return view('pages.explore', [
+            'user' => $authenticatedUser,
+            'products' => $products,
+        ]);
     }
+
 
     // Categories Section
     public function categories()
@@ -57,8 +63,11 @@ class PageController extends Controller
 
     public function my_profile()
     {
-        return view("pages.myProfile");
+        $authenticatedUser = session('authenticatedUser');
+
+        return view('pages.myProfile', ['user' => $authenticatedUser]);
     }
+
 
     public function my_goods()
     {
