@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\PageController;
-
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Authorization
@@ -37,6 +37,7 @@ Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('
 
 Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
 
+Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
 
 
 
