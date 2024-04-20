@@ -17,7 +17,8 @@
                         <p class="text-sm text-gray-600">Location: {{ $product['location'] }}</p>
                         <div class="mt-4 flex justify-between items-center">
                             <span class="text-gray-600">Price: {{ $product['price'] }}</span>
-                            <button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300">Add to Cart</button>
+                            <button class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300" style="font-size: 14px;" onclick="openModal('{{ $product['name'] }}', '{{ $product['description'] }}', '{{ $product['image'] }}', '{{ $product['location'] }}', '{{ $product['price'] }}')">Detail</button>
+                            <button class="bg-purple-500 text-white px-4 py-2 ml-1 rounded hover:bg-gray-600 transition duration-300" style="font-size: 14px;">Add</button>
                         </div>
                     </div>
                 </div>
@@ -39,7 +40,57 @@
     </div>
 </div>
 
+<div id="productModal" class="modal" style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;">
+    <div class="modal-content" style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 600px; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+        <span class="close" onclick="closeModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; color: #888; z-index: 1;">&times;</span>
+        <h2 id="modalTitle" style="color: #333; text-align: center; font-size: 28px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Product Details</h2>
+        <div style="text-align: center;">
+            <img id="modalImage" src="" alt="Product Image" style="max-width: 50%; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
+            <p id="modalLocation" style="color: #666; margin-bottom: 10px;"></p>
+            <p id="modalPrice" style="color: #666; margin-bottom: 20px;"></p>
+        </div>
+        <p id="modalDescription" style="color: #666; text-align: justify;"></p>
+        <div style="text-align: center;">
+            <button class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300 mt-2" onclick="addToCart()">Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+
+
 <script>
+    // Function to open modal with product details
+function openModal(name, description, image, location, price) {
+    const modal = document.getElementById('productModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalImage = document.getElementById('modalImage');
+    const modalLocation = document.getElementById('modalLocation');
+    const modalPrice = document.getElementById('modalPrice');
+
+    modal.style.display = 'block';
+    modalTitle.textContent = name;
+    modalDescription.textContent = description;
+    modalImage.src = image;
+    modalLocation.textContent = "Location: " + location;
+    modalPrice.textContent = "Price: " + price;
+}
+
+
+    // Function to close modal
+    function closeModal() {
+        var modal = document.getElementById('productModal');
+        modal.style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById('productModal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
     // Ambil elemen slide dan tombol
     const productSlider = document.querySelector('.product-slider-container');
     const slideLeftBtn = document.querySelector('.product-slider-btn.left-0');
@@ -53,7 +104,7 @@
 
     // Panggil fungsi resetIndexes saat struktur HTML lengkap dimuat
     window.addEventListener('load', resetIndexes);
-
+    
     // Fungsi untuk mengatur ulang indeks awal dan akhir setelah struktur HTML lengkap dimuat
     function resetIndexes() {
         endIndex = visibleCards - 1;

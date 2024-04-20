@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('role_id');
             $table->string('us_name');
             $table->string('us_username');
-            $table->string('us_avatar')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('us_gender')->nullable();
             $table->integer('us_age')->nullable();
             $table->string('us_email')->unique();

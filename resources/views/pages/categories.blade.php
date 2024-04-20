@@ -4,10 +4,12 @@
 
         <div class="text-3xl text-[#F12E52]"><b>Categories</b></div>
 
+
         {{-- insert code here --}}
         <br>
         @include('utils.categories.product')
     </div>
 </div>
 
-@include('utils.layouts.footer.footer')
+<!-- @include('utils.layouts.footer.footer') -->
+
