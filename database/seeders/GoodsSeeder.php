@@ -30,7 +30,8 @@ class GoodsSeeder extends Seeder
 
         for ($i = 1; $i <= 30; $i++) {
             $type = rand(0, 1) ? 'Used' : 'New';
-            $originalPrice = rand(10000, 1000000);
+            $originalPrice = rand(10000, 1000000000);
+            $predictionPrice = rand(10000, 1000000000);
             $age = rand(1, 10);
             $category = $categories[rand(0, count($categories) - 1)];
 
@@ -40,6 +41,7 @@ class GoodsSeeder extends Seeder
                 'g_desc' => 'Description of Product ' . $i,
                 'g_type' => $type,
                 'g_original_price' => $originalPrice,
+                'g_price_prediction' => $predictionPrice,
                 'g_age' => $age,
                 'g_category' => $category,
                 'created_at' => Date::now(),
@@ -47,7 +49,8 @@ class GoodsSeeder extends Seeder
             ];
         }
 
-        // Insert data into the goods table
         Goods::insert($goods);
     }
+
+
 }
