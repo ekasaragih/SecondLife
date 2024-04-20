@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ChatController;
 
 /*
@@ -37,6 +38,8 @@ Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
 Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
+
+Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
 Route::get('/chat', [ChatController::class, 'index'])->name('home_chat');
 
 

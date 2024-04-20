@@ -1,217 +1,131 @@
+@php
+    $categories = \App\Models\Goods::distinct('g_category')->pluck('g_category');
+@endphp
+
 <div class="flex gap-2 px-2">
-    <button
-        class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-        onclick="filterProducts('All')">All</button>
-    <button
-        class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-        onclick="filterProducts('Fashion')">Fashion</button>
-    <button
-        class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-        onclick="filterProducts('Skincare')">Skincare</button>
-    <button
-        class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg   hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-        onclick="filterProducts('Electronic')">Electronic</button>
+    <select class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100" onchange="filterByCategory(this.value)">
+        <option value="All">All</option>
+        @foreach($categories as $category)
+            <option value="{{ $category }}">{{ $category }}</option>
+        @endforeach
+    </select>
 </div>
 
 <br>
-<div class="product-slider-container overflow-hidden relative">
-    <!-- Product Cards -->
-    @php
-    $products = [
-    [
-    'name' => 'Iphone 15',
-    'price' => '$19.99',
-    'image' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-Klj9zb0sXy-rG1aiNMuw1-dChFq9Bm1bnaDukC5REg&s',
-    'type' => 'Electronic',
-    ],
-    [
-    'name' => 'Samsung J2',
-    'price' => '$29.99',
-    'image' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjhJ76DpyyhN1B9uG4LKOVCdblP5pE1zZynW0FW_2GIQ&s',
-    'type' => 'Electronic',
-    ],
-    [
-    'name' => 'Zlota 3in1',
-    'price' => '$39.99',
-    'image' => 'https://beautify.id/image/cache/catalog/products/ZLO002-8-1200x1200.jpg',
-    'type' => 'Skincare',
-    ],
-    [
-    'name' => 'Highwaist Jeans',
-    'price' => '$49.99',
-    'image' => 'https://img.lazcdn.com/g/p/a57714bcbff89c8a3db5a69777436236.jpg_720x720q80.jpg',
-    'type' => 'Fashion',
-    ],
-    [
-    'name' => 'Originote Sunscreen',
-    'price' => '$59.99',
-    'image' => 'https://images.soco.id/2dfd6f46-ef81-459b-9da7-b8732b1dfd5d-.jpg',
-    'type' => 'Skincare',
-    ],
-    [
-    'name' => 'Oversize Tee',
-    'price' => '$69.99',
-    'image' => 'https://images.tokopedia.net/img/cache/700/hDjmkQ/2023/1/5/efc92d38-118a-48a1-b6dd-39b0a63add4e.jpg',
-    'type' => 'Fashion',
-    ],
-    [
-    'name' => 'Ipad Gen 10',
-    'price' => '$79.99',
-    'image' => 'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg',
-    'type' => 'Electronic',
-    ],
-    [
-    'name' => 'Originote Retinol',
-    'price' => '$89.99',
-    'image' =>
-    'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//catalog-image/104/MTA-140397259/brd-94854_the-originote-moisturizer-hyalucera-moisturizer-gel-cica-b5-soothing-moisturizer-brightening-moisturizer_full01-87e7b918.jpg',
-    'type' => 'Skincare',
-    ],
-    [
-    'name' => 'Vaseline Jelly',
-    'price' => '$89.99',
-    'image' =>
-    'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//97/MTA-85941142/vaseline_vaseline-petroleum-jelly-100ml-original_full01.jpg',
-    'type' => 'Skincare',
-    ],
-    ];
-    @endphp
-    <div class="flex" id="productCards">
-        @foreach($products as $index => $product)
-        <div class="h-auto product-card flex-none w-1/4 border border-gray-300 {{ strtolower($product['type']) }}"
-            data-type="{{ strtolower($product['type']) }}">
-            <img class="max-w-full h-auto" src="{{ $product['image'] }}" alt="Product Image">
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product['name'] }}</h3>
-                <p class="text-sm text-gray-600">{{ $product['type'] }}</p>
-                <div class="mt-4 flex justify-between items-center">
-                    <span class="text-gray-600">Price: {{ $product['price'] }}</span>
-                    <!-- <button
-                        class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300">Add
-                        to Wishlist</button> -->
 
-                    <button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
-                        onclick="addToWishlist({{ $index }}, '{{ $product['name'] }}', '{{ $product['price'] }}', '{{ $product['image'] }}', '{{ $product['type'] }}')">Add
-                        to Wishlist</button>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+    @php
+        $products = \App\Models\Goods::getAllGoodsWithImages();
+    @endphp
+    @foreach($products as $product)
+        <div class="max-w-md rounded overflow-hidden shadow-lg product-card" style="display: block;height: 500px;">
+            @php
+                // Ambil gambar pertama produk dari relasi
+                $firstImage = $product->images->first();
+                // URL gambar dari tabel goods_image
+                $imageUrl = $firstImage ? $firstImage->img_url : 'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg'; // Menggunakan URL gambar dari database
+                // Ubah format harga
+                $formattedPrice = 'Rp ' . number_format($product->g_original_price, 0, ',', '.');
+            @endphp
+            <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image">
+            <div class="px-6 py-4">
+                <div class="font-bold text-xl mb-2">{{ $product->g_name }}</div>
+                <p class="text-gray-700 text-base mb-2">{{ $product->g_desc }}</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <p class="text-gray-700"><span class="font-bold">Category:</span> {{ $product->g_category }}</p>
+                        <p class="text-gray-700"><span class="font-bold">Condition:</span> {{ $product->g_type }}</p>
+                        <p class="text-gray-700"><span class="font-bold">Age:</span> {{ $product->g_age }}</p>
+                        <p class="text-gray-700"><span class="font-bold">Price:</span> {{ $formattedPrice }}</p>
+                    </div>
+                    <div class="flex justify-end items-center">
+                        <button class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
+                                onclick="openProductModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ $product->g_category }}', '{{ $product->g_type }}', '{{ $formattedPrice }}')">
+                            View Details
+                        </button>
+                        &nbsp;
+                        <button class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
+                                onclick="addToWishlist('{{ $product->id }}', '{{ $product->g_name }}', '{{ $formattedPrice }}', '{{ $imageUrl }}', '{{ $product->g_type }}')">
+                            Add to Wishlist
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        @endforeach
-    </div>
-</div><br>
+    @endforeach
+</div><br><br>
 
-<!-- Tombol untuk menggeser ke kiri -->
-<button class="product-slider-btn left-0" onclick="slideLeft()">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-    </svg>
-</button>
-<!-- Tombol untuk menggeser ke kanan -->
-<button class="product-slider-btn right-0" onclick="slideRight()">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-    </svg>
-</button>
-</div>
+<!-- Product Modal -->
+<div id="productModal" class="modal" style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;">
+    <div class="modal-content" style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 600px; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+        <div class="flex justify-end p-4">
+            <button class="text-gray-500 hover:text-gray-600 focus:outline-none" onclick="closeProductModal()">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="p-8" style="text-align: center;">
+            <img id="modalImage" src="" alt="Product Image" style="max-width: 50%; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
+            <h2 id="productName" class="text-2xl font-semibold mb-4"></h2>
+            <p id="productDesc" class="text-lg text-gray-700 mb-4"></p>
+            <p id="productCategory" class="text-lg text-gray-700 mb-2"></p>
+            <p id="productType" class="text-lg text-gray-700 mb-2"></p>
+            <p id="productPrice" class="text-lg text-gray-700 mb-2"></p>
+            <div class="flex justify-center">
+                <button class="bg-purple-500 text-white px-6 py-3 rounded hover:bg-gray-600 transition duration-300" onclick="startBarter()">Click to Barter</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    //Wishlist
-function addToWishlist(index, name, price, image, type) {
-    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-    let product = { index, name, price, image, type };
+    // Wishlist
+    function addToWishlist(id, name, price, image, type) {
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let product = { id, name, price, image, type };
 
-    if (wishlist.some(item => item.index === index)) {
-        Swal.fire("Product already exists in the wishlist!");
-        // Swal.fire("SweetAlert2 is working!");
-        // alert('Product already exists in the wishlist!');
-    } else {
-        wishlist.push(product);
-        localStorage.setItem('wishlist', JSON.stringify(wishlist));
-        Swal.fire("Product added to the Wishlist!");
-    }
-}
-
-    // Get the wishlist count element
-    const wishlistCount = document.getElementById('wishlist-count');
-
-    // Get the wishlist from the local storage
-    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-
-    // Update the wishlist count
-    wishlistCount.textContent = wishlist.length;
-
-    // Add an event listener to the remove button to update the wishlist count
-    const removeButtons = document.querySelectorAll('.remove-button');
-    removeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const index = button.dataset.index;
-            wishlist = wishlist.filter(item => item.index !== index);
+        if (wishlist.some(item => item.id === id)) {
+            Swal.fire("Product already exists in the wishlist!");
+        } else {
+            wishlist.push(product);
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
-            wishlistCount.textContent = wishlist.length;
-        });
-    });
-
-    // Ambil elemen slide dan tombol
-    const productSlider = document.querySelector('.product-slider-container');
-    const slideLeftBtn = document.querySelector('.product-slider-btn.left-0');
-    const slideRightBtn = document.querySelector('.product-slider-btn.right-0');
-    const productCards = document.querySelectorAll('.product-card');
-    const cardWidth = productCards[0].offsetWidth + parseInt(getComputedStyle(productCards[0]).marginLeft) + parseInt(getComputedStyle(productCards[0]).marginRight);
-    const visibleCards = 4; 
-    let startIndex = 0;
-    let endIndex = visibleCards - 1;
-    let filteredProducts = [];
-
-    // Panggil fungsi resetIndexes saat struktur HTML lengkap dimuat
-    window.addEventListener('load', resetIndexes);
-
-    // Fungsi untuk mengatur ulang indeks awal dan akhir setelah struktur HTML lengkap dimuat
-    function resetIndexes() {
-        endIndex = visibleCards - 1;
-        showHideCards(filteredProducts);
+            Swal.fire("Product added to the Wishlist!");
+        }
     }
 
-    // Fungsi untuk menampilkan atau menyembunyikan kartu produk berdasarkan indeks
-    function showHideCards(cards) {
-        cards.forEach((card, index) => {
-            if (index >= startIndex && index <= endIndex) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
+    // Open Product Modal
+    function openProductModal(name, desc, category, type, price) {
+        document.getElementById('productName').textContent = name;
+        document.getElementById('productDesc').textContent = desc;
+        document.getElementById('productCategory').textContent = 'Category: ' + category;
+        document.getElementById('productType').textContent = 'Type: ' + type;
+        document.getElementById('productPrice').textContent = 'Price: ' + price;
+        document.getElementById('productModal').style.display = 'block';
+    }
+
+    // Close Product Modal
+    function closeProductModal() {
+        document.getElementById('productModal').style.display = 'none';
+    }
+
+    // Filter by Category
+    function filterByCategory(category) {
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            const productCategoryElement = card.querySelector('p:nth-child(1)');
+            if (productCategoryElement) {
+                const productCategoryText = productCategoryElement.textContent.trim();
+                const categoryIndex = productCategoryText.indexOf('Category:');
+                if (categoryIndex !== -1) {
+                    const productCategory = productCategoryText.slice(categoryIndex + 'Category:'.length).trim();
+                    if (category === 'All' || productCategory.toLowerCase() === category.toLowerCase()) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
             }
         });
     }
-
-    function slideLeft() {
-        if (startIndex > 0) {
-            startIndex--;
-            endIndex--;
-            productSlider.scrollLeft -= cardWidth;
-            showHideCards(filteredProducts);
-        }
-    }
-
-        // Fungsi untuk menggeser slide ke kanan
-        function slideRight() {
-        if (endIndex < {{ count($products) }} - 1) {
-            startIndex++;
-            endIndex++;
-            productSlider.scrollLeft += cardWidth;
-            showHideCards();
-        }
-    }   
-
-    function filterProducts(type) {
-    productCards.forEach(card => {
-        if (type === 'All' || card.dataset.type.toLowerCase() === type.toLowerCase()) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-    resetIndexes();
-
-    
-}
 </script>
