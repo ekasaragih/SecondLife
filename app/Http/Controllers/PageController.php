@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Goods;
-
 use Illuminate\Http\Request;
+use App\Models\Goods;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
@@ -81,6 +80,9 @@ class PageController extends Controller
 
     public function my_goods()
     {
-        return view("pages.myGoods");
+        $authenticatedUser = session('authenticatedUser');
+        $userId = $authenticatedUser->us_ID;
+        $goods = Goods::where('us_ID', $userId)->get();
+        return view("pages.myGoods", compact('goods'));
     }
 }

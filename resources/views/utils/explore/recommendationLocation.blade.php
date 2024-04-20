@@ -1,92 +1,47 @@
+@php
+// Ambil semua kota dari database
+$cities = \App\Models\User::distinct('us_city')->pluck('us_city');
+@endphp
 <div class="my-10 relative">
     <div class="mt-8">
         <h2 class="text-2xl font-bold text-red-500 mb-4">Recommended Products <span class="text-sm text-gray-600">based
                 on location</span></h2>
-        <div>
-            <button class="bg-purple-500 text-white px-4 py-2 mb-5 rounded hover:bg-gray-600 transition duration-300"
-                onclick="filterProducts('Jakarta')">Jakarta</button>
-            <button class="bg-purple-500 text-white px-4 py-2 mb-5 rounded hover:bg-gray-600 transition duration-300"
-                onclick="filterProducts('Bekasi')">Bekasi</button>
-            <button class="bg-purple-500 text-white px-4 py-2 mb-5 rounded hover:bg-gray-600 transition duration-300"
-                onclick="filterProducts('All')">All</button>
+        <div class="flex gap-2 px-2">
+            <select
+                class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"
+                onchange="filterByCity(this.value)">
+                <option value="All">All</option>
+                @foreach($cities as $city)
+                <option value="{{ $city }}">{{ $city }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="product-slider-container overflow-hidden relative">
-            <!-- Product Cards -->
-            @php
-            $products = [
-            [
-            'name' => 'Product 1',
-            'description' => 'Description for Product 1',
-            'price' => '$19.99',
-            'image' => 'https://via.placeholder.com/400',
-            'location' => 'Jakarta',
-            ],
-            [
-            'name' => 'Product 2',
-            'description' => 'Description for Product 2',
-            'price' => '$29.99',
-            'image' => 'https://via.placeholder.com/400',
-            'location' => 'Bekasi',
-            ],
-            [
-            'name' => 'Product 3',
-            'description' => 'Description for Product 3',
-            'price' => '$39.99',
-            'image' => 'https://via.placeholder.com/400',
-            'location' => 'Jakarta',
-            ],
-            [
-            'name' => 'Product 4',
-            'description' => 'Description for Product 4',
-            'price' => '$49.99',
-            'image' => 'https://via.placeholder.com/400',
-            'location' => 'Jakarta',
-            ],
-            [
-            'name' => 'Product 5',
-            'description' => 'Description for Product 5',
-            'price' => '$59.99',
-            'image' => 'https://via.placeholder.com/400',
-            'location' => 'Jakarta',
-            ],
-            [
-            'name' => 'Product 6',
-            'description' => 'Description for Product 6',
-            'price' => '$69.99',
-            'image' => 'https://via.placeholder.com/400',
-            'location' => 'Jakarta',
-            ],
-            [
-            'name' => 'Product 7',
-            'description' => 'Description for Product 7',
-            'price' => '$79.99',
-            'image' => 'https://via.placeholder.com/400',
-            'location' => 'Bekasi',
-            ],
-            [
-            'name' => 'Product 8',
-            'description' => 'Description for Product 8',
-            'price' => '$89.99',
-            'image' => 'https://via.placeholder.com/400',
-            'location' => 'Bekasi',
-            ],
-            ];
-            @endphp
             <div class="flex" id="productCards">
-                @foreach($products as $index => $product)
-                <div class="product-card flex-none w-1/4 border border-gray-300 {{ strtolower($product['location']) }}"
-                    data-location="{{ strtolower($product['location']) }}">
-                    <img src="{{ $product['image'] }}" alt="Product Image">
+                @php
+                $products = \App\Models\Goods::getAllGoodsWithImages();
+                @endphp
+                @foreach($products as $product)
+                @php
+                // Ambil informasi pengguna yang memiliki produk
+                $user = $product->userID;
+                @endphp
+                <div class="product-card flex-none w-1/4 border border-gray-300 {{ strtolower($user->us_city) }}"
+                    data-location="{{ strtolower($user->us_city) }}">
+                    <img src="{{ $product->images->first()->img_url ?? 'https://via.placeholder.com/400' }}"
+                        alt="Product Image">
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product['name'] }}</h3>
-                        <p class="text-sm text-gray-600">{{ $product['description'] }}</p>
-                        <p class="text-sm text-gray-600">Location: {{ $product['location'] }}</p>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product->g_name }}</h3>
+                        <p class="text-sm text-gray-600">{{ $product->g_desc }}</p>
+                        <!-- Tampilkan informasi lokasi pengguna -->
+                        <p class="text-sm text-gray-600">Location: {{ $user->us_city }}</p>
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-gray-600">Price: {{ $product['price'] }}</span>
+                            <span class="text-gray-600 text-xs">Price: Rp {{ number_format($product->g_original_price,
+                                0, ',', '.') }}</span>
                             <button
                                 class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
                                 style="font-size: 14px;"
-                                onclick="openModal('{{ $product['name'] }}', '{{ $product['description'] }}', '{{ $product['image'] }}', '{{ $product['location'] }}', '{{ $product['price'] }}')">Detail</button>
+                                onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ $product->images->first()->img_url ?? 'https://via.placeholder.com/150' }}', '{{ $user->us_city }}', '{{ number_format($product->g_original_price, 0, ',', '.') }}')">Detail</button>
                             <button
                                 class="bg-purple-500 text-white px-4 py-2 ml-1 rounded hover:bg-gray-600 transition duration-300"
                                 style="font-size: 14px;">Add</button>
@@ -124,9 +79,9 @@
             Product Details</h2>
         <div style="text-align: center;">
             <img id="modalImage" src="" alt="Product Image"
-                style="max-width: 50%; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
+                style="width: 300px; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
             <p id="modalLocation" style="color: #666; margin-bottom: 10px;"></p>
-            <p id="modalPrice" style="color: #666; margin-bottom: 20px;"></p>
+            <p id="modalPrice" style="color: #666; margin-bottom: 20px; font-size: 18px; font-weight: bold;"></p>
         </div>
         <p id="modalDescription" style="color: #666; text-align: justify;"></p>
         <div style="text-align: center;">
@@ -137,26 +92,23 @@
     </div>
 </div>
 
-
-
 <script>
     // Function to open modal with product details
-function openModal(name, description, image, location, price) {
-    const modal = document.getElementById('productModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDescription = document.getElementById('modalDescription');
-    const modalImage = document.getElementById('modalImage');
-    const modalLocation = document.getElementById('modalLocation');
-    const modalPrice = document.getElementById('modalPrice');
+    function openModal(name, description, image, location, price) {
+        const modal = document.getElementById('productModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalImage = document.getElementById('modalImage');
+        const modalLocation = document.getElementById('modalLocation');
+        const modalPrice = document.getElementById('modalPrice');
 
-    modal.style.display = 'block';
-    modalTitle.textContent = name;
-    modalDescription.textContent = description;
-    modalImage.src = image;
-    modalLocation.textContent = "Location: " + location;
-    modalPrice.textContent = "Price: " + price;
-}
-
+        modal.style.display = 'block';
+        modalTitle.textContent = name;
+        modalDescription.textContent = description;
+        modalImage.src = image;
+        modalLocation.textContent = "Location: " + location;
+        modalPrice.textContent = "Price: " + price;
+    }
 
     // Function to close modal
     function closeModal() {
@@ -185,7 +137,7 @@ function openModal(name, description, image, location, price) {
 
     // Panggil fungsi resetIndexes saat struktur HTML lengkap dimuat
     window.addEventListener('load', resetIndexes);
-    
+
     // Fungsi untuk mengatur ulang indeks awal dan akhir setelah struktur HTML lengkap dimuat
     function resetIndexes() {
         endIndex = visibleCards - 1;
@@ -202,12 +154,13 @@ function openModal(name, description, image, location, price) {
             }
         });
     }
- function slideLeft() {
+
+    function slideLeft() {
         if (startIndex > 0) {
             startIndex--;
             endIndex--;
             productSlider.scrollLeft -= cardWidth;
-            showHideCards();
+            showHideCards(filteredProducts);
         }
     }
 
@@ -217,19 +170,24 @@ function openModal(name, description, image, location, price) {
             startIndex++;
             endIndex++;
             productSlider.scrollLeft += cardWidth;
-            showHideCards();
+            showHideCards(filteredProducts);
         }
     }
 
-    function filterProducts(location) {
+    function filterByCity(location) {
+    // Loop melalui setiap produk
     productCards.forEach(card => {
-        if (location === 'All' || card.dataset.location.toLowerCase() === location.toLowerCase()) {
-            card.style.display = 'block';
+        // Ambil lokasi pengguna yang terkait dengan produk
+        const cardLocation = card.getAttribute('data-location');
+
+        // Periksa apakah lokasi pengguna cocok dengan kota yang dipilih atau "All"
+        if (location === 'All' || cardLocation.toLowerCase() === location.toLowerCase()) {
+            card.style.display = 'block'; // Tampilkan produk jika cocok
         } else {
-            card.style.display = 'none';
+            card.style.display = 'none'; // Sembunyikan produk jika tidak cocok
         }
     });
-    resetIndexes();
+    resetIndexes(); // Atur ulang indeks untuk slider
 }
 
 </script>
