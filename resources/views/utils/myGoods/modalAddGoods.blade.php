@@ -1,5 +1,5 @@
 <div id="modalAddGoods" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
-class="hidden fixed inset-0 overflow-y-auto bg-black bg-opacity-50 z-50 justify-center items-center">
+    class="hidden fixed inset-0 overflow-y-auto bg-black bg-opacity-50 z-50 justify-center items-center">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -19,7 +19,7 @@ class="hidden fixed inset-0 overflow-y-auto bg-black bg-opacity-50 z-50 justify-
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <form id="addGoodsForm">
+            <form id="addGoodsForm" enctype="multipart/form-data">
                 @csrf
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 space-y-4">
@@ -77,9 +77,9 @@ class="hidden fixed inset-0 overflow-y-auto bg-black bg-opacity-50 z-50 justify-
                             <div class="mb-4">
                                 <label for="image" class="block text-sm font-medium text-gray-700">Upload
                                     Image</label>
-                                <input
-                                    class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                    id="small_size" type="file">
+                                    <input 
+                                    class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
+                                    id="small_size" name="images" type="file" accept="image/*" multiple required>
                             </div>
                         </div>
                     </div>
@@ -137,12 +137,11 @@ class="hidden fixed inset-0 overflow-y-auto bg-black bg-opacity-50 z-50 justify-
                         icon: "success",
                         timer: 2000,
                         timerProgressBar: true,
-                        onClose: function() {
-                            setTimeout(function() {
-                                location.reload();
-                            }, 2000);
-                        }
+                        onClose: function() {}
                     });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
                 },
                 error: function(xhr, status, error) {
                     Swal.fire({

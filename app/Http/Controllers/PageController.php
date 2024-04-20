@@ -67,7 +67,9 @@ class PageController extends Controller
 
     public function my_goods()
     {
-        $goods = Goods::all();
+        $authenticatedUser = session('authenticatedUser');
+        $userId = $authenticatedUser->us_ID;
+        $goods = Goods::where('us_ID', $userId)->get();
         return view("pages.myGoods", compact('goods'));
     }
 }
