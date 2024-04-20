@@ -11,4 +11,5 @@
     </div>
 </div>
 
-@include('utils.layouts.footer.footer')
+<!-- @include('utils.layouts.footer.footer') -->
+

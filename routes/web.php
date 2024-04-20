@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
     Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
     Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
+    Route::get('/chat', [ChatController::class, 'index'])->name('home_chat');
 });
 
 Route::get('/', [PageController::class, 'explore'])->name('explore');
@@ -38,6 +41,9 @@ Route::get('/communities', [PageController::class, 'communities'])->name('commun
 
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
+
+Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
+
 
 
 

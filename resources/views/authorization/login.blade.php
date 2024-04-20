@@ -26,10 +26,6 @@
             if (!/\d/.test(password)) {
                 return "Password must contain at least one number";
             }
-            // Password contains an underscore check
-            if (!/_/.test(password)) {
-                return "Password must contain at least one underscore";
-            }
             // No special characters check
             if (/[^a-zA-Z0-9_]/.test(password)) {
                 return "Password must not consist of special characters, including (){}[]|`¬¦! \"£$%^&*\"<>:;#~_-+=,@";
