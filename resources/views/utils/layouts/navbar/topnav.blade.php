@@ -36,17 +36,18 @@
         <div class="flex items-center gap-4">
 
             <a href="{{ route('wishlist') }}" title="My Wishlist"
-              class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'wishlist' ? 'text-primary-content' : '' }}">
+                class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'wishlist' ? 'text-primary-content' : '' }}">
                 <i class="fa fa-heart" aria-hidden="true"></i>
                 <span id="wishlist-count"
-                class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
+                    class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
             </a>
 
-            <button class="relative text-3xl text-gray-700" title="Messages">
+            <a href="{{ route('home_chat') }}" title="Messages"
+                class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'home_chat' ? 'text-primary-content' : '' }}">
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
                 <span
                     class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
-            </button>
+            </a>
 
             <a href="{{ route('my_profile') }}" title="My Profile"
                 class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'my_profile' ? 'text-primary-content' : '' }}">
