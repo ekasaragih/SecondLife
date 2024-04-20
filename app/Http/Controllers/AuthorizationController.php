@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Roles;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthorizationController extends Controller
 {
@@ -60,59 +62,34 @@ class AuthorizationController extends Controller
         }
     }
 
-    // Function not worked yet
-    public function storeSkip(Request $request)
-    {
-        $request->validate([
-            'us_name' => 'required|string|max:250',
-            'us_username' => 'required|string|max:12',
-            'us_email' => 'required|email:dns|max:250|unique:users',
-            'password' => 'required|min:8',
-            'confirm_password' => 'required|same:password',
-        ]);
-
-        $user = User::create([
-            'role_id' => Roles::ROLE_USER,
-            'us_name' => $request->us_name,
-            'us_username' => $request->us_username,
-            'us_email' => $request->us_email,
-            'password' => Hash::make($request->password),
-            'password_updated_at' => now()
-        ]);    
-
-        if($user) {
-            return redirect()->route('login')->withSuccess('You have successfully registered!');
-        } else {
-            return back()->withError('Failed to register user. Please try again.');
-        }
-    }
-
     public function authenticate(Request $request)
     {
-        $request->validate([
-            'login' => 'required|string',
-            'password' => 'required|string',
+        $credentials = $request->only('us_username', 'password');
+    
+        $validator = Validator::make($credentials, [
+            'us_username' => 'required',
+            'password' => 'required',
         ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    
+        $user = User::where('us_username', $credentials['us_username'])->first();
+    
+        if ($user && password_verify($credentials['password'], $user->password)) {
+            if (Auth::loginUsingId($user->us_ID)) {
 
-        $loginType = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL ) 
-            ? 'us_email' 
-            : 'us_username';
+                session([
+                    'authenticatedUser' => $user,
+                ]);
 
-        $credentials = [
-            $loginType => $request->input('login'),
-            'password' => $request->input('password'),
-        ];
-
-        if(Auth::attempt($credentials))
-        {
-            $request->session()->regenerate();
-            return redirect('/')->withSuccess('You have successfully logged in!');
+                return redirect()->route('explore');
+            }
         }
 
-        return redirect()->back()->withErrors([
-            'login' => 'Invalid email/username or password!',
-        ]);
-    }
+        return redirect()->back()->withErrors(['message' => 'Invalid credentials'])->withInput();
+    } 
 
 
 }
