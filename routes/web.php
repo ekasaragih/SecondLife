@@ -33,6 +33,7 @@ Route::get('/communities', [PageController::class, 'communities'])->name('commun
 
 Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
 Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
+Route::post('/wishlist/add', [ProductController::class, 'addToWishlist'])->name('wishlist.add');
 
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
