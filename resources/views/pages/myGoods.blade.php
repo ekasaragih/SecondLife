@@ -7,7 +7,7 @@
 
 <div>
     <div class="flex justify-center h-screen pt-52 mb-96 pb-64">
-        <div class="w-4\/5 container pb-64">
+        <div class="w-4/5 container pb-64">
 
             <div class="text-3xl text-[#F12E52] mb-5">
                 <b>My Goods</b>
