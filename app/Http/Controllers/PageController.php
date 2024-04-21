@@ -19,6 +19,11 @@ class PageController extends Controller
     }
 
     // Menu
+    public function about_us()
+    {
+        return view("utils.menu.aboutUs");
+    }
+
     public function contact_us()
     {
         return view("utils.menu.contactUs");
@@ -50,20 +55,15 @@ class PageController extends Controller
         ]);
     }
 
-
-    // Categories Section
     public function categories()
     {
         return view("pages.categories");
     }
-    // End of Categories Section
 
-    // wishlist Section
     public function wishlist()
     {
         return view("pages.wishlist");
     }
-    // End of wishlist Section
 
     public function communities()
     {
@@ -76,7 +76,6 @@ class PageController extends Controller
 
         return view('pages.myProfile', ['user' => $authenticatedUser]);
     }
-
 
     public function my_goods()
     {
