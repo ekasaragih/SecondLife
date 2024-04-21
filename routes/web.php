@@ -74,7 +74,8 @@ Route::get('/500-server-error', [PageController::class, 'internal_server_error']
 | Post & Get Functions
 |--------------------------------------------------------------------------
 */
-Route::post('/add-my-goods', [GoodsController::class, 'add_my_goods'])->name('add_my_goods');
+Route::post('/my-goods/add', [GoodsController::class, 'store'])->name('add_my_goods');
+Route::post('/my-goods/add-img', [GoodsController::class, 'storeImg'])->name('add_img');
 Route::post('/wishlist/add', [ProductController::class, 'addToWishlist'])->name('wishlist.add');
 
 

@@ -1,6 +1,12 @@
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    <link rel="stylesheet" href="/asset/css/imgContainer.css">
+</head>
+
 <div id="modalAddGoods" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
     class="hidden fixed inset-0 overflow-y-auto bg-black bg-opacity-50 z-50 justify-center items-center">
-    <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative p-4 w-full max-w-5xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
@@ -23,63 +29,83 @@
                 @csrf
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 space-y-4">
-                    <div class="max-w-2xl px-4 py-8 mx-auto">
+                    <div class="max-w-5xl px-4 py-8 mx-auto">
                         <div>
                             <div class="mb-4">
                                 <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                                <input type="text" id="name" name="name" placeholder="Enter name of goods"
+                                <input type="text" id="g_name" name="name" placeholder="Enter name of goods"
                                     class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                             </div>
                             <div class="w-full flex">
                                 <div class="w-1/2 mb-4 mr-2">
                                     <label for="category"
                                         class="block text-sm font-medium text-gray-700">Category</label>
-                                    <select id="category" name="category"
+                                    <select id="g_category" name="category"
                                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
-                                        <option value="electronics">Electronics</option>
-                                        <option value="clothing">Clothing</option>
-                                        <option value="books">Books</option>
-                                        <!-- Add more options as needed -->
+                                        <option value="" selected disabled>-- Choose categories --</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Clothing and Accessories">Clothing and Accessories</option>
+                                        <option value="Home Decor">Home Decor</option>
+                                        <option value="Collectibles">Collectibles</option>
+                                        <option value="Books and Media">Books and Media</option>
+                                        <option value="Tools and Equipment">Tools and Equipment</option>
+                                        <option value="Musical Instruments">Musical Instruments</option>
+                                        <option value="Sports and Fitness Equipment">Sports and Fitness Equipment
+                                        </option>
+                                        <option value="Kitchenware">Kitchenware</option>
                                     </select>
                                 </div>
                                 <div class="w-1/2 mb-4">
-                                    <label for="type" class="block text-sm font-medium text-gray-700">Type</label>
-                                    <select id="type" name="type"
+                                    <label for="g_type" class="block text-sm font-medium text-gray-700">Type</label>
+                                    <select id="g_type" name="g_type"
                                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
-                                        <option value="new">New</option>
-                                        <option value="used">Used</option>
-                                        <!-- Add more options as needed -->
+                                        <option value="" selected disabled>-- Choose type --</option>
+                                        <option value="New">New</option>
+                                        <option value="Used">Used</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="w-full flex space-x-2">
                                 <div class="w-full mb-4">
-                                    <label for="category" class="block text-sm font-medium text-gray-700">Original
+                                    <label for="original_price" class="block text-sm font-medium text-gray-700">Original
                                         Price</label>
-                                    <input type="number" id="originalPrice" name="originalPrice"
+                                    <input type="number" id="original_price" name="original_price"
                                         placeholder="ex: 500000"
-                                        class="mt-1 p-2 block border border-gray-300 rounded-md">
+                                        class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                                 <div class="w-full mb-4">
-                                    <label for="type" class="block text-sm font-medium text-gray-700">Age of Goods -
-                                        inyears </label>
-                                    <input type="number" id="ageOfGoods" name="ageOfGoods" placeholder="ex: 1"
-                                        class="mt-1 p-2 block border border-gray-300 rounded-md">
+                                    <label for="prediction_price"
+                                        class="block text-sm font-medium text-gray-700">Prediction
+                                        Price</label>
+                                    <input type="number" id="prediction_price" name="prediction_price"
+                                        placeholder="ex: 500000"
+                                        class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                                </div>
+                                <div class="w-full mb-4">
+                                    <label for="age_goods" class="block text-sm font-medium text-gray-700">Age of Goods
+                                        (In years) </label>
+                                    <input type="number" id="age_goods" name="age_goods" placeholder="ex: 1"
+                                        class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label for="description"
                                     class="block text-sm font-medium text-gray-700">Description</label>
-                                <textarea id="description" name="description" rows="3"
+                                <textarea id="g_description" name="description" rows="3"
                                     placeholder="Give a detail explanation of your goods' condition"
                                     class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required></textarea>
                             </div>
                             <div class="mb-4">
                                 <label for="image" class="block text-sm font-medium text-gray-700">Upload
                                     Image</label>
-                                    <input 
-                                    class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
-                                    id="small_size" name="images" type="file" accept="image/*" multiple required>
+                                <div id="id-input-div" class="input-div mt-2">
+                                    <p>Drag & drop photos here or click to browse</p>
+                                    <input name="files" id="input_image" type="file" class="file" multiple="multiple"
+                                        accept="image/jpeg, image/png, image/jpg" onchange="previewImage()" />
+                                </div>
+                                <div id="queuedImages" class="queued-div p-2">
+                                    <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -87,7 +113,7 @@
                 <!-- Modal footer -->
                 <div
                     class="flex items-center space-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button type="submit"
+                    <button type="submit" id="btn_upload_goods"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center addBtn">
                         Upload
                     </button>
@@ -108,40 +134,83 @@
     </div>
 </div>
 
+{{-- Function for queued image and remove it and upload photos - POST to DB --}}
+<script>
+    const queuedImagesArray = [];
+
+            function previewImage() {
+                const input = document.getElementById('input_image');
+                const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+
+                if (input.files && input.files.length > 0) {
+                    for (let i = 0; i < input.files.length; i++) {
+                        const file = input.files[i];
+                        const reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            const imageContainer = document.createElement('div');
+                            imageContainer.classList.add('queued-image-container');
+
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.classList.add('queued-image');
+
+                            const deleteButton = document.createElement('span');
+                            deleteButton.innerHTML = '&times;';
+                            deleteButton.classList.add('delete-button');
+                            deleteButton.addEventListener('click', function () {
+                                imageContainer.remove();
+                                const index = queuedImagesArray.indexOf(file);
+                                if (index !== -1) {
+                                    queuedImagesArray.splice(index, 1);
+                                }
+                            });
+
+                            imageContainer.appendChild(img);
+                            imageContainer.appendChild(deleteButton);
+
+                            imagePreviewContainer.appendChild(imageContainer);
+
+                            queuedImagesArray.push(file);
+                        };
+
+                        reader.readAsDataURL(file);
+                    }
+                }
+            }
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const addGoodsForm = document.getElementById('addGoodsForm');
+        const apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
 
-        addGoodsForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
+        $('#btn_upload_goods').click(function (event) {
+            event.preventDefault();
 
-            // Serialize form data
-            const formData = new FormData(addGoodsForm);
+            var goods = {
+                g_name: $("#g_name").val(),
+                g_desc: $("#g_description").val(),
+                g_type: $("#g_type").val(),
+                g_original_price: $("#original_price").val(),
+                g_price_prediction: $("#prediction_price").val(),
+                g_age: $("#age_goods").val(),
+                g_category: $("#g_category").val(),
+            
+            }
 
-            // Send AJAX request
             $.ajax({
                 url: '{{ route('add_my_goods') }}',
                 type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
+                data: goods,
                 dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': 'Bearer ' + apiToken
+                },
                 success: function(response) {
-                    addGoodsForm.reset();
-                    const modalElement = document.getElementById('modalAddGoods');
-                    const modal = new Modal(modalElement);
-                    modal.hide();
-                    Swal.fire({
-                        title: "Success!",
-                        text: "Data stored successfully!",
-                        icon: "success",
-                        timer: 2000,
-                        timerProgressBar: true,
-                        onClose: function() {}
-                    });
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
+                    console.log('respomse: ', response);
+                    postGoodsImage(response.g_ID);
                 },
                 error: function(xhr, status, error) {
                     Swal.fire({
@@ -152,5 +221,48 @@
                 }
             });
         });
+
+        function postGoodsImage(goodsId) {
+            var goods_img = new FormData();
+            var inputImage = document.getElementById('input_image');
+
+            for (var i = 0; i < inputImage.files.length; i++) {
+                goods_img.append('files[]', inputImage.files[i]);
+            }
+            goods_img.append('g_ID', goodsId);
+            
+            $.ajax({
+                url: '{{ route('add_img') }}',
+                type: 'POST',
+                data: goods_img,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': 'Bearer ' + apiToken
+                },
+                dataType: 'json',
+                success: function(response) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Goods and images stored successfully!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            location.reload();
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong while storing images!",
+                    });
+                }
+            });
+        }
     });
 </script>
