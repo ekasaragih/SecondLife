@@ -5,23 +5,29 @@
 </head>
 
 
-<div class="flex justify-center h-screen pt-52">
+<div class="flex justify-center h-screen pt-52 pb-64">
     <div class="container w-4/5">
 
         @auth
-        Olla, {{ $user->us_name }}!
+        <div class="my-4 text-secondary">
+            Olla, {{ $user->us_name }}!
+        </div>
         @else
-        <h6>Hello, User!</h6>
-        <p>Welcome to Project Alchemist! Please log in.</p>
-        <span><a href="{{ route('login') }}" class="btn btn-secondary">Login</a></span>
+        <div class="my-4 text-secondary">
+            <h6 class="text-base">Hello, User!</h6>
+            <p>Welcome to Project Alchemist! Please log in.</p>
+            <span><a href="{{ route('login') }}" class="text-secondary hover:text-opacity-60"><u>Login</u></a></span>
+        </div>
         @endauth
 
         @include('utils.explore.swape')
         @include('utils.explore.recommendationLocation')
+        @include('utils.explore.trendPrediction', ['products' => $products])
+
+        @include('utils.layouts.footer.footer')
     </div>
 </div>
 
-@include('utils.layouts.footer.footer')
 
 
 {{--

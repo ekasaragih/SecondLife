@@ -13,8 +13,11 @@ module.exports = {
                 error: "#ff5757",
                 "primary-content": "#959CE8",
             },
+            fontFamily: {
+                rubik: ["Rubik", "sans-serif"],
+            },
         },
     },
     variants: {},
-    plugins: [require("flowbite/plugin")],
+    // plugins: [require("flowbite/plugin")],
 };

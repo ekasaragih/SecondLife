@@ -11,6 +11,7 @@ class Goods extends Model
     use HasFactory;
 
     protected $table = 'goods';
+    protected $primaryKey = 'g_ID';
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +19,7 @@ class Goods extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'g_ID',
         'us_ID',
         'g_name',
         'g_desc',
