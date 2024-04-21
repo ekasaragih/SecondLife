@@ -78,7 +78,7 @@
                                         class="block text-sm font-medium text-gray-700">Prediction
                                         Price</label>
                                     <input type="number" id="prediction_price" name="prediction_price"
-                                        placeholder="ex: 500000"
+                                        placeholder="will be count by system"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                                 <div class="w-full mb-4">
@@ -95,7 +95,7 @@
                                     placeholder="Give a detail explanation of your goods' condition"
                                     class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required></textarea>
                             </div>
-                            <div class="mb-4">
+                            <div class="mb-2">
                                 <label for="image" class="block text-sm font-medium text-gray-700">Upload
                                     Image</label>
                                 <div id="id-input-div" class="input-div mt-2">
