@@ -11,11 +11,6 @@
 <div id="about" class="relative bg-white overflow-hidden font-rubik">
     <div class="max-w-7xl px-10">
         <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full">
-            {{-- <svg
-                class="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
-                fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                <polygon points="50,0 100,0 50,100 0,100"></polygon>
-            </svg> --}}
 
             <div class="pt-1"></div>
 
