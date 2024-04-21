@@ -5,8 +5,9 @@ use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
