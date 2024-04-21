@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Goods;
 use App\Models\GoodsImage;
 
@@ -70,6 +70,18 @@ class GoodsController extends Controller
         }
 
         return response()->json(['message' => 'Images stored successfully'], 200);
+    }
+
+    public function destroy($id)
+    {
+        $goods = Goods::findOrFail($id);
+        foreach ($goods->images as $image) {
+            $imagePath = 'public/' . $image->img_url;
+            Storage::delete($imagePath);
+        }
+        $goods->delete();
+
+        return response()->json(['message' => 'Goods deleted successfully'], 200);
     }
 
 }
