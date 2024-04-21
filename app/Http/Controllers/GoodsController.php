@@ -84,4 +84,9 @@ class GoodsController extends Controller
         return response()->json(['message' => 'Goods deleted successfully'], 200);
     }
 
+    public function show($id)
+    {
+        $goods = Goods::with('images')->findOrFail($id);
+        return response()->json($goods);
+    }
 }

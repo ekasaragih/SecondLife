@@ -49,7 +49,7 @@
                             <div
                                 class="p-2 m-1 bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] shadow-lg rounded-md">
                                 <button class="edit-btn" data-modal-target="modalEditGoods"
-                                    data-modal-toggle="modalEditGoods">
+                                    data-goods-id="{{ $goods->g_ID }}">
                                     <span><i class="fa fa-pencil mr-1" aria-hidden="true"></i> Edit </span>
                                 </button>
                             </div>
@@ -110,7 +110,7 @@
                     })
                     .then((willDelete) => {
                         if (willDelete) {
-                            fetch(`/my-goods/delete/${goodsId}`, {
+                            fetch(`{{ route('add_my_goods') }}`, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -141,5 +141,64 @@
                     });
             });
         });
+        const editButtons = document.querySelectorAll('.edit-btn');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const goodsId = this.dataset.goodsId;
+                fetch(`/my-goods/${goodsId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        populateEditModal(data);
+                        console.log(data);
+                        console.log(document.getElementById('g_name')
+                        .value); // Call a function to populate the modal with the retrieved data
+                        openEditModal();
+                    })
+                    .catch(error => console.error(error));
+            });
+        });
+
+        function populateEditModal(data) {
+            document.getElementById('edit_g_name').value = data.g_name;
+            document.getElementById('edit_g_category').value = data.g_category;
+            document.getElementById('edit_g_type').value = data.g_type;
+            document.getElementById('edit_g_original_price').value = data.g_original_price;
+            // document.getElementById('g_price_prediction').value = data.g_price_prediction;
+            document.getElementById('edit_g_age').value = data.g_age;
+            document.getElementById('edit_g_desc').value = data.g_desc;
+            previewEditImages(data.images);
+        }
+
+        function openEditModal() {
+            const modalEditGoods = document.getElementById('modalEditGoods');
+            modalEditGoods.classList.remove('hidden');
+        }
+
+        function previewEditImages(images) {
+        const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
+
+        images.forEach(imageUrl => {
+            const imageContainer = document.createElement('div');
+            imageContainer.classList.add('queued-image-container');
+
+            const img = document.createElement('img');
+            img.src = `/storage/${imageUrl.img_url}`;
+            img.classList.add('queued-image');
+
+            const deleteButton = document.createElement('span');
+            deleteButton.innerHTML = '&times;';
+            deleteButton.classList.add('delete-button');
+            deleteButton.addEventListener('click', function() {
+                imageContainer.remove();
+                // Optionally, you can also send an AJAX request to delete the image from the database here
+            });
+
+            imageContainer.appendChild(img);
+            imageContainer.appendChild(deleteButton);
+
+            imagePreviewContainer.appendChild(imageContainer);
+        });
+    }
     });
 </script>
