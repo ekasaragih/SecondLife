@@ -8,7 +8,7 @@
         {{-- insert code here --}}
         <br>
         @include('utils.categories.product')
+        @include('utils.layouts.footer.footer')
     </div>
 </div>
 
-<!-- @include('utils.layouts.footer.footer') -->
