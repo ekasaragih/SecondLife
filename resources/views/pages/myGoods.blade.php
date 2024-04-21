@@ -88,45 +88,58 @@
 |--------------------------------------------------------------------------
 --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     import {
         Modal
     } from 'flowbite';
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const deleteButtons = document.querySelectorAll('.delete-btn');
 
         deleteButtons.forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 const goodsId = this.dataset.goodsId;
-                const confirmed = confirm('Are you sure you want to delete this item?');
-                
-                if (confirmed) {
-                    fetch(`/my-goods/delete/${goodsId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json'
-                        }
+                swal({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this item!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
                     })
-                    .then(response => {
-                        if (response.ok) {
-                            // Optionally, you can remove the deleted item from the UI
-                            // e.g., this.parentNode.remove();
-                            alert('Item deleted successfully.');
-                            location.reload();
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            fetch(`/my-goods/delete/${goodsId}`, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        swal("Success!", "Item deleted successfully.",
+                                            "success");
+                                        setTimeout(function() {
+                                            location.reload();
+                                        }, 2000);
+                                    } else {
+                                        throw new Error('Failed to delete item.');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error(error);
+                                    alert('Failed to delete item.');
+                                });
                         } else {
-                            throw new Error('Failed to delete item.');
+                            // User clicked the "Cancel" button in SweetAlert
+                            swal("Your item is safe!", {
+                                icon: "info",
+                            });
                         }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        alert('Failed to delete item.');
                     });
-                }
             });
         });
     });
 </script>
-
