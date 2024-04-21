@@ -4,7 +4,6 @@
 
 @include('utils.layouts.navbar.topnav')
 
-
     <div class="flex justify-center h-screen pt-52">
     <div class="container w-4/5">
 
@@ -43,8 +42,7 @@
             <h3 class="mb-1 text-x  l font-semibold">{{ $product->g_name }}</h3>
             <p class="mb-1 text-lg">Price: {{ $formattedPrice }}</p>
             <p class="mb-4 text-lg">Category: {{ $product->g_category }}</p>
-            <button class="bg-purple-500 text-white px-6 py-3 rounded hover:bg-gray-600 transition duration-300" onclick="showTermsAndConditionsPopup()">Click to Barter</button>
-        </div>
+            <button class="bg-purple-500 text-white px-6 py-3 rounded hover:bg-gray-600 transition duration-300" onclick="showTermsAndConditionsPopup('{{ $product->g_name }}', '{{ $product->g_desc }}')">View Details</button>        </div>
 
                 @endforeach
             </div>
@@ -62,6 +60,7 @@
                 </div>
             </div>
         </div>
+
         @include('utils.layouts.footer.footer')
 
         <style>
@@ -178,16 +177,22 @@
             const type = document.createElement('p');
             type.textContent = `Type: ${product.type}`;
             type.classList.add('mb-4', 'text-lg');
-            
+
+            const viewDetailsButton = document.createElement('button');
+            viewDetailsButton.classList.add('mt-2', 'px-4', 'py-2', 'rounded-md', 'bg-blue-600', 'text-white', 'border', 'border-transparent', 'hover:bg-blue-700', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-600', 'focus:ring-opacity-50');
+            viewDetailsButton.textContent = 'View Details';
+            viewDetailsButton.addEventListener('click', () => showTermsAndConditionsPopup(product));
+
             const removeButton = document.createElement('button');
             removeButton.classList.add('mt-2', 'px-4', 'py-2', 'rounded-md', 'bg-red-600', 'text-white', 'border', 'border-transparent', 'hover:bg-red-700', 'focus:outline-none', 'focus:ring-2', 'focus:ring-red-600', 'focus:ring-opacity-50');
             removeButton.textContent = 'Remove from Wishlist';
-            removeButton.addEventListener('click', () => removeFromWishlist(index)); // Use the index as parameter for removeFromWishlist()
+            removeButton.addEventListener('click', () => removeFromWishlist(index));
 
             productCard.appendChild(image);
             productCard.appendChild(name);
             productCard.appendChild(price);
             productCard.appendChild(type);
+            productCard.appendChild(viewDetailsButton);
             productCard.appendChild(removeButton);
             productList.appendChild(productCard);
         });
@@ -217,7 +222,7 @@
     wishlistCount.textContent = wishlist.length;
 
        // Function to show Terms and Conditions popup
-       function showTermsAndConditionsPopup() {
+       function showTermsAndConditionsPopup(name, desc) {
                 // Tampilkan popup Terms and Conditions
                 Swal.fire({
                     title: '<span style="font-size: 20px; font-weight: bold;">Barter Process Terms & Conditions</span>',
