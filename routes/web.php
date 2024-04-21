@@ -44,7 +44,7 @@ Route::get('/communities', [PageController::class, 'communities'])->name('commun
 Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
 Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
 
-
+Route::get('/about-us', [PageController::class, 'about_us'])->name('about_us');
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
