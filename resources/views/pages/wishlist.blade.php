@@ -42,11 +42,35 @@
             <h3 class="mb-1 text-x  l font-semibold">{{ $product->g_name }}</h3>
             <p class="mb-1 text-lg">Price: {{ $formattedPrice }}</p>
             <p class="mb-4 text-lg">Category: {{ $product->g_category }}</p>
-            <button class="bg-purple-500 text-white px-6 py-3 rounded hover:bg-gray-600 transition duration-300" onclick="showTermsAndConditionsPopup('{{ $product->g_name }}', '{{ $product->g_desc }}')">View Details</button>        </div>
-
+            <button class="bg-purple-500 text-white px-6 py-3 rounded hover:bg-gray-600 transition duration-300" onclick="openProductModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ $imageUrl }}', '{{ $product->g_category }}', '{{ $product->g_type }}', '{{ $formattedPrice }}')">View Details</button></div>
                 @endforeach
             </div>
         </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal" style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;">
+        <div class="modal-content" style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 600px; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+            <div class="flex justify-end p-4">
+                <button class="text-gray-500 hover:text-gray-600 focus:outline-none" onclick="closeProductModal()">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-8" style="text-align: center;">
+                <img id="productImage" src="" alt="Product Image" style="max-width: 50%; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
+                <h2 id="productName" class="text-2xl font-semibold mb-4"></h2>
+                <p id="productDesc" class="text-lg text-gray-700 mb-4"></p>
+                <p id="productCategory" class="text-lg text-gray-700 mb-2"></p>
+                <p id="productType" class="text-lg text-gray-700 mb-2"></p>
+                <p id="productPrice" class="text-lg text-gray-700 mb-2"></p>
+                <div class="flex justify-center">
+                <button class="bg-purple-500 text-white px-6 py-3 rounded hover:bg-gray-600 transition duration-300" onclick="showTermsAndConditionsPopup()">Click to Barter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Popup Terms and Conditions -->
     <div id="termsModal" class="modal" style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1100; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;">
@@ -96,29 +120,27 @@
         });
     }
 
-    // Function to add a product to the wishlist
-    function addToWishlist(id, name, price, image, type) {
-        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+ // Function to add a product to the wishlist
+function addToWishlist(id, name, desc, price, image, type) {
+    // Check if the product already exists in the wishlist
+    const isProductInWishlist = wishlist.some(product => product.productId === id);
 
-        // Check if the product already exists in the wishlist
-        const isProductInWishlist = wishlist.some(product => product.productId === id);
+    if (isProductInWishlist) {
+        Swal.fire("Product already exists in Wishlist!");
+    } else {
+        // Add the product to the wishlist
+        wishlist.push({ productId: id, name, desc, price, image, type });
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        displayWishlist(); // Update the wishlist view after adding the product
+        // Update the wishlist count
+        const wishlistCount = document.getElementById('wishlist-count');
+        wishlistCount.textContent = wishlist.length;
+        Swal.fire("Product added to the Wishlist!", "", "success");
 
-        if (isProductInWishlist) {
-            Swal.fire("Product already exists in Wishlist!");
-        } else {
-            // Add the product to the wishlist
-            wishlist.push({ productId: id, name, price, image, type });
-            localStorage.setItem('wishlist', JSON.stringify(wishlist));
-            displayWishlist(); // Update the wishlist view after adding the product
-            // Update the wishlist count
-            const wishlistCount = document.getElementById('wishlist-count');
-            wishlistCount.textContent = wishlist.length;
-            Swal.fire("Product added to the Wishlist!", "", "success");
-
-            // Send AJAX request to server to add product to wishlist
-            addToWishlistBackend(id);
-        }
+        // Send AJAX request to server to add product to wishlist
+        addToWishlistBackend(id);
     }
+}
 
     // Function to send AJAX request to server to add product to wishlist
     function addToWishlistBackend(productId) {
@@ -170,18 +192,35 @@
             name.textContent = product.name;
             name.classList.add('mb-1', 'text-xl');
 
-            const price = document.createElement('p');
-            price.textContent = `Price: ${product.price}`;
-            price.classList.add('mb-1', 'text-lg');
+            const desc = document.createElement('h3');
+            desc.textContent = product.desc;
+            desc.classList.add('mb-1', 'text-xl');
+
+            const category = document.createElement('h3');
+            category.textContent = product.category;
+            category.classList.add('mb-1', 'text-xl');
 
             const type = document.createElement('p');
             type.textContent = `Type: ${product.type}`;
             type.classList.add('mb-4', 'text-lg');
 
+            const price = document.createElement('p');
+            price.textContent = `Price: ${product.price}`;
+            price.classList.add('mb-1', 'text-lg');
+
             const viewDetailsButton = document.createElement('button');
-            viewDetailsButton.classList.add('mt-2', 'px-4', 'py-2', 'rounded-md', 'bg-blue-600', 'text-white', 'border', 'border-transparent', 'hover:bg-blue-700', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-600', 'focus:ring-opacity-50');
+            viewDetailsButton.classList.add('bg-purple-500', 'text-white', 'px-6', 'py-3', 'rounded', 'hover:bg-gray-600', 'transition', 'duration-300');
             viewDetailsButton.textContent = 'View Details';
-            viewDetailsButton.addEventListener('click', () => showTermsAndConditionsPopup(product));
+            viewDetailsButton.onclick = function() {
+                openProductModal(
+                    `{{ $product->g_name }}`,
+                    `{{ $product->g_desc }}`,
+                    `{{ $imageUrl }}`,
+                    `{{ $product->g_category }}`,
+                    `{{ $product->g_type }}`,
+                    `{{ $formattedPrice }}`
+                );
+            };
 
             const removeButton = document.createElement('button');
             removeButton.classList.add('mt-2', 'px-4', 'py-2', 'rounded-md', 'bg-red-600', 'text-white', 'border', 'border-transparent', 'hover:bg-red-700', 'focus:outline-none', 'focus:ring-2', 'focus:ring-red-600', 'focus:ring-opacity-50');
@@ -190,8 +229,10 @@
 
             productCard.appendChild(image);
             productCard.appendChild(name);
-            productCard.appendChild(price);
+            productCard.appendChild(desc);
+            productCard.appendChild(category);
             productCard.appendChild(type);
+            productCard.appendChild(price);
             productCard.appendChild(viewDetailsButton);
             productCard.appendChild(removeButton);
             productList.appendChild(productCard);
