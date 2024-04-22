@@ -1,8 +1,8 @@
-{{-- <head>
+<head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="api-token" content="{{ Auth::user()->api_token }}">
     <link rel="stylesheet" href="/asset/css/imgContainer.css">
-</head> --}}
+</head>
 
 <div id="modalEditGoods" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
     class="hidden fixed inset-0 overflow-y-auto bg-black bg-opacity-50 z-50 justify-center items-center">
@@ -12,7 +12,7 @@
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Upload Goods
+                    Save Changes
                 </h3>
                 <button type="button"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -31,6 +31,7 @@
                 <div class="p-4 md:p-5 space-y-4">
                     <div class="max-w-5xl px-4 py-8 mx-auto">
                         <div>
+                            <input type="hidden" id="edit_g_ID" />
                             <div class="mb-4">
                                 <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
                                 <input type="text" id="edit_g_name" name="g_name" placeholder="Enter name of goods"
@@ -102,9 +103,9 @@
                                     <p>Drag & drop photos here or click to browse</p>
                                     <input name="files" id="edit_image" type="file" class="file"
                                         multiple="multiple" accept="image/jpeg, image/png, image/jpg"
-                                        onchange="previewImage()" />
+                                        onchange="editPreviewImage()" />
                                 </div>
-                                <div id="queuedImages" class="queued-div p-2">
+                                <div id="edit_queuedImages" class="queued-div p-2">
                                     <div id="edit_imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
                                 </div>
                             </div>
@@ -135,15 +136,16 @@
     </div>
 </div>
 
-{{-- <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
-        const addGoodsForm = document.getElementById('editGoodsForm');
+        const editGoodsForm = document.getElementById('editGoodsForm');
         const apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
 
-        $('#btn_edit_goods').click(function (event) {
+        $('#btn_edit_goods').click(function(event) {
             event.preventDefault();
 
             var goods = {
+                g_ID: $("#edit_g_ID").val(),
                 g_name: $("#edit_g_name").val(),
                 g_desc: $("#edit_g_desc").val(),
                 g_type: $("#edit_g_type").val(),
@@ -151,11 +153,11 @@
                 g_price_prediction: $("#edit_g_prediction_price").val(),
                 g_age: $("#edit_g_age").val(),
                 g_category: $("#edit_g_category").val(),
-            
+
             }
 
             $.ajax({
-                url: '{{ route('add_my_goods') }}',
+                url: '{{ route('edit_my_goods') }}',
                 type: 'POST',
                 data: goods,
                 dataType: 'json',
@@ -164,7 +166,7 @@
                     'Authorization': 'Bearer ' + apiToken
                 },
                 success: function(response) {
-                    console.log('respomse: ', response);
+                    console.log('response: ', response);
                     postGoodsImage(response.g_ID);
                 },
                 error: function(xhr, status, error) {
@@ -179,13 +181,13 @@
 
         function postGoodsImage(goodsId) {
             var goods_img = new FormData();
-            var inputImage = document.getElementById('input_image');
+            var inputImage = document.getElementById('edit_image');
 
             for (var i = 0; i < inputImage.files.length; i++) {
                 goods_img.append('files[]', inputImage.files[i]);
             }
             goods_img.append('g_ID', goodsId);
-            
+
             $.ajax({
                 url: '{{ route('add_img') }}',
                 type: 'POST',
@@ -220,4 +222,41 @@
             });
         }
     });
-</script> --}}
+
+    function editPreviewImage() {
+    const input = document.getElementById('edit_image');
+    const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
+
+    if (input.files && input.files.length > 0) {
+        for (let i = 0; i < input.files.length; i++) {
+            const file = input.files[i];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const imageContainer = document.createElement('div');
+                imageContainer.classList.add('queued-image-container');
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('queued-image');
+
+                const deleteButton = document.createElement('span');
+                deleteButton.innerHTML = '&times;';
+                deleteButton.classList.add('delete-button');
+                deleteButton.addEventListener('click', function() {
+                    imageContainer.remove();
+                    // Optionally, you can also send an AJAX request to delete the image from the database here
+                });
+
+                imageContainer.appendChild(img);
+                imageContainer.appendChild(deleteButton);
+
+                imagePreviewContainer.appendChild(imageContainer);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+}
+
+</script>

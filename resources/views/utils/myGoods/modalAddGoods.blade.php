@@ -100,8 +100,9 @@
                                     Image</label>
                                 <div id="id-input-div" class="input-div mt-2">
                                     <p>Drag & drop photos here or click to browse</p>
-                                    <input name="files" id="input_image" type="file" class="file" multiple="multiple"
-                                        accept="image/jpeg, image/png, image/jpg" onchange="previewImage()" />
+                                    <input name="files" id="input_image" type="file" class="file"
+                                        multiple="multiple" accept="image/jpeg, image/png, image/jpg"
+                                        onchange="previewImage()" />
                                 </div>
                                 <div id="queuedImages" class="queued-div p-2">
                                     <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
@@ -138,46 +139,46 @@
 <script>
     const queuedImagesArray = [];
 
-            function previewImage() {
-                const input = document.getElementById('input_image');
-                const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    function previewImage() {
+        const input = document.getElementById('input_image');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
 
-                if (input.files && input.files.length > 0) {
-                    for (let i = 0; i < input.files.length; i++) {
-                        const file = input.files[i];
-                        const reader = new FileReader();
+        if (input.files && input.files.length > 0) {
+            for (let i = 0; i < input.files.length; i++) {
+                const file = input.files[i];
+                const reader = new FileReader();
 
-                        reader.onload = function (e) {
-                            const imageContainer = document.createElement('div');
-                            imageContainer.classList.add('queued-image-container');
+                reader.onload = function(e) {
+                    const imageContainer = document.createElement('div');
+                    imageContainer.classList.add('queued-image-container');
 
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.classList.add('queued-image');
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('queued-image');
 
-                            const deleteButton = document.createElement('span');
-                            deleteButton.innerHTML = '&times;';
-                            deleteButton.classList.add('delete-button');
-                            deleteButton.addEventListener('click', function () {
-                                imageContainer.remove();
-                                const index = queuedImagesArray.indexOf(file);
-                                if (index !== -1) {
-                                    queuedImagesArray.splice(index, 1);
-                                }
-                            });
+                    const deleteButton = document.createElement('span');
+                    deleteButton.innerHTML = '&times;';
+                    deleteButton.classList.add('delete-button');
+                    deleteButton.addEventListener('click', function() {
+                        imageContainer.remove();
+                        const index = queuedImagesArray.indexOf(file);
+                        if (index !== -1) {
+                            queuedImagesArray.splice(index, 1);
+                        }
+                    });
 
-                            imageContainer.appendChild(img);
-                            imageContainer.appendChild(deleteButton);
+                    imageContainer.appendChild(img);
+                    imageContainer.appendChild(deleteButton);
 
-                            imagePreviewContainer.appendChild(imageContainer);
+                    imagePreviewContainer.appendChild(imageContainer);
 
-                            queuedImagesArray.push(file);
-                        };
+                    queuedImagesArray.push(file);
+                };
 
-                        reader.readAsDataURL(file);
-                    }
-                }
+                reader.readAsDataURL(file);
             }
+        }
+    }
 </script>
 
 <script>
@@ -185,7 +186,7 @@
         const addGoodsForm = document.getElementById('addGoodsForm');
         const apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
 
-        $('#btn_upload_goods').click(function (event) {
+        $('#btn_upload_goods').click(function(event) {
             event.preventDefault();
 
             var goods = {
@@ -196,7 +197,7 @@
                 g_price_prediction: $("#prediction_price").val(),
                 g_age: $("#age_goods").val(),
                 g_category: $("#g_category").val(),
-            
+
             }
 
             $.ajax({
@@ -209,7 +210,7 @@
                     'Authorization': 'Bearer ' + apiToken
                 },
                 success: function(response) {
-                    console.log('respomse: ', response);
+                    console.log('response: ', response);
                     postGoodsImage(response.g_ID);
                 },
                 error: function(xhr, status, error) {
@@ -230,7 +231,7 @@
                 goods_img.append('files[]', inputImage.files[i]);
             }
             goods_img.append('g_ID', goodsId);
-            
+
             $.ajax({
                 url: '{{ route('add_img') }}',
                 type: 'POST',

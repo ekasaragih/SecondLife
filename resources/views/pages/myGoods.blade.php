@@ -87,7 +87,7 @@
 | SCRIPTS
 |--------------------------------------------------------------------------
 --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     import {
@@ -141,41 +141,16 @@
                     });
             });
         });
-        const editButtons = document.querySelectorAll('.edit-btn');
+    });
 
-        editButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const goodsId = this.dataset.goodsId;
-                fetch(`/my-goods/${goodsId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        populateEditModal(data);
-                        console.log(data);
-                        console.log(document.getElementById('g_name')
-                        .value); // Call a function to populate the modal with the retrieved data
-                        openEditModal();
-                    })
-                    .catch(error => console.error(error));
-            });
-        });
+    function clearEditImagePreview() {
+        const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
+        imagePreviewContainer.innerHTML = ''; // Clear the container by removing all its child elements
+    }
 
-        function populateEditModal(data) {
-            document.getElementById('edit_g_name').value = data.g_name;
-            document.getElementById('edit_g_category').value = data.g_category;
-            document.getElementById('edit_g_type').value = data.g_type;
-            document.getElementById('edit_g_original_price').value = data.g_original_price;
-            // document.getElementById('g_price_prediction').value = data.g_price_prediction;
-            document.getElementById('edit_g_age').value = data.g_age;
-            document.getElementById('edit_g_desc').value = data.g_desc;
-            previewEditImages(data.images);
-        }
+    function previewEditImages(images) {
+        clearEditImagePreview(); // Clear the container before populating with new images
 
-        function openEditModal() {
-            const modalEditGoods = document.getElementById('modalEditGoods');
-            modalEditGoods.classList.remove('hidden');
-        }
-
-        function previewEditImages(images) {
         const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
 
         images.forEach(imageUrl => {
@@ -200,5 +175,41 @@
             imagePreviewContainer.appendChild(imageContainer);
         });
     }
+
+    
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const editButtons = document.querySelectorAll('.edit-btn');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const goodsId = this.dataset.goodsId;
+                fetch(`/my-goods/${goodsId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        populateEditModal(data);
+                    })
+                    .catch(error => console.error(error));
+            });
+        });
+
+        function populateEditModal(data) {
+            document.getElementById('edit_g_ID').value = data.g_ID;
+            document.getElementById('edit_g_name').value = data.g_name;
+            document.getElementById('edit_g_category').value = data.g_category;
+            document.getElementById('edit_g_type').value = data.g_type;
+            document.getElementById('edit_g_original_price').value = data.g_original_price;
+            document.getElementById('edit_g_prediction_price').value = data.g_price_prediction;
+            document.getElementById('edit_g_age').value = data.g_age;
+            document.getElementById('edit_g_desc').value = data.g_desc;
+            previewEditImages(data.images);
+            openEditModal();
+        }
+
+        function openEditModal() {
+            const modalEditGoods = document.getElementById('modalEditGoods');
+            modalEditGoods.classList.remove('hidden');
+        }
     });
 </script>
