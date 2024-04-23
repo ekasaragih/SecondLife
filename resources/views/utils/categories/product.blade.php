@@ -181,7 +181,6 @@
             data: data,
             success: function(data) {
                 if (data.success) {
-                  
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',
@@ -190,12 +189,20 @@
                         showConfirmButton: false
                     });
                 } else {
-                   
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: data.message,
-                    });
+                    // Check if the error message indicates that the product is already in the wishlist
+                    if (data.message.includes('already added')) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Oops...',
+                            text: data.message,
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        });
+                    }
                 }
             },
             error: function(xhr, status, error) {
@@ -209,7 +216,6 @@
             }
         });
     });
-  
 </script>
 
 <script>
