@@ -28,7 +28,7 @@
                     Sylverter Stallone
                 </p> --}}
                 <p class="text-sm mt-1">
-                    Ayok makan mangga
+                    Cunawi
                 </p>
                 <p class="text-right text-xs text-grey-dark mt-1">
                     12:45 pm
