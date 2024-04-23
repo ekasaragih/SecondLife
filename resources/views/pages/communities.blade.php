@@ -1,16 +1,23 @@
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    <link rel="stylesheet" href="/asset/css/imgContainer.css">
+</head>
+
 @include('utils.layouts.navbar.topnav')
 <div class="flex justify-center h-screen pt-52">
     <div class="container w-4/5">
         <div class="text-3xl text-[#F12E52] mb-2"><b>Share Your Thoughts</b></div>
         <div class="w-full mx-auto rounded">
-            <form>
+            <form id="addCommunityPost">
+                @csrf
                 <div class="mb-4 border-2 rounded-md">
-                    <input type="text" id="post" name="post"
+                    <input type="text" id="community_title" name="community_title"
                         class="w-full px-3 py-2 border-b border-gray-300 font-semibold" placeholder="Title">
-                    <input type="textarea" id="post" name="post" class="w-full h-40 px-3 py-2 pt-0"
+                    <input type="textarea" id="community_desc" name="community_desc" class="w-full h-40 px-3 py-2 pt-0"
                         placeholder="Share your thoughts">
                 </div>
-                <button
+                <button type="submit" id="btn-community-post"
                     class="bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] font-bold py-2 px-4 rounded shadow">
                     Post
                 </button>
@@ -69,6 +76,53 @@
 </div>
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function(){
+    const addCommunityPost = document.getElementById('addCommunityPost');
+    const apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
+
+    $('#btn-community-post').click(function(event) {
+            event.preventDefault();
+
+            var community = {
+                community_title: $("#community_title").val(),
+                community_desc: $("#community_desc").val(),
+            }
+
+            $.ajax({
+                url: '{{ route('add_my_community_post') }}',
+                type: 'POST',
+                data: community,
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': 'Bearer ' + apiToken
+                },
+                success: function(response) {
+                    console.log('response: ', response);
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your post added successfully!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            location.reload();
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!",
+                    });
+                }
+            });
+        });
+});
+
     // Get the wishlist count element
      const wishlistCount = document.getElementById('wishlist-count');
 
