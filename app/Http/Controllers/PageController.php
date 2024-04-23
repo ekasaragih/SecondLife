@@ -51,9 +51,12 @@ class PageController extends Controller
         
         $authenticatedUser = session('authenticatedUser');
 
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+
         return view('pages.explore', [
             'user' => $authenticatedUser,
             'products' => $products,
+            'wishlistCount' => $wishlistCount,
         ]);
     }
 
@@ -62,7 +65,8 @@ class PageController extends Controller
         $authenticatedUser = session('authenticatedUser');
         $categories = Goods::distinct('g_category')->pluck('g_category');
         $products = Goods::getAllGoodsWithImages();
-
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        
         $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
 
         $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)
@@ -76,32 +80,50 @@ class PageController extends Controller
             'categories' => $categories,
             'products' => $products,
             'nonWishlistProducts' => $nonWishlistProducts,
+            'wishlistCount' => $wishlistCount,
         ]);
     }
 
 
     public function wishlist()
     {
-        return view("pages.wishlist");
+        $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+       
+        return view('pages.wishlist', [
+            'wishlistCount' => $wishlistCount,
+        ]);
     }
 
     public function communities()
     {
-        return view("pages.communities");
+        $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        dd($authenticatedUser);
+        return view('pages.communities', [
+            'user' => $authenticatedUser,
+            'wishlistCount' => $wishlistCount,
+        ]);
     }
 
     public function my_profile()
     {
         $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
 
-        return view('pages.myProfile', ['user' => $authenticatedUser]);
+        return view('pages.myProfile', [
+            'user' => $authenticatedUser, 
+            'wishlistCount' => $wishlistCount,
+        ]);
     }
 
     public function my_goods()
     {
         $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         $userId = $authenticatedUser->us_ID;
         $goods = Goods::where('us_ID', $userId)->get();
-        return view("pages.myGoods", compact('goods'));
+        
+        return view("pages.myGoods", compact('goods', 'wishlistCount'));
     }
 }

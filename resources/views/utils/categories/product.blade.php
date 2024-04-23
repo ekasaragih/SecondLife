@@ -103,12 +103,9 @@
 </script>
 
 <script>
-    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
-
-    $('#btn_add_wishlist').click(function(e) {
-        const productId = this.getAttribute('data-product-id');
-        const userId = this.getAttribute('data-user-id');
+    function addToWishlist(productId, userId) {
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
 
         var data = {
             g_ID: productId,
@@ -134,7 +131,6 @@
                         showConfirmButton: false
                     });
                 } else {
-                    // Check if the error message indicates that the product is already in the wishlist
                     if (data.message.includes('already added')) {
                         Swal.fire({
                             icon: 'info',
@@ -151,7 +147,6 @@
                 }
             },
             error: function(xhr, status, error) {
-                // Handle errors
                 console.error('Error:', error);
                 Swal.fire({
                     icon: 'error',
@@ -160,6 +155,12 @@
                 });
             }
         });
+    }
+
+    $(document).on('click', '.add-to-wishlist', function() {
+        var productId = $(this).data('product-id');
+        var userId = $(this).data('user-id');
+        addToWishlist(productId, userId);
     });
 </script>
 
@@ -208,21 +209,6 @@
             }
         });
     }
-
-    const wishlistCount = document.getElementById('wishlist-count');
-
-    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-    wishlistCount.textContent = wishlist.length;
-
-    const removeButtons = document.querySelectorAll('.remove-button');
-    removeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const index = button.dataset.index;
-            wishlist = wishlist.filter(item => item.index !== index);
-            localStorage.setItem('wishlist', JSON.stringify(wishlist));
-            wishlistCount.textContent = wishlist.length;
-        });
-    });
 
     // Function to continue to the chat page
     function continueToChat() {
