@@ -37,3 +37,59 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function sendMessage() {
+        const loggedInUserId = '{{ $loggedInUserId }}';
+        const ownerUserId = '{{ $ownerUserId }}';
+        const message = document.getElementById('messageInput').value.trim();
+
+            if (message !== '') {
+              
+                axios.post('api/chat/send', {
+                    sender_id: loggedInUserId,
+                    receiver_id: ownerUserId,
+                    message: message
+                })
+                .then(function (response) {
+                
+                    const formattedMessage = `
+                    <div class="flex justify-end mb-2">
+                        <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
+                            <p class="text-sm mt-1">
+                                ${message}
+                            </p>
+                            <p class="text-right text-xs text-grey-dark mt-1">
+                                You • ${moment().format('LT')}
+                            </p>
+                        </div>
+                    </div>
+                    `;
+                    document.getElementById('chatMessages').insertAdjacentHTML('beforeend', formattedMessage);
+                    document.getElementById('messageInput').value = '';
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Please enter a message',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        }
+        
+        document.getElementById('messageInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+</script>

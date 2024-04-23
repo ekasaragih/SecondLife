@@ -271,7 +271,7 @@
 
         console.log(loggedInUserId, ownerUserId);
         
-        window.location.href = '{{ route("chat_page") }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId;
+        window.location.href = '{{ route("home_chat") }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId;
     }
 
 

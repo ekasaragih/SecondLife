@@ -23,6 +23,8 @@
 
         <!-- Input Form -->
         <div class="flex">
+            <input type="hidden" value="{{ $loggedInUserId }}" />
+            <input type="hidden" value="{{ $ownerUserId }}" />
             <input type="text" id="messageInput"
                 class="w-full px-4 py-2 mr-2 focus:outline-none focus:ring focus:border-blue-300 border-gray-300 rounded-lg"
                 placeholder="Type your message...">
@@ -33,6 +35,16 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // You can use the passed user IDs here in your JavaScript if needed
+            const loggedInUserId = '{{ $loggedInUserId }}';
+            const ownerUserId = '{{ $ownerUserId }}';
+    
+            // Example usage
+            console.log('Logged-in user ID:', loggedInUserId);
+            console.log('Owner user ID:', ownerUserId);
+    </script>
 
     <script>
         function sendMessage() {
