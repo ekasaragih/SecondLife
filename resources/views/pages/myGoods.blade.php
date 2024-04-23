@@ -103,7 +103,7 @@
                     })
                     .then((willDelete) => {
                         if (willDelete) {
-                            fetch(`{{ route('add_my_goods') }}`, {
+                            fetch(`/my-goods/delete/${goodsId}`, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
