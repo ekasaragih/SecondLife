@@ -42,46 +42,42 @@ class GoodsController extends Controller
 
     public function storeImg(Request $request)
     {
-        // Retrieve the authenticated user from the session
         $authenticatedUser = session('authenticatedUser');
-        
-        // Validate the request data
         $request->validate([
             'files' => 'required|array',
-            'files.*' => 'image|mimes:jpeg,png,jpg|max:2048', // Validate each file in the 'files' array
-            'g_ID' => 'required|exists:goods,g_ID', // Ensure the 'g_ID' exists in the 'goods' table
+            'files.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'g_ID' => 'required|exists:goods,g_ID',
         ]);
 
-        // Find existing images associated with the same 'g_ID'
-        $existingImages = GoodsImage::where('g_ID', $request->input('g_ID'))->get();
+        $g_ID = $request->input('g_ID');
+        $goods = Goods::find($g_ID);
 
-        // Delete existing images if any
-        foreach ($existingImages as $existingImage) {
-            // Delete the image file from storage
-            Storage::delete($existingImage->img_url);
-            
-            // Delete the image record from the database
-            $existingImage->delete();
+        if (!$goods) {
+            return response()->json(['message' => 'Goods not found'], 404);
         }
 
-        // Loop through each file in the 'files' array to store new images
+        $goodsImages = GoodsImage::where('g_ID', $g_ID)->get();
+
+        foreach ($goodsImages as $image) {
+            $image->delete();
+            Storage::delete('public/goodsimage/' . $image->img_url);
+        }
+
+        GoodsImage::where('g_ID', $g_ID)->delete();
+
         foreach ($request->file('files') as $file) {
-            // Generate a unique image name based on goods details, user details, and timestamp
             $goods = Goods::find($request->input('g_ID'));
             $goodsName = str_replace(' ', '_', $goods->g_name);
             $username = $authenticatedUser->us_username;
             $goodsID = $goods->g_ID;
             $timestamp = now()->timestamp;
-            $imageCount = GoodsImage::where('g_ID', $request->input('g_ID'))->count(); // Count existing images for this goods
-            $extension = $file->getClientOriginalExtension(); // Get the file extension
+            $imageCount = GoodsImage::where('g_ID', $request->input('g_ID'))->count();
+            $extension = $file->getClientOriginalExtension();
 
-            // Construct the image name
             $imageName = $goodsName . '_' . $username . '_' . $goodsID . '_' . ($imageCount + 1) . '_' . $timestamp . '_' . $extension;
 
-            // Store the image in the 'public/goods_img' directory with the constructed image name
             $path = $file->storeAs('goods_img', $imageName, 'public');
 
-            // Create a new 'GoodsImage' record and save it to the database
             $goodsImage = new GoodsImage();
             $goodsImage->img_url = $path;
             $goodsImage->g_ID = $request->input('g_ID');
@@ -89,7 +85,6 @@ class GoodsController extends Controller
             $goodsImage->save();
         }
 
-        // Return a JSON response indicating success
         return response()->json(['message' => 'Images stored successfully'], 200);
     }
 

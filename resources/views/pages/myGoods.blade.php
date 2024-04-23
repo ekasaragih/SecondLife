@@ -59,13 +59,6 @@
                                     <span><i class="fa fa-trash mr-1" aria-hidden="true"></i> Delete </span>
                                 </button>
                             </div>
-                            {{-- <div
-                                class="p-2 m-1 bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] shadow-lg rounded-md">
-                                <a href="">
-                                    <span data-modal-target="modalEditGoods" data-modal-toggle="modalEditGoods"><i
-                                            class="fa fa-pencil mr-1" aria-hidden="true"></i> Edit </span>
-                                </a>
-                            </div> --}}
                         </div>
                     </div>
                 @endforeach
@@ -158,7 +151,7 @@
             imageContainer.classList.add('queued-image-container');
 
             const img = document.createElement('img');
-            img.src = `/storage/${imageUrl.img_url}`;
+            img.src = `/storage/app/public/${imageUrl.img_url}`;
             img.classList.add('queued-image');
 
             const deleteButton = document.createElement('span');

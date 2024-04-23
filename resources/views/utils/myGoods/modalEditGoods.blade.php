@@ -203,7 +203,7 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Goods and images stored successfully!",
+                        title: "Data changes successfully!",
                         showConfirmButton: false,
                         timer: 1500
                     }).then((result) => {
