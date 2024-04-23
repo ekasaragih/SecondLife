@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Goods;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +47,7 @@ class PageController extends Controller
         $categoryCounts = $recentProductsByCategory->map->count();
         $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
         $products = Goods::whereIn('g_category', $topCategories)->get();
-        // dd($products);
+        
         $authenticatedUser = session('authenticatedUser');
 
         return view('pages.explore', [
@@ -57,7 +58,15 @@ class PageController extends Controller
 
     public function categories()
     {
-        return view("pages.categories");
+        $authenticatedUser = session('authenticatedUser');
+        $categories = Goods::distinct('g_category')->pluck('g_category');
+        $products = Goods::getAllGoodsWithImages();
+
+        return view('pages.categories', [
+            'user' => $authenticatedUser,
+            'categories' => $categories,
+            'products' => $products,
+        ]);
     }
 
     public function wishlist()

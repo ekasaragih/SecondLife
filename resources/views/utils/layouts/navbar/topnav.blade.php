@@ -43,12 +43,12 @@
                     class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
             </a>
 
-            <a href="{{ route('home_chat') }}" title="Messages"
+            {{-- <a href="{{ route('home_chat') }}" title="Messages"
                 class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'home_chat' ? 'text-primary-content' : '' }}">
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
                 <span
                     class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
-            </a>
+            </a> --}}
 
 
 

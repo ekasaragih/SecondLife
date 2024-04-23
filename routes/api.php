@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,6 @@ Route::group(['middleware' => 'auth'], function () {
     // PROFILE
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('update.avatar');
     
+    // CHAT
+    Route::post('/chat/send', [ChatController::class, 'send'])->name('send_message');
 });

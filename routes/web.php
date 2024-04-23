@@ -34,7 +34,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
     Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
     Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
-    Route::get('/chat', [ChatController::class, 'index'])->name('home_chat');
+    Route::get('/chat-fix', [ChatController::class, 'index'])->name('home_chat');
+    Route::get('/chat', [ChatController::class, 'chat_page'])->name('chat_page');
 });
 
 Route::get('/', [PageController::class, 'explore'])->name('explore');
@@ -77,6 +78,9 @@ Route::get('/500-server-error', [PageController::class, 'internal_server_error']
 Route::post('/my-goods/add', [GoodsController::class, 'store'])->name('add_my_goods');
 Route::post('/my-goods/add-img', [GoodsController::class, 'storeImg'])->name('add_img');
 Route::post('/wishlist/add', [ProductController::class, 'addToWishlist'])->name('wishlist.add');
+
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send_message');
+
 
 
 

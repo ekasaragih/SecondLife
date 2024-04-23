@@ -7,7 +7,7 @@
         </svg>
     </div>
     <div class="flex-1 mx-4">
-        <input class="w-full border rounded px-2 py-2" type="text" />
+        <input class="w-full border rounded px-2 py-2" id="messageInput" type="text" />
     </div>
     <div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
