@@ -36,25 +36,39 @@
         $formattedPrice = 'Rp ' . number_format($product->g_original_price, 0, ',', '.');
         @endphp
 
-        <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image">
+        <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
+            data-product-image="{{ $imageUrl }}">
         <div class="px-6 py-4">
             <input type="hidden" id="goods_owner" value="{{ $product->us_ID }}" />
             <div class="font-bold text-xl mb-2">{{ $product->g_name }}</div>
-            <p class="text-gray-700 text-base mb-2">{{ $product->g_desc }}</p>
+            <p class="text-gray-700 text-base mb-2">{{ $product->g_desc }}
+            </p>
             <div class="grid grid-cols-1 gap-2">
                 <div>
                     {{-- <input type="hidden" id="goods_owner" value="{{ $product->us_ID }}" /> --}}
-                    <p class="text-gray-700"><span class="font-bold">Category:</span> {{ $product->g_category }}</p>
-                    <p class="text-gray-700"><span class="font-bold">Condition:</span> {{ $product->g_type }}</p>
-                    <p class="text-gray-700"><span class="font-bold">Age:</span> {{ $product->g_age }}</p>
-                    <p class="text-gray-700"><span class="font-bold">Price:</span> {{ $formattedPrice }}</p>
+                    <p class="text-gray-700"><span class="font-bold">Category:</span>
+                        {{ $product->g_category }}
+                    </p>
+                    <p class="text-gray-700"><span class="font-bold">Condition:</span>
+                        {{ $product->g_type }}
+                    </p>
+                    <p class="text-gray-700"><span class="font-bold">Age:</span>
+                        {{ $product->g_age }}
+                    </p>
+                    <p class="text-gray-700"><span class="font-bold">Price:</span>
+                        {{$formattedPrice }}
+                    </p>
                 </div>
             </div>
         </div>
         <div class="px-6 py-4">
             <div class="flex justify-between items-center">
                 <button class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
-                    onclick="openProductModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ $imageUrl }}', '{{ $product->g_category }}', '{{ $product->g_type }}', '{{ $formattedPrice }}')">
+                    id="btn_see_detail" data-product-image="{{ $imageUrl }}" data-product-name="{{ $product->g_name }}"
+                    data-product-name="{{ $product->g_name }}" data-product-desc="{{ $product->g_desc }}"
+                    data-product-category="{{ $product->g_category }}" data-product-category="{{ $product->g_age }}"
+                    data-product-type="{{ $product->g_type }}" data-product-price="{{ $formattedPrice }}"
+                    data-modal-target="modalProductDetail" data-modal-toggle="modalProductDetail">
                     View Details
                 </button>
                 <button
@@ -70,34 +84,6 @@
 
 <br><br>
 
-{{-- Product Modal --}}
-<div id="productModal" class="modal"
-    style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;">
-    <div class="modal-content"
-        style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 600px; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-        <div class="flex justify-end p-4">
-            <button class="text-gray-500 hover:text-gray-600 focus:outline-none" onclick="closeProductModal()">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                    </path>
-                </svg>
-            </button>
-        </div>
-        <div class="p-8" style="text-align: center;">
-            <img id="productImage" src="" alt="Product Image"
-                style="max-width: 50%; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
-            <h2 id="productName" class="text-2xl font-semibold mb-4"></h2>
-            <p id="productDesc" class="text-lg text-gray-700 mb-4"></p>
-            <p id="productCategory" class="text-lg text-gray-700 mb-2"></p>
-            <p id="productType" class="text-lg text-gray-700 mb-2"></p>
-            <p id="productPrice" class="text-lg text-gray-700 mb-2"></p>
-            <div class="flex justify-center">
-                <button class="bg-purple-500 text-white px-6 py-3 rounded hover:bg-gray-600 transition duration-300"
-                    onclick="showTermsAndConditionsPopup()">Click to Barter</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 {{-- Recommendation based on Categories --}}
 <div class="space-y-2 space-x-2">
@@ -139,23 +125,22 @@
     </div>
 </div>
 
-<!-- Popup Terms and Conditions -->
-<div id=" termsModal" class="modal"
-    style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1100; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;">
-    <div class="modal-content"
-        style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 800px; /* Ubah nilai max-width di sini */ position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-        <div class="flex justify-end p-4">
-            <button class="text-gray-500 hover:text-gray-600 focus:outline-none" onclick="closeTermsModal()">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                    </path>
-                </svg>
-            </button>
-        </div>
-    </div>
-</div>
+{{-- Product Details Modal --}}
+@include('utils.categories.modalProductDetail')
+@include('utils.categories.modalTermsAndCondition')
 
-
+{{--
+|--------------------------------------------------------------------------
+| SCRIPTS
+|--------------------------------------------------------------------------
+--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="/js/moment.js"></script>
+<script>
+    import {
+            Modal
+        } from 'flowbite';
+</script>
 
 <script>
     var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -219,65 +204,30 @@
 </script>
 
 <script>
-    // Open Product Modal
-    function openProductModal(name, desc, image, category, type, price) {
-        document.getElementById('productName').textContent = name;
-        document.getElementById('productDesc').textContent = desc;
-        document.getElementById('productImage').src = image;
-        document.getElementById('productCategory').textContent = 'Category: ' + category;
-        document.getElementById('productType').textContent = 'Type: ' + type;
-        document.getElementById('productPrice').textContent = 'Price: ' + price;
-        document.getElementById('productModal').style.display = 'block';
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var detailButtons = document.querySelectorAll('#btn_see_detail');
 
-    // Close Product Modal
-    function closeProductModal() {
-        document.getElementById('productModal').style.display = 'none';
-    }
+        detailButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var productName = this.getAttribute('data-product-name');
+                var productDesc = this.getAttribute('data-product-desc');
+                var productImage = this.getAttribute('data-product-image');
+                var productCategory = this.getAttribute('data-product-category');
+                var productType = this.getAttribute('data-product-type');
+                var productPrice = this.getAttribute('data-product-price');
 
-    // Function to show Terms and Conditions popup
-    function showTermsAndConditionsPopup() {
-        // Tampilkan popup Terms and Conditions
-        Swal.fire({
-            title: '<span style="font-size: 20px; font-weight: bold;">Barter Process Terms & Conditions</span>',
-            html: '<div style="text-align: justify; font-size: 16px; font-weight: 370;">' +
-                '<p>Dear User,</p><br>' +
-                '<p>Welcome to Secondlife, your trusted platform for facilitating barter transactions. Before proceeding, it\'s important to familiarize yourself with our terms and conditions to ensure a smooth and fair bartering experience for all participants.</p><br>' +
-                '<ul>' +
-                '<li><strong>1. Accuracy of Listings:</strong> Users are required to provide accurate and truthful descriptions of the items or services they offer for barter. Misrepresentation of items or services may result in the suspension or termination of the user\'s account.</li>' +
-                '<li><strong>2. Open Communication:</strong> We encourage open and transparent communication between users regarding the terms of the barter agreement. It is essential to discuss the condition, quantity, and value of the items or services being exchanged to avoid misunderstandings.</li>' +
-                '<li><strong>3. Legal Compliance:</strong> Users must ensure that the items or services they offer for barter comply with all applicable laws and regulations. This includes, but is not limited to, laws related to the sale of goods, intellectual property rights, and taxation.</li>' +
-                '<li><strong>4. Dispute Resolution:</strong> In the event of a dispute between users regarding a barter transaction, users are encouraged to attempt to resolve the issue amicably. If a resolution cannot be reached, users may contact the website administrator for assistance.</li>' +
-                '<li><strong>5. Limitation of Liability:</strong> The website and its administrators are not responsible for any disputes, damages, or losses arising from the barter process. Users engage in barter transactions at their own risk.</li>' +
-                '<li><strong>6. Privacy and Data Protection:</strong> We are committed to protecting your privacy and handling your personal information with care. All personal data provided during the barter process will be handled in accordance with our privacy policy. Users are prohibited from sharing personal information of other users without their consent.</li>' +
-                '<li><strong>7. Modification of Terms:</strong> These terms and conditions may be modified or updated by the website administrator at any time. Users will be notified of any changes, and continued use of the website constitutes acceptance of the modified terms.</li>' +
-                '<li><strong>8. Termination of Service:</strong> The website administrator reserves the right to suspend or terminate the barter service or any user\'s account at any time, for any reason, without prior notice.</li>' +
-                '<li><strong>9. Governing Law and Jurisdiction:</strong> These terms and conditions are governed by the laws of jurisdiction. Any disputes arising from the barter process shall be resolved exclusively in the courts of jurisdiction].</li>' +
-                '<li><strong>10. Severability:</strong> If any provision of these terms and conditions is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.</li><br>' +
-                '</ul>' +
-                '<p>By continuing to use our website and participate in the barter process, you acknowledge that you have read, understood, and agree to abide by these terms and conditions.</p><br>' +
-                '<p>Thank you for choosing Secondlife for your bartering needs. Should you have any questions or concerns, please do not hesitate to contact us.</p><br>' +
-                '<p>Sincerely,</p>' +
-                '<p>Secondlife Team</p>' +
-                '</div>',
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonText: 'I Accept',
-            cancelButtonText: 'Cancel',
-            customClass: {
-                popup: 'wide-popup' // Tambahkan kelas CSS wide-popup di sini
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Jika pengguna menerima, lanjutkan dengan aksi yang diinginkan, misalnya lanjut ke obrolan
-                continueToChat();
-            } else {
-                // Jika pengguna membatalkan atau menolak, tutup popup atau lakukan aksi lain yang sesuai
-                closeProductModal();
-            }
+                document.getElementById('productName').textContent = productName;
+                document.getElementById('productDesc').textContent = productDesc;
+                document.getElementById('productImage').src = productImage;
+                document.getElementById('productCategory').textContent = 'Category: ' + productCategory;
+                document.getElementById('productType').textContent = 'Type: ' + productType;
+                document.getElementById('productPrice').textContent = 'Price: ' + productPrice;
+
+                // var modal = new fb.Modal(document.getElementById('modalProductDetail'));
+                // modal.show();
+            });
         });
-    }
-
+    });
 
 
     // Filter by Category
