@@ -3,14 +3,9 @@
     <meta name="api-token" content="{{ Auth::user()->api_token }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .wide-popup {
-            width: 1500px !important;
-        }
-    </style>
 </head>
 
-{{-- Filter based on categories --}}
+{{-- Filter categories --}}
 <div class="flex gap-2 px-2">
     <select
         class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
@@ -86,47 +81,12 @@
 
 
 {{-- Recommendation based on Categories --}}
-<div class="space-y-2 space-x-2">
-    <div class="text-3xl text-[#F12E52]"><b>Recommendation</b><span class="font-bold text-sm text-gray-600">based on
-            your preferences</span></div>
-</div>
-<br>
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-4">
-        @php
-        // Ambil daftar produk yang tidak termasuk dalam wishlist
-        $nonWishlistProducts = \App\Models\Goods::all()
-        ->filter(function ($product) {
-        return !in_array(
-        $product->id,
-        collect(json_decode(request()->cookie('wishlist') ?? '[]'))
-        ->pluck('id')
-        ->toArray(),
-        );
-        })
-        ->shuffle()
-        ->take(8);
-        @endphp
-
-        @foreach ($nonWishlistProducts as $product)
-        <div class="recommendation-card bg-gray-100 rounded-lg p-4 flex flex-col justify-between">
-            <img src="{{ $product->images->first()->img_url ?? 'https://via.placeholder.com/150' }}"
-                alt="{{ $product->g_name }}" class="w-full mb-2">
-            <h3 class="mb-1 text-xl font-semibold">{{ $product->g_name }}</h3>
-            <p class="mb-1 text-lg">Price: Rp {{ number_format($product->g_original_price, 0, ',', '.') }}</p>
-            <p class="mb-4 text-lg">Category: {{ $product->g_category }}</p>
-            <button
-                class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300 btn-add-to-wishlist"
-                data-product="{{ $product->g_ID }}" data-user-id="{{ $user->us_ID }}">
-                Add to Wishlist
-            </button>
-        </div>
-        @endforeach
-    </div>
-</div>
+@include('utils.categories.recommendation')
 
 {{-- Product Details Modal --}}
 @include('utils.categories.modalProductDetail')
+
+{{-- T&C Modal --}}
 @include('utils.categories.modalTermsAndCondition')
 
 {{--
@@ -223,8 +183,6 @@
                 document.getElementById('productType').textContent = 'Type: ' + productType;
                 document.getElementById('productPrice').textContent = 'Price: ' + productPrice;
 
-                // var modal = new fb.Modal(document.getElementById('modalProductDetail'));
-                // modal.show();
             });
         });
     });

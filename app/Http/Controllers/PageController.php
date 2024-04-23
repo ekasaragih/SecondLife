@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Goods;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
@@ -62,12 +63,22 @@ class PageController extends Controller
         $categories = Goods::distinct('g_category')->pluck('g_category');
         $products = Goods::getAllGoodsWithImages();
 
+        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
+
+        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)
+            ->with('images')
+            ->inRandomOrder()
+            ->limit(8)
+            ->get();
+
         return view('pages.categories', [
             'user' => $authenticatedUser,
             'categories' => $categories,
             'products' => $products,
+            'nonWishlistProducts' => $nonWishlistProducts,
         ]);
     }
+
 
     public function wishlist()
     {
