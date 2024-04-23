@@ -99,7 +99,7 @@ class PageController extends Controller
     {
         $authenticatedUser = session('authenticatedUser');
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-        dd($authenticatedUser);
+        
         return view('pages.communities', [
             'user' => $authenticatedUser,
             'wishlistCount' => $wishlistCount,
