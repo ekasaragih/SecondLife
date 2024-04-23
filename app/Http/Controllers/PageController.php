@@ -88,9 +88,23 @@ class PageController extends Controller
     public function wishlist()
     {
         $authenticatedUser = session('authenticatedUser');
+        $categories = Goods::distinct('g_category')->pluck('g_category');
+        $products = Goods::getAllGoodsWithImages();
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-       
+        
+        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
+
+        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)
+            ->with('images')
+            ->inRandomOrder()
+            ->limit(8)
+            ->get();
+
         return view('pages.wishlist', [
+            'user' => $authenticatedUser,
+            'categories' => $categories,
+            'products' => $products,
+            'nonWishlistProducts' => $nonWishlistProducts,
             'wishlistCount' => $wishlistCount,
         ]);
     }
