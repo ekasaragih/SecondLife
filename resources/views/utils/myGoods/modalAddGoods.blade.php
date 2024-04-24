@@ -74,18 +74,18 @@
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                                 <div class="w-full mb-4">
+                                    <label for="age_goods" class="block text-sm font-medium text-gray-700">Age of Goods
+                                        (In years) </label>
+                                    <input type="number" id="age_goods" name="age_goods" placeholder="ex: 1"
+                                        class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                                </div>
+                                <div class="w-full mb-4">
                                     <label for="prediction_price"
                                         class="block text-sm font-medium text-gray-700">Prediction
                                         Price</label>
                                     <input type="number" id="prediction_price" name="prediction_price"
                                         placeholder="will be count by system"
-                                        class="mt-1 p-2 w-full border border-gray-300 rounded-md">
-                                </div>
-                                <div class="w-full mb-4">
-                                    <label for="age_goods" class="block text-sm font-medium text-gray-700">Age of Goods
-                                        (In years) </label>
-                                    <input type="number" id="age_goods" name="age_goods" placeholder="ex: 1"
-                                        class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                                        class="mt-1 p-2 w-full border border-gray-300 rounded-md" disabled>
                                 </div>
                             </div>
                             <div class="mb-4">
@@ -188,13 +188,14 @@
 
         $('#btn_upload_goods').click(function(event) {
             event.preventDefault();
+            var predictionPrice = calculatePredictionPrice();
 
             var goods = {
                 g_name: $("#g_name").val(),
                 g_desc: $("#g_description").val(),
                 g_type: $("#g_type").val(),
                 g_original_price: $("#original_price").val(),
-                g_price_prediction: $("#prediction_price").val(),
+                g_price_prediction: predictionPrice,
                 g_age: $("#age_goods").val(),
                 g_category: $("#g_category").val(),
 
@@ -222,6 +223,61 @@
                 }
             });
         });
+
+        function calculatePredictionPrice() {
+            var g_type = $("#g_type").val();
+            var g_category = $("#g_category").val();
+            var g_original_price = parseInt($("#original_price").val());
+            var g_age = parseInt($("#age_goods").val());
+
+            if (g_type === 'New') {
+                var predictionPrice = g_original_price - (0.0286 * g_original_price);
+                return predictionPrice;
+            } else if (g_type === 'Used') {
+                var marginalSalvage, lifeSpan;
+
+                if (g_category === 'Electronics') {
+                    marginalSalvage = 0.10;
+                    lifeSpan = 5.8;
+                } else if (g_category === 'Clothing and Accessories') {
+                    marginalSalvage = 0.25;
+                    lifeSpan = 5.4;
+                } else if (g_category === 'Home Decor') {
+                    marginalSalvage = 0.15;
+                    lifeSpan = 10;
+                } else if (g_category === 'Collectibles') {
+                    marginalSalvage = 0.04;
+                    lifeSpan = null; // Assign a value for lifeSpan
+                } else if (g_category === 'Books and Media') {
+                    marginalSalvage = 0.20;
+                    lifeSpan = 15;
+                } else if (g_category === 'Tools and Equipment') {
+                    marginalSalvage = 0.08;
+                    lifeSpan = 7.45;
+                } else if (g_category === 'Musical Instruments') {
+                    marginalSalvage = 0.06;
+                    lifeSpan = null;
+                } else if (g_category === 'Sports and Fitness Equipment') {
+                    marginalSalvage = 0.07;
+                    lifeSpan = 10;
+                } else if (g_category === 'Kitchenware') {
+                    marginalSalvage = 0.05;
+                    lifeSpan = 9.9;
+                }
+
+                if (lifeSpan === null) {
+                    var predictionPrice = g_original_price - (marginalSalvage * g_original_price / g_age);
+                } else {
+                    var depreciationExpense = (g_original_price - (g_original_price * marginalSalvage)) /
+                        lifeSpan;
+                    var predictionPrice = g_original_price - (g_age * depreciationExpense);
+                }
+                return predictionPrice;
+            } else {
+                throw new Error('Invalid type');
+            }
+        }
+
 
         function postGoodsImage(goodsId) {
             var goods_img = new FormData();
