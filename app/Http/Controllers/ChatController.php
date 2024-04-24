@@ -37,7 +37,7 @@ class ChatController extends Controller
 
         $contacts = User::whereIn('us_ID', $contacts)->get();
 
-                foreach ($contacts as $contact) {
+        foreach ($contacts as $contact) {
             $lastMessage = Message::where(function ($query) use ($loggedInUserId, $contact) {
                 $query->where('sender_id', $loggedInUserId)
                     ->where('receiver_id', $contact->us_ID);

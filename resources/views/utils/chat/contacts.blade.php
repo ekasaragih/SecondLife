@@ -12,12 +12,10 @@
                     {{ $contact->us_name }}
                 </p>
                 <p class="text-xs text-grey-darkest">
-                    {{-- Waktu dari last message dari other user yang ngechat si logged in user --}}
                     {{ $contact->last_message_time }}
                 </p>
             </div>
             <p class="text-grey-dark mt-1 text-sm">
-                {{-- Last message dari other user yang ngechat si logged in user --}}
                 {{ $contact->last_message }}
             </p>
         </div>

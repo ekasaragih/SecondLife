@@ -15,6 +15,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-4">
                 <!-- Products will be added here -->
+                {{-- ini ntar langsung dari db aja pake foreach wishlist gitu2 baru display si goods nya --}}
             </div>
         </div><br>
 
