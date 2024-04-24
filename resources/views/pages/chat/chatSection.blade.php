@@ -17,6 +17,7 @@
 
                     <!-- Contacts -->
                     @include('utils.chat.contacts')
+
                 </div>
 
 
