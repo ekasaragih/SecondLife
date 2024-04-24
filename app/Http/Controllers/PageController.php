@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Communities;
 use Illuminate\Http\Request;
 use App\Models\Goods;
 use Illuminate\Support\Facades\DB;
@@ -67,7 +69,8 @@ class PageController extends Controller
 
     public function communities()
     {
-        return view("pages.communities");
+        $communities = Communities::all();
+        return view("pages.communities", compact('communities'));
     }
 
     public function my_profile()
