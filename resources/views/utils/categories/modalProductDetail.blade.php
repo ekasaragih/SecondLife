@@ -34,7 +34,8 @@
             <!-- Modal footer -->
             <div class="flex items-center space-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button class="bg-purple-500 text-white px-6 py-3 rounded hover:bg-gray-600 transition duration-300"
-                    data-modal-target="modalTermsAndCondition" data-modal-toggle="modalTermsAndCondition">Click to
+                    data-modal-target="modalTermsAndCondition" data-modal-toggle="modalTermsAndCondition"
+                    data-modal-hide="modalProductDetail">Click to
                     Barter
                 </button>
             </div>
