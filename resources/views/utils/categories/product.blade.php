@@ -40,7 +40,6 @@
             </p>
             <div class="grid grid-cols-1 gap-2">
                 <div>
-                    {{-- <input type="hidden" id="goods_owner" value="{{ $product->us_ID }}" /> --}}
                     <p class="text-gray-700"><span class="font-bold">Category:</span>
                         {{ $product->g_category }}
                     </p>
@@ -60,7 +59,7 @@
             <div class="flex justify-between items-center">
                 <button class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
                     id="btn_see_detail" data-product-image="{{ $imageUrl }}" data-product-name="{{ $product->g_name }}"
-                    data-product-name="{{ $product->g_name }}" data-product-desc="{{ $product->g_desc }}"
+                    data-product-id="{{ $product->us_ID }}" data-product-desc="{{ $product->g_desc }}"
                     data-product-category="{{ $product->g_category }}" data-product-category="{{ $product->g_age }}"
                     data-product-type="{{ $product->g_type }}" data-product-price="{{ $formattedPrice }}"
                     data-modal-target="modalProductDetail" data-modal-toggle="modalProductDetail">
@@ -110,7 +109,7 @@
         var data = {
             g_ID: productId,
             us_ID: userId,
-        }
+        };
 
         $.ajax({
             url: 'api/wishlist/store',
@@ -170,6 +169,7 @@
 
         detailButtons.forEach(function(button) {
             button.addEventListener('click', function() {
+                var productUserId= this.getAttribute('data-product-id');
                 var productName = this.getAttribute('data-product-name');
                 var productDesc = this.getAttribute('data-product-desc');
                 var productImage = this.getAttribute('data-product-image');
@@ -177,6 +177,7 @@
                 var productType = this.getAttribute('data-product-type');
                 var productPrice = this.getAttribute('data-product-price');
 
+                document.getElementById('productId').textContent = productUserId;
                 document.getElementById('productName').textContent = productName;
                 document.getElementById('productDesc').textContent = productDesc;
                 document.getElementById('productImage').src = productImage;
@@ -210,14 +211,5 @@
         });
     }
 
-    // Function to continue to the chat page
-    function continueToChat() {
-        const loggedInUserId = "{{ $user->us_ID }}";
-        const ownerUserId = $('#goods_owner').val();
 
-        console.log(loggedInUserId, ownerUserId);
-
-        window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' +
-            ownerUserId;
-    }
 </script>

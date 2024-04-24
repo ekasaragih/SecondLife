@@ -67,13 +67,13 @@
                                 acceptance of the modified terms.</li>
                             <li><strong>8. Termination of Service:</strong> The website administrator reserves the
                                 right to suspend or terminate
-                                the barter service or any user\s account at any time, for any reason, without prior
+                                the barter service or any user's account at any time, for any reason, without prior
                                 notice.</li>
                             <li><strong>9. Governing Law and Jurisdiction:</strong> These terms and conditions are
                                 governed by the laws of
                                 jurisdiction. Any disputes arising from the barter process shall be resolved exclusively
                                 in the courts of
-                                jurisdiction].</li>
+                                jurisdiction.</li>
                             <li><strong>10. Severability:</strong> If any provision of these terms and conditions is
                                 found to be invalid or
                                 unenforceable, the remaining provisions shall remain in full force and effect.</li><br>
@@ -93,9 +93,8 @@
             <!-- Modal footer -->
             <div class="flex items-center space-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button type="button" onclick="continueToChat()"
-                    class="text-black bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    I accept
-                </button>
+                    class="text-black bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">I
+                    accept</button>
                 <button type="button" data-modal-hide="modalTermsAndCondition"
                     class="text-yellow-400 inline-flex items-center hover:text-white border border-yellow-400 hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     <svg class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewBox="0 0 20 20"
@@ -110,3 +109,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Function to continue to the chat page
+    function continueToChat() {
+        const loggedInUserId = "{{ $user->us_ID }}";
+        const ownerUserId = $('#productId').text();
+        
+        console.log(loggedInUserId, ownerUserId);
+        
+        const modal = document.getElementById('modalTermsAndCondition');
+        const ownerIdElement = modal.querySelector('#ownerId');
+        if (ownerIdElement) {
+            ownerIdElement.textContent = ownerUserId;
+        }
+
+        window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId;
+    }
+</script>

@@ -8,9 +8,9 @@
             <p class="text-grey-darkest">
                 Minyons
             </p>
-            <p class="text-grey-darker text-xs mt-1">
+            {{-- <p class="text-grey-darker text-xs mt-1">
                 Active now
-            </p>
+            </p> --}}
         </div>
     </div>
 

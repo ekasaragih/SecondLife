@@ -22,6 +22,8 @@
                 <div class="max-w-3xl px-4 py-8 mx-auto">
                     <img id="productImage" src="" alt="Product Image"
                         style="max-width: 50%; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
+
+                    <p id="productId" class="hidden text-lg text-gray-700 mb-4"></p>
                     <h2 id="productName" class="text-2xl font-semibold mb-4"></h2>
                     <p id="productDesc" class="text-lg text-gray-700 mb-4"></p>
                     <p id="productCategory" class="text-lg text-gray-700 mb-2"></p>

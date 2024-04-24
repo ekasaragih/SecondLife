@@ -48,6 +48,12 @@
         const ownerUserId = '{{ $ownerUserId }}';
         const message = document.getElementById('messageInput').value.trim();
 
+        const productName = $('#productName').text();
+        const productDesc = $('#productDesc').text();
+        const productCategory = $('#productCategory').text();
+        const productType = $('#productType').text();
+        const productPrice = $('#productPrice').text();
+
             if (message !== '') {
               
                 axios.post('api/chat/send', {
