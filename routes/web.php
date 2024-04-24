@@ -57,6 +57,7 @@ Route::get('/comments', [CommentController::class, 'index']);
 Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
 Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
 
+Route::post('/wishlist', 'SwapeController@addToWishlist')->name('wishlist.add');
 
 
 
