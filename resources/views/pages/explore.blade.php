@@ -9,7 +9,7 @@
     <div class="container w-4/5">
 
         @auth
-        <div class="my-4 text-secondary">
+        <div class="my-4 text-secondary font-semibold">
             Olla, {{ $user->us_name }}!
         </div>
         @else

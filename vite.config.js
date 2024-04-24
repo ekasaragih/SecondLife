@@ -1,9 +1,12 @@
 // vite.config.js
 import { defineConfig } from "vite";
-import { resolve } from "path";
+import laravel from "laravel-vite-plugin";
 
 export default defineConfig({
-    css: {
-        postcss: resolve(__dirname, "./postcss.config.cjs"),
-    },
+    plugins: [
+        laravel({
+            input: ["resources/css/app.css", "resources/js/app.js"],
+            refresh: true,
+        }),
+    ],
 });
