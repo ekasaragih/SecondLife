@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Communities;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Goods;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
@@ -48,43 +48,96 @@ class PageController extends Controller
         $categoryCounts = $recentProductsByCategory->map->count();
         $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
         $products = Goods::whereIn('g_category', $topCategories)->get();
-        // dd($products);
+        
         $authenticatedUser = session('authenticatedUser');
+
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
 
         return view('pages.explore', [
             'user' => $authenticatedUser,
             'products' => $products,
+            'wishlistCount' => $wishlistCount,
         ]);
     }
 
     public function categories()
     {
-        return view("pages.categories");
+        $authenticatedUser = session('authenticatedUser');
+        $categories = Goods::distinct('g_category')->pluck('g_category');
+        $products = Goods::getAllGoodsWithImages();
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        
+        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
+
+        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)
+            ->with('images')
+            ->inRandomOrder()
+            ->limit(8)
+            ->get();
+
+        return view('pages.categories', [
+            'user' => $authenticatedUser,
+            'categories' => $categories,
+            'products' => $products,
+            'nonWishlistProducts' => $nonWishlistProducts,
+            'wishlistCount' => $wishlistCount,
+        ]);
     }
+
 
     public function wishlist()
     {
-        return view("pages.wishlist");
+        $authenticatedUser = session('authenticatedUser');
+        $categories = Goods::distinct('g_category')->pluck('g_category');
+        $products = Goods::getAllGoodsWithImages();
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        
+        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
+
+        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)
+            ->with('images')
+            ->inRandomOrder()
+            ->limit(8)
+            ->get();
+
+        return view('pages.wishlist', [
+            'user' => $authenticatedUser,
+            'categories' => $categories,
+            'products' => $products,
+            'nonWishlistProducts' => $nonWishlistProducts,
+            'wishlistCount' => $wishlistCount,
+        ]);
     }
 
     public function communities()
     {
-        $communities = Communities::all();
-        return view("pages.communities", compact('communities'));
+        $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        
+        return view('pages.communities', [
+            'user' => $authenticatedUser,
+            'wishlistCount' => $wishlistCount,
+        ]);
     }
 
     public function my_profile()
     {
         $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
 
-        return view('pages.myProfile', ['user' => $authenticatedUser]);
+        return view('pages.myProfile', [
+            'user' => $authenticatedUser, 
+            'wishlistCount' => $wishlistCount,
+        ]);
     }
 
     public function my_goods()
     {
         $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         $userId = $authenticatedUser->us_ID;
         $goods = Goods::where('us_ID', $userId)->get();
-        return view("pages.myGoods", compact('goods'));
+        
+        return view("pages.myGoods", compact('goods', 'wishlistCount'));
     }
 }
