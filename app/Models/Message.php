@@ -20,6 +20,7 @@ class Message extends Model
         'id',
         'sender_ID',
         'receiver_ID',
+        'g_ID',
         'message',
     ];
 }

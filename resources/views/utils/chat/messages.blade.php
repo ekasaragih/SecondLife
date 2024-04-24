@@ -23,15 +23,13 @@
             </div>
         </div>
 
-
-
-        {{-- Chat from logged in user --}}
-        <div id="chatMessages"></div>
-
         {{-- Display chat messages --}}
+        @php
+        $prevDate = null;
+        @endphp
         @foreach($chatMessages as $message)
 
-        @if($message->sender_id == $loggedInUserId)
+        @if($message->created_at->format('d/m/Y') !== $prevDate)
         <div class="flex justify-center mb-2">
             <div class="rounded py-2 px-4" style="background-color: #DDECF2">
                 <p class="text-sm uppercase">
@@ -39,14 +37,23 @@
                 </p>
             </div>
         </div>
-        {{-- Right section chat from logged in user --}}
+        @endif
+
+        {{-- Update previous date --}}
+        @php
+        $prevDate = $message->created_at->format('d/m/Y');
+        @endphp
+
+        {{-- Display chat messages --}}
+        @if($message->sender_id == $loggedInUserId)
+        {{-- Right section chat from logged-in user --}}
         <div class="flex justify-end mb-2">
             <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
                 <p class="text-sm mt-1">
-                    {{ $message->content }}
+                    {{ $message->message }}
                 </p>
                 <p class="text-right text-xs text-grey-dark mt-1">
-                    You • {{ $message->created_at->format('H:i') }} {{-- Adjust the date format as needed --}}
+                    You • {{ $message->created_at->format('H:i') }}
                 </p>
             </div>
         </div>
@@ -55,19 +62,18 @@
         <div class="flex mb-2">
             <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
                 <p class="text-sm mt-1">
-                    {{ $message->content }}
+                    {{ $message->message }}
                 </p>
                 <p class="text-right text-xs text-grey-dark mt-1">
-                    {{ $message->sender_name }} • {{ $message->created_at->format('H:i') }} {{-- Adjust the date
-                    format as
-                    needed --}}
+                    {{ $ownerName }} • {{ $message->created_at->format('H:i') }}
                 </p>
             </div>
         </div>
         @endif
         @endforeach
 
-
+        {{-- Chat from logged in user --}}
+        <div id="chatMessages"></div>
 
     </div>
 </div>
