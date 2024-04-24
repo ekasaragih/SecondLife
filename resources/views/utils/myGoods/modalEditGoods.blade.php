@@ -75,18 +75,18 @@
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                                 <div class="w-full mb-4">
-                                    <label for="prediction_price"
-                                        class="block text-sm font-medium text-gray-700">Prediction
-                                        Price</label>
-                                    <input type="number" id="edit_g_prediction_price" name="prediction_price"
-                                        placeholder="will be count by system"
-                                        class="mt-1 p-2 w-full border border-gray-300 rounded-md">
-                                </div>
-                                <div class="w-full mb-4">
                                     <label for="age_goods" class="block text-sm font-medium text-gray-700">Age of Goods
                                         (In years) </label>
                                     <input type="number" id="edit_g_age" name="age_goods" placeholder="ex: 1"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
+                                </div>
+                                <div class="w-full mb-4">
+                                    <label for="prediction_price"
+                                        class="block text-sm font-medium text-gray-700">Prediction
+                                        Price (counted by the system)</label>
+                                    <input type="number" id="edit_g_prediction_price" name="prediction_price"
+                                        placeholder="will be count by system"
+                                        class="mt-1 p-2 w-full border border-gray-300 rounded-md" disabled>
                                 </div>
                             </div>
                             <div class="mb-4">
@@ -224,39 +224,38 @@
     });
 
     function editPreviewImage() {
-    const input = document.getElementById('edit_image');
-    const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
+        const input = document.getElementById('edit_image');
+        const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
 
-    if (input.files && input.files.length > 0) {
-        for (let i = 0; i < input.files.length; i++) {
-            const file = input.files[i];
-            const reader = new FileReader();
+        if (input.files && input.files.length > 0) {
+            for (let i = 0; i < input.files.length; i++) {
+                const file = input.files[i];
+                const reader = new FileReader();
 
-            reader.onload = function(e) {
-                const imageContainer = document.createElement('div');
-                imageContainer.classList.add('queued-image-container');
+                reader.onload = function(e) {
+                    const imageContainer = document.createElement('div');
+                    imageContainer.classList.add('queued-image-container');
 
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.classList.add('queued-image');
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('queued-image');
 
-                const deleteButton = document.createElement('span');
-                deleteButton.innerHTML = '&times;';
-                deleteButton.classList.add('delete-button');
-                deleteButton.addEventListener('click', function() {
-                    imageContainer.remove();
-                    // Optionally, you can also send an AJAX request to delete the image from the database here
-                });
+                    const deleteButton = document.createElement('span');
+                    deleteButton.innerHTML = '&times;';
+                    deleteButton.classList.add('delete-button');
+                    deleteButton.addEventListener('click', function() {
+                        imageContainer.remove();
+                        // Optionally, you can also send an AJAX request to delete the image from the database here
+                    });
 
-                imageContainer.appendChild(img);
-                imageContainer.appendChild(deleteButton);
+                    imageContainer.appendChild(img);
+                    imageContainer.appendChild(deleteButton);
 
-                imagePreviewContainer.appendChild(imageContainer);
-            };
+                    imagePreviewContainer.appendChild(imageContainer);
+                };
 
-            reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
+            }
         }
     }
-}
-
 </script>
