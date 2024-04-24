@@ -8,16 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Wishlist extends Model
 {
     use HasFactory;
-    protected $table = 'wishlists'; // Sesuaikan dengan nama tabel di database jika berbeda
+    protected $table = 'wishlist';
 
     protected $fillable = [
-        'g_ID', // ID produk
-        'us_ID', // ID pengguna
+        'g_ID',
+        'us_ID',
     ];
 
-    // Tambahkan relasi ke model produk jika diperlukan
     public function product()
     {
-        return $this->belongsTo(Product::class, 'g_ID');
+        return $this->belongsTo(Goods::class, 'g_ID');
     }
 }

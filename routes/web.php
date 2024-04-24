@@ -90,5 +90,8 @@ Route::delete('/my-goods/delete/{id}', [GoodsController::class, 'destroy'])->nam
 Route::post('/wishlist/add', [ProductController::class, 'addToWishlist'])->name('wishlist.add');
 Route::post('/communities/add', [CommunitiesController::class, 'store'])->name('add_my_community_post');
 
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send_message');
+
+
 
 

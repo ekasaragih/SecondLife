@@ -1,14 +1,6 @@
 <div class="flex-1 overflow-auto" style="background-color: #DAD3CC">
     <div class="py-2 px-3">
 
-        <div class="flex justify-center mb-2">
-            <div class="rounded py-2 px-4" style="background-color: #DDECF2">
-                <p class="text-sm uppercase">
-                    April 19, 2024
-                </p>
-            </div>
-        </div>
-
         <div class="flex justify-center mb-4">
             <div class="rounded py-2 px-4" style="background-color: #FCF4CB">
                 <p class="text-xs">
@@ -16,120 +8,95 @@
                 </p>
             </div>
         </div>
-        {{--
-        <div class="flex mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                <p class="text-sm text-teal">
-                    Sylverter Stallone
-                </p>
-                <p class="text-sm mt-1">
-                    Hi everyone! Glad you could join! I am making a new movie.
-                </p>
-                <p class="text-right text-xs text-grey-dark mt-1">
-                    12:45 pm
-                </p>
+
+        <div id="productDetails" class="hidden">
+            <div class="flex justify-center mb-4">
+                <div class="rounded py-2 px-3 bg-[#F2F2F2] w-96">
+                    <p class="text-sm mt-1">
+                        Product Name: <span id="productNames"></span><br>
+                        Description: <span id="productDescs"></span><br>
+                        Category: <span id="productCategorys"></span><br>
+                        Type: <span id="productTypes"></span><br>
+                        Price: <span id="productPrices"></span>
+                    </p>
+                </div>
             </div>
         </div>
 
-        <div class="flex mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                <p class="text-sm text-purple">
-                    Tom Cruise
-                </p>
-                <p class="text-sm mt-1">
-                    Hi all! I have one question for the movie
-                </p>
-                <p class="text-right text-xs text-grey-dark mt-1">
-                    12:45 pm
-                </p>
-            </div>
-        </div>
+        {{-- Display chat messages --}}
+        @php
+        $prevDate = null;
+        @endphp
+        @foreach($chatMessages as $message)
 
-        <div class="flex mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                <p class="text-sm text-orange">
-                    Harrison Ford
-                </p>
-                <p class="text-sm mt-1">
-                    Again?
-                </p>
-                <p class="text-right text-xs text-grey-dark mt-1">
-                    12:45 pm
-                </p>
-            </div>
-        </div>
-
-        <div class="flex mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                <p class="text-sm text-orange">
-                    Russell Crowe
-                </p>
-                <p class="text-sm mt-1">
-                    Is Andrés coming for this one?
-                </p>
-                <p class="text-right text-xs text-grey-dark mt-1">
-                    12:45 pm
-                </p>
-            </div>
-        </div> --}}
-
-        <div class="flex mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                {{-- <p class="text-sm text-teal">
-                    Sylverter Stallone
-                </p> --}}
-                <p class="text-sm mt-1">
-                    Ayok makan mangga
-                </p>
-                <p class="text-right text-xs text-grey-dark mt-1">
-                    12:45 pm
-                </p>
-            </div>
-        </div>
-
-        <div class="flex justify-end mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
-                <p class="text-sm mt-1">
-                    mlz gx mud
-                </p>
-                <p class="text-right text-xs text-grey-dark mt-1">
-                    12:46 pm
-                </p>
-            </div>
-        </div>
-
-        <div class="flex justify-end mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
-                <p class="text-sm mt-1">
-                    gx mud
-                </p>
-                <p class="text-right text-xs text-grey-dark mt-1">
-                    12:46 pm
-                </p>
-            </div>
-        </div>
-
+        @if($message->created_at->format('d/m/Y') !== $prevDate)
         <div class="flex justify-center mb-2">
             <div class="rounded py-2 px-4" style="background-color: #DDECF2">
                 <p class="text-sm uppercase">
-                    April 20, 2024
+                    {{ $message->created_at->format('d/m/Y') }}
                 </p>
             </div>
         </div>
+        @endif
 
-        <div class="flex mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                {{-- <p class="text-sm text-purple">
-                    Tom Cruise
-                </p> --}}
+        {{-- Update previous date --}}
+        @php
+        $prevDate = $message->created_at->format('d/m/Y');
+        @endphp
+
+        {{-- Display chat messages --}}
+        @if($message->sender_id == $loggedInUserId)
+        {{-- Right section chat from logged-in user --}}
+        <div class="flex justify-end mb-2">
+            <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
                 <p class="text-sm mt-1">
-                    Halo dek
+                    {{ $message->message }}
                 </p>
                 <p class="text-right text-xs text-grey-dark mt-1">
-                    09.47 pm
+                    You • {{ $message->created_at->format('H:i') }}
                 </p>
             </div>
         </div>
+        @else
+        {{-- Left section chat from other user --}}
+        <div class="flex mb-2">
+            <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
+                <p class="text-sm mt-1">
+                    {{ $message->message }}
+                </p>
+                <p class="text-right text-xs text-grey-dark mt-1">
+                    {{ $ownerName }} • {{ $message->created_at->format('H:i') }}
+                </p>
+            </div>
+        </div>
+        @endif
+        @endforeach
+
+        {{-- Chat from logged in user --}}
+        <div id="chatMessages"></div>
 
     </div>
 </div>
+
+{{-- <script>
+    function displayProductDetails() {
+        // Retrieve product details from the modal
+        const productName = $('#productName').text();
+        const productDesc = $('#productDesc').text();
+        const productCategory = $('#productCategory').text();
+        const productType = $('#productType').text();
+        const productPrice = $('#productPrice').text();
+        
+        // Populate the product details into the designated elements
+        $('#productDetails #productNames').text(productName);
+        $('#productDetails #productDescs').text(productDesc);
+        $('#productDetails #productCategorys').text(productCategory);
+        $('#productDetails #productTypes').text(productType);
+        $('#productDetails #productPrices').text(productPrice);
+        
+        // Show the product details section
+        $('#productDetails').removeClass('hidden');
+    }
+
+    displayProductDetails();
+</script> --}}
