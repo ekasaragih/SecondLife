@@ -21,8 +21,7 @@
 
 
                 <!-- Right -->
-                @if(request()->filled('logged_in_user') && request()->filled('owner_user') &&
-                request()->filled('goods'))
+                @if(request()->filled('logged_in_user') && request()->filled('owner_user'))
                 <div class="w-2/3 border flex flex-col">
                     <!-- Header -->
                     @include('utils.chat.chatHeader')

@@ -21,30 +21,30 @@ class ChatController extends Controller
         
         $chatMessages = Message::where(function ($query) use ($loggedInUserId, $ownerUserId, $goodsId) {
             $query->where('sender_id', $loggedInUserId)
-                ->where('receiver_id', $ownerUserId)
-                ->where('g_ID', $goodsId);
+                ->where('receiver_id', $ownerUserId);
         })->orWhere(function ($query) use ($loggedInUserId, $ownerUserId, $goodsId) {
             $query->where('sender_id', $ownerUserId)
-                ->where('receiver_id', $loggedInUserId)
-                ->where('g_ID', $goodsId);
+                ->where('receiver_id', $loggedInUserId);
         })->orderBy('created_at')
         ->get();
 
         $product = Goods::where('us_ID', $ownerUserId)->first();
 
-        $contacts = Message::where('receiver_id', $loggedInUserId)
-        ->distinct('sender_id')
-        ->pluck('sender_id');
+        $senderIds = Message::where('receiver_ID', $loggedInUserId)->distinct()->pluck('sender_ID');
 
-        $contacts = User::whereIn('us_ID', $contacts)->get();
+        $receiverIds = Message::where('sender_ID', $loggedInUserId)->distinct()->pluck('receiver_ID');
+
+        $contactIds = $senderIds->merge($receiverIds)->unique();
+
+        $contacts = User::whereIn('us_ID', $contactIds)->get();
 
         foreach ($contacts as $contact) {
             $lastMessage = Message::where(function ($query) use ($loggedInUserId, $contact) {
-                $query->where('sender_id', $loggedInUserId)
-                    ->where('receiver_id', $contact->us_ID);
+                $query->where('sender_ID', $loggedInUserId)
+                    ->where('receiver_ID', $contact->us_ID);
             })->orWhere(function ($query) use ($loggedInUserId, $contact) {
-                $query->where('sender_id', $contact->us_ID)
-                    ->where('receiver_id', $loggedInUserId);
+                $query->where('sender_ID', $contact->us_ID)
+                    ->where('receiver_ID', $loggedInUserId);
             })->orderBy('created_at', 'desc')->first();
 
             $contact->last_message_time = $lastMessage ? $lastMessage->created_at->format('H:i') : null;
