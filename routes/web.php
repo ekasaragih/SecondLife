@@ -7,6 +7,7 @@ use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CommentController;
 
 
 /*
@@ -51,7 +52,12 @@ Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('
 Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
-Route::get('/recommendation-location', [ProductController::class, 'recommendation_location'])->name('recommendation_location');
+// Route::get('/recommendation-location', [ProductController::class, 'recommendation_location'])->name('recommendation_location');
+Route::get('/comments', [CommentController::class, 'index']);
+Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
+Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
+
+
 
 
 
@@ -76,6 +82,9 @@ Route::get('/500-server-error', [PageController::class, 'internal_server_error']
 */
 Route::post('/my-goods/add', [GoodsController::class, 'store'])->name('add_my_goods');
 Route::post('/my-goods/add-img', [GoodsController::class, 'storeImg'])->name('add_img');
+Route::get('/my-goods/{id}', [GoodsController::class, 'show'])->name('show_edit_my_good');
+Route::post('/my-goods/edit', [GoodsController::class, 'update'])->name('edit_my_goods');
+Route::delete('/my-goods/delete/{id}', [GoodsController::class, 'destroy'])->name('delete_my_goods');
 Route::post('/wishlist/add', [ProductController::class, 'addToWishlist'])->name('wishlist.add');
 
 Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send_message');

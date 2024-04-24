@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GoodsImage extends Model
 {
+    protected $primaryKey = 'img_ID';
     protected $table = 'goods_image';
 
     protected $fillable = [

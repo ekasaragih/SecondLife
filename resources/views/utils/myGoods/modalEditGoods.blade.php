@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/asset/css/imgContainer.css">
 </head>
 
-<div id="modalAddGoods" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+<div id="modalEditGoods" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
     class="hidden fixed inset-0 overflow-y-auto bg-black bg-opacity-50 z-50 justify-center items-center">
     <div class="relative p-4 w-full max-w-5xl max-h-full">
         <!-- Modal content -->
@@ -12,11 +12,11 @@
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Upload Goods
+                    Save Changes
                 </h3>
                 <button type="button"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-hide="modalAddGoods">
+                    data-modal-hide="modalEditGoods">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -25,22 +25,23 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <form id="addGoodsForm" enctype="multipart/form-data">
+            <form id="editGoodsForm" enctype="multipart/form-data">
                 @csrf
                 <!-- Modal body -->
                 <div class="p-4 md:p-5 space-y-4">
                     <div class="max-w-5xl px-4 py-8 mx-auto">
                         <div>
+                            <input type="hidden" id="edit_g_ID" />
                             <div class="mb-4">
                                 <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                                <input type="text" id="g_name" name="name" placeholder="Enter name of goods"
+                                <input type="text" id="edit_g_name" name="g_name" placeholder="Enter name of goods"
                                     class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                             </div>
                             <div class="w-full flex">
                                 <div class="w-1/2 mb-4 mr-2">
                                     <label for="category"
                                         class="block text-sm font-medium text-gray-700">Category</label>
-                                    <select id="g_category" name="category"
+                                    <select id="edit_g_category" name="category"
                                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                                         <option value="" selected disabled>-- Choose categories --</option>
                                         <option value="Electronics">Electronics</option>
@@ -57,7 +58,7 @@
                                 </div>
                                 <div class="w-1/2 mb-4">
                                     <label for="g_type" class="block text-sm font-medium text-gray-700">Type</label>
-                                    <select id="g_type" name="g_type"
+                                    <select id="edit_g_type" name="g_type"
                                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                                         <option value="" selected disabled>-- Choose type --</option>
                                         <option value="New">New</option>
@@ -69,7 +70,7 @@
                                 <div class="w-full mb-4">
                                     <label for="original_price" class="block text-sm font-medium text-gray-700">Original
                                         Price</label>
-                                    <input type="number" id="original_price" name="original_price"
+                                    <input type="number" id="edit_g_original_price" name="original_price"
                                         placeholder="ex: 500000"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
@@ -77,21 +78,21 @@
                                     <label for="prediction_price"
                                         class="block text-sm font-medium text-gray-700">Prediction
                                         Price</label>
-                                    <input type="number" id="prediction_price" name="prediction_price"
+                                    <input type="number" id="edit_g_prediction_price" name="prediction_price"
                                         placeholder="will be count by system"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                                 <div class="w-full mb-4">
                                     <label for="age_goods" class="block text-sm font-medium text-gray-700">Age of Goods
                                         (In years) </label>
-                                    <input type="number" id="age_goods" name="age_goods" placeholder="ex: 1"
+                                    <input type="number" id="edit_g_age" name="age_goods" placeholder="ex: 1"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label for="description"
                                     class="block text-sm font-medium text-gray-700">Description</label>
-                                <textarea id="g_description" name="description" rows="3"
+                                <textarea id="edit_g_desc" name="description" rows="3"
                                     placeholder="Give a detail explanation of your goods' condition"
                                     class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required></textarea>
                             </div>
@@ -100,12 +101,12 @@
                                     Image</label>
                                 <div id="id-input-div" class="input-div mt-2">
                                     <p>Drag & drop photos here or click to browse</p>
-                                    <input name="files" id="input_image" type="file" class="file"
+                                    <input name="files" id="edit_image" type="file" class="file"
                                         multiple="multiple" accept="image/jpeg, image/png, image/jpg"
-                                        onchange="previewImage()" />
+                                        onchange="editPreviewImage()" />
                                 </div>
-                                <div id="queuedImages" class="queued-div p-2">
-                                    <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
+                                <div id="edit_queuedImages" class="queued-div p-2">
+                                    <div id="edit_imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
                                 </div>
                             </div>
                         </div>
@@ -114,11 +115,11 @@
                 <!-- Modal footer -->
                 <div
                     class="flex items-center space-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button type="submit" id="btn_upload_goods"
+                    <button type="submit" id="btn_edit_goods"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center addBtn">
                         Upload
                     </button>
-                    <button type="button" data-modal-hide="modalAddGoods"
+                    <button type="button" data-modal-hide="modalEditGoods"
                         class="text-yellow-400 inline-flex items-center hover:text-white border border-yellow-400 hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         <svg class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -135,73 +136,28 @@
     </div>
 </div>
 
-{{-- Function for queued image and remove it and upload photos - POST to DB --}}
-<script>
-    const queuedImagesArray = [];
-
-    function previewImage() {
-        const input = document.getElementById('input_image');
-        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-
-        if (input.files && input.files.length > 0) {
-            for (let i = 0; i < input.files.length; i++) {
-                const file = input.files[i];
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    const imageContainer = document.createElement('div');
-                    imageContainer.classList.add('queued-image-container');
-
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.classList.add('queued-image');
-
-                    const deleteButton = document.createElement('span');
-                    deleteButton.innerHTML = '&times;';
-                    deleteButton.classList.add('delete-button');
-                    deleteButton.addEventListener('click', function() {
-                        imageContainer.remove();
-                        const index = queuedImagesArray.indexOf(file);
-                        if (index !== -1) {
-                            queuedImagesArray.splice(index, 1);
-                        }
-                    });
-
-                    imageContainer.appendChild(img);
-                    imageContainer.appendChild(deleteButton);
-
-                    imagePreviewContainer.appendChild(imageContainer);
-
-                    queuedImagesArray.push(file);
-                };
-
-                reader.readAsDataURL(file);
-            }
-        }
-    }
-</script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const addGoodsForm = document.getElementById('addGoodsForm');
+        const editGoodsForm = document.getElementById('editGoodsForm');
         const apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
 
-        $('#btn_upload_goods').click(function(event) {
+        $('#btn_edit_goods').click(function(event) {
             event.preventDefault();
 
             var goods = {
-                g_name: $("#g_name").val(),
-                g_desc: $("#g_description").val(),
-                g_type: $("#g_type").val(),
-                g_original_price: $("#original_price").val(),
-                g_price_prediction: $("#prediction_price").val(),
-                g_age: $("#age_goods").val(),
-                g_category: $("#g_category").val(),
+                g_ID: $("#edit_g_ID").val(),
+                g_name: $("#edit_g_name").val(),
+                g_desc: $("#edit_g_desc").val(),
+                g_type: $("#edit_g_type").val(),
+                g_original_price: $("#edit_g_original_price").val(),
+                g_price_prediction: $("#edit_g_prediction_price").val(),
+                g_age: $("#edit_g_age").val(),
+                g_category: $("#edit_g_category").val(),
 
             }
 
             $.ajax({
-                url: '{{ route('add_my_goods') }}',
+                url: '{{ route('edit_my_goods') }}',
                 type: 'POST',
                 data: goods,
                 dataType: 'json',
@@ -225,7 +181,7 @@
 
         function postGoodsImage(goodsId) {
             var goods_img = new FormData();
-            var inputImage = document.getElementById('input_image');
+            var inputImage = document.getElementById('edit_image');
 
             for (var i = 0; i < inputImage.files.length; i++) {
                 goods_img.append('files[]', inputImage.files[i]);
@@ -247,7 +203,7 @@
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Goods and images stored successfully!",
+                        title: "Data changes successfully!",
                         showConfirmButton: false,
                         timer: 1500
                     }).then((result) => {
@@ -266,4 +222,41 @@
             });
         }
     });
+
+    function editPreviewImage() {
+    const input = document.getElementById('edit_image');
+    const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
+
+    if (input.files && input.files.length > 0) {
+        for (let i = 0; i < input.files.length; i++) {
+            const file = input.files[i];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const imageContainer = document.createElement('div');
+                imageContainer.classList.add('queued-image-container');
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('queued-image');
+
+                const deleteButton = document.createElement('span');
+                deleteButton.innerHTML = '&times;';
+                deleteButton.classList.add('delete-button');
+                deleteButton.addEventListener('click', function() {
+                    imageContainer.remove();
+                    // Optionally, you can also send an AJAX request to delete the image from the database here
+                });
+
+                imageContainer.appendChild(img);
+                imageContainer.appendChild(deleteButton);
+
+                imagePreviewContainer.appendChild(imageContainer);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+}
+
 </script>
