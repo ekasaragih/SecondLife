@@ -17,6 +17,7 @@ class ChatController extends Controller
         $goodsId = $request->query('goods');
         
         $ownerName = User::where('us_ID', $ownerUserId)->value('us_name');
+        $ownerUsername = User::where('us_ID', $ownerUserId)->value('us_username');
         
         $chatMessages = Message::where(function ($query) use ($loggedInUserId, $ownerUserId, $goodsId) {
             $query->where('sender_id', $loggedInUserId)
@@ -50,7 +51,7 @@ class ChatController extends Controller
             $contact->last_message = $lastMessage ? $lastMessage->message : null;
         }
 
-        return view('pages.chat.chatSection', compact('loggedInUserId', 'ownerUserId', 'chatMessages', 'product', 'ownerName', 'contacts'));
+        return view('pages.chat.chatSection', compact('loggedInUserId', 'ownerUserId', 'chatMessages', 'product', 'ownerName', 'contacts', 'ownerUsername'));
     }
 
 
