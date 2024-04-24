@@ -43,23 +43,32 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+        const results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
     function sendMessage() {
         const loggedInUserId = '{{ $loggedInUserId }}';
         const ownerUserId = '{{ $ownerUserId }}';
         const message = document.getElementById('messageInput').value.trim();
 
-        const productName = $('#productName').text();
-        const productDesc = $('#productDesc').text();
-        const productCategory = $('#productCategory').text();
-        const productType = $('#productType').text();
-        const productPrice = $('#productPrice').text();
+        const goodsId = getParameterByName('goods');
+
+        console.log(goodsId);
 
             if (message !== '') {
               
                 axios.post('api/chat/send', {
                     sender_id: loggedInUserId,
                     receiver_id: ownerUserId,
-                    message: message
+                    message: message,
+                    g_ID: goodsId,
                 })
                 .then(function (response) {
                 

@@ -58,11 +58,12 @@
         <div class="px-6 py-4">
             <div class="flex justify-between items-center">
                 <button class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
-                    id="btn_see_detail" data-product-image="{{ $imageUrl }}" data-product-name="{{ $product->g_name }}"
-                    data-product-id="{{ $product->us_ID }}" data-product-desc="{{ $product->g_desc }}"
-                    data-product-category="{{ $product->g_category }}" data-product-category="{{ $product->g_age }}"
-                    data-product-type="{{ $product->g_type }}" data-product-price="{{ $formattedPrice }}"
-                    data-modal-target="modalProductDetail" data-modal-toggle="modalProductDetail">
+                    id="btn_see_detail" data-product-image="{{ $imageUrl }}" data-product-id="{{ $product->g_ID }}"
+                    data-product-name="{{ $product->g_name }}" data-product-user-id="{{ $product->us_ID }}"
+                    data-product-desc="{{ $product->g_desc }}" data-product-category="{{ $product->g_category }}"
+                    data-product-category="{{ $product->g_age }}" data-product-type="{{ $product->g_type }}"
+                    data-product-price="{{ $formattedPrice }}" data-modal-target="modalProductDetail"
+                    data-modal-toggle="modalProductDetail">
                     View Details
                 </button>
                 <button
@@ -169,7 +170,8 @@
 
         detailButtons.forEach(function(button) {
             button.addEventListener('click', function() {
-                var productUserId= this.getAttribute('data-product-id');
+                var productId= this.getAttribute('data-product-id');
+                var productUserId= this.getAttribute('data-product-user-id');
                 var productName = this.getAttribute('data-product-name');
                 var productDesc = this.getAttribute('data-product-desc');
                 var productImage = this.getAttribute('data-product-image');
@@ -177,7 +179,8 @@
                 var productType = this.getAttribute('data-product-type');
                 var productPrice = this.getAttribute('data-product-price');
 
-                document.getElementById('productId').textContent = productUserId;
+                document.getElementById('goodsId').textContent = productId;
+                document.getElementById('productOwnerId').textContent = productUserId;
                 document.getElementById('productName').textContent = productName;
                 document.getElementById('productDesc').textContent = productDesc;
                 document.getElementById('productImage').src = productImage;

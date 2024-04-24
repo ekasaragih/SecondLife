@@ -28,11 +28,13 @@ class ChatController extends ApiController
         $message = $request->input('message');
         $senderId = $request->input('sender_id');
         $receiverId = $request->input('receiver_id');
+        $goodsId = $request->input('g_ID');
 
         $newMessage = new Message();
         $newMessage->sender_id = $senderId;
         $newMessage->receiver_id = $receiverId;
         $newMessage->message = $message;
+        $newMessage->g_ID = $goodsId;
         $newMessage->save();
 
         return response()->json(['success' => true]);

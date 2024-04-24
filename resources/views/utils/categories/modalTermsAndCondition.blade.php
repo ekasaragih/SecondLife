@@ -114,16 +114,17 @@
     // Function to continue to the chat page
     function continueToChat() {
         const loggedInUserId = "{{ $user->us_ID }}";
-        const ownerUserId = $('#productId').text();
-        
-        console.log(loggedInUserId, ownerUserId);
-        
+        const ownerUserId = $('#productOwnerId').text();
+        const goodsId = $('#goodsId').text();
+
         const modal = document.getElementById('modalTermsAndCondition');
         const ownerIdElement = modal.querySelector('#ownerId');
-        if (ownerIdElement) {
+        const goodsIdElement = modal.querySelector('#goods_ID');
+        if (ownerIdElement, goodsIdElement) {
             ownerIdElement.textContent = ownerUserId;
+            goodsIdElement.textContent = goodsId;
         }
 
-        window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId;
+        window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId + '&goods=' + goodsId;
     }
 </script>
