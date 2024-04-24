@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Goods;
 use App\Models\GoodsImage;
 
@@ -49,6 +49,22 @@ class GoodsController extends Controller
             'g_ID' => 'required|exists:goods,g_ID',
         ]);
 
+        $g_ID = $request->input('g_ID');
+        $goods = Goods::find($g_ID);
+
+        if (!$goods) {
+            return response()->json(['message' => 'Goods not found'], 404);
+        }
+
+        $goodsImages = GoodsImage::where('g_ID', $g_ID)->get();
+
+        foreach ($goodsImages as $image) {
+            $image->delete();
+            Storage::delete('public/goodsimage/' . $image->img_url);
+        }
+
+        GoodsImage::where('g_ID', $g_ID)->delete();
+
         foreach ($request->file('files') as $file) {
             $goods = Goods::find($request->input('g_ID'));
             $goodsName = str_replace(' ', '_', $goods->g_name);
@@ -72,4 +88,66 @@ class GoodsController extends Controller
         return response()->json(['message' => 'Images stored successfully'], 200);
     }
 
+    public function destroy($id)
+    {
+        $goods = Goods::findOrFail($id);
+        foreach ($goods->images as $image) {
+            $imagePath = 'public/' . $image->img_url;
+            Storage::delete($imagePath);
+        }
+        $goods->delete();
+
+        return response()->json(['message' => 'Goods deleted successfully'], 200);
+    }
+
+    public function show($id)
+    {
+        $goods = Goods::with('images')->findOrFail($id);
+        return response()->json($goods);
+    }
+
+    public function update(Request $request)
+    {
+        $authenticatedUser = session('authenticatedUser');
+    
+        $request->validate([
+            'g_name' => 'required|string',
+            'g_desc' => 'required|string',
+            'g_type' => 'required|string',
+            'g_original_price' => 'required|numeric',
+            'g_price_prediction' => 'required|numeric',
+            'g_age' => 'required|integer',
+            'g_category' => 'required|string',
+            'g_ID' => 'required|integer', // Add validation for the ID
+        ]);
+    
+        // Retrieve the ID from the request
+        $g_ID = $request->input('g_ID');
+    
+        // If ID is provided, update existing record; otherwise, create a new record
+        if ($g_ID) {
+            // Find the existing record
+            $goods = Goods::find($g_ID);
+    
+            // Check if the record exists
+            if (!$goods) {
+                return response()->json(['message' => 'Record not found'], 404);
+            }
+    
+            // Update the fields with new values from the request
+            $goods->us_ID = $authenticatedUser->us_ID;
+            $goods->g_name = $request->input('g_name');
+            $goods->g_desc = $request->input('g_desc');
+            $goods->g_type = $request->input('g_type');
+            $goods->g_original_price = $request->input('g_original_price');
+            $goods->g_price_prediction = $request->input('g_price_prediction');
+            $goods->g_age = $request->input('g_age');
+            $goods->g_category = $request->input('g_category');
+        }
+        // Save the changes to the database
+        $goods->save();
+    
+        return response()->json(['message' => 'Data changes stored successfully', 'g_ID' => $goods->g_ID], 200);
+    }
+    
 }

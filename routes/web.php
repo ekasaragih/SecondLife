@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\CommunitiesController;
+use App\Models\Communities;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +85,14 @@ Route::get('/500-server-error', [PageController::class, 'internal_server_error']
 */
 Route::post('/my-goods/add', [GoodsController::class, 'store'])->name('add_my_goods');
 Route::post('/my-goods/add-img', [GoodsController::class, 'storeImg'])->name('add_img');
+Route::get('/my-goods/{id}', [GoodsController::class, 'show'])->name('show_edit_my_good');
+Route::post('/my-goods/edit', [GoodsController::class, 'update'])->name('edit_my_goods');
+Route::delete('/my-goods/delete/{id}', [GoodsController::class, 'destroy'])->name('delete_my_goods');
 Route::post('/wishlist/add', [ProductController::class, 'addToWishlist'])->name('wishlist.add');
+Route::post('/communities/add', [CommunitiesController::class, 'store'])->name('add_my_community_post');
+
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send_message');
+
 
 
 

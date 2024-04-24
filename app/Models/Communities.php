@@ -5,18 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Wishlist extends Model
+class Communities extends Model
 {
     use HasFactory;
-    protected $table = 'wishlist';
+
+    protected $table = 'communities';
 
     protected $fillable = [
-        'g_ID',
         'us_ID',
+        'community_title',
+        'community_desc',
     ];
 
-    public function product()
+    public function userID()
     {
-        return $this->belongsTo(Goods::class, 'g_ID');
+        return $this->belongsTo(User::class, 'us_ID');
     }
 }
