@@ -1,6 +1,8 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @auth
     <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    @endauth
     <link rel="stylesheet" href="/asset/css/imgContainer.css">
 </head>
 
@@ -100,9 +102,8 @@
                                     Image</label>
                                 <div id="id-input-div" class="input-div mt-2">
                                     <p>Drag & drop photos here or click to browse</p>
-                                    <input name="files" id="input_image" type="file" class="file"
-                                        multiple="multiple" accept="image/jpeg, image/png, image/jpg"
-                                        onchange="previewImage()" />
+                                    <input name="files" id="input_image" type="file" class="file" multiple="multiple"
+                                        accept="image/jpeg, image/png, image/jpg" onchange="previewImage()" />
                                 </div>
                                 <div id="queuedImages" class="queued-div p-2">
                                     <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>

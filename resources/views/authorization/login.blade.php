@@ -5,7 +5,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @yield('head')
 
-    <script>
+    {{-- <script>
         // Function to validate email format
         function validateEmail(email) {
             var re = /\S+@\S+\.\S+/;
@@ -77,7 +77,7 @@
             // If both email and password are valid, proceed with form submission
             event.target.submit();
         }
-    </script>
+    </script> --}}
 </head>
 
 <body>
@@ -122,7 +122,7 @@
                                 <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
                                 <label class="form-check-label" for="form1Example3"> Remember me </label>
                             </div> --}}
-                            <a href="#" style="color: #EC297B;">Forgot password?</a>
+                            <a href="{{ route('forgotPassword')}}" style="color: #EC297B;">Forgot password?</a>
                         </div>
                         <div class="mt-10">
                             <button type="submit"
@@ -146,7 +146,7 @@
 | SCRIPTS
 |--------------------------------------------------------------------------
 --}}
-<script>
+{{-- <script>
     // Function to validate email format
         function validateEmail(email) {
             var re = /\S+@\S+\.\S+/;
@@ -224,4 +224,4 @@
             // If both email and password are valid, proceed with form submission
             event.target.submit();
         }
-</script>
+</script> --}}

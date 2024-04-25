@@ -17,7 +17,6 @@ class GoodsImage extends Model
         'us_ID',
     ];
 
-    // Definisikan relasi dengan model Goods
     public function goods(): BelongsTo
     {
         return $this->belongsTo(Goods::class, 'g_ID');

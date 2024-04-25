@@ -38,6 +38,7 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                         <div class="mt-4 flex justify-between items-center">
                             <span class="text-gray-600 text-xs">Price: Rp {{ number_format($product->g_original_price,
                                 0, ',', '.') }}</span>
+                            @auth
                             <button
                                 class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
                                 style="font-size: 14px;"
@@ -45,6 +46,7 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                             <button
                                 class="bg-purple-500 text-white px-4 py-2 ml-1 rounded hover:bg-gray-600 transition duration-300"
                                 style="font-size: 14px;">Add</button>
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -68,12 +70,19 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
     </div>
 </div>
 
-<div id="productModal" class="modal" style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;" data-product-id="">
-    <div class="modal-content" style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 600px; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-        <span class="close" onclick="closeModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; color: #888; z-index: 1;">&times;</span>
-        <h2 id="modalTitle" style="color: #333; text-align: center; font-size: 28px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Product Details</h2>
+<div id="productModal" class="modal"
+    style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;"
+    data-product-id="">
+    <div class="modal-content"
+        style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 600px; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+        <span class="close" onclick="closeModal()"
+            style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; color: #888; z-index: 1;">&times;</span>
+        <h2 id="modalTitle"
+            style="color: #333; text-align: center; font-size: 28px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+            Product Details</h2>
         <div style="text-align: center;">
-            <img id="modalImage" src="" alt="Product Image" style="width: 300px; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
+            <img id="modalImage" src="" alt="Product Image"
+                style="width: 300px; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
             <p id="modalLocation" style="color: #666; margin-bottom: 10px;"></p>
             <p id="modalPrice" style="color: #666; margin-bottom: 20px; font-size: 18px; font-weight: bold;"></p>
         </div>
@@ -82,21 +91,30 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
         <p id="modalDescription" style="color: #666; text-align: justify;"></p>
         <hr style="margin: 20px 0;"> <!-- Garis penghalang -->
         <div id="commentSection" class="mt-4"></div>
-        <div style="text-align: center; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);">
-            <form id="commentFormModal" class="flex items-center justify-center" action="{{ route('comment_store') }}" method="POST">
+        <div
+            style="text-align: center; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);">
+            <form id="commentFormModal" class="flex items-center justify-center" action="{{ route('comment_store') }}"
+                method="POST">
                 @csrf
                 <!-- Tambahkan input tersembunyi untuk menyimpan g_id -->
                 <input type="hidden" id="g_ID" name="g_ID" value="">
-                <textarea id="commentInputModal" name="comment" class="w-full px-3 py-2 rounded border-none focus:outline-none focus:border-indigo-500 mr-2" rows="4" placeholder="Add a comment" style="resize: none;"></textarea>
-                <button type="submit" class="bg-transparent hover:bg-purple-500 text-purple-500 font-semibold hover:text-white px-4 py-2 border border-purple-500 hover:border-transparent rounded">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 17l5-5m0 0l-5-5m5 5h-12"></path>
+                <textarea id="commentInputModal" name="comment"
+                    class="w-full px-3 py-2 rounded border-none focus:outline-none focus:border-indigo-500 mr-2"
+                    rows="4" placeholder="Add a comment" style="resize: none;"></textarea>
+                <button type="submit"
+                    class="bg-transparent hover:bg-purple-500 text-purple-500 font-semibold hover:text-white px-4 py-2 border border-purple-500 hover:border-transparent rounded">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 17l5-5m0 0l-5-5m5 5h-12"></path>
                     </svg>
                 </button>
             </form>
         </div>
         <div style="text-align: center;">
-            <button class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300 mt-2" onclick="addToCart()">Add to Cart</button>
+            <button
+                class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300 mt-2"
+                onclick="addToCart()">Add to Cart</button>
         </div>
     </div>
 </div>

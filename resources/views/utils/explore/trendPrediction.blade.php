@@ -17,9 +17,10 @@
                         <p class="text-sm text-gray-600" id="goods_location">Location: user location</p>
                         <div class="mt-4 flex justify-between items-center">
                             {{-- Ini nanti diganti jadi harga yang setelah dikalkulasiin --}}
-                            <span class="text-gray-600" id="goods_ori_price">Price: Rp{{
+                            <span class="text-gray-600 text-xs" id="goods_ori_price">Price: Rp{{
                                 number_format($product->g_original_price, 0, ',', '.')
                                 }}</span>
+                            @auth
                             <button
                                 class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
                                 style="font-size: 14px;"
@@ -27,6 +28,7 @@
                             <button
                                 class=" bg-purple-500 text-white px-4 py-2 ml-1 rounded hover:bg-gray-600 transition duration-300"
                                 style="font-size: 14px;">Add</button>
+                            @endauth
                         </div>
                     </div>
                 </div>
