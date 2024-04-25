@@ -50,8 +50,11 @@ class PageController extends Controller
         $products = Goods::whereIn('g_category', $topCategories)->get();
         
         $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = null;
 
-        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        if ($authenticatedUser && $authenticatedUser->us_ID) {
+            $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        }
 
         return view('pages.explore', [
             'user' => $authenticatedUser,
@@ -60,20 +63,32 @@ class PageController extends Controller
         ]);
     }
 
+
     public function categories()
     {
         $authenticatedUser = session('authenticatedUser');
         $categories = Goods::distinct('g_category')->pluck('g_category');
         $products = Goods::getAllGoodsWithImages();
-        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-        
-        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
+        $wishlistCount = null;
+        $wishlistItems = [];
 
-        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)
-            ->with('images')
-            ->inRandomOrder()
-            ->limit(8)
-            ->get();
+        if ($authenticatedUser && $authenticatedUser->us_ID) {
+            $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+            $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
+        }
+
+        if (empty($wishlistItems)) {
+            $nonWishlistProducts = Goods::with('images')
+                ->inRandomOrder()
+                ->limit(8)
+                ->get();
+        } else {
+            $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)
+                ->with('images')
+                ->inRandomOrder()
+                ->limit(8)
+                ->get();
+        }
 
         return view('pages.categories', [
             'user' => $authenticatedUser,
@@ -88,6 +103,9 @@ class PageController extends Controller
     public function wishlist()
     {
         $authenticatedUser = session('authenticatedUser');
+        if (!$authenticatedUser || !$authenticatedUser->us_ID) {
+            return redirect()->route('explore');
+        }
 
         $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)
             ->with('goods.images')
@@ -120,7 +138,11 @@ class PageController extends Controller
     public function communities()
     {
         $authenticatedUser = session('authenticatedUser');
-        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        if ($authenticatedUser !== null) {
+            $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        } else {
+            $wishlistCount = 0;
+        }
         
         return view('pages.communities', [
             'user' => $authenticatedUser,

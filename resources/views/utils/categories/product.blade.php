@@ -1,6 +1,8 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @auth
     <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    @endauth
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -28,7 +30,7 @@
         $defaultImageUrl =
         'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
         $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
-        $formattedPrice = 'Rp ' . number_format($product->g_original_price, 0, ',', '.');
+        $formattedPrice = 'Rp ' . number_format($product->g_prediction_price, 0, ',', '.');
         @endphp
 
         <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
@@ -36,20 +38,20 @@
         <div class="px-6 py-4">
             <input type="hidden" id="goods_owner" value="{{ $product->us_ID }}" />
             <div class="font-bold text-xl mb-2">{{ $product->g_name }}</div>
-            <p class="text-gray-700 text-base mb-2">{{ $product->g_desc }}
+            <p class="hidden text-gray-700 text-base mb-2">{{ $product->g_desc }}
             </p>
-            <div class="grid grid-cols-1 gap-2">
+            <div class="grid grid-cols-1 gap-2 mt-3">
                 <div>
                     <p class="text-gray-700"><span class="font-bold">Category:</span>
                         {{ $product->g_category }}
                     </p>
-                    <p class="text-gray-700"><span class="font-bold">Condition:</span>
+                    <p class="hidden text-gray-700"><span class="font-bold">Condition:</span>
                         {{ $product->g_type }}
                     </p>
                     <p class="text-gray-700"><span class="font-bold">Age:</span>
-                        {{ $product->g_age }}
+                        {{ $product->g_age }} <span>Years</span>
                     </p>
-                    <p class="text-gray-700"><span class="font-bold">Price:</span>
+                    <p class="hidden text-gray-700"><span class="font-bold">Prediction price:</span>
                         {{$formattedPrice }}
                     </p>
                 </div>
@@ -57,6 +59,7 @@
         </div>
         <div class="px-6 py-4">
             <div class="flex justify-between items-center">
+                @auth
                 <button class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
                     id="btn_see_detail" data-product-image="{{ $imageUrl }}" data-product-id="{{ $product->g_ID }}"
                     data-product-name="{{ $product->g_name }}" data-product-user-id="{{ $product->us_ID }}"
@@ -66,11 +69,13 @@
                     data-modal-toggle="modalProductDetail">
                     View Details
                 </button>
+
                 <button
                     class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist"
                     id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}" data-user-id="{{ $user->us_ID }}">
                     Add to Wishlist
                 </button>
+                @endauth
             </div>
         </div>
     </div>
@@ -83,11 +88,13 @@
 {{-- Recommendation based on Categories --}}
 @include('utils.categories.recommendation')
 
+@auth
 {{-- Product Details Modal --}}
 @include('utils.categories.modalProductDetail')
 
 {{-- T&C Modal --}}
 @include('utils.categories.modalTermsAndCondition')
+@endauth
 
 {{--
 |--------------------------------------------------------------------------

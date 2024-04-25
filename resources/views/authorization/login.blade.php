@@ -5,7 +5,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @yield('head')
 
-    <script>
+    {{-- <script>
         // Function to validate email format
         function validateEmail(email) {
             var re = /\S+@\S+\.\S+/;
@@ -77,7 +77,7 @@
             // If both email and password are valid, proceed with form submission
             event.target.submit();
         }
-    </script>
+    </script> --}}
 </head>
 
 <body>
