@@ -41,4 +41,13 @@ class WishlistController extends Controller
         }
     }
 
+    public function remove(Request $request)
+    {
+        $wishlistId = $request->input('wishlist_ID');
+
+        Wishlist::destroy($wishlistId);
+
+        return response()->json(['success' => true, 'message' => 'Item removed from wishlist.']);
+    }
+
 }

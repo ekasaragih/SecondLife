@@ -10,6 +10,7 @@ class Communities extends Model
     use HasFactory;
 
     protected $table = 'communities';
+    protected $primaryKey = 'community_ID';
 
     protected $fillable = [
         'us_ID',

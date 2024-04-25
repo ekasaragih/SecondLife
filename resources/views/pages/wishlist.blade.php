@@ -40,8 +40,8 @@
                         See Details
                     </button>
                     <button
-                        class="mt-2 px-4 py-2 rounded-md bg-red-600 text-white border border-transparent hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
-                        onclick="removeFromWishlist({{ $wishlistItem->id }})">Remove from Wishlist</button>
+                        class="mt-2 px-4 py-2 rounded-md bg-red-600 text-white border border-transparent hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 remove-from-wishlist"
+                        data-wishlist-id="{{ $wishlistItem->wishlist_ID }}">Remove from Wishlist</button>
                 </div>
                 @endif
                 @endforeach
@@ -108,6 +108,9 @@
                         timer: 1500,
                         showConfirmButton: false
                     });
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1500);
                 } else {
                     if (data.message.includes('already added')) {
                         Swal.fire({
@@ -140,6 +143,60 @@
         var userId = $(this).data('user-id');
         addToWishlist(productId, userId);
     });
+</script>
+
+<script>
+    $(document).on('click', '.remove-from-wishlist', function() {
+        var wishlistId = $(this).data('wishlist-id');
+        removeFromWishlist(wishlistId);
+    });
+
+    function removeFromWishlist(wishlistId) {
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
+
+        $.ajax({
+            url: 'api/wishlist/remove',
+            method: 'POST',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Authorization': 'Bearer ' + apiToken
+            },
+            data: { wishlist_ID: wishlistId },
+            success: function(data) {
+                if (data.success) {
+                    // Item removed successfully, you may want to update the UI accordingly
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: data.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    // Handle error response
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle AJAX error
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
+            }
+        });
+    }
 </script>
 
 <script>

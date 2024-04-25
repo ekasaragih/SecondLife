@@ -14,19 +14,20 @@ class CommentController extends Controller
         // Validasi permintaan
         $request->validate([
             'comment' => 'required|string',
-            'g_ID' => 'required|integer', // Tambahkan validasi untuk g_ID
+            'g_ID' => 'required|integer',
         ]);
 
         // Simpan komentar ke dalam database
         $comment = new Comment();
         $comment->comment_desc = $request->input('comment');
-        $comment->us_ID = auth()->id(); // Mendapatkan us_ID dari pengguna yang sedang login
-        $comment->g_ID = $request->input('g_ID'); // Mengambil g_ID dari formulir
+        $comment->us_ID = auth()->id();
+        $comment->g_ID = $request->input('g_ID');
         $comment->save();
 
         // Berikan respons bahwa komentar telah disimpan
         return response()->json(['success' => 'Comment has been posted successfully']);
     }
+    
     public function index()
     {
         // Return all comments

@@ -11,6 +11,7 @@ class Wishlist extends Model
 {
     use HasFactory;
     protected $table = 'wishlist';
+    protected $primaryKey = 'wishlist_ID';
 
     protected $fillable = [
         'g_ID',

@@ -89,31 +89,24 @@ class PageController extends Controller
     {
         $authenticatedUser = session('authenticatedUser');
 
-        // Fetch wishlist items for the authenticated user along with their associated goods
         $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)
-            ->with('goods.images') // Load the associated goods and their images
+            ->with('goods.images')
             ->get();
 
-        // Fetch distinct categories
         $categories = Goods::distinct('g_category')->pluck('g_category');
 
-        // Fetch all goods with their images
         $products = Goods::getAllGoodsWithImages();
 
-        // Count wishlist items for the authenticated user
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         
-        // Fetch IDs of wishlist items
         $wishlistItemIds = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
 
-        // Fetch non-wishlist products (products not in the wishlist)
         $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItemIds)
             ->with('images')
             ->inRandomOrder()
             ->limit(8)
             ->get();
 
-        // Return view with necessary data
         return view('pages.wishlist', [
             'user' => $authenticatedUser,
             'categories' => $categories,
