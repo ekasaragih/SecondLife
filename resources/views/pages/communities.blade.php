@@ -42,10 +42,16 @@
                             </div>
                             <h2 class="text-lg font-semibold mb-2 pl-3">{{ $community->community_title }}</h2>
                             <p class="text-gray-800 pl-3">{{ $community->community_desc }}</p>
-                            <div class="flex flex-row items-center pl-3">
-                                <span class="text-2xl text-[#F12E52] mr-1">&hearts;</span>
-                                <h3>20</h3>
-                            </div>
+                            <div class="flex flex-row items-center pl-3 mt-2">
+                                <button class="like-button ml-2  text-gray-500 hover:text-[#F12E52] focus:outline-none"
+                                        data-post-id="{{ $community->community_ID }}">
+                                    <i class="fa {{ $community->isLikedByCurrentUser ? 'fa-heart' : 'fa-heart-o' }}"
+                                       aria-hidden="true"></i>
+                                </button>
+                                <h3 class="ml-2" id="like-count-{{ $community->community_ID }}">
+                                    {{ $community->likes()->count() }}
+                                </h3>
+                            </div>                            
                         </div>
 
                         <div class="w-11/12 float-right">
@@ -94,7 +100,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const addCommunityPost = document.getElementById('addCommunityPost');
-        // const addCommunityFeedback = document.getElementById('addCommunityFeedback');
         const apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
 
         $('#btn-community-post').click(function(event) {
@@ -181,6 +186,50 @@
                 }
             });
         });
+
+        $(document).on('click', '.like-button', function(event) {
+            event.preventDefault();
+
+            var button = $(this);
+            var postId = button.data('post-id');
+            var isLiked = button.find('i').hasClass('fa-heart');
+
+            $.ajax({
+                url: '{{ route('like_community') }}',
+                type: 'POST',
+                data: {
+                    community_ID: postId
+                },
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': 'Bearer ' + apiToken
+                },
+                success: function(response) {
+                    console.log('response: ', response);
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: response.success,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            location.reload();
+                            console.log(feedback);
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!",
+                    });
+                }
+            });
+        });
+
 
     });
 

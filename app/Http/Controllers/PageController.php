@@ -7,6 +7,7 @@ use App\Models\Feedbacks;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Goods;
+use App\Models\Likes;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\DB;
 
@@ -147,6 +148,12 @@ class PageController extends Controller
             $wishlistCount = 0;
         }
         $communities = Communities::with('feedbacks')->get();
+        foreach ($communities as $community) {
+            $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
+                            ->where('community_ID', $community->community_ID)
+                            ->exists();
+            $community->isLikedByCurrentUser = $isLiked;
+        }
         $feedbacks = Feedbacks::all();
         return view("pages.communities", compact('communities', 'feedbacks', 'wishlistCount', 'authenticatedUser'));
     }

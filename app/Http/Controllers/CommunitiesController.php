@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Communities;
 use App\Models\Feedbacks;
+use App\Models\Likes;
 use Illuminate\Http\Request;
 
 class CommunitiesController extends Controller
@@ -45,6 +46,35 @@ class CommunitiesController extends Controller
         $feedback->save();
 
         return response()->json(['message' => 'Data stored successfully', 'community_ID' => $feedback->community_ID], 200);
+    }
 
+    public function like(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'community_ID' => 'required|exists:communities,community_ID',
+        ]);
+
+        // Check if the user has already liked the post
+        $user = session('authenticatedUser');
+        $community_ID = $request->community_ID;
+        $like = Likes::where('user_ID', $user->us_ID)
+                    ->where('community_ID', $community_ID)
+                    ->first();
+
+        if ($like) {
+            // User has already liked the post
+            $like->delete();
+            return response()->json(['success' => 'You have unliked this post' ], 200);
+        }
+
+        // Create a new like record
+        $like = new Likes();
+        $like->user_ID = $user->us_ID;
+        $like->community_ID = $community_ID;
+        $like->save();
+
+        // Return success response with updated like count
+        return response()->json(['success' => 'You have liked this post' ], 200);
     }
 }
