@@ -146,7 +146,7 @@
 | SCRIPTS
 |--------------------------------------------------------------------------
 --}}
-<script>
+{{-- <script>
     // Function to validate email format
         function validateEmail(email) {
             var re = /\S+@\S+\.\S+/;
@@ -224,4 +224,4 @@
             // If both email and password are valid, proceed with form submission
             event.target.submit();
         }
-</script>
+</script> --}}
