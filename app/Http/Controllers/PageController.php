@@ -88,24 +88,39 @@ class PageController extends Controller
     public function wishlist()
     {
         $authenticatedUser = session('authenticatedUser');
+
+        // Fetch wishlist items for the authenticated user along with their associated goods
+        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)
+            ->with('goods.images') // Load the associated goods and their images
+            ->get();
+
+        // Fetch distinct categories
         $categories = Goods::distinct('g_category')->pluck('g_category');
+
+        // Fetch all goods with their images
         $products = Goods::getAllGoodsWithImages();
+
+        // Count wishlist items for the authenticated user
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         
-        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
+        // Fetch IDs of wishlist items
+        $wishlistItemIds = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
 
-        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)
+        // Fetch non-wishlist products (products not in the wishlist)
+        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItemIds)
             ->with('images')
             ->inRandomOrder()
             ->limit(8)
             ->get();
 
+        // Return view with necessary data
         return view('pages.wishlist', [
             'user' => $authenticatedUser,
             'categories' => $categories,
             'products' => $products,
             'nonWishlistProducts' => $nonWishlistProducts,
             'wishlistCount' => $wishlistCount,
+            'wishlistItems' => $wishlistItems,
         ]);
     }
 
