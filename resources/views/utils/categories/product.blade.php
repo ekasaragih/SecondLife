@@ -130,6 +130,9 @@
                         timer: 1500,
                         showConfirmButton: false
                     });
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1500);
                 } else {
                     if (data.message.includes('already added')) {
                         Swal.fire({
