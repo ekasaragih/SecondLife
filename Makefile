@@ -32,6 +32,7 @@ refresh:
 	php artisan db:seed --class=RoleSeeder
 	php artisan db:seed --class=UserSeeder
 	php artisan db:seed --class=GoodsSeeder
+	php artisan db:seed --class=GoodsImageSeeder
 
 migrate:
 	php artisan migrate

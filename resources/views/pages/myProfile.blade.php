@@ -2,7 +2,9 @@
 
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @auth
     <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    @endauth
 </head>
 
 <div class="pt-52 mb-24">

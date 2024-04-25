@@ -10,6 +10,7 @@ class Message extends Model
     use HasFactory;
 
     protected $table = 'messages';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.

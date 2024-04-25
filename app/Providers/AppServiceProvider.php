@@ -23,8 +23,14 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('utils.layouts.navbar.topnav', function ($view) {
             $authenticatedUser = session('authenticatedUser');
-            $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+            $wishlistCount = null;
+
+            if ($authenticatedUser && $authenticatedUser->us_ID) {
+                $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+            }
+
             $view->with('wishlistCount', $wishlistCount);
         });
+
     }   
 }

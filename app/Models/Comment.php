@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     protected $table = 'comments';
-
     protected $primaryKey = 'comment_ID';
 
     protected $fillable = [
-        'us_ID', 'comment_desc', 'created_at', 'updated_at', 'g_ID'
+        'us_ID', 
+        'comment_desc',  
+        'g_ID'
     ];
 
     // Relationship with User model
