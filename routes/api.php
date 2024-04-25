@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // WISHLIST
     Route::post('/wishlist/store', [WishlistController::class, 'store'])->name('add_wishlist');
+    Route::post('/wishlist/ignore', [WishlistController::class, 'ignore'])->name('wishlist.ignore');
+
 
     // CHAT
     Route::post('/chat/send', [ChatController::class, 'send'])->name('send_message');
