@@ -35,7 +35,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-
+            @auth
             <a href="{{ route('wishlist') }}" title="My Wishlist"
                 class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'wishlist' ? 'text-primary-content' : '' }}">
                 <i class="fa fa-heart" aria-hidden="true"></i>
@@ -58,9 +58,6 @@
                     class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
             </a>
 
-
-
-            @auth
             <a href="{{ route('my_profile') }}" title="My Profile"
                 class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'user_profile' ? 'text-primary-content' : '' }}">
                 <i class="fa fa-user-circle" aria-hidden="true"></i>

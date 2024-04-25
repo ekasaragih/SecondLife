@@ -39,9 +39,15 @@ class Goods extends Model
         return $this->hasMany(GoodsImage::class, 'g_ID');
     }
 
-    // Tambahkan method untuk mengambil semua data barang
     public static function getAllGoodsWithImages()
     {
         return self::with('images')->get();
     }
+
+    public function wishlist(): HasMany
+    {
+        return $this->hasMany(Wishlist::class, 'g_ID');
+    }
+
+
 }
