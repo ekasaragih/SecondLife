@@ -54,15 +54,9 @@ Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('
 Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
 
 Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
-// Route::get('/recommendation-location', [ProductController::class, 'recommendation_location'])->name('recommendation_location');
 Route::get('/comments', [CommentController::class, 'index']);
 Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
 Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
-
-Route::post('/wishlist', 'SwapeController@addToWishlist')->name('wishlist.add');
-
-
-
 
 
 /*
