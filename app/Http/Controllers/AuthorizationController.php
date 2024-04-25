@@ -10,12 +10,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\ForgotPasswordMail;
 
 class AuthorizationController extends Controller
 {
     public function login()
     {
         return view("authorization.login");
+    }
+    public function forgotPassword()
+    {
+        return view("authorization.forgotPassword");
     }
 
     public function register()
