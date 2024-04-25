@@ -25,7 +25,6 @@ Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_
 Route::get('/register-optional', [AuthorizationController::class, 'registerSkip'])->name('registerSkip');
 Route::post('/register', [AuthorizationController::class, 'storeSkip'])->name('auth_storeSkip');
 Route::get('/forgotPassword', [AuthorizationController::class, 'forgotPassword'])->name('forgotPassword');
-Route::post('/forgotPassword', [AuthorizationController::class, 'forgotPassword']);
 
 /*
 |--------------------------------------------------------------------------

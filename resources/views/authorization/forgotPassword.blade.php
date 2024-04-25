@@ -63,10 +63,8 @@
                     Don't panic! Just type in your email and we will send you a code to reset your password!
                 </h1>
 
-                <form action="#" method="POST" class="space-y-4" onsubmit="handleSubmit(event)">
-                <form action="{{ route('login') }}" method="POST" class="space-y-4">
-                {{ csrf_field() }}
-                
+                <form action="{{ route('login') }}" method="POST" class="space-y-4" onsubmit="handleSubmit(event)">
+                @csrf                
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
                         <input type="email" id="email" name="email"
