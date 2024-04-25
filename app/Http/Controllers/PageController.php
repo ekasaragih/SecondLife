@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Communities;
+use App\Models\Feedbacks;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Goods;
@@ -143,11 +146,9 @@ class PageController extends Controller
         } else {
             $wishlistCount = 0;
         }
-        
-        return view('pages.communities', [
-            'user' => $authenticatedUser,
-            'wishlistCount' => $wishlistCount,
-        ]);
+        $communities = Communities::with('feedbacks')->get();
+        $feedbacks = Feedbacks::all();
+        return view("pages.communities", compact('communities', 'feedbacks', 'wishlistCount', 'authenticatedUser'));
     }
 
     public function my_profile()
