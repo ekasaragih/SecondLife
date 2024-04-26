@@ -50,12 +50,14 @@ class PageController extends Controller
             ->get()
             ->groupBy('g_category');
 
-        $categoryCounts = $recentProductsByCategory->map->count();
-        $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
-        $products = Goods::whereIn('g_category', $topCategories)->get();
-        
         $authenticatedUser = session('authenticatedUser');
         $wishlistCount = null;
+        $categoryCounts = $recentProductsByCategory->map->count();
+        $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
+
+        $products = Goods::whereIn('g_category', $topCategories)
+        ->where('us_ID', '!=', $authenticatedUser->us_ID)
+        ->get();
 
         if ($authenticatedUser && $authenticatedUser->us_ID) {
             $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();

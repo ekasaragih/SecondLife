@@ -20,12 +20,7 @@
         </div>
         @endauth
 
-        @include('utils.explore.swape')
-
-        <div id="searchResults" class="mt-8">
-            
-    </div>
-        
+        @include('utils.explore.swape(wini)')
         @include('utils.explore.recommendationLocation')
         @include('utils.explore.trendPrediction', ['products' => $products])
 

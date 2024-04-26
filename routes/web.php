@@ -65,8 +65,7 @@ Route::get('/404-not-found', [PageController::class, 'not_found'])->name('not_fo
 Route::get('/500-server-error', [PageController::class, 'internal_server_error'])->name('internal_server_error');
 
 
-Route::get('/explore', 'App\Http\Controllers\ExploreController@search')->name('explore.search');
-Route::get('/explore', [ExploreController::class, 'search'])->name('explore.search');
+Route::get('/search', 'App\Http\Controllers\SearchController@search')->name('search');
 
 
 
@@ -89,8 +88,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/communities/addFeedback', [CommunitiesController::class, 'storeFeedback'])->name('add_my_community_feedback');
     Route::post('/communities/like', [CommunitiesController::class, 'like'])->name('like_community');
     Route::post('/communities/unlike', [CommunitiesController::class, 'unlike'])->name('unlike_community');
+
+    Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
 });
-
-
-
-

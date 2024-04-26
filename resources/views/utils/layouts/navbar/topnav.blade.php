@@ -26,15 +26,13 @@
         </div>
 
         <div class="items-center flex-1 relative">
-        <form id="searchForm">
-    <input type="search" name="query" id="searchInput" class="p-3 border border-gray-300 rounded-lg w-full"
-        placeholder="Find product here..">
+        <form action="{{ route('search') }}" method="GET">
+    <input type="text" name="query" placeholder="Search by name..." class="p-3 border border-gray-300 rounded-lg w-full">
     <button type="submit"
         class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
         <ion-icon name="search-outline"></ion-icon>
     </button>
 </form>
-
 </div>
 
         <div class="flex items-center gap-4">
