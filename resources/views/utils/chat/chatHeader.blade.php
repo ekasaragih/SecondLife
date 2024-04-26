@@ -9,7 +9,7 @@
                 {{ $ownerName }}
             </p>
             <p class="text-grey-darker text-xs mt-1">
-                {{ $product->us_username }}
+                <span>@</span>{{ $ownerUsername }}
             </p>
         </div>
     </div>

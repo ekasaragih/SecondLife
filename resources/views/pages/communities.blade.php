@@ -30,6 +30,7 @@
 
         <div id="post-card" class="mt-5 mb-12">
             @auth
+            @if(isset($communities) && count($communities) > 0)
             @foreach ($communities as $community)
             <div id="post" class="rounded-lg shadow-md p-3 border-2 m-1">
                 <div class="flex items-center p-3">
@@ -72,6 +73,9 @@
             </div>
 
             @endforeach
+            @else
+            <p>No communities found.</p>
+            @endif
             @else
             <p class="my-5">Please <a href="/login"
                     class="underline font-semibold hover:text-primary duration-200 translate-x-2">log in</a> to see

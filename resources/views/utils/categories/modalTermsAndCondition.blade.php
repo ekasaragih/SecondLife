@@ -92,7 +92,7 @@
             </div>
             <!-- Modal footer -->
             <div class="flex items-center space-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <button type="button" onclick="continueToChat()"
+                <button type="button" onclick="continueToChat()" id="btn-accept"
                     class="text-black bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">I
                     accept</button>
                 <button type="button" data-modal-hide="modalTermsAndCondition"
@@ -112,6 +112,7 @@
 
 <script>
     // Function to continue to the chat page
+    
     function continueToChat() {
         const loggedInUserId = "{{ $user->us_ID }}";
         const ownerUserId = $('#productOwnerId').text();
@@ -125,6 +126,19 @@
             goodsIdElement.textContent = goodsId;
         }
 
-        window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId + '&goods=' + goodsId;
+        const productName = $('#productName').text();
+        const productDesc = $('#productDesc').text();
+        const productCategory = $('#productCategory').text();
+        const productType = $('#productType').text();
+        const productPrice = $('#productPrice').text();
+        
+        // Store product details in sessionStorage
+        sessionStorage.setItem('productName', productName);
+        sessionStorage.setItem('productDesc', productDesc);
+        sessionStorage.setItem('productCategory', productCategory);
+        sessionStorage.setItem('productType', productType);
+        sessionStorage.setItem('productPrice', productPrice);
+
+        window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId;
     }
 </script>

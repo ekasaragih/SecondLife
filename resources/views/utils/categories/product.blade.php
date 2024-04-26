@@ -30,7 +30,7 @@
         $defaultImageUrl =
         'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
         $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
-        $formattedPrice = 'Rp ' . number_format($product->g_prediction_price, 0, ',', '.');
+        $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
         @endphp
 
         <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
@@ -60,15 +60,15 @@
         <div class="px-6 py-4">
             <div class="flex justify-between items-center">
                 @auth
-                <button class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
-                    id="btn_see_detail" data-product-image="{{ $imageUrl }}" data-product-id="{{ $product->g_ID }}"
+                <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}" id="btn_see_detail"
+                    class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
+                    data-product-image="{{ $imageUrl }}" data-product-id="{{ $product->g_ID }}"
                     data-product-name="{{ $product->g_name }}" data-product-user-id="{{ $product->us_ID }}"
                     data-product-desc="{{ $product->g_desc }}" data-product-category="{{ $product->g_category }}"
                     data-product-category="{{ $product->g_age }}" data-product-type="{{ $product->g_type }}"
-                    data-product-price="{{ $formattedPrice }}" data-modal-target="modalProductDetail"
-                    data-modal-toggle="modalProductDetail">
+                    data-product-price="{{ $formattedPrice }}">
                     View Details
-                </button>
+                </a>
 
                 <button
                     class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist"

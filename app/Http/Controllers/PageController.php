@@ -170,4 +170,16 @@ class PageController extends Controller
         
         return view("pages.myGoods", compact('goods', 'wishlistCount'));
     }
+
+    public function goods_detail($id)
+    {
+        $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        $userId = $authenticatedUser->us_ID;
+        $goods = Goods::where('us_ID', $userId)->get();
+
+        $product = Goods::findOrFail($id);
+        
+        return view("pages.goodsDetail", compact('goods', 'wishlistCount', 'product'));
+    }
 }
