@@ -1,24 +1,49 @@
-<!-- userProfile.blade.php -->
-
 @include('utils.layouts.navbar.topnav')
 
-<div class="container mx-auto mt-8">
-    <h1 class="text-2xl font-bold mb-4">User Profile</h1>
+<div class="flex items-center justify-center pt-52">
+    <div class="container w-4/5">
+        <div class="container mx-auto max-w-screen-lg">
+            <div class="flex items-center mb-4">
+                <!-- Foto profil -->
+                <img class="h-32 w-32 rounded-full border-4 border-white mr-4" id="user_avatar"
+                    src="https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg" alt="User Avatar">
 
-    <!-- Tampilkan us_id -->
-    <p>Us ID: {{ $us_id }}</p>
+                <!-- Informasi profil -->
+                <div>
+                    <!-- Nama -->
+                    <h1 class="text-3xl font-semibold">{{ $user->us_name }}'s Profile</h1>
+                    
+                    <!-- Lokasi -->
+                    <p class="text-sm text-gray-600">Location: {{ $user->us_city ?? 'Not specified' }}</p>
+                </div>
+            </div>
 
-    <!-- Tampilkan produk yang sesuai dengan us_id -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        @foreach($products as $product)
-        <div class="bg-white p-4 rounded-lg shadow-md">
-            <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" class="w-full h-40 object-cover mb-4 rounded-md">
-            <h2 class="text-lg font-semibold mb-2">{{ $product['name'] }}</h2>
-            <p class="text-sm text-gray-600 mb-2">{{ $product['description'] }}</p>
-            <p class="text-sm text-gray-600 mb-2">Location: {{ $product['location'] }}</p>
-            <p class="text-sm text-gray-600 mb-2">Price: {{ $product['price'] }}</p>
+            @if ($goods->isEmpty())
+                <p class="text-xl text-gray-600">No goods found for this user.</p>
+            @else
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    @foreach ($goods as $good)
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                            <img src="{{ $good->images->first()->img_url ?? 'https://via.placeholder.com/400' }}"
+                                alt="Product Image">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
+                                <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
+                                <div class="mt-2 flex justify-between items-center">
+                                    <p class="text-sm text-gray-500">Category: {{ $good->g_category }}</p>
+                                    <p class="text-sm text-gray-500">Age: {{ $good->g_age }} Years</p>
+                                </div>
+                                <div class="mt-4 flex justify-between items-center">
+                                    <p class="text-sm font-semibold text-gray-700">Price: Rp {{ number_format($good->g_original_price, 0, ',', '.') }}</p>
+                                    <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
+                                        class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
-        @endforeach
     </div>
 </div>
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommunitiesController;
+use App\Http\Controllers\UserController;
 use App\Models\Communities;
 
 /*
@@ -54,6 +55,10 @@ Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
 Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
 
 
+Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Error Pages
@@ -88,4 +93,3 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
 });
-=======
