@@ -60,7 +60,7 @@ class GoodsController extends Controller
 
         foreach ($goodsImages as $image) {
             $image->delete();
-            Storage::delete('public/goodsimage/' . $image->img_url);
+            Storage::delete('public/goods_img/' . $image->img_url);
         }
 
         GoodsImage::where('g_ID', $g_ID)->delete();
@@ -74,7 +74,7 @@ class GoodsController extends Controller
             $imageCount = GoodsImage::where('g_ID', $request->input('g_ID'))->count();
             $extension = $file->getClientOriginalExtension();
 
-            $imageName = $goodsName . '_' . $username . '_' . $goodsID . '_' . ($imageCount + 1) . '_' . $timestamp . '_' . $extension;
+            $imageName = $goodsName . '_' . $username . '_' . $goodsID . '_' . ($imageCount + 1) . '_' . $timestamp . '.' . $extension;
 
             $path = $file->storeAs('goods_img', $imageName, 'public');
 
