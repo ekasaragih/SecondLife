@@ -13,6 +13,7 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
             <select
                 class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"
                 onchange="filterByCity(this.value)">
+                <option value="Current">Current Location</option> <!-- New option for Current Location -->
                 <option value="All">All</option>
                 @foreach($cities as $city)
                 <option value="{{ $city }}">{{ $city }}</option>
@@ -124,5 +125,86 @@ function slideRight() {
         showHideCards(filteredProducts);
     }
 }
+
+function filterByCity(location) {
+    if (location === 'Current') {
+        getCurrentLocationAndFilter(); // Get and filter by current location
+    } else {
+        // Loop through each product card
+        productCards.forEach(card => {
+            const cardLocation = card.getAttribute('data-location');
+
+            // Check if the user's location matches the selected city or "All"
+            if (location === 'All' || cardLocation.toLowerCase() === location.toLowerCase()) {
+                card.style.display = 'block'; // Show the product if it matches
+            } else {
+                card.style.display = 'none'; // Hide the product if it doesn't match
+            }
+        });
+        resetIndexes(); // Reset indexes for the slider
+    }
+}
+
+
+
+function getCurrentLocationAndFilter() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // Use Google Maps Geocoding API to fetch the address from coordinates
+            axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCo37QBCTFooHIQH-Lwk-XrD6gL_uPeWVI`)
+                .then(function(response) {
+                    // Log the entire API response for examination
+                    console.log('Geocoding API response:', response.data);
+
+                    // Log all address components to inspect the structure
+                    const components = response.data.results[0].address_components;
+                    console.log('Address Components:', components);
+
+                    // Extract the city (locality) from available components
+                    let detectedCity = null;
+                    for (let component of components) {
+                        // Check for potential city types (e.g., administrative_area_level_2)
+                        if (component.types.includes('administrative_area_level_2')) {
+                            detectedCity = component.long_name;
+                            break;
+                        }
+                        // You can add more conditions to extract other relevant city types
+                    }
+
+                    if (detectedCity) {
+                        // Log the detected city name
+                        console.log('Detected City:', detectedCity);
+
+                        // Compare with each product card's location attribute
+                        productCards.forEach(card => {
+                            const cardLocation = card.getAttribute('data-location');
+
+                            // Check if the detected city matches the user's city
+                            if (detectedCity.toLowerCase() === cardLocation.toLowerCase()) {
+                                card.style.display = 'block'; // Show the product if it matches
+                            } else {
+                                card.style.display = 'none'; // Hide the product if it doesn't match
+                            }
+                        });
+                        resetIndexes(); // Reset indexes for the slider
+                    } else {
+                        console.error('City (locality) not found in address components.');
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error fetching current location:', error);
+                });
+        });
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+    }
+}
+
+
+
+    getCurrentLocationAndFilter();
 
 </script>
