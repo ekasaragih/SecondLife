@@ -77,22 +77,20 @@ Route::get('/500-server-error', [PageController::class, 'internal_server_error']
 | Post & Get Functions
 |--------------------------------------------------------------------------
 */
-Route::post('/my-goods/add', [GoodsController::class, 'store'])->name('add_my_goods');
-Route::post('/my-goods/add-img', [GoodsController::class, 'storeImg'])->name('add_img');
-Route::get('/my-goods/{id}', [GoodsController::class, 'show'])->name('show_edit_my_good');
-Route::post('/my-goods/edit', [GoodsController::class, 'update'])->name('edit_my_goods');
-Route::delete('/my-goods/delete/{id}', [GoodsController::class, 'destroy'])->name('delete_my_goods');
-Route::post('/wishlist/add', [ProductController::class, 'addToWishlist'])->name('wishlist.add');
+Route::middleware(['auth'])->group(function () {
+    // My Goods
+    Route::post('/my-goods/add', [GoodsController::class, 'store'])->name('add_my_goods');
+    Route::post('/my-goods/add-img', [GoodsController::class, 'storeImg'])->name('add_img');
+    Route::get('/my-goods/{id}', [GoodsController::class, 'show'])->name('show_edit_my_good');
+    Route::post('/my-goods/edit', [GoodsController::class, 'update'])->name('edit_my_goods');
+    Route::delete('/my-goods/delete/{id}', [GoodsController::class, 'destroy'])->name('delete_my_goods');
 
-Route::post('/communities/add', [CommunitiesController::class, 'store'])->name('add_my_community_post');
-Route::post('/communities/addFeedback', [CommunitiesController::class, 'storeFeedback'])->name('add_my_community_feedback');
-Route::post('/communities/like', [CommunitiesController::class, 'like'])->name('like_community');
-Route::post('/communities/unlike', [CommunitiesController::class, 'unlike'])->name('unlike_community');
-
-Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');
-
-Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send_message');
-
-
-
-
+    // Communities
+    Route::post('/communities/add', [CommunitiesController::class, 'store'])->name('add_my_community_post');
+    Route::post('/communities/addFeedback', [CommunitiesController::class, 'storeFeedback'])->name('add_my_community_feedback');
+    Route::post('/communities/like', [CommunitiesController::class, 'like'])->name('like_community');
+    Route::post('/communities/unlike', [CommunitiesController::class, 'unlike'])->name('unlike_community');
+ 
+    Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
+    Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send_message');
+});
