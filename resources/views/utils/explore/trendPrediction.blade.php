@@ -1,3 +1,4 @@
+
 <div class="my-10 relative">
     <div class="mt-8">
         <h2 class="text-2xl font-bold text-red-500 mb-4">What's trend now? </h2>
@@ -9,8 +10,15 @@
                 @foreach($products as $product)
                 <div class="product-card flex-none w-1/4 border border-gray-300 location-name" id="product_detail"
                     data-location="">
+                    @php
+                    $images = $product->images;
+                    $defaultImageUrl =
+                    'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
+                    $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
+                    $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
+                    @endphp
                     <!-- Assuming no image here -->
-                    <img src="https://via.placeholder.com/400" alt="Product Image">
+                    <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"   data-product-image="{{ $imageUrl }}">
                     <div class="p-4">
                         <h3 class="text-lg font-semibold text-gray-800 mb-2" id="goods_name">{{ $product->g_name }}</h3>
                         <p class="text-sm text-gray-600" id="goods_desc">{{ $product->g_desc }}</p>
@@ -120,7 +128,7 @@
     const productTrendSlider = document.querySelector('.product-trend-slider-container');
     const slideLeftTrendBtn = document.querySelector('.product-trend-slider-btn.left-0');
     const slideRightTrendBtn = document.querySelector('.product-trend-slider-btn.right-0');
-    const productTrendCards = document.querySelectorAll('.product-trend-card');
+    const productTrendCards = document.querySelectorAll('.product-card');
     const cardTrendWidth = productCards[0].offsetWidth + parseInt(getComputedStyle(productCards[0]).marginLeft) + parseInt(getComputedStyle(productCards[0]).marginRight);
     const visibleTrendCards = 4; 
     let startTrendIndex = 0;
