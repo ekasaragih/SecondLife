@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Goods;
@@ -21,7 +22,6 @@ class GoodsController extends Controller
             'g_price_prediction' => 'required|numeric',
             'g_age' => 'required|integer',
             'g_category' => 'required|string',
-        
         ]);
 
         $goods = new Goods();
@@ -33,11 +33,10 @@ class GoodsController extends Controller
         $goods->g_price_prediction = $request->input('g_price_prediction');
         $goods->g_age = $request->input('g_age');
         $goods->g_category = $request->input('g_category');
-      
+
         $goods->save();
 
         return response()->json(['message' => 'Data stored successfully', 'g_ID' => $goods->g_ID], 200);
-
     }
 
     public function storeImg(Request $request)
@@ -74,12 +73,12 @@ class GoodsController extends Controller
             $imageCount = GoodsImage::where('g_ID', $request->input('g_ID'))->count();
             $extension = $file->getClientOriginalExtension();
 
-            $imageName = $goodsName . '_' . $username . '_' . $goodsID . '_' . ($imageCount + 1) . '_' . $timestamp . '_' . $extension;
+            $imageName = $goodsName . '_' . $username . '_' . $goodsID . '_' . ($imageCount + 1) . '_' . $timestamp . '.' . $extension;
 
-            $path = $file->storeAs('goods_img', $imageName, 'public');
+            $file->move(public_path('goods_img'), $imageName);
 
             $goodsImage = new GoodsImage();
-            $goodsImage->img_url = $path;
+            $goodsImage->img_url = $imageName;
             $goodsImage->g_ID = $request->input('g_ID');
             $goodsImage->us_ID = $authenticatedUser->us_ID;
             $goodsImage->save();
@@ -92,8 +91,13 @@ class GoodsController extends Controller
     {
         $goods = Goods::findOrFail($id);
         foreach ($goods->images as $image) {
-            $imagePath = 'public/' . $image->img_url;
-            Storage::delete($imagePath);
+            $imagePath = public_path('goods_img/' . $image->img_url);
+
+            if (File::exists($imagePath)) {
+                // Delete the file
+                File::delete($imagePath);
+            }
+            $image->delete();
         }
         $goods->delete();
 
@@ -109,7 +113,7 @@ class GoodsController extends Controller
     public function update(Request $request)
     {
         $authenticatedUser = session('authenticatedUser');
-    
+
         $request->validate([
             'g_name' => 'required|string',
             'g_desc' => 'required|string',
@@ -120,20 +124,20 @@ class GoodsController extends Controller
             'g_category' => 'required|string',
             'g_ID' => 'required|integer', // Add validation for the ID
         ]);
-    
+
         // Retrieve the ID from the request
         $g_ID = $request->input('g_ID');
-    
+
         // If ID is provided, update existing record; otherwise, create a new record
         if ($g_ID) {
             // Find the existing record
             $goods = Goods::find($g_ID);
-    
+
             // Check if the record exists
             if (!$goods) {
                 return response()->json(['message' => 'Record not found'], 404);
             }
-    
+
             // Update the fields with new values from the request
             $goods->us_ID = $authenticatedUser->us_ID;
             $goods->g_name = $request->input('g_name');
@@ -146,8 +150,7 @@ class GoodsController extends Controller
         }
         // Save the changes to the database
         $goods->save();
-    
+
         return response()->json(['message' => 'Data changes stored successfully', 'g_ID' => $goods->g_ID], 200);
     }
-    
 }

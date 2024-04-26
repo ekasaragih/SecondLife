@@ -27,7 +27,7 @@
                     <div id="Goods"
                         class="w-full rounded-lg shadow-md p-5 border-2 space-y-2 float-right flex items-center z-0 mb-5">
                         @foreach ($goods->images as $image)
-                            <img class="w-32 h-32 rounded-none m-4" src="{{ asset('storage/' . $image->img_url) }}"
+                            <img class="w-32 h-32 rounded-none m-4" src="{{ asset('goods_img/' . $image->img_url) }}"
                                 alt="Goods Image">
                         @endforeach
                         <div class="w-3/4 m-4 pl-3 relative">

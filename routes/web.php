@@ -88,4 +88,3 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
 });
-=======
