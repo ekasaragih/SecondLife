@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Goods;
 use App\Models\Wishlist;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
@@ -175,12 +176,14 @@ class PageController extends Controller
     {
         $authenticatedUser = session('authenticatedUser');
         $user = session('authenticatedUser');
+        
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         $userId = $authenticatedUser->us_ID;
         $goods = Goods::where('us_ID', $userId)->get();
 
         $product = Goods::findOrFail($id);
+        $userDetails = User::findOrFail($product->us_ID);
         
-        return view("pages.goodsDetail", compact('user', 'authenticatedUser', 'goods', 'wishlistCount', 'product'));
+        return view("pages.goodsDetail", compact('user', 'authenticatedUser', 'userDetails', 'goods', 'wishlistCount', 'product'));
     }
 }

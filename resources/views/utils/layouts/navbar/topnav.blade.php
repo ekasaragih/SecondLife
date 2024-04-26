@@ -17,7 +17,7 @@
     @yield('head')
 </head>
 
-<div class="fixed top-0 left-0 w-full bg-white shadow-xl z-50">
+<div class="fixed top-0 left-0 w-full bg-white shadow-xl z-50 font-rubik">
     <div class="container mx-auto flex items-center justify-between gap-10">
         <div class="">
             <a href="/" class="header-logo">

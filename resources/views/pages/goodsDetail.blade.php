@@ -1,6 +1,15 @@
 @include('utils.layouts.navbar.topnav')
 
-<div class="flex justify-center h-screen pt-48 font-rubik">
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @auth
+    <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    @endauth
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<div class="flex justify-center h-screen pt-48 pb-64 font-rubik">
     <div class="container w-4/5">
 
         <div class="text-3xl text-[#F12E52]"><b>Product Detail</b></div>
@@ -25,7 +34,6 @@
                                 <span class="mr-3">Type:</span>
                                 <span class="font-semibold text-secondary">{{ $product->g_type }}</span>
                             </div>
-
                         </div>
                         <div class="flex">
                             <div>
@@ -56,9 +64,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="flex border-t border-gray-100 mt-5 italic text-xs">
+                    <div class="mt-4">
+                        <span class="mr-3 text-gray-500">Uploaded by:</span>
+                        <span class="font-semibold text-fray-400">{{ $userDetails->us_name }}</span>
+                    </div>
+                </div>
             </div>
 
         </section>
+
+        @include('utils.layouts.footer.footer')
     </div>
 </div>
 
@@ -88,7 +105,7 @@
         };
 
         $.ajax({
-            url: 'api/wishlist/store',
+            url: '../api/wishlist/store',
             method: 'POST',
             dataType: 'json',
             headers: {

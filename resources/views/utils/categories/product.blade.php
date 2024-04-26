@@ -89,9 +89,6 @@
 @include('utils.categories.recommendation')
 
 @auth
-{{-- Product Details Modal --}}
-@include('utils.categories.modalProductDetail')
-
 {{-- T&C Modal --}}
 @include('utils.categories.modalTermsAndCondition')
 @endauth
@@ -175,34 +172,6 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var detailButtons = document.querySelectorAll('#btn_see_detail');
-
-        detailButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var productId= this.getAttribute('data-product-id');
-                var productUserId= this.getAttribute('data-product-user-id');
-                var productName = this.getAttribute('data-product-name');
-                var productDesc = this.getAttribute('data-product-desc');
-                var productImage = this.getAttribute('data-product-image');
-                var productCategory = this.getAttribute('data-product-category');
-                var productType = this.getAttribute('data-product-type');
-                var productPrice = this.getAttribute('data-product-price');
-
-                document.getElementById('goodsId').textContent = productId;
-                document.getElementById('productOwnerId').textContent = productUserId;
-                document.getElementById('productName').textContent = productName;
-                document.getElementById('productDesc').textContent = productDesc;
-                document.getElementById('productImage').src = productImage;
-                document.getElementById('productCategory').textContent = 'Category: ' + productCategory;
-                document.getElementById('productType').textContent = 'Type: ' + productType;
-                document.getElementById('productPrice').textContent = 'Price: ' + productPrice;
-
-            });
-        });
-    });
-
-
     // Filter by Category
     function filterByCategory(category) {
         const productCards = document.querySelectorAll('.product-card');
