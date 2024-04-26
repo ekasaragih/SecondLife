@@ -170,15 +170,19 @@ class PageController extends Controller
         ]);
     }
 
-    public function my_goods()
-    {
-        $authenticatedUser = session('authenticatedUser');
-        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-        $userId = $authenticatedUser->us_ID;
-        $goods = Goods::where('us_ID', $userId)->get();
-        
-        return view("pages.myGoods", compact('goods', 'wishlistCount'));
-    }
+public function my_goods()
+{
+    $authenticatedUser = session('authenticatedUser');
+    $userId = $authenticatedUser->us_ID;
+    
+    // Fetch goods with their associated images
+    $goods = Goods::with('images')->where('us_ID', $userId)->get();
+    
+    $wishlistCount = Wishlist::where('us_ID', $userId)->count();
+
+    return view("pages.myGoods", compact('goods', 'wishlistCount'));
+}
+
 
     public function goods_detail($id)
     {
