@@ -30,7 +30,7 @@
         $defaultImageUrl =
         'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
         $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
-        $formattedPrice = 'Rp ' . number_format($product->g_prediction_price, 0, ',', '.');
+        $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
         @endphp
 
         <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
@@ -60,15 +60,15 @@
         <div class="px-6 py-4">
             <div class="flex justify-between items-center">
                 @auth
-                <button class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
-                    id="btn_see_detail" data-product-image="{{ $imageUrl }}" data-product-id="{{ $product->g_ID }}"
+                <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}" id="btn_see_detail"
+                    class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
+                    data-product-image="{{ $imageUrl }}" data-product-id="{{ $product->g_ID }}"
                     data-product-name="{{ $product->g_name }}" data-product-user-id="{{ $product->us_ID }}"
                     data-product-desc="{{ $product->g_desc }}" data-product-category="{{ $product->g_category }}"
                     data-product-category="{{ $product->g_age }}" data-product-type="{{ $product->g_type }}"
-                    data-product-price="{{ $formattedPrice }}" data-modal-target="modalProductDetail"
-                    data-modal-toggle="modalProductDetail">
+                    data-product-price="{{ $formattedPrice }}">
                     View Details
-                </button>
+                </a>
 
                 <button
                     class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist"
@@ -88,13 +88,6 @@
 {{-- Recommendation based on Categories --}}
 @include('utils.categories.recommendation')
 
-@auth
-{{-- Product Details Modal --}}
-@include('utils.categories.modalProductDetail')
-
-{{-- T&C Modal --}}
-@include('utils.categories.modalTermsAndCondition')
-@endauth
 
 {{--
 |--------------------------------------------------------------------------
@@ -175,34 +168,6 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var detailButtons = document.querySelectorAll('#btn_see_detail');
-
-        detailButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var productId= this.getAttribute('data-product-id');
-                var productUserId= this.getAttribute('data-product-user-id');
-                var productName = this.getAttribute('data-product-name');
-                var productDesc = this.getAttribute('data-product-desc');
-                var productImage = this.getAttribute('data-product-image');
-                var productCategory = this.getAttribute('data-product-category');
-                var productType = this.getAttribute('data-product-type');
-                var productPrice = this.getAttribute('data-product-price');
-
-                document.getElementById('goodsId').textContent = productId;
-                document.getElementById('productOwnerId').textContent = productUserId;
-                document.getElementById('productName').textContent = productName;
-                document.getElementById('productDesc').textContent = productDesc;
-                document.getElementById('productImage').src = productImage;
-                document.getElementById('productCategory').textContent = 'Category: ' + productCategory;
-                document.getElementById('productType').textContent = 'Type: ' + productType;
-                document.getElementById('productPrice').textContent = 'Price: ' + productPrice;
-
-            });
-        });
-    });
-
-
     // Filter by Category
     function filterByCategory(category) {
         const productCards = document.querySelectorAll('.product-card');
