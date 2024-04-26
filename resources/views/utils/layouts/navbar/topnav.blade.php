@@ -4,11 +4,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="tailwind.css">
+    <link rel="stylesheet" href="/tailwind.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="/asset/img/mini-logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/public/asset/img/mini-logo.png" type="image/x-icon">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
@@ -21,7 +21,7 @@
     <div class="container mx-auto flex items-center justify-between gap-10">
         <div class="">
             <a href="/" class="header-logo">
-                <img src="asset/img/mini-logo.png" alt="SecondLife's logo" class="h-28 w-32">
+                <img src="/asset/img/mini-logo.png" alt="SecondLife's logo" class="h-28 w-32">
             </a>
         </div>
 
@@ -44,12 +44,6 @@
                     {{ $wishlistCount }}
                 </span>
             </a>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                console.log($('#wishlist-count').text());
-            });
-            </script>
 
             <a href="{{ route('home_chat') }}" title="Messages"
                 class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'home_chat' ? 'text-primary-content' : '' }}">
@@ -75,3 +69,9 @@
 
     @include('utils.layouts.navbar.navbarMain')
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+                console.log($('#wishlist-count').text());
+    });
+</script>
