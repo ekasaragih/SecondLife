@@ -155,7 +155,7 @@
             imageContainer.classList.add('queued-image-container');
 
             const img = document.createElement('img');
-            img.src = `/storage/app/public/${imageUrl.img_url}`;
+            img.src = `goods_img/${imageUrl.img_url}`;
             img.classList.add('queued-image');
 
             const deleteButton = document.createElement('span');
@@ -200,6 +200,7 @@
             document.getElementById('edit_g_prediction_price').value = data.g_price_prediction;
             document.getElementById('edit_g_age').value = data.g_age;
             document.getElementById('edit_g_desc').value = data.g_desc;
+            document.getElementById('existing_images').value = JSON.stringify(data.images);
             previewEditImages(data.images);
             openEditModal();
         }

@@ -43,6 +43,7 @@ class GoodsController extends Controller
     {
         $authenticatedUser = session('authenticatedUser');
         $request->validate([
+            'existing_images' => 'required|array',
             'files' => 'required|array',
             'files.*' => 'image|mimes:jpeg,png,jpg|max:2048',
             'g_ID' => 'required|exists:goods,g_ID',
@@ -56,13 +57,20 @@ class GoodsController extends Controller
         }
 
         $goodsImages = GoodsImage::where('g_ID', $g_ID)->get();
+        $existingImages = $request->input('existing_images');
+        $imagesToDelete = array_diff($existingImages, $goodsImages->pluck('img_url')->toArray());
 
-        foreach ($goodsImages as $image) {
-            $image->delete();
-            Storage::delete('public/goodsimage/' . $image->img_url);
+
+        foreach ($imagesToDelete as $imageUrl) {
+            // Delete the image from storage
+            $imagePath = public_path('goods_img/' . $imageUrl);
+            File::delete($imagePath);
+
+            // Delete the image record from the database
+            GoodsImage::where('g_ID', $g_ID)
+                ->where('img_url', $imageUrl)
+                ->delete();
         }
-
-        GoodsImage::where('g_ID', $g_ID)->delete();
 
         foreach ($request->file('files') as $file) {
             $goods = Goods::find($request->input('g_ID'));
