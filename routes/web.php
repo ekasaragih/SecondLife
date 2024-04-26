@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
     Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
     Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
+    Route::get('/goods-detail/{id}', [PageController::class, 'goods_detail'])->name('goods_detail');
     Route::get('/chat', [ChatController::class, 'index'])->name('home_chat');
 });
 
@@ -44,16 +45,10 @@ Route::get('/', [PageController::class, 'explore'])->name('explore');
 Route::get('/categories', [PageController::class, 'categories'])->name('categories');
 Route::get('/communities', [PageController::class, 'communities'])->name('communities');
 
-Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
-Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
-
 Route::get('/about-us', [PageController::class, 'about_us'])->name('about_us');
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
-Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
-
-Route::get('/products', [ProductController::class, 'showProducts'])->name('products');
 Route::get('/comments', [CommentController::class, 'index']);
 Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
 Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
@@ -90,7 +85,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/communities/addFeedback', [CommunitiesController::class, 'storeFeedback'])->name('add_my_community_feedback');
     Route::post('/communities/like', [CommunitiesController::class, 'like'])->name('like_community');
     Route::post('/communities/unlike', [CommunitiesController::class, 'unlike'])->name('unlike_community');
- 
+
     Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
-    Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send_message');
 });
+=======

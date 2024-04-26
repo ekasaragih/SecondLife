@@ -5,7 +5,7 @@
 </head>
 
 
-<div class="flex justify-center h-screen pt-52 pb-64">
+<div class="flex justify-center h-screen pt-52 pb-64 font-rubik">
     <div class="container w-4/5">
 
         @auth

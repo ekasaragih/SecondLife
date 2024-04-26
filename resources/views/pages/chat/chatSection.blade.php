@@ -125,5 +125,35 @@
         }
     });
 
+    function displayProductDetails() {
+        // Retrieve product details from sessionStorage
+        const productName = sessionStorage.getItem('productName');
+        const productDesc = sessionStorage.getItem('productDesc');
+        const productCategory = sessionStorage.getItem('productCategory');
+        const productType = sessionStorage.getItem('productType');
+        const productPrice = sessionStorage.getItem('productPrice');
+        
+        // Populate the product details into the designated elements
+        $('#displayProductName').text(productName);
+        $('#displayProductDesc').text(productDesc);
+        $('#displayProductCategory').text(productCategory);
+        $('#displayProductType').text(productType);
+        $('#displayProductPrice').text(productPrice);
+        
+        $('#productDetails').removeClass('hidden');
+        
+        const message = `Hello is this product still available? \n\nProduct Name: ${productName}\nDescription: ${productDesc}\n${productCategory}\n${productType}\n${productPrice}`;
+        
+        // Set the message to the chat input field
+        $('#messageInput').val(message);
+
+        // $('#messageInput').val('');
+    }
+        
+        
+    $(document).ready(function() {
+        displayProductDetails();
+    });
+
     document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
 </script>

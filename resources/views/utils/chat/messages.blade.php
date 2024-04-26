@@ -13,11 +13,11 @@
             <div class="flex justify-center mb-4">
                 <div class="rounded py-2 px-3 bg-[#F2F2F2] w-96">
                     <p class="text-sm mt-1">
-                        Product Name: <span id="productNames"></span><br>
-                        Description: <span id="productDescs"></span><br>
-                        Category: <span id="productCategorys"></span><br>
-                        Type: <span id="productTypes"></span><br>
-                        Price: <span id="productPrices"></span>
+                        Product Name: <span id="displayProductName"></span><br>
+                        Description: <span id="displayProductDesc"></span><br>
+                        Category: <span id="displayProductCategory"></span><br>
+                        Type: <span id="displayProductType"></span><br>
+                        Price: <span id="displayProductPrice"></span>
                     </p>
                 </div>
             </div>
@@ -48,8 +48,8 @@
         @if($message->sender_id == $loggedInUserId)
         {{-- Right section chat from logged-in user --}}
         <div class="flex justify-end mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #E2F7CB">
-                <p class="text-sm mt-1">
+            <div class="rounded py-2 px-3 max-w-96 break-words overflow-hidden" style="background-color: #E2F7CB">
+                <p class="text-sm mt-1 whitespace-normal max-w-full text-left">
                     {{ $message->message }}
                 </p>
                 <p class="text-right text-xs text-grey-dark mt-1">
@@ -60,8 +60,8 @@
         @else
         {{-- Left section chat from other user --}}
         <div class="flex mb-2">
-            <div class="rounded py-2 px-3" style="background-color: #F2F2F2">
-                <p class="text-sm mt-1">
+            <div class="rounded py-2 px-3 max-w-96 overflow-hidden break-words" style="background-color: #F2F2F2">
+                <p class="text-sm mt-1 whitespace-pre max-w-full">
                     {{ $message->message }}
                 </p>
                 <p class="text-right text-xs text-grey-dark mt-1">
@@ -77,26 +77,3 @@
 
     </div>
 </div>
-
-{{-- <script>
-    function displayProductDetails() {
-        // Retrieve product details from the modal
-        const productName = $('#productName').text();
-        const productDesc = $('#productDesc').text();
-        const productCategory = $('#productCategory').text();
-        const productType = $('#productType').text();
-        const productPrice = $('#productPrice').text();
-        
-        // Populate the product details into the designated elements
-        $('#productDetails #productNames').text(productName);
-        $('#productDetails #productDescs').text(productDesc);
-        $('#productDetails #productCategorys').text(productCategory);
-        $('#productDetails #productTypes').text(productType);
-        $('#productDetails #productPrices').text(productPrice);
-        
-        // Show the product details section
-        $('#productDetails').removeClass('hidden');
-    }
-
-    displayProductDetails();
-</script> --}}

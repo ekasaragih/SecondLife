@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Goods;
 use App\Models\Likes;
 use App\Models\Wishlist;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
@@ -179,5 +180,20 @@ class PageController extends Controller
         $goods = Goods::where('us_ID', $userId)->get();
         
         return view("pages.myGoods", compact('goods', 'wishlistCount'));
+    }
+
+    public function goods_detail($id)
+    {
+        $authenticatedUser = session('authenticatedUser');
+        $user = session('authenticatedUser');
+        
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        $userId = $authenticatedUser->us_ID;
+        $goods = Goods::where('us_ID', $userId)->get();
+
+        $product = Goods::findOrFail($id);
+        $userDetails = User::findOrFail($product->us_ID);
+        
+        return view("pages.goodsDetail", compact('user', 'authenticatedUser', 'userDetails', 'goods', 'wishlistCount', 'product'));
     }
 }
