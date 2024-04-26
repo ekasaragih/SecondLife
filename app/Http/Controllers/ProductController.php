@@ -21,28 +21,30 @@ class ProductController extends Controller
         // Mengirim data produk dan kategori ke view 'product'
         return view('product', compact('products', 'categories'));
     }
+    
+    public function addToWishlist(Request $request)
+    {
+        $authenticatedUser = session('authenticatedUser');
 
-    public function addToWishlist(Request $request) {
-        $productId = $request->input('product_id');
-        $userId = auth()->user()->id;
-    
-        // Check if the product already exists in the user's wishlist
-        $existingWishlist = Wishlist::where('g_ID', $productId)
-                                    ->where('us_ID', $userId)
-                                    ->first();
-    
-        // If the product does not exist in the user's wishlist, add it to the database
-        if (!$existingWishlist) {
-            Wishlist::create([
-                'g_ID' => $productId,
-                'us_ID' => $userId,
-            ]);
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['success' => false, 'message' => 'Product already exists in the wishlist.']);
+        $request->validate([
+            'goods_ID' => 'required|integer',
+        ]);
+
+        $g_ID = $request->input('goods_ID');
+        $us_ID = $authenticatedUser->us_ID;
+
+        $existingWishlist = Wishlist::where('g_ID', $g_ID)->where('us_ID', $us_ID)->first();
+
+        if (!$existingWishlist){
+            $wishlist = new Wishlist();
+            $wishlist->us_ID = $us_ID;
+            $wishlist->g_ID = $g_ID;
+            $wishlist->save();
+            return response()->json(['message' => 'Data stored successfully'], 200);
+        }else{
+            return response()->json(['message' => 'Product already in the wishlist'], 200);
         }
     }
-    
 
 }
 

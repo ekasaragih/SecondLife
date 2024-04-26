@@ -85,8 +85,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/communities/addFeedback', [CommunitiesController::class, 'storeFeedback'])->name('add_my_community_feedback');
     Route::post('/communities/like', [CommunitiesController::class, 'like'])->name('like_community');
     Route::post('/communities/unlike', [CommunitiesController::class, 'unlike'])->name('unlike_community');
+
+    Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
 });
-
-
-
-
+=======

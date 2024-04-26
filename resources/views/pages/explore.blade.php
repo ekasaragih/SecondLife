@@ -20,7 +20,7 @@
         </div>
         @endauth
 
-        @include('utils.explore.swape')
+        @include('utils.explore.swape(wini)')
         @include('utils.explore.recommendationLocation')
         @include('utils.explore.trendPrediction', ['products' => $products])
 
