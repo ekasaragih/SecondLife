@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Communities;
+use App\Models\Feedbacks;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Goods;
+use App\Models\Likes;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\DB;
 
@@ -143,11 +147,15 @@ class PageController extends Controller
         } else {
             $wishlistCount = 0;
         }
-        
-        return view('pages.communities', [
-            'user' => $authenticatedUser,
-            'wishlistCount' => $wishlistCount,
-        ]);
+        $communities = Communities::with('feedbacks')->get();
+        foreach ($communities as $community) {
+            $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
+                            ->where('community_ID', $community->community_ID)
+                            ->exists();
+            $community->isLikedByCurrentUser = $isLiked;
+        }
+        $feedbacks = Feedbacks::all();
+        return view("pages.communities", compact('communities', 'feedbacks', 'wishlistCount', 'authenticatedUser'));
     }
 
     public function my_profile()
