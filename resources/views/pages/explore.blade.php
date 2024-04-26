@@ -21,6 +21,11 @@
         @endauth
 
         @include('utils.explore.swape')
+
+        <div id="searchResults" class="mt-8">
+            
+    </div>
+        
         @include('utils.explore.recommendationLocation')
         @include('utils.explore.trendPrediction', ['products' => $products])
 
@@ -53,6 +58,18 @@
             wishlist = wishlist.filter(item => item.index !== index);
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
             wishlistCount.textContent = wishlist.length;
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const productCarousel = new bootstrap.Carousel(document.getElementById('productCarousel'), {
+            interval: false // Disable automatic sliding
+        });
+
+        const slideRightBtn = document.querySelector('.carousel-control-next');
+
+        slideRightBtn.addEventListener('click', function() {
+            productCarousel.next(); // Slide to the next item
         });
     });
 </script>

@@ -26,13 +26,16 @@
         </div>
 
         <div class="items-center flex-1 relative">
-            <input type="search" name="search" class="p-3 border border-gray-300 rounded-lg w-full"
-                placeholder="Find product here..">
-            <button
-                class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
-                <ion-icon name="search-outline"></ion-icon>
-            </button>
-        </div>
+        <form id="searchForm">
+    <input type="search" name="query" id="searchInput" class="p-3 border border-gray-300 rounded-lg w-full"
+        placeholder="Find product here..">
+    <button type="submit"
+        class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
+        <ion-icon name="search-outline"></ion-icon>
+    </button>
+</form>
+
+</div>
 
         <div class="flex items-center gap-4">
             @auth
@@ -71,6 +74,30 @@
 </div>
 
 <script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const query = document.getElementById('searchInput').value.trim();
+
+        if (query !== '') {
+            fetch(`/explore?query=${query}`, {
+                method: 'GET'
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Memuat hasil pencarian ke dalam container pencarian yang sesuai
+                const searchContainer = document.getElementById('searchResults');
+                searchContainer.innerHTML = data;
+            })
+            .catch(error => console.error('Error fetching search results:', error));
+        }
+    });
+});
+
+    
     document.addEventListener('DOMContentLoaded', function() {
                 console.log($('#wishlist-count').text());
     });
