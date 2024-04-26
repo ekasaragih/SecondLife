@@ -231,8 +231,12 @@
             var g_original_price = parseInt($("#original_price").val());
             var g_age = parseInt($("#age_goods").val());
 
+            if(g_age === 0){
+                var predictionPrice = g_original_price - (0.0286 * g_original_price/2);
+                return predictionPrice;
+            }
             if (g_type === 'New') {
-                var predictionPrice = g_original_price - (0.0286 * g_original_price);
+                var predictionPrice = g_original_price - (g_age * (0.0286 * g_original_price));
                 return predictionPrice;
             } else if (g_type === 'Used') {
                 var marginalSalvage, lifeSpan;

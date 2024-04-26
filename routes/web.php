@@ -24,6 +24,7 @@ Route::get('/register', [AuthorizationController::class, 'register'])->name('reg
 Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store');
 Route::get('/register-optional', [AuthorizationController::class, 'registerSkip'])->name('registerSkip');
 Route::post('/register', [AuthorizationController::class, 'storeSkip'])->name('auth_storeSkip');
+Route::get('/forgotPassword', [AuthorizationController::class, 'forgotPassword'])->name('forgotPassword');
 
 /*
 |--------------------------------------------------------------------------
@@ -53,10 +54,6 @@ Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
 Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
 
 
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Error Pages
@@ -76,13 +73,18 @@ Route::get('/500-server-error', [PageController::class, 'internal_server_error']
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
+    // My Goods
     Route::post('/my-goods/add', [GoodsController::class, 'store'])->name('add_my_goods');
     Route::post('/my-goods/add-img', [GoodsController::class, 'storeImg'])->name('add_img');
     Route::get('/my-goods/{id}', [GoodsController::class, 'show'])->name('show_edit_my_good');
     Route::post('/my-goods/edit', [GoodsController::class, 'update'])->name('edit_my_goods');
     Route::delete('/my-goods/delete/{id}', [GoodsController::class, 'destroy'])->name('delete_my_goods');
-    Route::post('/wishlist/add', [ProductController::class, 'addToWishlist'])->name('wishlist.add');
+
+    // Communities
     Route::post('/communities/add', [CommunitiesController::class, 'store'])->name('add_my_community_post');
+    Route::post('/communities/addFeedback', [CommunitiesController::class, 'storeFeedback'])->name('add_my_community_feedback');
+    Route::post('/communities/like', [CommunitiesController::class, 'like'])->name('like_community');
+    Route::post('/communities/unlike', [CommunitiesController::class, 'unlike'])->name('unlike_community');
 });
 
 

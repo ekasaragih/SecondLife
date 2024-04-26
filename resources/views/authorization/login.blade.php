@@ -122,7 +122,7 @@
                                 <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
                                 <label class="form-check-label" for="form1Example3"> Remember me </label>
                             </div> --}}
-                            <a href="#" style="color: #EC297B;">Forgot password?</a>
+                            <a href="{{ route('forgotPassword')}}" style="color: #EC297B;">Forgot password?</a>
                         </div>
                         <div class="mt-10">
                             <button type="submit"
