@@ -88,10 +88,6 @@
 {{-- Recommendation based on Categories --}}
 @include('utils.categories.recommendation')
 
-@auth
-{{-- T&C Modal --}}
-@include('utils.categories.modalTermsAndCondition')
-@endauth
 
 {{--
 |--------------------------------------------------------------------------
