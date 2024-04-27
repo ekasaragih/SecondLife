@@ -14,8 +14,8 @@
                 <div class="col-span-1">
                     <div class="text-center">
                         <img class="h-32 w-32 rounded-full border-4 border-white mx-auto user_avatar" id="user_avatar"
-                            src="{{ asset('users_img/' . $user->avatar) }}"
-                            alt="{{$user->us_name}}">
+                            src="{{ $user->avatar ? asset('users_img/' . $user->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
+                            alt="{{ $user->us_name }}">
                         <button
                             class="mb-5 py-2.5 px-3 text-sm font-medium text-primary focus:outline-none bg-gray-50 rounded-lg border border-primary hover:bg-gray-100 hover:text-primary focus:z-10 focus:ring-4 focus:ring-primary"
                             data-modal-target="modalUpdateAvatar" data-modal-toggle="modalUpdateAvatar"
@@ -55,7 +55,7 @@
                                 <path class=""
                                     d="M5.64 16.36a9 9 0 1 1 12.72 0l-5.65 5.66a1 1 0 0 1-1.42 0l-5.65-5.66zm11.31-1.41a7 7 0 1 0-9.9 0L12 19.9l4.95-4.95zM12 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
                             </svg>
-                            {{$user->us_city}}, {{$user->us_province}}
+                            {{ $user->us_city }}, {{ $user->us_province }}
                             <span
                                 class="ml-2 opacity-75 hover:text-secondary cursor-pointer transition-all ease-out duration-300"
                                 title="Change location" id="editLocationButton" data-modal-target="modalChangeAddress"
@@ -66,13 +66,15 @@
                     </div>
 
                     <div class="ml-auto text-right">
-    <p class="text-lg font-semibold text-gray-800 font-rubik"> <!-- Menggunakan class `font-rubik` -->
-        Followers: <span class="text-purple-500">{{ auth()->user()->followers()->count() }}</span>
-    </p>
-    <p class="text-lg font-semibold text-gray-800 font-rubik"> <!-- Menggunakan class `font-rubik` -->
-        Following: <span class="text-purple-500">{{ auth()->user()->following()->count() }}</span>
-    </p>
-</div>
+                        <p class="text-lg font-semibold text-gray-800 font-rubik">
+                            <!-- Menggunakan class `font-rubik` -->
+                            Followers: <span class="text-purple-500">{{ auth()->user()->followers()->count() }}</span>
+                        </p>
+                        <p class="text-lg font-semibold text-gray-800 font-rubik">
+                            <!-- Menggunakan class `font-rubik` -->
+                            Following: <span class="text-purple-500">{{ auth()->user()->following()->count() }}</span>
+                        </p>
+                    </div>
 
 
                 </div>
@@ -230,4 +232,3 @@
         });
     });
 </script>
-
