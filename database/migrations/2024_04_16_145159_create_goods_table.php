@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('goods', function (Blueprint $table) {
             $table->id('g_ID');
-            $table->foreignId('us_ID');
+            $table->unsignedBigInteger('us_ID');
             $table->string('g_name');
             $table->string('g_desc');
             $table->string('g_type')->nullable();
@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('g_age')->nullable();
             $table->string('g_category')->nullable();
             $table->timestamps();
+
+            $table->foreign('us_ID')->references('us_ID')->on('users');
         });
     }
 

@@ -1,4 +1,4 @@
-@include('utils.layouts.navbar.topnav')
+@extends('utils.layouts.navbar.topnav')
 
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -8,7 +8,6 @@
 </head>
 
 <div class="pt-52 mb-24">
-
     <div class="mx-12 bg-white rounded-lg overflow-hidden shadow-lg">
         <div class="border-b p-4">
             <div class="grid grid-cols-4 gap-4">
@@ -19,9 +18,7 @@
                         <button
                             class="mb-5 py-2.5 px-3 text-sm font-medium text-primary focus:outline-none bg-gray-50 rounded-lg border border-primary hover:bg-gray-100 hover:text-primary focus:z-10 focus:ring-4 focus:ring-primary"
                             onclick="loadAddAvatarModal()" data-modal-target="modalUpdateAvatar"
-                            data-modal-toggle="modalUpdateAvatar" type="button">Update
-                            Avatar</button>
-
+                            data-modal-toggle="modalUpdateAvatar" type="button">Update Avatar</button>
 
                         <div class="flex gap-2 px-2">
                             <a href="{{ route('my_goods') }}" title="My Goods"
@@ -64,6 +61,17 @@
                             </span>
                         </div>
                     </div>
+
+                    <div class="ml-auto text-right">
+    <p class="text-lg font-semibold text-gray-800 font-rubik"> <!-- Menggunakan class `font-rubik` -->
+        Followers: <span class="text-purple-500">{{ auth()->user()->followers()->count() }}</span>
+    </p>
+    <p class="text-lg font-semibold text-gray-800 font-rubik"> <!-- Menggunakan class `font-rubik` -->
+        Following: <span class="text-purple-500">{{ auth()->user()->following()->count() }}</span>
+    </p>
+</div>
+
+
                 </div>
             </div>
 
@@ -75,8 +83,6 @@
 </div>
 
 @include('utils.layouts.footer.footer')
-
-
 
 {{--
 |--------------------------------------------------------------------------
@@ -93,11 +99,6 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script src="/js/moment.js"></script>
-<script>
-    import {
-            Modal
-        } from 'flowbite';
-</script>
 
 <script>
     // TO DO LIST
@@ -199,8 +200,8 @@
         loadUserDetail();
     });
 
-     // Get the wishlist count element
-     const wishlistCount = document.getElementById('wishlist-count');
+    // Get the wishlist count element
+    const wishlistCount = document.getElementById('wishlist-count');
 
     // Get the wishlist from the local storage
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];

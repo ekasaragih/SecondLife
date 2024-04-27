@@ -9,7 +9,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommunitiesController;
-use App\Http\Controllers\ExploreController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\UserController;
 use App\Models\Communities;
 
@@ -22,6 +22,7 @@ use App\Models\Communities;
 
 
 Route::get('/login', [AuthorizationController::class, 'login'])->name('login');
+Route::post('/logout', [AuthorizationController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthorizationController::class, 'authenticate']);
 Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
 Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store');
@@ -58,6 +59,10 @@ Route::post('/comments', [CommentController::class, 'storeComment'])->name('comm
 
 
 Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');
+Route::post('/user/follow/{user}', [UserController::class, 'followUser'])->name('user.follow');
+Route::post('/user/unfollow/{user}', [UserController::class, 'unfollowUser'])->name('user.unfollow');
+Route::get('/user/{user}/follow-status', [UserController::class, 'followStatus'])->name('user.follow_status');
+
 
 
 
