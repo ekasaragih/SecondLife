@@ -35,11 +35,11 @@
 
             <!-- Follower and Following Counts (moved to the right) -->
             <div class="ml-auto text-right">
-                <p class="text-sm text-gray-600">
+            <p class="text-lg font-semibold text-gray-800 font-rubik"> <!-- Menggunakan class `font-rubik` -->
                     <span class="font-semibold">Followers:</span>
                     <span class="ml-2 text-purple-600">{{ $user->followers()->count() }}</span>
                 </p>
-                <p class="text-sm text-gray-600">
+                <p class="text-lg font-semibold text-gray-800 font-rubik"> <!-- Menggunakan class `font-rubik` -->
                     <span class="font-semibold">Following:</span>
                     <span class="ml-2 text-purple-600">{{ $user->following()->count() }}</span>
                 </p>
