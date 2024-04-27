@@ -55,4 +55,16 @@
             wishlistCount.textContent = wishlist.length;
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const productCarousel = new bootstrap.Carousel(document.getElementById('productCarousel'), {
+            interval: false // Disable automatic sliding
+        });
+
+        const slideRightBtn = document.querySelector('.carousel-control-next');
+
+        slideRightBtn.addEventListener('click', function() {
+            productCarousel.next(); // Slide to the next item
+        });
+    });
 </script>

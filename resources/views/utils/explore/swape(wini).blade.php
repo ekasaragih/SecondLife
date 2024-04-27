@@ -1,9 +1,18 @@
+
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @auth
         <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
     <link rel="stylesheet" href="/asset/css/imgContainer.css">
+    <style>
+        /* Add this style to fit the images within the carousel */
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <div class="grid grid-cols-4 gap-4">
@@ -25,9 +34,21 @@
                 @foreach ($products as $index => $product)
                     <div id="carousel-item-{{ $index }}"
                         class="carousel-item duration-700 ease-in-out transition-transform {{ $index === 0 ? 'opacity-100' : 'opacity-0 hidden' }}">
-                        <img src="{{ $product->images->isEmpty() ? 'https://via.placeholder.com/400x300' : $product->images[0]->image_url }}"
+                        @php
+                            $images = $product->images;
+                            $defaultImageUrl =
+                            'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
+                            $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
+                            $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
+                         @endphp
+
+                         <!-- <img src="{{ $product->images->isEmpty() ? 'https://via.placeholder.com/400x300' : $product->images[0]->image_url }}"
                             class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
                             alt="{{ $product->g_name }}" />
+                        <div -->
+                        <img src="{{ $imageUrl }}"
+                            class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
+                            alt="{{ $product->g_name }}" data-product-image="{{ $imageUrl }}"/>
                         <div
                             class="carousel-item-caption bg-black bg-opacity-50 p-4 text-white rounded-md absolute top-0 left-0 right-0">
                             <p class="mb-0 text-lg font-bold" id="product_ID">ID: {{ $product->g_ID }}</p>
