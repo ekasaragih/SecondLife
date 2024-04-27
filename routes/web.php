@@ -22,6 +22,7 @@ use App\Models\Communities;
 
 
 Route::get('/login', [AuthorizationController::class, 'login'])->name('login');
+Route::post('/logout', [AuthorizationController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthorizationController::class, 'authenticate']);
 Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
 Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store');

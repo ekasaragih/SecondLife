@@ -34,7 +34,6 @@
     </button>
 </form>
 </div>
-
         <div class="flex items-center gap-4">
             @auth
             <a href="{{ route('wishlist') }}" title="My Wishlist"
@@ -63,8 +62,14 @@
                 Sign In
             </a>
             @endauth
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                title="Log Out" class="relative text-base text-gray-700 hover:text-gray-600 transition-all ease-in duration-300">
+                <i class="fa fa-sign-out" style="font-size: 29px;" aria-hidden="true"></i>
+            </a>
 
-
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>        
         </div>
     </div>
 
@@ -94,7 +99,6 @@
         }
     });
 });
-
     
     document.addEventListener('DOMContentLoaded', function() {
                 console.log($('#wishlist-count').text());
