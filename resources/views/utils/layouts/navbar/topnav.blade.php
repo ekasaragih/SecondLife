@@ -28,7 +28,7 @@
         <div class="items-center flex-1 relative">
         <form action="{{ route('search') }}" method="GET">
     <input type="text" name="query" placeholder="Search by name..." class="p-3 border border-gray-300 rounded-lg w-full">
-    <button type="submit"
+    <button type="submit" id ="searchButton" name="searchButton"
         class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
         <ion-icon name="search-outline"></ion-icon>
     </button>
@@ -73,9 +73,10 @@
 
 <script>
  document.addEventListener('DOMContentLoaded', function() {
+    // console.log($('#wishlist-count').text());
     const searchForm = document.getElementById('searchForm');
 
-    searchForm.addEventListener('submit', function(event) {
+    $('#searchButton').click(function(event) {
         event.preventDefault(); // Prevent default form submission
 
         const query = document.getElementById('searchInput').value.trim();
@@ -94,9 +95,4 @@
         }
     });
 });
-
-    
-    document.addEventListener('DOMContentLoaded', function() {
-                console.log($('#wishlist-count').text());
-    });
 </script>

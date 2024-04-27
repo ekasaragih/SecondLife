@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,84 @@ class UserController extends Controller
 
         // Tampilkan halaman profil pengguna dengan data yang diperlukan
         return view('pages.user.userProfile', ['user' => $user, 'goods' => $goods]);
+    }
+
+    public function store_profilePicture(Request $request)
+    {
+        $authenticatedUser = session('authenticatedUser');
+
+        $request->validate([
+            'avatar.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $us_ID = $authenticatedUser->us_ID;
+        $user = User::find($us_ID);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        if ($user->avatar){
+            $imagePath = public_path('users_img/' . $user->avatar);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+        }
+
+        $avatar = $request->file('avatar');
+        $userName = str_replace(' ', '_', $user->us_name);
+        $timestamp = now()->timestamp;
+        $extension = $avatar->getClientOriginalExtension();
+
+        $imageName = $userName . '_'  . $timestamp . '.' . $extension;
+        $avatar->move(public_path('users_img'), $imageName);
+
+        $user->avatar = $imageName;
+        $user->save();
+
+        return response()->json(['message' => 'Images stored successfully'], 200);
+    }
+
+
+    public function edit_profile(Request $request)
+    {
+        $authenticatedUser = session('authenticatedUser');
+
+        $request->validate([
+            'us_name' => 'required|string|max:250',
+            'us_username' => 'required|string|max:12',
+            'us_email' => 'required|email|max:250',
+            'us_DOB' => 'nullable|date',
+            'us_gender' => 'nullable|string',
+        ]);
+
+        $us_ID = $authenticatedUser->us_ID;
+        $profile = User::find($us_ID);
+
+        if ($profile) {
+            if($profile->us_email !== $request->input('us_email')){
+                $request->validate([
+                    'us_email' => 'required|email|max:250|unique:users,us_email,' . $us_ID . ',us_id',
+                ]);
+                $profile->us_email = $request->input('us_email');
+            }
+            if($profile->us_username !== $request->input('us_username')){
+                $request->validate([
+                    'us_username' => 'required|string|max:12|unique:users,us_username,' . $us_ID . ',us_id',
+                ]);
+                $profile->us_username = $request->input('us_username');
+            }
+            $profile->us_name = $request->input('us_name');
+            $profile->us_DOB = $request->input('us_DOB');
+            $profile->us_gender = $request->input('us_gender');
+            $profile->save();
+
+            return response()->json(['message' => 'Data changes stored successfully', 'us_ID' => $profile->g_ID], 200);
+            
+        }else{
+            return response()->json(['message' => 'Record not found'], 404);
+        }
+        
     }
 }
 
