@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->foreignId('g_ID')->nullable(); // Menambahkan kolom foreign ID yang nullable
+            $table->unsignedBigInteger('g_ID')->nullable();
+
+            $table->foreign('g_ID')->references('g_ID')->on('goods');
         });
     }
 
@@ -22,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->dropColumn('g_ID'); // Menghapus kolom foreign ID
+            $table->dropColumn('g_ID');
         });
     }
 };

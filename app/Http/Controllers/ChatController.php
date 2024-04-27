@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Goods;
 use App\Models\Message;
 use App\Models\User;
+use App\Models\Wishlist;
 
 class ChatController extends Controller
 {
@@ -35,11 +36,9 @@ class ChatController extends Controller
         $product = Goods::where('us_ID', $ownerUserId)->first();
 
         $senderIds = Message::where('receiver_ID', $loggedInUserId)->distinct()->pluck('sender_ID');
-
         $receiverIds = Message::where('sender_ID', $loggedInUserId)->distinct()->pluck('receiver_ID');
 
         $contactIds = $senderIds->merge($receiverIds)->unique();
-
         $contacts = User::whereIn('us_ID', $contactIds)->get();
 
         foreach ($contacts as $contact) {
@@ -55,7 +54,15 @@ class ChatController extends Controller
             $contact->last_message = $lastMessage ? $lastMessage->message : null;
         }
 
-        return view('pages.chat.chatSection', compact('loggedInUserId', 'ownerUserId', 'chatMessages', 'product', 'ownerName', 'contacts', 'ownerUsername'));
+        $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        $userId = $authenticatedUser->us_ID;
+        $goods = Goods::where('us_ID', $userId)->get();
+
+        $chattingUserGoods = Goods::where('us_ID', $ownerUserId)->get();
+        $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)->get();
+
+        return view('pages.chat.chatSection', compact('loggedInUserId', 'chattingUserGoods', 'loggedInUserGoods', 'ownerUserId', 'chatMessages', 'product', 'ownerName', 'contacts', 'ownerUsername', 'goods', 'wishlistCount'));
     }
 
      private function makeClickableLinks($text)
