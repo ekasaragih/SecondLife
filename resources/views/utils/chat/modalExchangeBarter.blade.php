@@ -186,14 +186,14 @@
         const userGoodsId = $('input[name="user_goods"]:checked').val();
         const otherUserGoodsId = $('input[name="other_user_goods"]:checked').val();
 
-        if (loggedInUserSelectedGoodsCount > 1 || otherUserSelectedGoodsCount > 1) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'You can only choose 1 goods for each user!'
-            });
-            return;
-        }
+        // if (userGoodsId > 1 || otherUserGoodsId > 1) {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Oops...',
+        //         text: 'You can only choose 1 goods for each user!'
+        //     });
+        //     return;
+        // }
 
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var apiToken = $('meta[name="api-token"]').attr('content');
@@ -210,7 +210,7 @@
                 my_ID: loggedInUserId,
                 goods_owner_ID: otherUserId,
                 my_goods: userGoodsId,
-                goods_owner_ID: otherUserGoodsId
+                barter_with: otherUserGoodsId
             },
             success: function(response) {
                 Swal.fire({

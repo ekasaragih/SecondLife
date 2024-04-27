@@ -23,10 +23,10 @@ class ExchangeController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'user_id' => 'required|integer',
-            'other_user_id' => 'required|integer',
-            'user_goods_id' => 'required|integer',
-            'other_user_goods_id' => 'required|integer',
+            'my_ID' => 'required|integer',
+            'goods_owner_ID' => 'required|integer',
+            'my_goods' => 'required|integer',
+            'barter_with' => 'required|integer',
         ]);
 
         // Create a new exchange record

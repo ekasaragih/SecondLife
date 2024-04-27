@@ -13,10 +13,10 @@ class Exchange extends Model
     protected $primaryKey = 'ex_ID';
 
     protected $fillable = [
-        'user_id',
-        'other_user_id',
-        'user_goods_id',
-        'other_user_goods_id',
+        'my_ID',
+        'goods_owner_ID',
+        'my_goods',
+        'barter_with',
     ];
 
     public function user()
