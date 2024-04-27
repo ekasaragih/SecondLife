@@ -9,7 +9,10 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommunitiesController;
+use App\Http\Controllers\ExploreController;
+use App\Http\Controllers\UserController;
 use App\Models\Communities;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +57,10 @@ Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
 Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
 
 
+Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Error Pages
@@ -63,6 +70,7 @@ Route::get('/404-not-found', [PageController::class, 'not_found'])->name('not_fo
 Route::get('/500-server-error', [PageController::class, 'internal_server_error'])->name('internal_server_error');
 
 
+Route::get('/search', 'App\Http\Controllers\SearchController@search')->name('search');
 
 
 
@@ -85,8 +93,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/communities/addFeedback', [CommunitiesController::class, 'storeFeedback'])->name('add_my_community_feedback');
     Route::post('/communities/like', [CommunitiesController::class, 'like'])->name('like_community');
     Route::post('/communities/unlike', [CommunitiesController::class, 'unlike'])->name('unlike_community');
+
+    Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
 });
-
-
-
-

@@ -50,12 +50,14 @@ class PageController extends Controller
             ->get()
             ->groupBy('g_category');
 
-        $categoryCounts = $recentProductsByCategory->map->count();
-        $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
-        $products = Goods::whereIn('g_category', $topCategories)->get();
-        
         $authenticatedUser = session('authenticatedUser');
         $wishlistCount = null;
+        $categoryCounts = $recentProductsByCategory->map->count();
+        $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
+
+        $products = Goods::whereIn('g_category', $topCategories)
+        ->where('us_ID', '!=', $authenticatedUser->us_ID)
+        ->get();
 
         if ($authenticatedUser && $authenticatedUser->us_ID) {
             $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
@@ -148,7 +150,12 @@ class PageController extends Controller
         } else {
             $wishlistCount = 0;
         }
-        $communities = Communities::with('feedbacks')->get();
+
+        $communities = Communities::with('feedbacks')
+                    ->withCount('likes')
+                    ->orderByDesc('likes_count')
+                    ->get();
+                    
         foreach ($communities as $community) {
             $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
                             ->where('community_ID', $community->community_ID)
@@ -170,15 +177,19 @@ class PageController extends Controller
         ]);
     }
 
-    public function my_goods()
-    {
-        $authenticatedUser = session('authenticatedUser');
-        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-        $userId = $authenticatedUser->us_ID;
-        $goods = Goods::where('us_ID', $userId)->get();
-        
-        return view("pages.myGoods", compact('goods', 'wishlistCount'));
-    }
+public function my_goods()
+{
+    $authenticatedUser = session('authenticatedUser');
+    $userId = $authenticatedUser->us_ID;
+    
+    // Fetch goods with their associated images
+    $goods = Goods::with('images')->where('us_ID', $userId)->get();
+    
+    $wishlistCount = Wishlist::where('us_ID', $userId)->count();
+
+    return view("pages.myGoods", compact('goods', 'wishlistCount'));
+}
+
 
     public function goods_detail($id)
     {
