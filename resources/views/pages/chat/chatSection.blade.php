@@ -50,6 +50,21 @@
     </div>
 </div>
 
+{{-- Modal exchange goods (barter) -> if barter is accepted --}}
+@include('utils.chat.modalExchangeBarter')
+
+{{--
+|--------------------------------------------------------------------------
+| SCRIPTS
+|--------------------------------------------------------------------------
+--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="/js/moment.js"></script>
+<script>
+    import {
+            Modal
+        } from 'flowbite';
+</script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
