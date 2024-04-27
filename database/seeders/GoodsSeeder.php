@@ -136,7 +136,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 11,
+                'us_ID' => 1,
                 'g_name' => 'Wireless Charging Pad',
                 'g_desc' => 'Sleek and stylish wireless charging pad compatible with various smartphone models.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -148,7 +148,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 12,
+                'us_ID' => 2,
                 'g_name' => 'Vintage Leather Jacket',
                 'g_desc' => 'Classic vintage leather jacket with timeless style and rugged durability.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -160,7 +160,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 13,
+                'us_ID' => 3,
                 'g_name' => 'Smart Home Security Camera',
                 'g_desc' => 'Advanced smart home security camera with AI-powered motion detection and night vision.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -172,7 +172,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 14,
+                'us_ID' => 4,
                 'g_name' => 'Wireless Gaming Mouse',
                 'g_desc' => 'Ergonomic wireless gaming mouse with customizable RGB lighting and high precision sensor.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -184,7 +184,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 15,
+                'us_ID' => 5,
                 'g_name' => 'Fitness Tracker Smartwatch',
                 'g_desc' => 'Smartwatch with built-in fitness tracker, heart rate monitor, and sleep analysis features.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -196,7 +196,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 16,
+                'us_ID' => 6,
                 'g_name' => 'Vintage Retro Turntable',
                 'g_desc' => 'Classic vintage retro turntable with built-in speakers for vinyl record playback.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -208,7 +208,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 17,
+                'us_ID' => 7,
                 'g_name' => 'Portable Espresso Maker',
                 'g_desc' => 'Compact and portable espresso maker for coffee lovers on the go, compatible with Nespresso capsules.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -220,7 +220,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 18,
+                'us_ID' => 8,
                 'g_name' => 'Graphic Design Software Bundle',
                 'g_desc' => 'Bundle of professional graphic design software tools for creating stunning digital artwork and illustrations.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -232,7 +232,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 19,
+                'us_ID' => 9,
                 'g_name' => 'Vintage Retro Camera',
                 'g_desc' => 'Classic vintage retro camera with manual film advance and authentic vintage aesthetic.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -244,7 +244,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 20,
+                'us_ID' => 10,
                 'g_name' => 'Smart LED Light Bulbs',
                 'g_desc' => 'Smart LED light bulbs with adjustable color temperature and smartphone app control.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -256,7 +256,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 21,
+                'us_ID' => 1,
                 'g_name' => 'Bluetooth Portable Speaker',
                 'g_desc' => 'Compact and portable Bluetooth speaker with powerful sound output and long battery life.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -268,7 +268,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 22,
+                'us_ID' => 2,
                 'g_name' => 'Vintage Leather Backpack',
                 'g_desc' => 'Classic vintage leather backpack with multiple compartments and adjustable shoulder straps.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -280,7 +280,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 23,
+                'us_ID' => 3,
                 'g_name' => 'Portable Power Bank Charger',
                 'g_desc' => 'Compact and lightweight portable power bank charger with fast charging technology.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -292,7 +292,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 24,
+                'us_ID' => 4,
                 'g_name' => 'Complete Guitar Starter Kit',
                 'g_desc' => 'Everything you need to start learning guitar, including a guitar, accessories, and instructional materials.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -304,7 +304,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 25,
+                'us_ID' => 5,
                 'g_name' => 'Limited Edition Vinyl Records',
                 'g_desc' => 'Rare limited edition vinyl records featuring classic albums from iconic artists.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -316,7 +316,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 26,
+                'us_ID' => 6,
                 'g_name' => 'Home Tool Set',
                 'g_desc' => 'Comprehensive home tool set with various essential tools for DIY projects and repairs.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -328,7 +328,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 27,
+                'us_ID' => 7,
                 'g_name' => 'Fitness Resistance Bands Set',
                 'g_desc' => 'Set of high-quality fitness resistance bands for strength training and rehabilitation exercises.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -340,7 +340,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 28,
+                'us_ID' => 8,
                 'g_name' => 'Healthy Recipe Cookbook',
                 'g_desc' => 'Collection of healthy and delicious recipes for everyday meals, promoting a balanced diet.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -352,7 +352,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 29,
+                'us_ID' => 9,
                 'g_name' => 'Professional Chef Knife Set',
                 'g_desc' => 'Premium chef knife set with high-quality blades and ergonomic handles, essential for culinary enthusiasts.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -364,7 +364,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 30,
+                'us_ID' => 10,
                 'g_name' => 'Vintage Vinyl Records Collection',
                 'g_desc' => 'Collection of vintage vinyl records featuring classic albums from various artists.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -376,7 +376,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 31,
+                'us_ID' => 1,
                 'g_name' => 'Portable Espresso Maker',
                 'g_desc' => 'Compact and portable espresso maker for coffee lovers on the go, compatible with Nespresso capsules.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -388,7 +388,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 32,
+                'us_ID' => 2,
                 'g_name' => 'DIY Home Improvement Book',
                 'g_desc' => 'Comprehensive guidebook for DIY home improvement projects, step-by-step instructions for various tasks.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -400,7 +400,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 33,
+                'us_ID' => 3,
                 'g_name' => 'Vintage Vinyl Records Collection (MLTR)',
                 'g_desc' => 'Collection of vintage vinyl records featuring classic albums from various artists.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -412,7 +412,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 34,
+                'us_ID' => 4,
                 'g_name' => 'Artisan Handcrafted Vase',
                 'g_desc' => 'Handcrafted ceramic vase with intricate designs, perfect for adding elegance to any home decor.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -424,7 +424,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 35,
+                'us_ID' => 5,
                 'g_name' => 'Rare Collectible Coin Set',
                 'g_desc' => 'Set of rare collectible coins from various historical periods, a valuable addition to any coin collection.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -436,7 +436,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 36,
+                'us_ID' => 6,
                 'g_name' => 'Professional Power Drill Set',
                 'g_desc' => 'Complete power drill set with various drill bits and accessories, essential for DIY projects and home improvements.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -448,7 +448,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 37,
+                'us_ID' => 7,
                 'g_name' => 'Designer Handcrafted Scarf',
                 'g_desc' => 'Luxurious designer scarf handcrafted from premium silk, featuring exquisite patterns and vibrant colors.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -460,7 +460,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 38,
+                'us_ID' => 8,
                 'g_name' => 'Antique Brass Table Lamp',
                 'g_desc' => 'Antique brass table lamp with ornate details, adding a touch of vintage charm to any room.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -472,7 +472,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 39,
+                'us_ID' => 9,
                 'g_name' => 'Vintage Toolbox Set',
                 'g_desc' => 'Vintage toolbox set with retro design, perfect for collectors or as a decorative piece in a workshop or garage.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -484,7 +484,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 40,
+                'us_ID' => 10,
                 'g_name' => 'Limited Edition Designer Watch',
                 'g_desc' => 'Exclusive limited edition designer watch with intricate craftsmanship and premium materials.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -496,7 +496,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 41,
+                'us_ID' => 1,
                 'g_name' => 'Vintage Record Player',
                 'g_desc' => 'Classic vintage record player with retro design, perfect for vinyl enthusiasts and collectors.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -508,7 +508,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 42,
+                'us_ID' => 2,
                 'g_name' => 'Vintage Style Wall Clock',
                 'g_desc' => 'Vintage style wall clock with antique finish, adds character and charm to any living space.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
@@ -520,7 +520,7 @@ class GoodsSeeder extends Seeder
                 'updated_at' => Date::now(),
             ],
             [
-                'us_ID' => 43,
+                'us_ID' => 3,
                 'g_name' => 'Vintage Leather Backpack (Blue)',
                 'g_desc' => 'Classic vintage leather jacket with timeless style and rugged durability.',
                 'g_type' => rand(0, 1) ? 'Used' : 'New',
