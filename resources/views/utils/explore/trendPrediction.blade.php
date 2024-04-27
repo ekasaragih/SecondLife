@@ -28,15 +28,12 @@
                             <span class="text-gray-600 text-xs" id="goods_ori_price">Price: Rp{{
                                 number_format($product->g_original_price, 0, ',', '.')
                                 }}</span>
-                            @auth
-                            <button
-                                class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
-                                style="font-size: 14px;"
-                                onclick="openTrendModal('{{ $product->g_name }}', '{{ $product->g_desc }}', 'UserLocation', '{{ $product->g_original_price }}')">Detail</button>
-                            <button
-                                class=" bg-purple-500 text-white px-4 py-2 ml-1 rounded hover:bg-gray-600 transition duration-300"
-                                style="font-size: 14px;">Add</button>
-                            @endauth
+                                @auth
+                                <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}" class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300" style="font-size: 14px;">Detail</a>
+                                <button
+                                    class=" bg-purple-500 text-white px-4 py-2 ml-1 rounded hover:bg-gray-600 transition duration-300"
+                                    style="font-size: 14px;">Add</button>
+                            @endauth                        
                         </div>
                     </div>
                 </div>
