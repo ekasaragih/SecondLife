@@ -145,7 +145,7 @@
             </div>
             <!-- Modal footer -->
             <div class="flex items-center space-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <button type="submit" onclick=""
+                <button type="submit"
                     class="text-black bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Confirm
                 </button>
@@ -171,6 +171,45 @@
             if (checkbox.id !== checkboxId) {
                 checkbox.checked = false;
             }
+        });
+    }
+</script>
+
+<script>
+    function confirmExchange() {
+        const loggedInUserId = {{ auth()->user()->us_ID }};
+        const otherUserId = {{ $otherUserId }};
+        const userGoodsId = document.querySelector('input[name="user_goods"]:checked').value;
+        const otherUserGoodsId = document.querySelector('input[name="other_user_goods"]:checked').value;
+
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
+
+        // Send AJAX request
+        fetch('/api/exchange/store', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Authorization': 'Bearer ' + apiToken
+            },
+            body: JSON.stringify({
+                user_id: loggedInUserId,
+                other_user_id: otherUserId,
+                user_goods_id: userGoodsId,
+                other_user_goods_id: otherUserGoodsId
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Handle success
+                console.log('Exchange confirmed successfully!');
+            } else {
+                // Handle error
+                console.error('Failed to confirm exchange.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
     }
 
