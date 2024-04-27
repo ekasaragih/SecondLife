@@ -11,10 +11,28 @@
                 <!-- Informasi profil -->
                 <div>
                     <!-- Nama -->
+                    <h1 class="text-3xl font-semibold">usID check: {{ $user->us_ID }}</h1>
                     <h1 class="text-3xl font-semibold">{{ $user->us_name }}'s Profile</h1>
                     
                     <!-- Lokasi -->
                     <p class="text-sm text-gray-600">Location: {{ $user->us_city ?? 'Not specified' }}</p>
+                    
+                    <!-- Follow button -->
+                    @if(auth()->user()->isFollowing($user))
+                        <form id="unfollowForm" action="{{ route('user.unfollow', $user) }}" method="POST">
+                            @csrf
+                            <button id="followButton" type="submit" class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                Unfollow
+                            </button>
+                        </form>
+                    @else
+                        <form id="followForm" action="{{ route('user.follow', $user) }}" method="POST">
+                            @csrf
+                            <button id="followButton" type="submit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Follow
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
 
@@ -46,5 +64,43 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const followForm = document.getElementById('followForm');
+        const followButton = document.getElementById('followButton');
+
+        if (followForm) {
+            followForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                fetch(followForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        followButton.classList.remove('bg-blue-500', 'hover:bg-blue-700');
+                        followButton.classList.add('bg-green-500', 'hover:bg-green-700');
+                        followButton.textContent = 'Following';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        }
+    });
+</script>
+
+<style>
+    /* Efek hover pada tombol */
+    #followButton:hover {
+        background-color: #2b6cb0; /* Ubah warna latar belakang saat dihover */
+    }
+</style>
 
 @include('utils.layouts.footer.footer')

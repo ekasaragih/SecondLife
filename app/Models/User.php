@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -64,5 +65,17 @@ class User extends Authenticatable
 {
     return $this->hasMany(Goods::class, 'us_ID', 'us_ID');
 }
+public function following(): BelongsToMany
+{
+    return $this->belongsToMany(User::class, 'follow', 'follower_id', 'followed_id')->withTimestamps();
+}
 
+public function isFollowing(User $user): bool
+{
+    return $this->following()->where('followed_id', $user->id)->exists();
+}
+public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'follow', 'followed_id', 'follower_id')->withTimestamps();
+    }
 }

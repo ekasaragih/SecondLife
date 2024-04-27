@@ -18,5 +18,20 @@ class UserController extends Controller
         // Tampilkan halaman profil pengguna dengan data yang diperlukan
         return view('pages.user.userProfile', ['user' => $user, 'goods' => $goods]);
     }
+
+    public function followUser(User $user)
+    {
+        // Attach the user to the following relationship of the authenticated user
+        auth()->user()->following()->attach($user);
+
+        return back()->with('success', 'You are now following ' . $user->name);
+    }
+
+    public function unfollowUser(User $user)
+    {
+        auth()->user()->following()->detach($user);
+
+        return back()->with('success', 'You have unfollowed ' . $user->name);
+    }
 }
 
