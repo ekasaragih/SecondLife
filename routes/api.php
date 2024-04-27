@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\ChatController;
 use App\Http\Controllers\API\WishlistController;
+use App\Http\Controllers\API\ExchangeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // CHAT
     Route::post('/chat/send', [ChatController::class, 'send'])->name('send_message');
+
+    // EXCHANGE
+    Route::post('/exchange/store', [ExchangeController::class, 'store'])->name('exchange.store');
+
 });

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="/public/asset/img/mini-logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/asset/img/mini-logo.png" type="image/x-icon">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
@@ -34,7 +34,6 @@
     </button>
 </form>
 </div>
-
         <div class="flex items-center gap-4">
             @auth
             <a href="{{ route('wishlist') }}" title="My Wishlist"
@@ -63,8 +62,14 @@
                 Sign In
             </a>
             @endauth
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                title="Log Out" class="relative text-base text-gray-700 hover:text-gray-600 transition-all ease-in duration-300">
+                <i class="fa fa-sign-out" style="font-size: 29px;" aria-hidden="true"></i>
+            </a>
 
-
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>        
         </div>
     </div>
 

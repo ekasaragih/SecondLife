@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -18,6 +19,29 @@ class UserController extends Controller
 
         // Tampilkan halaman profil pengguna dengan data yang diperlukan
         return view('pages.user.userProfile', ['user' => $user, 'goods' => $goods]);
+    }
+
+   public function followUser(User $user)
+    {
+        // Attach the user to the following relationship of the authenticated user
+        auth()->user()->following()->attach($user);
+
+        return back()->with('success', 'You are now following ' . $user->name);
+    }
+
+    public function unfollowUser(User $user)
+    {
+        auth()->user()->following()->detach($user);
+
+        return back()->with('success', 'You have unfollowed ' . $user->name);
+    }
+
+    public function followStatus(User $user)
+    {
+        // Check if authenticated user is following the specified user
+        $isFollowing = auth()->user()->isFollowing($user);
+
+        return response()->json(['is_following' => $isFollowing]);
     }
 
     public function store_profilePicture(Request $request)
