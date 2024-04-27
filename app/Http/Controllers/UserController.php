@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -32,6 +33,14 @@ class UserController extends Controller
         auth()->user()->following()->detach($user);
 
         return back()->with('success', 'You have unfollowed ' . $user->name);
+    }
+
+    public function followStatus(User $user)
+    {
+        // Check if authenticated user is following the specified user
+        $isFollowing = auth()->user()->isFollowing($user);
+
+        return response()->json(['is_following' => $isFollowing]);
     }
 }
 
