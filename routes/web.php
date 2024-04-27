@@ -9,7 +9,9 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommunitiesController;
+use App\Http\Controllers\ExploreController;
 use App\Models\Communities;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +65,7 @@ Route::get('/404-not-found', [PageController::class, 'not_found'])->name('not_fo
 Route::get('/500-server-error', [PageController::class, 'internal_server_error'])->name('internal_server_error');
 
 
+Route::get('/search', 'App\Http\Controllers\SearchController@search')->name('search');
 
 
 
