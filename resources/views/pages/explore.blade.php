@@ -15,12 +15,12 @@
         @else
         <div class="my-4 text-secondary">
             <h6 class="text-base">Hello, User!</h6>
-            <p>Welcome to Project Alchemist! Please log in.</p>
+            <p>Welcome to SecondLife! Please log in.</p>
             <span><a href="{{ route('login') }}" class="text-secondary hover:text-opacity-60"><u>Login</u></a></span>
         </div>
         @endauth
 
-        @include('utils.explore.swape(wini)')
+        @include('utils.explore.swape')
         @include('utils.explore.recommendationLocation')
         @include('utils.explore.trendPrediction', ['products' => $products])
 
