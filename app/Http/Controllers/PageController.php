@@ -169,10 +169,12 @@ class PageController extends Controller
     public function my_profile()
     {
         $authenticatedUser = session('authenticatedUser');
+        $user = User:: where ('us_ID',$authenticatedUser->us_ID)->first();
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
 
         return view('pages.myProfile', [
-            'user' => $authenticatedUser, 
+            'authenticatedUser' => $authenticatedUser,
+            'user' => $user, 
             'wishlistCount' => $wishlistCount,
         ]);
     }
