@@ -35,8 +35,8 @@
                             <div id="post" class="rounded-lg shadow-md p-3 border-2 m-1">
                                 <div class="flex items-center p-3">
                                     <img class="w-8 h-8 rounded-full mr-4"
-                                        src="https://cdn.antaranews.com/cache/1200x800/2023/03/13/4E7F573F-B89D-40E4-AE6F-56C06AD96496.jpeg"
-                                        alt="Profile Picture">
+                                        src="{{ $community->userID->avatar ? asset('users_img/' . $community->userID->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
+                                        alt="{{ $community->userID->us_name }}">
                                     <h2 class="text-lg font-semibold mr-3">{{ $community->UserID->us_name }}</h2>
                                     <h2 class="text-base text-gray-500 italic">
                                         {{ \Carbon\Carbon::parse($community->created_at)->format('F j, Y') }}</h2>
@@ -55,7 +55,8 @@
                                 </div>
                             </div>
 
-                            <button class="toggle-replies-button mr-3 mt-2 p-2 bg-[#F12E52] text-white hover:bg-white hover:text-[#F12E52] focus:outline-none shadow-md rounded-md">
+                            <button
+                                class="toggle-replies-button mr-3 mt-2 p-2 bg-[#F12E52] text-white hover:bg-white hover:text-[#F12E52] focus:outline-none shadow-md rounded-md">
                                 {{ $community->repliesVisible ? 'Hide Replies' : 'Show Replies' }}
                             </button>
 
@@ -82,8 +83,8 @@
                                         <div id="replies"
                                             class="w-11/12 rounded-lg shadow-md p-5 border-2 m-1 float-right flex items-center">
                                             <img class="w-8 h-8 rounded-full mr-4"
-                                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUAl5RnJ7_Y5MWYXPkxtFAM5eahD7k9RjDDQ&s"
-                                                alt="Profile Picture">
+                                                src="{{ $feedback->userID->avatar ? asset('users_img/' . $feedback->userID->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
+                                                alt="{{ $feedback->userID->us_name }}">
                                             <h2 class="text-lg font-semibold mr-3">{{ $feedback->UserID->us_name }}</h2>
                                             <h2 class="text-base text-gray-500 italic">
                                                 {{ \Carbon\Carbon::parse($feedback->created_at)->format('F j, Y') }}</h2>
@@ -119,9 +120,11 @@
                 // Find the replies container related to this button
                 const repliesContainer = button.parentNode.querySelector('.replies-container');
                 // Toggle visibility of replies container
-                repliesContainer.style.display = repliesContainer.style.display === 'none' ? 'block' : 'none';
+                repliesContainer.style.display = repliesContainer.style.display === 'none' ?
+                    'block' : 'none';
                 // Update button text
-                button.textContent = repliesContainer.style.display === 'none' ? 'Show Replies' : 'Hide Replies';
+                button.textContent = repliesContainer.style.display === 'none' ?
+                    'Show Replies' : 'Hide Replies';
             });
         });
 
