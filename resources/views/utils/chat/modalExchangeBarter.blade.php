@@ -207,10 +207,10 @@
                 'Authorization': 'Bearer ' + apiToken
             },
             data: {
-                user_id: loggedInUserId,
-                other_user_id: otherUserId,
-                user_goods_id: userGoodsId,
-                other_user_goods_id: otherUserGoodsId
+                my_ID: loggedInUserId,
+                goods_owner_ID: otherUserId,
+                my_goods: userGoodsId,
+                goods_owner_ID: otherUserGoodsId
             },
             success: function(response) {
                 Swal.fire({
