@@ -28,11 +28,10 @@
                         class="w-full rounded-lg shadow-md p-5 border-2 space-y-2 float-right flex items-center z-0 mb-5">
                         {{-- @foreach ($goods->images as $image) --}}
                         @if ($goods->images->isNotEmpty())
-                        <img class="w-32 h-32 rounded-none m-4" 
-                            src="{{ asset('goods_img/' . $goods->images->first()->img_url) }}" 
-                            alt="Goods Image">
-                    @endif
-                    
+                            <img class="w-32 h-32 rounded-none m-4"
+                                src="{{ asset('goods_img/' . $goods->images->first()->img_url) }}" alt="Goods Image">
+                        @endif
+
                         {{-- @endforeach --}}
                         <div class="w-3/4 m-4 pl-3 relative">
                             <div class="flex">
@@ -140,41 +139,6 @@
         });
     });
 
-    function clearEditImagePreview() {
-        const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
-        imagePreviewContainer.innerHTML = ''; // Clear the container by removing all its child elements
-    }
-
-    function previewEditImages(images) {
-        clearEditImagePreview(); // Clear the container before populating with new images
-
-        const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
-
-        images.forEach(imageUrl => {
-            const imageContainer = document.createElement('div');
-            imageContainer.classList.add('queued-image-container');
-
-            const img = document.createElement('img');
-            img.src = `goods_img/${imageUrl.img_url}`;
-            img.classList.add('queued-image');
-
-            const deleteButton = document.createElement('span');
-            deleteButton.innerHTML = '&times;';
-            deleteButton.classList.add('delete-button');
-            deleteButton.addEventListener('click', function() {
-                imageContainer.remove();
-                // Optionally, you can also send an AJAX request to delete the image from the database here
-            });
-
-            imageContainer.appendChild(img);
-            imageContainer.appendChild(deleteButton);
-
-            imagePreviewContainer.appendChild(imageContainer);
-        });
-    }
-
-    
-
     document.addEventListener('DOMContentLoaded', function() {
         const editButtons = document.querySelectorAll('.edit-btn');
 
@@ -208,6 +172,60 @@
         function openEditModal() {
             const modalEditGoods = document.getElementById('modalEditGoods');
             modalEditGoods.classList.remove('hidden');
+        }
+
+        function clearEditImagePreview() {
+            const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
+            imagePreviewContainer.innerHTML = ''; // Clear the container by removing all its child elements
+        }
+        let existingImages = [];
+
+        function previewEditImages(images) {
+            clearEditImagePreview(); // Clear the container before populating with new images
+            existingImages = images;
+
+            const imagePreviewContainer = document.getElementById('edit_imagePreviewContainer');
+
+            images.forEach(imageUrl => {
+                const imageContainer = document.createElement('div');
+                imageContainer.classList.add('queued-image-container');
+
+                const img = document.createElement('img');
+                img.src = `goods_img/${imageUrl.img_url}`;
+                img.classList.add('queued-image');
+
+                const deleteButton = document.createElement('span');
+                deleteButton.innerHTML = '&times;';
+                deleteButton.classList.add('delete-button');
+                deleteButton.addEventListener('click', function() {
+                    // Remove the image container from the UI
+                    imageContainer.remove();
+                    console.log("delete in myGoods");
+                    if (!document.getElementById('edit_imagePreviewContainer').contains(
+                            imageContainer)) {
+                        // If the image container is removed from the UI, proceed with updating existingImages
+                        const imageUrl = img.src.replace(window.location.origin + '/',''); // Get relative image URL
+                        const imageName = imageUrl.substring(imageUrl.lastIndexOf('/') +1); // Extract the image filename
+                        const index = existingImages.findIndex(image => image.img_url === imageName); // Compare with the filename
+                        if (index !== -1) {
+                            existingImages.splice(index,1); 
+                            document.getElementById('existing_images').value = JSON.stringify(
+                                existingImages);
+                            console.log(existingImages);
+                            console.log(document.getElementById('existing_images').value);
+                        }
+                    } else {
+                        // If the image container is still present in the UI, handle the error or retry the deletion
+                        console.error('Error: Image container was not removed from the UI.');
+                        // You can handle this error condition based on your application's requirements
+                    }
+                });
+
+                imageContainer.appendChild(img);
+                imageContainer.appendChild(deleteButton);
+
+                imagePreviewContainer.appendChild(imageContainer);
+            });
         }
     });
 </script>

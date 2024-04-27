@@ -42,9 +42,10 @@ class GoodsController extends Controller
     public function storeImg(Request $request)
     {
         $authenticatedUser = session('authenticatedUser');
+
         $request->validate([
-            'existing_images' => 'required|array',
-            'files' => 'required|array',
+            'existing_images' => 'required_without:files|array',
+            'files' => 'required_without:existing_images|array',
             'files.*' => 'image|mimes:jpeg,png,jpg|max:2048',
             'g_ID' => 'required|exists:goods,g_ID',
         ]);
@@ -56,40 +57,50 @@ class GoodsController extends Controller
             return response()->json(['message' => 'Goods not found'], 404);
         }
 
-        $goodsImages = GoodsImage::where('g_ID', $g_ID)->get();
-        $existingImages = $request->input('existing_images');
-        $imagesToDelete = array_diff($existingImages, $goodsImages->pluck('img_url')->toArray());
+        // If existing_images are provided, process them
+        if ($request->has('existing_images')) {
+            $goodsImages = GoodsImage::where('g_ID', $g_ID)->get();
+            $existingImages = $request->input('existing_images');
 
+            // Extract filenames from the existing_images[] parameters
+            $existingFilenames = array_map(function ($imageUrl) {
+                return basename($imageUrl); // Extract only the filename from the URL
+            }, $existingImages);
 
-        foreach ($imagesToDelete as $imageUrl) {
-            // Delete the image from storage
-            $imagePath = public_path('goods_img/' . $imageUrl);
-            File::delete($imagePath);
+            // Identify images to delete
+            $imagesToDelete = $goodsImages->filter(function ($image) use ($existingFilenames) {
+                return !in_array(basename($image->img_url), $existingFilenames);
+            });
 
-            // Delete the image record from the database
-            GoodsImage::where('g_ID', $g_ID)
-                ->where('img_url', $imageUrl)
-                ->delete();
+            // Delete images from storage and database
+            foreach ($imagesToDelete as $image) {
+                $imagePath = public_path('goods_img/' . $image->img_url);
+                File::delete($imagePath);
+                $image->delete();
+            }
         }
 
-        foreach ($request->file('files') as $file) {
-            $goods = Goods::find($request->input('g_ID'));
-            $goodsName = str_replace(' ', '_', $goods->g_name);
-            $username = $authenticatedUser->us_username;
-            $goodsID = $goods->g_ID;
-            $timestamp = now()->timestamp;
-            $imageCount = GoodsImage::where('g_ID', $request->input('g_ID'))->count();
-            $extension = $file->getClientOriginalExtension();
+        // If files are provided, process them
+        if ($request->has('files')) {
+            foreach ($request->file('files') as $file) {
+                $goods = Goods::find($request->input('g_ID'));
+                $goodsName = str_replace(' ', '_', $goods->g_name);
+                $username = $authenticatedUser->us_username;
+                $goodsID = $goods->g_ID;
+                $timestamp = now()->timestamp;
+                $imageCount = GoodsImage::where('g_ID', $request->input('g_ID'))->count();
+                $extension = $file->getClientOriginalExtension();
 
-            $imageName = $goodsName . '_' . $username . '_' . $goodsID . '_' . ($imageCount + 1) . '_' . $timestamp . '.' . $extension;
+                $imageName = $goodsName . '_' . $username . '_' . $goodsID . '_' . ($imageCount + 1) . '_' . $timestamp . '.' . $extension;
 
-            $file->move(public_path('goods_img'), $imageName);
+                $file->move(public_path('goods_img'), $imageName);
 
-            $goodsImage = new GoodsImage();
-            $goodsImage->img_url = $imageName;
-            $goodsImage->g_ID = $request->input('g_ID');
-            $goodsImage->us_ID = $authenticatedUser->us_ID;
-            $goodsImage->save();
+                $goodsImage = new GoodsImage();
+                $goodsImage->img_url = $imageName;
+                $goodsImage->g_ID = $request->input('g_ID');
+                $goodsImage->us_ID = $authenticatedUser->us_ID;
+                $goodsImage->save();
+            }
         }
 
         return response()->json(['message' => 'Images stored successfully'], 200);
