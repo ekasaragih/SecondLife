@@ -97,6 +97,7 @@ Route::middleware(['auth'])->group(function () {
     // User
     Route::post('/user/profile-picture', [UserController::class, 'store_profilePicture'])->name('profile_picture');
     Route::post('/user/edit-profile', [UserController::class, 'edit_profile'])->name('edit_my_profile');
+    Route::post('/user/edit-address', [UserController::class, 'edit_address'])->name('edit_my_address');
 
     Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
 });

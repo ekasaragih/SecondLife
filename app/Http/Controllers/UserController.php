@@ -97,5 +97,30 @@ class UserController extends Controller
         }
         
     }
+
+    public function edit_address(Request $request)
+    {
+        $authenticatedUser = session('authenticatedUser');
+
+        $request->validate([
+            'us_city' => 'required|string',
+            'us_province' => 'required|string',
+        ]);
+
+        $us_ID = $authenticatedUser->us_ID;
+        $profile = User::find($us_ID);
+
+        if ($profile) {
+            $profile->us_city = $request->input('us_city');
+            $profile->us_province = $request->input('us_province');
+            $profile->save();
+
+            return response()->json(['message' => 'Data changes stored successfully', 'us_ID' => $profile->g_ID], 200);
+            
+        }else{
+            return response()->json(['message' => 'Record not found'], 404);
+        }
+        
+    }
 }
 
