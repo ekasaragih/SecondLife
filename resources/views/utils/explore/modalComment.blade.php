@@ -2,7 +2,8 @@
     style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;"
     data-product-id="">
     <div class="modal-content"
-        style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 600px; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+    style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 800px; width: 90%; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+
         <span class="close" onclick="closeModal()"
             style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; color: #888; z-index: 1;">&times;</span>
         <h2 id="modalTitle"
@@ -12,7 +13,7 @@
             <img id="modalImage" src="" alt="Product Image"
                 style="width: 300px; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
             <p id="modalLocation" style="color: #666; margin-bottom: 10px;"></p>
-            <p id="modalPrice" style="color: #666; margin-bottom: 20px; font-size: 18px; font-weight: bold;"></p>
+            <p id="modalPrice" style="color: purple; margin-bottom: 20px; font-size: 18px; font-weight: bold;"></p>
         </div>
         <hr style="margin: 20px 0;"> <!-- Garis penghalang -->
         <p id="modalProductId" style="color: #666; margin-bottom: 10px;"></p>
@@ -42,7 +43,7 @@
         <div style="text-align: center;">
             <button
                 class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300 mt-2"
-                onclick="addToCart()">Add to Cart</button>
+                onclick="addToCart()">Add to Wishlist</button>
         </div>
     </div>
 </div>
