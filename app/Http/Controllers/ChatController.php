@@ -35,7 +35,17 @@ class ChatController extends Controller
         $senderIds = Message::where('receiver_ID', $loggedInUserId)->distinct()->pluck('sender_ID');
         $receiverIds = Message::where('sender_ID', $loggedInUserId)->distinct()->pluck('receiver_ID');
 
-        $contactIds = $senderIds->merge($receiverIds)->unique();
+        
+        $contactIds = Message::where('sender_id', $loggedInUserId)
+        ->orWhere('receiver_id', $loggedInUserId)
+        ->distinct()
+        ->pluck('sender_id')
+        ->merge(Message::where('sender_id', $loggedInUserId)
+            ->orWhere('receiver_id', $loggedInUserId)
+            ->distinct()
+            ->pluck('receiver_id'))
+        ->unique();
+
         $contacts = User::whereIn('us_ID', $contactIds)->get();
 
         foreach ($contacts as $contact) {
@@ -61,7 +71,22 @@ class ChatController extends Controller
 
         $recentExchange = Exchange::latest()->first();
 
-        return view('pages.chat.chatSection', compact('recentExchange', 'loggedInUserId', 'chattingUserGoods', 'loggedInUserGoods', 'ownerUserId', 'chatMessages', 'product', 'ownerName', 'contacts', 'ownerUsername', 'goods', 'wishlistCount'));
+        return view('pages.chat.chatSection', [
+            'recentExchange' => $recentExchange,
+            'loggedInUserId' => $loggedInUserId,
+            'chattingUserGoods' => $chattingUserGoods,
+            'loggedInUserGoods' => $loggedInUserGoods,
+            'ownerUserId' => $ownerUserId,
+            'chatMessages' => $chatMessages,
+            'ownerName' => $ownerName,
+            'contacts' => $contacts,
+            'ownerUsername' => $ownerUsername,
+            'goods' => $goods,
+            'wishlistCount' => $wishlistCount,
+            'product' => $product,
+            'goodsId' => $goodsId,
+
+        ]);
     }
 
 

@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('exchange', function (Blueprint $table) {
             $table->id('ex_ID');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('other_user_id');
-            $table->unsignedBigInteger('user_goods_id');
-            $table->unsignedBigInteger('other_user_goods_id');
+            $table->unsignedBigInteger('my_ID');
+            $table->unsignedBigInteger('goods_owner_ID');
+            $table->unsignedBigInteger('my_goods');
+            $table->unsignedBigInteger('barter_with');
             $table->timestamps();
 
             // Define foreign key constraints
-            $table->foreign('user_id')->references('us_ID')->on('users');
-            $table->foreign('other_user_id')->references('us_ID')->on('users');
-            $table->foreign('user_goods_id')->references('g_ID')->on('goods');
-            $table->foreign('other_user_goods_id')->references('g_ID')->on('goods');
+            $table->foreign('my_ID')->references('us_ID')->on('users');
+            $table->foreign('goods_owner_ID')->references('us_ID')->on('users');
+            $table->foreign('my_goods')->references('g_ID')->on('goods');
+            $table->foreign('barter_with')->references('g_ID')->on('goods');
         });
     }
 
