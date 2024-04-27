@@ -61,21 +61,31 @@
         {{-- Chat from logged in user --}}
         <div id="chatMessages"></div>
 
+        <div class="flex justify-center mb-4">
+            <div class="rounded py-2 px-4 bg-white">
+                <p class="text-xs">
+                    @if($recentExchange)
+                    You have bartered {{ $recentExchange->userGoods->g_name }} with {{
+                    $recentExchange->otherUser->us_name }}'s
+                    {{ $recentExchange->otherUserGoods->g_name }}
+                    @else
+                    No recent barter found
+                    @endif
+                </p>
+            </div>
+        </div>
+
         {{-- ini keknya cuma buat user yg logged in aja --}}
         <div class="flex justify-center mt-5">
             <div
                 class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <div class="flex flex-col items-center pb-10">
                     <span class="text-sm text-gray-500 dark:text-gray-400 mt-5">Please confirm this after you have done
-                        the
-                        discussion.</span>
+                        the discussion.</span>
                     <div class="flex mt-4 md:mt-6">
                         <a data-modal-target="modalExchangeBarter" data-modal-toggle="modalExchangeBarter"
                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                            Accept barter</a>
-                        <a href="#"
-                            class="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">
-                            Reject barter
+                            Accept barter
                         </a>
                     </div>
                 </div>

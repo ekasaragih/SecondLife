@@ -7,6 +7,7 @@ use App\Models\Goods;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\Wishlist;
+use App\Models\Exchange;
 
 class ChatController extends Controller
 {
@@ -28,10 +29,6 @@ class ChatController extends Controller
                 ->where('receiver_id', $loggedInUserId);
         })->orderBy('created_at')
         ->get();
-
-        foreach ($chatMessages as $message) {
-            $message->message = $this->makeClickableLinks($message->message);
-        }
 
         $product = Goods::where('us_ID', $ownerUserId)->first();
 
@@ -62,7 +59,9 @@ class ChatController extends Controller
         $chattingUserGoods = Goods::where('us_ID', $ownerUserId)->get();
         $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)->get();
 
-        return view('pages.chat.chatSection', compact('loggedInUserId', 'chattingUserGoods', 'loggedInUserGoods', 'ownerUserId', 'chatMessages', 'product', 'ownerName', 'contacts', 'ownerUsername', 'goods', 'wishlistCount'));
+        $recentExchange = Exchange::latest()->first();
+
+        return view('pages.chat.chatSection', compact('recentExchange', 'loggedInUserId', 'chattingUserGoods', 'loggedInUserGoods', 'ownerUserId', 'chatMessages', 'product', 'ownerName', 'contacts', 'ownerUsername', 'goods', 'wishlistCount'));
     }
 
 
