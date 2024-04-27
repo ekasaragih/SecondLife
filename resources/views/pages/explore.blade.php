@@ -21,14 +21,15 @@
         @endauth
 
         @include('utils.explore.swape')
-        @include('utils.explore.recommendationLocation')
-        @include('utils.explore.trendPrediction', ['products' => $products])
-
+        <div id="recommendationLocation">
+            @include('utils.explore.recommendationLocation')
+        </div><br><br><br>
+        <div id="trendingPrediction">
+            @include('utils.explore.trendPrediction', ['products' => $products])
+        </div> 
         @include('utils.layouts.footer.footer')
     </div>
 </div>
-
-
 
 {{--
 |--------------------------------------------------------------------------
