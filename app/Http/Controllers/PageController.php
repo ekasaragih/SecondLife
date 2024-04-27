@@ -150,7 +150,12 @@ class PageController extends Controller
         } else {
             $wishlistCount = 0;
         }
-        $communities = Communities::with('feedbacks')->get();
+
+        $communities = Communities::with('feedbacks')
+                    ->withCount('likes')
+                    ->orderByDesc('likes_count')
+                    ->get();
+                    
         foreach ($communities as $community) {
             $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
                             ->where('community_ID', $community->community_ID)
