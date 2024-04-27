@@ -30,8 +30,9 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                 // Ambil informasi pengguna yang memiliki produk
                 $user = $product->userID;
                 @endphp
+                @if ($user && $user->us_city)
                 <div class="product-card flex-none w-1/4 border border-gray-300 {{ strtolower($user->us_city) }}"
-                    data-location="{{ strtolower($user->us_city) }}">
+            data-location="{{ strtolower($user->us_city) }}">
                     <img src="{{ $product->images->first()->img_url ?? 'https://via.placeholder.com/400' }}"
                         alt="Product Image">
                     <div class="p-4">
@@ -54,6 +55,7 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                         </div>
                     </div>
                 </div>
+                @endif
                 @endforeach
             </div>
         </div>
