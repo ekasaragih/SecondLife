@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Goods;
 use App\Models\Message;
 use App\Models\User;
+use App\Models\Wishlist;
+use App\Models\Exchange;
 
 class ChatController extends Controller
 {
@@ -31,10 +33,18 @@ class ChatController extends Controller
         $product = Goods::where('us_ID', $ownerUserId)->first();
 
         $senderIds = Message::where('receiver_ID', $loggedInUserId)->distinct()->pluck('sender_ID');
-
         $receiverIds = Message::where('sender_ID', $loggedInUserId)->distinct()->pluck('receiver_ID');
 
-        $contactIds = $senderIds->merge($receiverIds)->unique();
+        
+        $contactIds = Message::where('sender_id', $loggedInUserId)
+        ->orWhere('receiver_id', $loggedInUserId)
+        ->distinct()
+        ->pluck('sender_id')
+        ->merge(Message::where('sender_id', $loggedInUserId)
+            ->orWhere('receiver_id', $loggedInUserId)
+            ->distinct()
+            ->pluck('receiver_id'))
+        ->unique();
 
         $contacts = User::whereIn('us_ID', $contactIds)->get();
 
@@ -51,10 +61,33 @@ class ChatController extends Controller
             $contact->last_message = $lastMessage ? $lastMessage->message : null;
         }
 
-        return view('pages.chat.chatSection', compact('loggedInUserId', 'ownerUserId', 'chatMessages', 'product', 'ownerName', 'contacts', 'ownerUsername'));
+        $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        $userId = $authenticatedUser->us_ID;
+        $goods = Goods::where('us_ID', $userId)->get();
+
+        $chattingUserGoods = Goods::where('us_ID', $ownerUserId)->get();
+        $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)->get();
+
+        $recentExchange = Exchange::latest()->first();
+
+        return view('pages.chat.chatSection', [
+            'recentExchange' => $recentExchange,
+            'loggedInUserId' => $loggedInUserId,
+            'chattingUserGoods' => $chattingUserGoods,
+            'loggedInUserGoods' => $loggedInUserGoods,
+            'ownerUserId' => $ownerUserId,
+            'chatMessages' => $chatMessages,
+            'ownerName' => $ownerName,
+            'contacts' => $contacts,
+            'ownerUsername' => $ownerUsername,
+            'goods' => $goods,
+            'wishlistCount' => $wishlistCount,
+            'product' => $product,
+            'goodsId' => $goodsId,
+
+        ]);
     }
-
-
 
 
 }
