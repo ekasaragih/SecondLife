@@ -97,7 +97,7 @@
                                 <ul class="grid w-full gap-6 md:grid-cols-1">
                                     @foreach ($chattingUserGoods as $goods)
                                     <li class="">
-                                        <input type="checkbox" id="{{ $goods->g_ID }}" name="user_goods"
+                                        <input type="checkbox" id="{{ $goods->g_ID }}" name="other_user_goods"
                                             value="{{ $goods->g_ID }}" class="hidden peer" required />
                                         <label for="{{ $goods->g_ID }}"
                                             class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -176,40 +176,58 @@
 </script>
 
 <script>
+    $('#btn_send_exchange').click(function () {
+        confirmExchange();
+    });
+
     function confirmExchange() {
         const loggedInUserId = {{ auth()->user()->us_ID }};
         const otherUserId = {{ $ownerUserId }};
-        const userGoodsId = document.querySelector('input[name="user_goods"]:checked').value;
-        const otherUserGoodsId = document.querySelector('input[name="other_user_goods"]:checked').value;
+        const userGoodsId = $('input[name="user_goods"]:checked').val();
+        const otherUserGoodsId = $('input[name="other_user_goods"]:checked').val();
 
-        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
+        if (loggedInUserSelectedGoodsCount > 1 || otherUserSelectedGoodsCount > 1) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You can only choose 1 goods for each user!'
+            });
+            return;
+        }
 
-        // Send AJAX request
-        fetch('/api/exchange/store', {
-            method: 'POST',
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+        var apiToken = $('meta[name="api-token"]').attr('content');
+
+        $.ajax({
+            url: '/api/exchange/store',
+            type: 'POST',
+            dataType: 'json',
             headers: {
                 'X-CSRF-TOKEN': csrfToken,
                 'Authorization': 'Bearer ' + apiToken
             },
-            body: JSON.stringify({
+            data: {
                 user_id: loggedInUserId,
                 other_user_id: otherUserId,
                 user_goods_id: userGoodsId,
                 other_user_goods_id: otherUserGoodsId
-            })
-        })
-        .then(response => {
-            if (response.ok) {
-                // Handle success
-                console.log('Exchange confirmed successfully!');
-            } else {
+            },
+            success: function(response) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: 'Exchange confirmed successfully!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = '/categories';
+                });
+
+            },
+            error: function(xhr, status, error) {
                 // Handle error
                 console.error('Failed to confirm exchange.');
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
         });
     }
 

@@ -65,14 +65,5 @@ class ChatController extends Controller
         return view('pages.chat.chatSection', compact('loggedInUserId', 'chattingUserGoods', 'loggedInUserGoods', 'ownerUserId', 'chatMessages', 'product', 'ownerName', 'contacts', 'ownerUsername', 'goods', 'wishlistCount'));
     }
 
-     private function makeClickableLinks($text)
-    {
-        // Find URLs and convert them into anchor tags
-        $text = preg_replace('/(http?:\/\/\S+)/', '<a href="$1" target="_blank">$1</a>', $text);
-        // Find email addresses and convert them into mailto links
-        $text = preg_replace('/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/', '<a href="mailto:$1">$1</a>', $text);
-        return $text;
-    }
-
 
 }
