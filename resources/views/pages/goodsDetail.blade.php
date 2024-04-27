@@ -27,7 +27,7 @@
                     <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                         <h2 class="text-sm title-font text-gray-500 tracking-widest">SECONDLIFE BARTER</h2>
                         <h1 class="text-primary text-3xl title-font mb-1 font-semibold">{{ $product->g_name }}</h1>
-
+                        <p class="leading-relaxed hidden" id="productOwnerId">{{ $product->us_ID }}</p>
                         <p class="leading-relaxed">{{ $product->g_desc }}</p>
                         <div class="py-2">
                             <span class="mr-3">Category:</span>

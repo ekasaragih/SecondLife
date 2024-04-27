@@ -50,6 +50,21 @@
     </div>
 </div>
 
+{{-- Modal exchange goods (barter) -> if barter is accepted --}}
+@include('utils.chat.modalExchangeBarter')
+
+{{--
+|--------------------------------------------------------------------------
+| SCRIPTS
+|--------------------------------------------------------------------------
+--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="/js/moment.js"></script>
+<script>
+    import {
+            Modal
+        } from 'flowbite';
+</script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -92,7 +107,7 @@
                             ${message}
                         </p>
                         <p class="text-right text-xs text-grey-dark mt-1">
-                            You • ${moment().format('LT')}
+                            You • ${moment().format('HH:mm')}
                         </p>
                     </div>
                 </div>
@@ -102,8 +117,7 @@
                 chatMessagesContainer.appendChild(document.createRange().createContextualFragment(formattedMessage));
                 chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
 
-                // Clear the message input
-                document.getElementById('messageInput').value = '';
+                $('#messageInput').val('');
             })
             .catch(function (error) {
                 console.error('Error:', error);
@@ -123,36 +137,6 @@
         if (event.key === 'Enter') {
             sendMessage();
         }
-    });
-
-    function displayProductDetails() {
-        // Retrieve product details from sessionStorage
-        const productName = sessionStorage.getItem('productName');
-        const productDesc = sessionStorage.getItem('productDesc');
-        const productCategory = sessionStorage.getItem('productCategory');
-        const productType = sessionStorage.getItem('productType');
-        const productPrice = sessionStorage.getItem('productPrice');
-        
-        // Populate the product details into the designated elements
-        $('#displayProductName').text(productName);
-        $('#displayProductDesc').text(productDesc);
-        $('#displayProductCategory').text(productCategory);
-        $('#displayProductType').text(productType);
-        $('#displayProductPrice').text(productPrice);
-        
-        $('#productDetails').removeClass('hidden');
-        
-        const message = `Hello is this product still available? \n\nProduct Name: ${productName}\nDescription: ${productDesc}\n${productCategory}\n${productType}\n${productPrice}`;
-        
-        // Set the message to the chat input field
-        $('#messageInput').val(message);
-
-        // $('#messageInput').val('');
-    }
-        
-        
-    $(document).ready(function() {
-        displayProductDetails();
     });
 
     document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
