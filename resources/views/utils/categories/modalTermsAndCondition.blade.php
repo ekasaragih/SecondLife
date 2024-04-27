@@ -117,6 +117,7 @@
         const loggedInUserId = "{{ $user->us_ID }}";
         const ownerUserId = $('#productOwnerId').text();
         const goodsId = $('#goodsId').text();
+        // const productDetailUrl = window.location.href;
 
         const modal = document.getElementById('modalTermsAndCondition');
         const ownerIdElement = modal.querySelector('#ownerId');
@@ -126,18 +127,8 @@
             goodsIdElement.textContent = goodsId;
         }
 
-        const productName = $('#productName').text();
-        const productDesc = $('#productDesc').text();
-        const productCategory = $('#productCategory').text();
-        const productType = $('#productType').text();
-        const productPrice = $('#productPrice').text();
-        
-        // Store product details in sessionStorage
-        sessionStorage.setItem('productName', productName);
-        sessionStorage.setItem('productDesc', productDesc);
-        sessionStorage.setItem('productCategory', productCategory);
-        sessionStorage.setItem('productType', productType);
-        sessionStorage.setItem('productPrice', productPrice);
+        const productDetailUrl = window.location.href; // Get the current page URL
+        sessionStorage.setItem('productDetailUrl', productDetailUrl);
 
         window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId;
     }
