@@ -3,7 +3,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @auth
-    <meta name="api-token" content="{{ Auth::user()->api_token }}">
+        <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -17,9 +17,13 @@
         <section class="text-gray-700 body-font overflow-hidden bg-white">
             <div class="my-10 mx-auto">
                 <div class="lg:w-4/5 mx-auto flex flex-wrap">
-                    <img alt="ecommerce"
-                        class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-                        src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg">
+                    <div id="productImages" class="lg:w-1/2 w-full flex justify-center items-center">
+                        <div class="flex items-center">
+                            @foreach ($product->images as $image)
+                                <img class="product-image hidden h-64 object-cover object-center" src="{{ asset('goods_img/' . $image->img_url) }}">
+                            @endforeach
+                        </div>
+                    </div>
                     <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                         <h2 class="text-sm title-font text-gray-500 tracking-widest">SECONDLIFE BARTER</h2>
                         <h1 class="text-primary text-3xl title-font mb-1 font-semibold">{{ $product->g_name }}</h1>
@@ -50,7 +54,8 @@
                                 Click to Barter
                             </button>
 
-                            <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 add-to-wishlist"
+                            <button
+                                class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 add-to-wishlist"
                                 title="Add to wishlist" id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}"
                                 data-user-id="{{ $authenticatedUser->us_ID }}">
                                 <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -58,28 +63,26 @@
                                     <path
                                         d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
                                     </path>
-                                    </svg>
-                                </button>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
-
-                <div class="mt-4">
-    <span class="mr-3 text-gray-500">Uploaded by:</span>
-    <a href="{{ route('userProfile', ['username' => $userDetails->us_name]) }}" class="font-semibold text-fray-400">{{ $userDetails->us_name }}</a>
-</div>
-
             </div>
-
+            <div class="mt-4">
+                <span class="mr-3 text-gray-500">Uploaded by:</span>
+                <a href="{{ route('userProfile', ['username' => $userDetails->us_name]) }}"
+                    class="font-semibold text-fray-400">{{ $userDetails->us_name }}</a>
+            </div>
         </section>
 
-        @include('utils.layouts.footer.footer')
-    </div>
+    @include('utils.layouts.footer.footer')
+
 </div>
 
 @auth
-{{-- T&C Modal --}}
-@include('utils.categories.modalTermsAndCondition')
+    {{-- T&C Modal --}}
+    @include('utils.categories.modalTermsAndCondition')
 @endauth
 
 {{--
@@ -91,10 +94,22 @@
 <script src="/js/moment.js"></script>
 <script>
     import {
-            Modal
-        } from 'flowbite';
+        Modal
+    } from 'flowbite';
 </script>
 <script>
+    var currentImageIndex = 0;
+    var images = document.querySelectorAll('.product-image');
+
+    function showNextImage() {
+        images[currentImageIndex].classList.add('hidden');
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        images[currentImageIndex].classList.remove('hidden');
+    }
+
+    // Change image every 3 seconds
+    setInterval(showNextImage, 3000);
+
     function addToWishlist(productId, userId) {
         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
@@ -153,12 +168,11 @@
     }
 
     $(document).on('click', '.add-to-wishlist', function() {
-    var productId = $(this).data('product-id');
-    var userId = $(this).data('user-id');
-    addToWishlist(productId, userId);
+        var productId = $(this).data('product-id');
+        var userId = $(this).data('user-id');
+        addToWishlist(productId, userId);
 
-    // Setelah tombol diklik, ubah kelasnya untuk membuatnya tetap merah
-    $(this).find('.love-icon').addClass('text-red-500');
-});
-
+        // Setelah tombol diklik, ubah kelasnya untuk membuatnya tetap merah
+        $(this).find('.love-icon').addClass('text-red-500');
+    });
 </script>
