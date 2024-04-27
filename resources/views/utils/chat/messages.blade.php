@@ -9,20 +9,6 @@
             </div>
         </div>
 
-        <div id="productDetails" class="hidden">
-            <div class="flex justify-center mb-4">
-                <div class="rounded py-2 px-3 bg-[#F2F2F2] w-96">
-                    <p class="text-sm mt-1">
-                        Product Name: <span id="displayProductName"></span><br>
-                        Description: <span id="displayProductDesc"></span><br>
-                        Category: <span id="displayProductCategory"></span><br>
-                        Type: <span id="displayProductType"></span><br>
-                        Price: <span id="displayProductPrice"></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-
         {{-- Display chat messages --}}
         @php
         $prevDate = null;
