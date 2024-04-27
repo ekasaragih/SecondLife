@@ -1,7 +1,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @auth
-    <meta name="api-token" content="{{ Auth::user()->api_token }}">
+        <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
     <link rel="stylesheet" href="/asset/css/imgContainer.css">
 </head>
@@ -101,10 +101,12 @@
                             <div class="mb-2">
                                 <label for="image" class="block text-sm font-medium text-gray-700">Upload
                                     Image</label>
+                                <input type="text" id="existing_images" name="existing_images">
                                 <div id="id-input-div" class="input-div mt-2">
                                     <p>Drag & drop photos here or click to browse</p>
-                                    <input name="files" id="edit_image" type="file" class="file" multiple="multiple"
-                                        accept="image/jpeg, image/png, image/jpg" onchange="editPreviewImage()" />
+                                    <input name="files" id="edit_image" type="file" class="file"
+                                        multiple="multiple" accept="image/jpeg, image/png, image/jpg"
+                                        onchange="editPreviewImage()" />
                                 </div>
                                 <div id="edit_queuedImages" class="queued-div p-2">
                                     <div id="edit_imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
@@ -118,7 +120,7 @@
                     class="flex items-center space-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                     <button type="submit" id="btn_edit_goods"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center addBtn">
-                        Upload
+                        Save Changes
                     </button>
                     <button type="button" data-modal-hide="modalEditGoods"
                         class="text-yellow-400 inline-flex items-center hover:text-white border border-yellow-400 hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
@@ -184,6 +186,24 @@
             var goods_img = new FormData();
             var inputImage = document.getElementById('edit_image');
 
+            const existingImages = JSON.parse($('#existing_images').val());
+
+            const existingImageUrls = existingImages.map(image => image.img_url);
+
+            // existingImageUrls.forEach(img_url => {
+            //     goods_img.append('existing_images[]', img_url);
+            // });
+            existingImageUrls.forEach(img_url => {
+                goods_img.append('existing_images[]', img_url);
+            });
+
+
+
+            // existingImages.forEach(
+            //     img_url => {
+            //         goods_img.append('existing_images[]', img_url);
+            //     });
+
             for (var i = 0; i < inputImage.files.length; i++) {
                 goods_img.append('files[]', inputImage.files[i]);
             }
@@ -214,6 +234,7 @@
                     });
                 },
                 error: function(xhr, status, error) {
+                    console.log(goods_img);
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
@@ -246,6 +267,7 @@
                     deleteButton.classList.add('delete-button');
                     deleteButton.addEventListener('click', function() {
                         imageContainer.remove();
+                        console.log("delete in modalEditGoods");
                         // Optionally, you can also send an AJAX request to delete the image from the database here
                     });
 

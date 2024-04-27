@@ -66,12 +66,11 @@
                     </div>
                 </div>
 
-                <div class="flex border-t border-gray-100 mt-5 italic text-xs">
-                    <div class="mt-4">
-                        <span class="mr-3 text-gray-500">Uploaded by:</span>
-                        <span class="font-semibold text-fray-400">{{ $userDetails->us_name }}</span>
-                    </div>
-                </div>
+                <div class="mt-4">
+    <span class="mr-3 text-gray-500">Uploaded by:</span>
+    <a href="{{ route('userProfile', ['username' => $userDetails->us_name]) }}" class="font-semibold text-fray-400">{{ $userDetails->us_name }}</a>
+</div>
+
             </div>
 
         </section>
