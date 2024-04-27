@@ -11,7 +11,6 @@
 
 <div class="flex justify-center h-screen pt-48 pb-64 font-rubik">
     <div class="container w-4/5">
-
         <div class="text-3xl text-[#F12E52]"><b>Product Detail</b></div>
 
         <section class="text-gray-700 body-font overflow-hidden bg-white">
@@ -84,6 +83,9 @@
                                         </path>
                                     </svg>
                                 </button>
+
+                                <!-- Modal Comment Component -->
+                                @include('utils.explore.modalComment')
                             </div>
                         </div>
                     </div>
@@ -99,26 +101,78 @@
         @include('utils.layouts.footer.footer')
 
     </div>
+    @include('utils.layouts.footer.footer')
+</div>
+</div>
 
-    @auth
-    {{-- T&C Modal --}}
-    @include('utils.categories.modalTermsAndCondition')
-    @endauth
+@auth
+{{-- T&C Modal --}}
+@include('utils.categories.modalTermsAndCondition')
+@endauth
 
-    {{--
-    |--------------------------------------------------------------------------
-    | SCRIPTS
-    |--------------------------------------------------------------------------
-    --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-    <script src="/js/moment.js"></script>
-    <script>
-        import {
+{{--
+|--------------------------------------------------------------------------
+| SCRIPTS
+|--------------------------------------------------------------------------
+--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="/js/moment.js"></script>
+<script>
+    import {
             Modal, Popover
         } from 'flowbite';
-    </script>
-    <script>
-        var currentImageIndex = 0;
+</script>
+<script>
+    var currentImageIndex = 0;
+{{--
+|--------------------------------------------------------------------------
+| SCRIPTS
+|--------------------------------------------------------------------------
+--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js">
+</script>
+<script src="/js/moment.js"></script>
+<script>
+    import { Modal } from 'flowbite';
+</script>
+<script>
+    // Function to open modal with product details
+    function openModal(name, description, image, location, price, g_ID) {
+        const modal = document.getElementById('productModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalImage = document.getElementById('modalImage');
+        const modalLocation = document.getElementById('modalLocation');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalProductId = document.getElementById('modalProductId');
+
+        modal.style.display = 'block';
+        modalTitle.textContent = name;
+        modalDescription.textContent = description;
+        modalImage.src = image;
+        modalLocation.textContent = "Location: " + location;
+        modalPrice.textContent = "Price: " + price;
+        modalProductId.textContent = "Product ID: " + g_ID;
+
+        // Load comments based on the g_ID of the current product
+        loadComments(g_ID);
+    }
+
+    // Function to close modal
+    function closeModal() {
+        var modal = document.getElementById('productModal');
+        modal.style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById('productModal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    var currentImageIndex = 0;
     var images = document.querySelectorAll('.product-image');
 
     function showNextImage() {
@@ -198,4 +252,4 @@
         $(this).find('.love-icon').addClass('border');
         $(this).find('.love-icon').addClass('border-red-500');
     });
-    </script>
+</script>
