@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommunitiesController;
 use App\Http\Controllers\ExploreController;
+use App\Http\Controllers\UserController;
 use App\Models\Communities;
 
 
@@ -54,6 +55,10 @@ Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('
 Route::get('/comments', [CommentController::class, 'index']);
 Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
 Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
+
+
+Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');
+
 
 
 /*
