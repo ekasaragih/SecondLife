@@ -19,7 +19,7 @@ class UserController extends Controller
         return view('pages.user.userProfile', ['user' => $user, 'goods' => $goods]);
     }
 
-    public function followUser(User $user)
+   public function followUser(User $user)
     {
         // Attach the user to the following relationship of the authenticated user
         auth()->user()->following()->attach($user);

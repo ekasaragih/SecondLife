@@ -78,4 +78,5 @@ public function followers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'follow', 'followed_id', 'follower_id')->withTimestamps();
     }
+    
 }
