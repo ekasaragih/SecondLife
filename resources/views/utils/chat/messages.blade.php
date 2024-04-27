@@ -46,8 +46,8 @@
         @else
         {{-- Left section chat from other user --}}
         <div class="flex mb-2">
-            <div class="rounded py-2 px-3 max-w-96 overflow-hidden break-words" style="background-color: #F2F2F2">
-                <p class="text-sm mt-1 whitespace-pre max-w-full">
+            <div class="rounded py-2 px-3 max-w-96 overflow-hidden" style="background-color: #F2F2F2">
+                <p class="text-sm mt-1 whitespace-normal max-w-full">
                     {{ $message->message }}
                 </p>
                 <p class="text-right text-xs text-grey-dark mt-1">

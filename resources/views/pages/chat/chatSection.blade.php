@@ -107,7 +107,7 @@
                             ${message}
                         </p>
                         <p class="text-right text-xs text-grey-dark mt-1">
-                            You • ${moment().format('LT')}
+                            You • ${moment().format('HH:mm')}
                         </p>
                     </div>
                 </div>
@@ -117,11 +117,6 @@
                 chatMessagesContainer.appendChild(document.createRange().createContextualFragment(formattedMessage));
                 chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
 
-                // Clear the message input
-                document.getElementById('messageInput').value = '';
-
-                sessionStorage.removeItem('productDetailUrl');
-                
                 $('#messageInput').val('');
             })
             .catch(function (error) {
@@ -144,49 +139,5 @@
         }
     });
 
-     function displayLinkPreview(url) {
-            linkPreview.getPreview(url)
-                .then(function(data) {
-                    // Display the preview information in the linkPreview element
-                    $('#linkPreview').html(`
-                        <div>
-                            <p>Title: ${data.title}</p>
-                            <p>Description: ${data.description}</p>
-                            <p>Image: <img src="${data.image}" alt="Preview Image"></p>
-                            <p>URL: <a href="${data.url}" target="_blank">${data.url}</a></p>
-                        </div>
-                    `);
-                })
-                .catch(function(error) {
-                    console.error('Error fetching link preview:', error);
-                });
-    }
-
-    const productDetailUrl = sessionStorage.getItem('productDetailUrl');
-    const message = `Hello, I want to ask about this stuff you posted: ${productDetailUrl}`;
-    $('#messageInput').val(message);
-
-        // Display link preview when the page loads
-    // displayLinkPreview(productDetailUrl);
-
     document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
-
-    function makeClickableLinks(text) {
-        // Find URLs and convert them into anchor tags
-        text = text.replace(/(http?:\/\/\S+)/g, '<a href="$1" target="_blank">$1</a>');
-        // Find email addresses and convert them into mailto links
-        text = text.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, '<a href="mailto:$1">$1</a>');
-        return text;
-    }
-
-    // Example usage:
-    $(document).ready(function() {
-        // Assuming chat messages are stored in elements with class "chat-message"
-        $('.chat-message').each(function() {
-            var message = $(this).html();
-            $(this).html(makeClickableLinks(message));
-        });
-    });
-
-
 </script>
