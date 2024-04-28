@@ -77,7 +77,7 @@
                                 <button
                                     class="text-white bg-red-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-red-600 rounded transition duration-300"
                                     data-modal-target="productModal"
-                                    onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ asset('goods_img/' . $product->images[0]->img_url) }}', '{{ $product->g_location }}', '{{ number_format($product->g_price_prediction, 0, ',', '.') }}', '{{ $product->g_ID }}')">
+                                    onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ !empty($product->images) && count($product->images) > 0 ? asset('goods_img/' . $product->images[0]->img_url) : '' }}', '{{ $product->g_location }}', '{{ number_format($product->g_price_prediction, 0, ',', '.') }}', '{{ $product->g_ID }}')">
                                     View Comment
                                 </button>
 

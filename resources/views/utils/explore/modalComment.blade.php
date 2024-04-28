@@ -49,7 +49,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-function openModal(name, description, image, location, price, g_ID) {
+    function openModal(name, description, image, location, price, g_ID) {
     const modal = document.getElementById('productModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
