@@ -29,9 +29,9 @@
         @php
         $prevDate = $message->created_at->format('d/m/Y');
         @endphp
-        <div id="mainChat"></div>
-        @endforeach
 
+        @endforeach
+        <div id="mainChat"></div>
         {{-- Chat from logged in user --}}
         <div id="chatMessages"></div>
 
