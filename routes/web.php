@@ -64,6 +64,7 @@ Route::post('/user/follow/{user}', [UserController::class, 'followUser'])->name(
 Route::post('/user/unfollow/{user}', [UserController::class, 'unfollowUser'])->name('user.unfollow');
 Route::get('/user/{user}/follow-status', [UserController::class, 'followStatus'])->name('user.follow_status');
 
+Route::get('/authenticated-user-name', [AuthorizationController::class, 'getAuthenticatedUserName']);
 
 
 

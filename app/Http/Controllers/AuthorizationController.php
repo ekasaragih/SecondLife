@@ -96,5 +96,18 @@ class AuthorizationController extends Controller
         return redirect()->back()->withErrors(['message' => 'Invalid credentials'])->withInput();
     } 
 
+    public function getAuthenticatedUserName()
+    {
+        // Pastikan pengguna sudah terotentikasi sebelum mengambil nama pengguna
+        if (Auth::check()) {
+            // Ambil nama pengguna yang sedang login
+            $loggedInUserName = Auth::user()->us_name;
 
+            // Kirimkan nama pengguna ke tampilan atau lakukan tindakan yang sesuai
+            return response()->json(['name' => $loggedInUserName], 200);
+        } else {
+            // Jika pengguna belum terotentikasi, Anda dapat mengembalikan pesan kesalahan atau melakukan tindakan lain yang sesuai dengan kebutuhan aplikasi Anda
+            return response()->json(['error' => 'User is not authenticated'], 401);
+        }
+    }
 }
