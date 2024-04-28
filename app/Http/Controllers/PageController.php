@@ -17,47 +17,47 @@ class PageController extends Controller
     // Error pages
     public function not_found()
     {
-        return view("utils.error.404");
+        return view('utils.error.404');
     }
 
     public function internal_server_error()
     {
-        return view("utils.error.500");
+        return view('utils.error.500');
     }
 
     // Menu
     public function about_us()
     {
-        return view("utils.menu.aboutUs");
+        return view('utils.menu.aboutUs');
     }
 
     public function contact_us()
     {
-        return view("utils.menu.contactUs");
+        return view('utils.menu.contactUs');
     }
 
     public function privacy_policy()
     {
-        return view("utils.menu.privacyPolicy");
+        return view('utils.menu.privacyPolicy');
     }
 
     // Main pages
     public function explore()
     {
-        $recentProductsByCategory = Goods::select('g_category', 'created_at')
-            ->orderBy('created_at', 'desc')
-            ->take(20)
-            ->get()
-            ->groupBy('g_category');
+        $recentProductsByCategory = Goods::select('g_category', 'created_at')->orderBy('created_at', 'desc')->take(20)->get()->groupBy('g_category');
 
         $authenticatedUser = session('authenticatedUser');
         $wishlistCount = null;
         $categoryCounts = $recentProductsByCategory->map->count();
         $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
 
-        $products = Goods::whereIn('g_category', $topCategories)
-        ->where('us_ID', '!=', $authenticatedUser->us_ID)
-        ->get();
+        if ($authenticatedUser) {
+            $products = Goods::whereIn('g_category', $topCategories)
+                ->where('us_ID', '!=', $authenticatedUser->us_ID)
+                ->get();
+        } else {
+            $products = Goods::whereIn('g_category', $topCategories)->get();
+        }
 
         if ($authenticatedUser && $authenticatedUser->us_ID) {
             $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
@@ -70,7 +70,6 @@ class PageController extends Controller
         ]);
     }
 
-
     public function categories()
     {
         $authenticatedUser = session('authenticatedUser');
@@ -81,20 +80,15 @@ class PageController extends Controller
 
         if ($authenticatedUser && $authenticatedUser->us_ID) {
             $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-            $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
+            $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)
+                ->pluck('g_ID')
+                ->toArray();
         }
 
         if (empty($wishlistItems)) {
-            $nonWishlistProducts = Goods::with('images')
-                ->inRandomOrder()
-                ->limit(8)
-                ->get();
+            $nonWishlistProducts = Goods::with('images')->inRandomOrder()->limit(8)->get();
         } else {
-            $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)
-                ->with('images')
-                ->inRandomOrder()
-                ->limit(8)
-                ->get();
+            $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)->with('images')->inRandomOrder()->limit(8)->get();
         }
 
         return view('pages.categories', [
@@ -105,7 +99,6 @@ class PageController extends Controller
             'wishlistCount' => $wishlistCount,
         ]);
     }
-
 
     public function wishlist()
     {
@@ -123,14 +116,12 @@ class PageController extends Controller
         $products = Goods::getAllGoodsWithImages();
 
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-        
-        $wishlistItemIds = Wishlist::where('us_ID', $authenticatedUser->us_ID)->pluck('g_ID')->toArray();
 
-        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItemIds)
-            ->with('images')
-            ->inRandomOrder()
-            ->limit(8)
-            ->get();
+        $wishlistItemIds = Wishlist::where('us_ID', $authenticatedUser->us_ID)
+            ->pluck('g_ID')
+            ->toArray();
+
+        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItemIds)->with('images')->inRandomOrder()->limit(8)->get();
 
         return view('pages.wishlist', [
             'user' => $authenticatedUser,
@@ -151,30 +142,27 @@ class PageController extends Controller
             $wishlistCount = 0;
         }
 
-        $communities = Communities::with('feedbacks')
-                    ->withCount('likes')
-                    ->orderByDesc('likes_count')
-                    ->get();
-                    
+        $communities = Communities::with('feedbacks')->withCount('likes')->orderByDesc('likes_count')->get();
+
         foreach ($communities as $community) {
             $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
-                            ->where('community_ID', $community->community_ID)
-                            ->exists();
+                ->where('community_ID', $community->community_ID)
+                ->exists();
             $community->isLikedByCurrentUser = $isLiked;
         }
         $feedbacks = Feedbacks::all();
-        return view("pages.communities", compact('communities', 'feedbacks', 'wishlistCount', 'authenticatedUser'));
+        return view('pages.communities', compact('communities', 'feedbacks', 'wishlistCount', 'authenticatedUser'));
     }
 
     public function my_profile()
     {
         $authenticatedUser = session('authenticatedUser');
-        $user = User:: where ('us_ID',$authenticatedUser->us_ID)->first();
+        $user = User::where('us_ID', $authenticatedUser->us_ID)->first();
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
 
         return view('pages.myProfile', [
             'authenticatedUser' => $authenticatedUser,
-            'user' => $user, 
+            'user' => $user,
             'wishlistCount' => $wishlistCount,
         ]);
     }
@@ -197,14 +185,14 @@ class PageController extends Controller
     {
         $authenticatedUser = session('authenticatedUser');
         $user = session('authenticatedUser');
-        
+
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         $userId = $authenticatedUser->us_ID;
         $goods = Goods::where('us_ID', $userId)->get();
 
         $product = Goods::findOrFail($id);
         $userDetails = User::findOrFail($product->us_ID);
-        
-        return view("pages.goodsDetail", compact('user', 'authenticatedUser', 'userDetails', 'goods', 'wishlistCount', 'product'));
+
+        return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'userDetails', 'goods', 'wishlistCount', 'product'));
     }
 }
