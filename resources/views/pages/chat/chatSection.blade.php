@@ -113,7 +113,7 @@
                 </div>
                 `;
 
-                const chatMessagesContainer = document.getElementById('chatMessages');
+                const chatMessagesContainer = document.getElementById('mainChat');
                 chatMessagesContainer.appendChild(document.createRange().createContextualFragment(formattedMessage));
                 chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
 

@@ -29,33 +29,7 @@
         @php
         $prevDate = $message->created_at->format('d/m/Y');
         @endphp
-
-        {{-- Display chat messages --}}
-        @if($message->sender_id == $loggedInUserId)
-        {{-- Right section chat from logged-in user --}}
-        <div class="flex justify-end mb-2">
-            <div class="rounded py-2 px-3 max-w-96 break-words overflow-hidden" style="background-color: #E2F7CB">
-                <p class="text-sm mt-1 whitespace-normal max-w-full text-left">
-                    {{ $message->message }}
-                </p>
-                <p class="text-right text-xs text-grey-dark mt-1">
-                    You • {{ $message->created_at->format('H:i') }}
-                </p>
-            </div>
-        </div>
-        @else
-        {{-- Left section chat from other user --}}
-        <div class="flex mb-2">
-            <div class="rounded py-2 px-3 max-w-96 overflow-hidden" style="background-color: #F2F2F2">
-                <p class="text-sm mt-1 whitespace-normal max-w-full">
-                    {{ $message->message }}
-                </p>
-                <p class="text-right text-xs text-grey-dark mt-1">
-                    {{ $ownerName }} • {{ $message->created_at->format('H:i') }}
-                </p>
-            </div>
-        </div>
-        @endif
+        <div id="mainChat"></div>
         @endforeach
 
         {{-- Chat from logged in user --}}
@@ -93,3 +67,73 @@
         </div>
     </div>
 </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function fetchMessages() {
+        const loggedInUserId = '{{ $loggedInUserId }}';
+        const ownerUserId = '{{ $ownerUserId }}';
+        const ownerName = '{{ $ownerName }}';
+
+        $.ajax({
+            url: '/api/chat/messages',
+            method: 'GET',
+            data: {
+                logged_in_user: loggedInUserId,
+                owner_user: ownerUserId,
+                // goods: goodsId
+            },
+            success: function(response) {
+                $('#mainChat').empty();
+
+                // Loop through fetched chat messages
+                response.chatMessages.forEach(function(message) {
+                    var messageHtml = '';
+
+                    const messageDate = new Date(message.created_at);
+                    
+                    // Format time in Indonesian time zone
+                    const timeOptions = {
+                    timeZone: 'Asia/Jakarta',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                    };
+                    const formattedTime = messageDate.toLocaleTimeString('id-ID', timeOptions);
+
+                    // Check if the message is from the logged-in user or the other user
+                    if (message.sender_id == loggedInUserId) {
+                    // Right section chat from logged-in user
+                    messageHtml += '<div class="flex justify-end mb-2">';
+                        messageHtml += '<div class="rounded py-2 px-3 max-w-96 break-words overflow-hidden" style="background-color: #E2F7CB">';
+                            messageHtml += '<p class="text-sm mt-1 whitespace-normal max-w-full text-left">' + message.message + '</p>';
+                            messageHtml += '<p class="text-right text-xs text-grey-dark mt-1">You • ' + formattedTime + '</p>';
+                            messageHtml += '</div>';
+                        messageHtml += '</div>';
+                    } else {
+                    // Left section chat from other user
+                    messageHtml += '<div class="flex mb-2">';
+                        messageHtml += '<div class="rounded py-2 px-3 max-w-96 overflow-hidden" style="background-color: #F2F2F2">';
+                            messageHtml += '<p class="text-sm mt-1 whitespace-normal max-w-full">' + message.message + '</p>';
+                            messageHtml += '<p class="text-right text-xs text-grey-dark mt-1">' + ownerName + ' • ' + formattedTime + '</p>';
+                            messageHtml += '</div>';
+                        messageHtml += '</div>';
+                    }
+
+                    // Append the message HTML to the chatMessages container
+                    $('#mainChat').append(messageHtml);
+                });
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.error('Error fetching chat messages:', error);
+            }
+        });
+    }
+
+    window.onload = () => {
+        fetchMessages();
+        setInterval(fetchMessages, 2000);
+    };
+</script>
