@@ -23,17 +23,16 @@
                         <h3 class="text-lg font-semibold text-gray-800 mb-2" id="goods_name">{{ $product->g_name }}</h3>
                         <p class="text-sm text-gray-600" id="goods_desc">{{ $product->g_desc }}</p>
                         <div class="mt-4 flex justify-between items-center">
-                            {{-- Ini nanti diganti jadi harga yang setelah dikalkulasiin --}}
                             <span class="text-gray-600 text-xs" id="goods_ori_price">Price: Rp{{
                                 number_format($product->g_original_price, 0, ',', '.')
                                 }}</span>
                             @auth
-                            <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}"
-                                class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
-                                style="font-size: 14px;">Detail</a>
-                            <button
-                                class=" bg-purple-500 text-white px-4 py-2 ml-1 rounded hover:bg-gray-600 transition duration-300"
-                                style="font-size: 14px;">Add</button>
+                            <div class="flex justify-center items-center">
+                                <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}"
+                                    class="bg-red-400 text-white text-sm px-4 py-2 rounded hover:bg-red-600 transition duration-300 text-center">
+                                    Detail
+                                </a>
+                            </div>
                             @endauth
                         </div>
                     </div>
