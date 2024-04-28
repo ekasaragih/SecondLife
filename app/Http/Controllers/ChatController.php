@@ -42,7 +42,16 @@ class ChatController extends Controller
             ->pluck('receiver_id'))
         ->unique();
 
-        $contacts = User::whereIn('us_ID', $contactIds)->get();
+        $contacts = User::whereIn('us_ID', $contactIds)
+            ->orderByDesc(function ($query) use ($loggedInUserId) {
+                $query->select('created_at')
+                    ->from('messages')
+                    ->whereRaw('messages.sender_ID = users.us_ID')
+                    ->orWhereRaw('messages.receiver_ID = users.us_ID')
+                    ->orderByDesc('created_at')
+                    ->limit(1);
+            })
+            ->get();
 
         foreach ($contacts as $contact) {
             $lastMessage = Message::where(function ($query) use ($loggedInUserId, $contact) {
