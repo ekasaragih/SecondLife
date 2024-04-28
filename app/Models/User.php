@@ -62,10 +62,11 @@ class User extends Authenticatable
     }
 
     public function goods()
-{
-    return $this->hasMany(Goods::class, 'us_ID', 'us_ID');
-}
-public function following(): BelongsToMany
+    {   
+        return $this->hasMany(Goods::class, 'us_ID', 'us_ID');
+    }
+
+    public function following(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'follow', 'follower_id', 'followed_id')->withTimestamps();
     }
