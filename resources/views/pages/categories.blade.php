@@ -5,13 +5,15 @@
         <div class="text-3xl text-[#F12E52]"><b>Categories</b></div><br>
 
         <div id="category">
-        @include('utils.categories.product')
-        <div>
+            @include('utils.categories.product')
+            <div>
 
-        <div id="recommendation">
-        @include('utils.categories.recommendation')
+                <div id="recommendation">
+                    @include('utils.categories.recommendation')
+                </div>
+
+                @include('utils.layouts.footer.footer')
+            </div>
         </div>
-
-        @include('utils.layouts.footer.footer')
     </div>
 </div>
