@@ -101,9 +101,9 @@
         @include('utils.layouts.footer.footer')
 
     </div>
-    @include('utils.layouts.footer.footer')
+
 </div>
-</div>
+
 
 @auth
 {{-- T&C Modal --}}

@@ -133,11 +133,24 @@
     }
 
         
-    document.getElementById('messageInput').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
+     document.getElementById('messageInput').addEventListener('keydown', function(event) {
+        if (event.shiftKey && event.key === 'Enter') {
+            // Insert a new line in the textarea
+            this.value += '\n';
+            // Prevent default behavior (sending the chat)
+            event.preventDefault();
+        } else if (event.key === 'Enter' && !event.shiftKey) {
+            // If Enter is pressed without Shift, send the chat
             sendMessage();
+            // Prevent default behavior (form submission)
+            event.preventDefault();
         }
     });
 
-    document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+    document.getElementById('sendMessageBtn').addEventListener('click', function(event) {
+        // Send the chat when the send button is clicked
+        sendMessage();
+        // Prevent default button behavior (form submission)
+        event.preventDefault();
+    });
 </script>
