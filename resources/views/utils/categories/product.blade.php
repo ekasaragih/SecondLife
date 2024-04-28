@@ -85,10 +85,6 @@
 <br><br>
 
 
-{{-- Recommendation based on Categories --}}
-@include('utils.categories.recommendation')
-
-
 {{--
 |--------------------------------------------------------------------------
 | SCRIPTS

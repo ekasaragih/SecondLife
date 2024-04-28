@@ -21,21 +21,21 @@ class Exchange extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'my_ID');
     }
 
     public function otherUser()
     {
-        return $this->belongsTo(User::class, 'other_user_id');
+        return $this->belongsTo(User::class, 'goods_owner_ID');
     }
 
     public function userGoods()
     {
-        return $this->belongsTo(Goods::class, 'user_goods_id');
+        return $this->belongsTo(Goods::class, 'my_goods');
     }
 
     public function otherUserGoods()
     {
-        return $this->belongsTo(Goods::class, 'other_user_goods_id');
+        return $this->belongsTo(Goods::class, 'barter_with');
     }
 }

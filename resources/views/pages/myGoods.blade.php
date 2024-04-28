@@ -198,12 +198,8 @@
                 deleteButton.innerHTML = '&times;';
                 deleteButton.classList.add('delete-button');
                 deleteButton.addEventListener('click', function() {
-                    // Remove the image container from the UI
                     imageContainer.remove();
-                    console.log("delete in myGoods");
-                    if (!document.getElementById('edit_imagePreviewContainer').contains(
-                            imageContainer)) {
-                        // If the image container is removed from the UI, proceed with updating existingImages
+                    if (!document.getElementById('edit_imagePreviewContainer').contains(imageContainer)) {
                         const imageUrl = img.src.replace(window.location.origin + '/',''); // Get relative image URL
                         const imageName = imageUrl.substring(imageUrl.lastIndexOf('/') +1); // Extract the image filename
                         const index = existingImages.findIndex(image => image.img_url === imageName); // Compare with the filename
@@ -211,13 +207,9 @@
                             existingImages.splice(index,1); 
                             document.getElementById('existing_images').value = JSON.stringify(
                                 existingImages);
-                            console.log(existingImages);
-                            console.log(document.getElementById('existing_images').value);
                         }
                     } else {
-                        // If the image container is still present in the UI, handle the error or retry the deletion
                         console.error('Error: Image container was not removed from the UI.');
-                        // You can handle this error condition based on your application's requirements
                     }
                 });
 
