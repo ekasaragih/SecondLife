@@ -1,8 +1,7 @@
-
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @auth
-        <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
     <link rel="stylesheet" href="/asset/css/imgContainer.css">
     <style>
@@ -32,40 +31,38 @@
         <div id="carousel-example" class="relative w-full">
             <div class="relative h-64 overflow-hidden rounded-lg sm:h-64 xl:h-80 2xl:h-96">
                 @foreach ($products as $index => $product)
-                    <div id="carousel-item-{{ $index }}"
-                        class="carousel-item duration-700 ease-in-out transition-transform {{ $index === 0 ? 'opacity-100' : 'opacity-0 hidden' }}">
-                        @php
-                            $images = $product->images;
-                            $defaultImageUrl =
-                            'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
-                            $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
-                            $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
-                         @endphp
+                <div id="carousel-item-{{ $index }}"
+                    class="carousel-item duration-700 ease-in-out transition-transform {{ $index === 0 ? 'opacity-100' : 'opacity-0 hidden' }}">
+                    @php
+                    $images = $product->images;
+                    $defaultImageUrl =
+                    'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
+                    $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
+                    $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
+                    @endphp
 
-                         <!-- <img src="{{ $product->images->isEmpty() ? 'https://via.placeholder.com/400x300' : $product->images[0]->image_url }}"
-                            class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
-                            alt="{{ $product->g_name }}" />
-                        <div -->
-                        <img src="{{ $imageUrl }}"
-                            class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
-                            alt="{{ $product->g_name }}" data-product-image="{{ $imageUrl }}"/>
-                        <div
-                            class="carousel-item-caption bg-black bg-opacity-50 p-4 text-white rounded-md absolute top-0 left-0 right-0">
-                            <p class="mb-0 text-lg font-bold" id="product_ID">ID: {{ $product->g_ID }}</p>
-                            <p class="mb-0 text-lg font-bold">Name: {{ $product->g_name }}</p>
-                            <p class="mb-0">Description: {{ $product->g_desc }}</p>
-                            <p>Price: Rp {{ number_format($product->g_original_price, 0, ',', '.') }}</p>
-                        </div>
+                    <img src="{{ $imageUrl }}"
+                        class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
+                        alt="{{ $product->g_name }}" data-product-image="{{ $imageUrl }}" />
+                    <div
+                        class="carousel-item-caption bg-black bg-opacity-50 p-4 text-white rounded-md absolute top-0 left-0 right-0">
+                        <p class="mb-0 text-lg font-bold hidden" id="product_ID">ID: {{ $product->g_ID }}</p>
+                        <p class="mb-0 text-lg font-bold">Name: {{ $product->g_name }}</p>
+                        <p class="mb-2">Description: {{ $product->g_desc }}</p>
+                        <p>Prediction Price: Rp {{ number_format($product->g_original_price, 0, ',', '.') }}</p>
                     </div>
+                </div>
                 @endforeach
                 <button id="data-carousel" type="button"
                     class="group absolute left-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
-                    <i class="fa fa-times inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white" aria-hidden="true"></i>
+                    <i class="fa fa-times inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white"
+                        aria-hidden="true"></i>
                 </button>
                 </button>
                 <button id="saveToWishlist" type="button"
                     class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300 btn-add-to-wishlist group absolute right-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
-                    <i class="fa fa-check inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white" aria-hidden="true"></i>
+                    <i class="fa fa-check inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white"
+                        aria-hidden="true"></i>
                 </button>
             </div>
         </div>
