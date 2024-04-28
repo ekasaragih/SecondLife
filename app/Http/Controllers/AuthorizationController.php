@@ -95,6 +95,4 @@ class AuthorizationController extends Controller
 
         return redirect()->back()->withErrors(['message' => 'Invalid credentials'])->withInput();
     } 
-
-
 }

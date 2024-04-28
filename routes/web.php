@@ -57,6 +57,7 @@ Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('
 
 
 
+Route::get('/authenticated-user-name', [AuthorizationController::class, 'getAuthenticatedUserName']);
 
 
 

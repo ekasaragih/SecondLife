@@ -45,11 +45,6 @@
                 </button>
             </form>
         </div>
-        <div style="text-align: center;">
-            <button
-                class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300 mt-2"
-                onclick="addToCart()">Add to Wishlist</button>
-        </div>
     </div>
 </div>
 
@@ -79,13 +74,13 @@
 document.getElementById('g_ID').value = g_ID; // Atur g_ID sesuai dengan produk yang terbuka
 
 // Load comments based on the g_ID of the current product
-loadComments(g_ID);
+loadComments(g_ID,us_name);
 }
 
 // Tentukan rute yang akan diarahkan saat tautan diklik
 const userProfileRoute = "{{ route('userProfile', ['username' => ':username']) }}";
 
-function loadComments(g_ID) {
+function loadComments(g_ID, us_name) {
     axios.get('/comments/' + g_ID)
         .then(function(response) {
             // Clear existing comments
@@ -105,8 +100,10 @@ function loadComments(g_ID) {
                 commentDiv.innerHTML = `
                     <img src="profile_picture.jpg" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
                     <div>
-                        <p class="font-semibold" style="margin-bottom: 4px;">${comment.us_ID}</p>
-                        <p class="text-sm text-gray-600" style="margin-bottom: 0;">${comment.comment_desc}</p>
+                    <p class="font-semibold" style="margin-bottom: 4px;">
+                            <a href="${userProfileRoute.replace(':username', comment.us_name)}" class="text-blue-500">${comment.us_name}</a>
+                        </p>
+                    <p class="text-sm text-gray-600" style="margin-bottom: 0;">${comment.comment_desc}</p>
                     </div>
                 `;
                 commentSection.appendChild(commentDiv);
@@ -131,7 +128,7 @@ function loadComments(g_ID) {
 }
 
 // Function to load all comments
-function loadAllComments(g_ID) {
+function loadAllComments(g_ID, us_name) {
     axios.get('/comments/' + g_ID)
         .then(function(response) {
             // Clear existing comments
@@ -145,8 +142,10 @@ function loadAllComments(g_ID) {
                 commentDiv.innerHTML = `
                     <img src="profile_picture.jpg" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
                     <div>
-                        <p class="font-semibold" style="margin-bottom: 4px;">${comment.us_ID}</p>
-                        <p class="text-sm text-gray-600" style="margin-bottom: 0;">${comment.comment_desc}</p>
+                    <p class="font-semibold" style="margin-bottom: 4px;">
+                            <a href="${userProfileRoute.replace(':username', comment.us_name)}" class="text-blue-500">${comment.us_name}</a>
+                        </p>
+                    <p class="text-sm text-gray-600" style="margin-bottom: 0;">${comment.comment_desc}</p>
                     </div>
                 `;
                 commentSection.appendChild(commentDiv);
