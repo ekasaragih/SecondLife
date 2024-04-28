@@ -1,7 +1,15 @@
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @auth
+    <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    @endauth
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
 @include('utils.explore.modalComment') {{-- Include the modalComment.blade.php file --}}
 
 @php
-// Ambil semua kota dari database
 $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
 @endphp
 
@@ -37,6 +45,7 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                         alt="Product Image">
                     <div class="p-4">
                         <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product->g_name }}</h3>
+                        <p class="text-sm text-gray-600">Uploaded by: {{ $user->us_name }}</p> <!-- Tampilkan us_name -->
                         <p class="text-sm text-gray-600">{{ $product->g_desc }}</p>
                         <!-- Tampilkan informasi lokasi pengguna -->
                         <p class="text-sm text-gray-600">Location: {{ $user->us_city }}</p>
@@ -44,13 +53,19 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                             <span class="text-gray-600 text-xs">Price: Rp {{ number_format($product->g_original_price,
                                 0, ',', '.') }}</span>
                             @auth
-                            <button
-                                class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
-                                style="font-size: 14px;"
-                                onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ $product->images->first()->img_url ?? 'https://via.placeholder.com/400' }}', '{{ $user->us_city }}', '{{ number_format($product->g_original_price, 0, ',', '.') }}', '{{ $product->g_ID }}')">Detail</button>
-                            <button
-                                class="bg-purple-500 text-white px-4 py-2 ml-1 rounded hover:bg-gray-600 transition duration-300"
-                                style="font-size: 14px;">Add</button>
+                            <button class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
+        style="font-size: 14px;"
+        onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ $product->images->first()->img_url ?? 'https://via.placeholder.com/400' }}', '{{ $user->us_city }}', '{{ number_format($product->g_original_price, 0, ',', '.') }}', '{{ $product->g_ID }}', '{{ $user->us_name }}')">
+    Detail
+</button>
+
+<button class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist"
+        id="btn_add_wishlist"
+        data-product-id="{{ $product->g_ID }}"
+        data-user-id="{{ Auth::id() }}"> <!-- Menggunakan Auth::id() untuk mendapatkan id pengguna yang login -->
+    Add
+</button>
+
                             @endauth
                         </div>
                     </div>
@@ -78,7 +93,69 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-// Ambil elemen slide dan tombol
+function addToWishlist(productId, userId) {
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
+
+        var data = {
+            g_ID: productId,
+            us_ID: userId,
+        };
+
+        $.ajax({
+            url: 'api/wishlist/store',
+            method: 'POST',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Authorization': 'Bearer ' + apiToken
+            },
+            data: data,
+            success: function(data) {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: data.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    if (data.message.includes('already added')) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Oops...',
+                            text: data.message,
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        });
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
+            }
+        });
+    }
+
+    $(document).on('click', '.add-to-wishlist', function() {
+        var productId = $(this).data('product-id');
+        var userId = $(this).data('user-id');
+        addToWishlist(productId, userId);
+    });
+    
 const productSlider = document.querySelector('.product-slider-container');
 const slideLeftBtn = document.querySelector('.product-slider-btn.left-0');
 const slideRightBtn = document.querySelector('.product-slider-btn.right-0');
@@ -147,8 +224,6 @@ function filterByCity(location) {
     }
 }
 
-
-
 function getCurrentLocationAndFilter() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -204,9 +279,5 @@ function getCurrentLocationAndFilter() {
         console.error('Geolocation is not supported by this browser.');
     }
 }
-
-
-
     getCurrentLocationAndFilter();
-
 </script>
