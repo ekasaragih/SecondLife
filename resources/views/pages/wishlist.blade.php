@@ -11,7 +11,6 @@
 
 <div class="flex justify-center h-screen pt-52">
     <div class="container w-4/5">
-
         <div class="text-3xl text-[#F12E52]"><b>Wishlist</b></div><br>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,26 +28,25 @@
                     <p class="mb-4 text-lg">Type: {{ $wishlistItem->goods->g_type }}</p>
                     <p class="mb-1 text-lg">Price: {{ $wishlistItem->goods->g_original_price }}</p>
                     <div class="px-6 py-4">
-                    <div class="flex justify-between items-center">
-                        @auth
-                        <a href="{{ route('goods_detail', ['id' => $wishlistItem->goods->g_ID]) }}" class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
-                            data-product-id="{{ $wishlistItem->goods->g_ID }}"
-                            data-product-user-id="{{ $wishlistItem->goods->us_ID }}"
-                            data-product-name="{{ $wishlistItem->goods->g_name }}"
-                            data-product-desc="{{ $wishlistItem->goods->g_desc }}"
-                            data-product-category="{{ $wishlistItem->goods->g_category }}"
-                            data-product-age="{{ $wishlistItem->goods->g_age }}"
-                            data-product-type="{{ $wishlistItem->goods->g_type }}"
-                            data-product-price="{{ $wishlistItem->goods->g_original_price }}">
-                            See Details
-                        </a>
-                        @endauth
-                </div>
-            </div>
-
-                <button
-                    class="mt-2 px-4 py-2 rounded-md bg-red-600 text-white border border-transparent hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 remove-from-wishlist"
-                    data-wishlist-id="{{ $wishlistItem->wishlist_ID }}">Remove from Wishlist</button>
+                        <div class="flex justify-between items-center">
+                            @auth
+                            <a href="{{ route('goods_detail', ['id' => $wishlistItem->goods->g_ID]) }}"
+                                class="btn-details bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition duration-300 flex-grow-0 flex-shrink-0 text-center"
+                                data-product-id="{{ $wishlistItem->goods->g_ID }}"
+                                data-product-user-id="{{ $wishlistItem->goods->us_ID }}"
+                                data-product-name="{{ $wishlistItem->goods->g_name }}"
+                                data-product-desc="{{ $wishlistItem->goods->g_desc }}"
+                                data-product-category="{{ $wishlistItem->goods->g_category }}"
+                                data-product-age="{{ $wishlistItem->goods->g_age }}"
+                                data-product-type="{{ $wishlistItem->goods->g_type }}"
+                                data-product-price="{{ $wishlistItem->goods->g_original_price }}">
+                                View Goods Details
+                            </a>&nbsp;
+                            @endauth
+                            <button class="btn-remove mt-2 px-4 py-2 rounded-md bg-red-600 text-white border border-transparent hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 remove-from-wishlist"
+                                data-wishlist-id="{{ $wishlistItem->wishlist_ID }}">Remove from Wishlist</button>
+                        </div>
+                    </div>
                 </div>
                 @endif
                 @endforeach
@@ -68,11 +66,8 @@
 
         @include('utils.layouts.footer.footer')
 
-
-
     </div>
 </div>
-
 
 {{--
 |--------------------------------------------------------------------------
