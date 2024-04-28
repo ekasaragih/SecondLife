@@ -81,4 +81,10 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follow', 'followed_id', 'follower_id')->withTimestamps();
     }
     
+    public function unreadMessages()
+    {
+        return Message::where('receiver_id', $this->us_ID)
+                      ->where('is_read', false)
+                      ->get();
+    }
 }

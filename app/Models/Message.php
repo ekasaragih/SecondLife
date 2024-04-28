@@ -23,5 +23,6 @@ class Message extends Model
         'receiver_ID',
         'g_ID',
         'message',
+        'is_read',
     ];
 }

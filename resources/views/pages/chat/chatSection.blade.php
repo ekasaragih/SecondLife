@@ -70,22 +70,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, '\\$&');
-        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-        const results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
-
-    function sendMessage() {
+    function sendMessage(isReply = false) {
         const loggedInUserId = '{{ $loggedInUserId }}';
         const ownerUserId = '{{ $ownerUserId }}';
         const message = document.getElementById('messageInput').value.trim();
-
-        const goodsId = getParameterByName('goods');
 
         if (message === '') {
             document.getElementById('sendMessageBtn').disabled = true;
@@ -97,7 +85,7 @@
                 sender_id: loggedInUserId,
                 receiver_id: ownerUserId,
                 message: message,
-                g_ID: goodsId,
+                is_reply: isReply,
             })
             .then(function (response) {
                 const formattedMessage = `

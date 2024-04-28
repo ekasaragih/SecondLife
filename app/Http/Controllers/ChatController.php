@@ -32,10 +32,6 @@ class ChatController extends Controller
 
         $product = Goods::where('us_ID', $ownerUserId)->first();
 
-        $senderIds = Message::where('receiver_ID', $loggedInUserId)->distinct()->pluck('sender_ID');
-        $receiverIds = Message::where('sender_ID', $loggedInUserId)->distinct()->pluck('receiver_ID');
-
-        
         $contactIds = Message::where('sender_id', $loggedInUserId)
         ->orWhere('receiver_id', $loggedInUserId)
         ->distinct()
