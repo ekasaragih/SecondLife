@@ -17,9 +17,9 @@ class RecommendationLocationController extends Controller
         // Mendapatkan semua data kategori
         $cities = User::distinct('us_city')->pluck('us_city');
         
+        $users = User::all(['us_ID', 'us_name'])->keyBy('us_ID');
 
-        // Mengirim data produk dan kategori ke view 'product'
-        return view('product', compact('products', 'cities'));
+        return view('product', compact('products', 'cities', 'users'));
     }
 
     public function addToWishlist(Request $request)

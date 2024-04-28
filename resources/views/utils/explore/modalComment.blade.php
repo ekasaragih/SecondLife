@@ -17,6 +17,11 @@
         </div>
         <hr style="margin: 20px 0;"> <!-- Garis penghalang -->
         <p id="modalProductId" style="color: #666; margin-bottom: 10px;"></p>
+        <div class="mt-4">
+            <span class="mr-3 text-gray-500">Uploaded by:</span>
+            <a href="#" id="uploadedByLink" class="font-semibold text-fray-400"></a>
+        </div>
+
         <p id="modalDescription" style="color: #666; text-align: justify;"></p>
         <hr style="margin: 20px 0;"> <!-- Garis penghalang -->
         <div id="commentSection" class="mt-4"></div>
@@ -50,7 +55,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-function openModal(name, description, image, location, price, g_ID) {
+function openModal(name, description, image, location, price, g_ID, us_name) {
     const modal = document.getElementById('productModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
@@ -58,6 +63,7 @@ function openModal(name, description, image, location, price, g_ID) {
     const modalLocation = document.getElementById('modalLocation');
     const modalPrice = document.getElementById('modalPrice');
     const modalProductId = document.getElementById('modalProductId');
+    const uploadedByLink = document.getElementById('uploadedByLink'); // Ambil elemen tautan
 
     modal.style.display = 'block';
     modalTitle.textContent = name;
@@ -66,13 +72,18 @@ function openModal(name, description, image, location, price, g_ID) {
     modalLocation.textContent = "Location: " + location;
     modalPrice.textContent = "Price: " + price;
     modalProductId.textContent = "Product ID: " + g_ID;
+    uploadedByLink.textContent = us_name; // Atur teks nama pengguna
+    uploadedByLink.href = "{{ route('userProfile', ['username' => ':username']) }}".replace(':username', us_name); // Tautkan nama pengguna dengan rute userProfile
 
-    // Set nilai g_ID di input tersembunyi untuk formulir komentar
-    document.getElementById('g_ID').value = g_ID; // Atur g_ID sesuai dengan produk yang terbuka
+// Set nilai g_ID di input tersembunyi untuk formulir komentar
+document.getElementById('g_ID').value = g_ID; // Atur g_ID sesuai dengan produk yang terbuka
 
-    // Load comments based on the g_ID of the current product
-    loadComments(g_ID);
+// Load comments based on the g_ID of the current product
+loadComments(g_ID);
 }
+
+// Tentukan rute yang akan diarahkan saat tautan diklik
+const userProfileRoute = "{{ route('userProfile', ['username' => ':username']) }}";
 
 function loadComments(g_ID) {
     axios.get('/comments/' + g_ID)
