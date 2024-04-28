@@ -2,7 +2,8 @@
     style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;"
     data-product-id="">
     <div class="modal-content"
-        style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 600px; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+        style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 800px; width: 90%; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+
         <span class="close" onclick="closeModal()"
             style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; color: #888; z-index: 1;">&times;</span>
         <h2 id="modalTitle"
@@ -12,10 +13,15 @@
             <img id="modalImage" src="" alt="Product Image"
                 style="width: 300px; height: auto; margin: 0 auto 20px; display: block; border-radius: 5px;">
             <p id="modalLocation" style="color: #666; margin-bottom: 10px;"></p>
-            <p id="modalPrice" style="color: #666; margin-bottom: 20px; font-size: 18px; font-weight: bold;"></p>
+            <p id="modalPrice" style="color: purple; margin-bottom: 20px; font-size: 18px; font-weight: bold;"></p>
         </div>
         <hr style="margin: 20px 0;"> <!-- Garis penghalang -->
         <p id="modalProductId" style="color: #666; margin-bottom: 10px;"></p>
+        <div class="mt-4">
+            <span class="mr-3 text-gray-500">Uploaded by:</span>
+            <a href="#" id="uploadedByLink" class="font-semibold text-fray-400"></a>
+        </div>
+
         <p id="modalDescription" style="color: #666; text-align: justify;"></p>
         <hr style="margin: 20px 0;"> <!-- Garis penghalang -->
         <div id="commentSection" class="mt-4"></div>
@@ -42,14 +48,14 @@
         <div style="text-align: center;">
             <button
                 class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300 mt-2"
-                onclick="addToCart()">Add to Cart</button>
+                onclick="addToCart()">Add to Wishlist</button>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    function openModal(name, description, image, location, price, g_ID) {
+    function openModal(name, description, image, location, price, g_ID, us_name) {
     const modal = document.getElementById('productModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
@@ -57,6 +63,7 @@
     const modalLocation = document.getElementById('modalLocation');
     const modalPrice = document.getElementById('modalPrice');
     const modalProductId = document.getElementById('modalProductId');
+    const uploadedByLink = document.getElementById('uploadedByLink'); // Ambil elemen tautan
 
     modal.style.display = 'block';
     modalTitle.textContent = name;
@@ -65,13 +72,18 @@
     modalLocation.textContent = "Location: " + location;
     modalPrice.textContent = "Price: " + price;
     modalProductId.textContent = "Product ID: " + g_ID;
+    uploadedByLink.textContent = us_name; // Atur teks nama pengguna
+    uploadedByLink.href = "{{ route('userProfile', ['username' => ':username']) }}".replace(':username', us_name); // Tautkan nama pengguna dengan rute userProfile
 
-    // Set nilai g_ID di input tersembunyi untuk formulir komentar
-    document.getElementById('g_ID').value = g_ID; // Atur g_ID sesuai dengan produk yang terbuka
+// Set nilai g_ID di input tersembunyi untuk formulir komentar
+document.getElementById('g_ID').value = g_ID; // Atur g_ID sesuai dengan produk yang terbuka
 
-    // Load comments based on the g_ID of the current product
-    loadComments(g_ID);
+// Load comments based on the g_ID of the current product
+loadComments(g_ID);
 }
+
+// Tentukan rute yang akan diarahkan saat tautan diklik
+const userProfileRoute = "{{ route('userProfile', ['username' => ':username']) }}";
 
 function loadComments(g_ID) {
     axios.get('/comments/' + g_ID)
