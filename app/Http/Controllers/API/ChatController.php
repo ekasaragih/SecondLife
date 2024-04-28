@@ -46,7 +46,6 @@ class ChatController extends ApiController
         $ownerUserId = $request->query('owner_user');
         $goodsId = $request->query('goods');
 
-        // Fetch chat messages from the database based on the parameters
         $chatMessages = Message::where(function ($query) use ($loggedInUserId, $ownerUserId) {
             $query->where('sender_id', $loggedInUserId)
                   ->where('receiver_id', $ownerUserId);
@@ -55,7 +54,6 @@ class ChatController extends ApiController
                   ->where('receiver_id', $loggedInUserId);
         })->orderBy('created_at')->get();
 
-        // Return the chat messages as JSON
         return response()->json(['chatMessages' => $chatMessages]);
     }
 
