@@ -45,11 +45,6 @@
                 </button>
             </form>
         </div>
-        <div style="text-align: center;">
-            <button
-                class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300 mt-2"
-                onclick="addToCart()">Add to Wishlist</button>
-        </div>
     </div>
 </div>
 
