@@ -83,22 +83,19 @@
             data: {
                 logged_in_user: loggedInUserId,
                 owner_user: ownerUserId,
-                // goods: goodsId
             },
             success: function(response) {
                 $('#mainChat').empty();
 
-                // Loop through fetched chat messages
                 response.chatMessages.forEach(function(message) {
                     var messageHtml = '';
 
                     const messageDate = new Date(message.created_at);
                     
-                    // Format time in Indonesian time zone
                     const timeOptions = {
-                    timeZone: 'Asia/Jakarta',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                        timeZone: 'Asia/Jakarta',
+                        hour: '2-digit',
+                        minute: '2-digit'
                     };
                     const formattedTime = messageDate.toLocaleTimeString('id-ID', timeOptions);
 
@@ -134,6 +131,6 @@
 
     window.onload = () => {
         fetchMessages();
-        setInterval(fetchMessages, 2000);
+        setInterval(fetchMessages, 5000);
     };
 </script>
