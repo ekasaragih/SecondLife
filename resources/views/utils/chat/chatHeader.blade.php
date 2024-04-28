@@ -1,17 +1,19 @@
 <div class="py-2 px-3 bg-grey-lighter flex flex-row justify-between items-center">
     <div class="flex items-center">
-        <div>
-            <img class="w-10 h-10 rounded-full"
-                src="https://i.pinimg.com/564x/a0/55/ee/a055eeaa4c31c142ff8d94a42e6939f2.jpg" />
-        </div>
-        <div class="ml-4">
-            <p class="text-grey-darkest">
-                {{ $ownerName }}
-            </p>
-            <p class="text-grey-darker text-xs mt-1">
-                <span>@</span>{{ $ownerUsername }}
-            </p>
-        </div>
+        <a href="{{ route('userProfile', ['username' => $ownerUsername]) }}" class="flex items-center">
+            <div>
+                <img class="w-10 h-10 rounded-full"
+                    src="https://i.pinimg.com/564x/a0/55/ee/a055eeaa4c31c142ff8d94a42e6939f2.jpg" />
+            </div>
+            <div class="ml-4">
+                <p class="text-grey-darkest">
+                    {{ $ownerName }}
+                </p>
+                <p class="text-grey-darker text-xs mt-1">
+                    <span>@</span>{{ $ownerUsername }}
+                </p>
+            </div>
+        </a>
     </div>
 
     <div class="flex">

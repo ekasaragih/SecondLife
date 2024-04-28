@@ -22,30 +22,37 @@
                     <img src="{{ $image->img_url }}" alt="{{ $wishlistItem->goods->g_name }}" class="w-full mb-2">
                     @break {{-- To display only the first image --}}
                     @endforeach
-                    <h3 class="mb-1 text-xl">{{ $wishlistItem->goods->g_name }}</h3>
-                    <h3 class="mb-1 text-xl">{{ $wishlistItem->goods->g_desc }}</h3>
-                    <h3 class="mb-1 text-xl">{{ $wishlistItem->goods->g_category }}</h3>
-                    <p class="mb-4 text-lg">Type: {{ $wishlistItem->goods->g_type }}</p>
-                    <p class="mb-1 text-lg">Price: {{ $wishlistItem->goods->g_original_price }}</p>
-                    <div class="px-6 py-4">
-                        <div class="flex justify-between items-center">
-                            @auth
-                            <a href="{{ route('goods_detail', ['id' => $wishlistItem->goods->g_ID]) }}"
-                                class="btn-details bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition duration-300 flex-grow-0 flex-shrink-0 text-center"
-                                data-product-id="{{ $wishlistItem->goods->g_ID }}"
-                                data-product-user-id="{{ $wishlistItem->goods->us_ID }}"
-                                data-product-name="{{ $wishlistItem->goods->g_name }}"
-                                data-product-desc="{{ $wishlistItem->goods->g_desc }}"
-                                data-product-category="{{ $wishlistItem->goods->g_category }}"
-                                data-product-age="{{ $wishlistItem->goods->g_age }}"
-                                data-product-type="{{ $wishlistItem->goods->g_type }}"
-                                data-product-price="{{ $wishlistItem->goods->g_original_price }}">
-                                View Goods Details
-                            </a>&nbsp;
-                            @endauth
-                            <button class="btn-remove mt-2 px-4 py-2 rounded-md bg-red-600 text-white border border-transparent hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 remove-from-wishlist"
-                                data-wishlist-id="{{ $wishlistItem->wishlist_ID }}">Remove from Wishlist</button>
-                        </div>
+
+                    <h3 class="mb-3 text-xl font-semibold">{{ $wishlistItem->goods->g_name }}</h3>
+                    <h3 class="mb-1 text-base">{{ $wishlistItem->goods->g_desc }}</h3>
+
+                    <div class="flex items-center my-5 font-medium text-sm">
+                        <h3 class="mr-2 mb-1">{{ $wishlistItem->goods->g_category }}</h3>
+                        <div class="h-1 w-1 bg-gray-400 rounded-full"></div>
+                        <p class="ml-2 mb-1">{{ $wishlistItem->goods->g_type }}</p>
+                    </div>
+
+                    <p class="mb-1 text-lg hidden">Price: {{ $wishlistItem->goods->g_original_price }}</p>
+                    <div class="px-6 py-4 mx-2 flex justify-center">
+                        @auth
+                        <a href="{{ route('goods_detail', ['id' => $wishlistItem->goods->g_ID]) }}"
+                            class="btn-details bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition duration-300 flex-grow-0 flex-shrink-0 text-center"
+                            data-product-id="{{ $wishlistItem->goods->g_ID }}"
+                            data-product-user-id="{{ $wishlistItem->goods->us_ID }}"
+                            data-product-name="{{ $wishlistItem->goods->g_name }}"
+                            data-product-desc="{{ $wishlistItem->goods->g_desc }}"
+                            data-product-category="{{ $wishlistItem->goods->g_category }}"
+                            data-product-age="{{ $wishlistItem->goods->g_age }}"
+                            data-product-type="{{ $wishlistItem->goods->g_type }}"
+                            data-product-price="{{ $wishlistItem->goods->g_original_price }}">
+                            View Details
+                        </a>
+                        @endauth
+
+                        <button type="button" title="Remove from wishlist"
+                            class="bg-red-500 ml-2 text-white text-xl px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 flex-grow-0 flex-shrink-0 text-center remove-from-wishlist">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
                 @endif
@@ -57,9 +64,6 @@
 
         {{-- Recommendation based on Categories --}}
         @include('utils.categories.recommendation')
-
-        {{-- Product Details Modal --}}
-        @include('utils.categories.modalProductDetail')
 
         {{-- T&C Modal --}}
         @include('utils.categories.modalTermsAndCondition')

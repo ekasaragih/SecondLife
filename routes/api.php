@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // CHAT
     Route::post('/chat/send', [ChatController::class, 'send'])->name('send_message');
+    Route::get('/chat/messages', [ChatController::class, 'fetch'])->name('fetch_message');
 
     // EXCHANGE
     Route::post('/exchange/store', [ExchangeController::class, 'store'])->name('exchange.store');

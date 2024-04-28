@@ -26,8 +26,6 @@ Route::post('/logout', [AuthorizationController::class, 'logout'])->name('logout
 Route::post('/login', [AuthorizationController::class, 'authenticate']);
 Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
 Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store');
-Route::get('/register-optional', [AuthorizationController::class, 'registerSkip'])->name('registerSkip');
-Route::post('/register', [AuthorizationController::class, 'storeSkip'])->name('auth_storeSkip');
 Route::get('/forgotPassword', [AuthorizationController::class, 'forgotPassword'])->name('forgotPassword');
 
 /*
@@ -43,6 +41,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
     Route::get('/goods-detail/{id}', [PageController::class, 'goods_detail'])->name('goods_detail');
     Route::get('/chat', [ChatController::class, 'index'])->name('home_chat');
+    Route::get('/comments', [CommentController::class, 'index']);
+    Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
+    Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');
 });
 
 Route::get('/', [PageController::class, 'explore'])->name('explore');
@@ -53,16 +54,8 @@ Route::get('/about-us', [PageController::class, 'about_us'])->name('about_us');
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
-Route::get('/comments', [CommentController::class, 'index']);
-Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
-Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
 
 
-Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');
-
-Route::post('/user/follow/{user}', [UserController::class, 'followUser'])->name('user.follow');
-Route::post('/user/unfollow/{user}', [UserController::class, 'unfollowUser'])->name('user.unfollow');
-Route::get('/user/{user}/follow-status', [UserController::class, 'followStatus'])->name('user.follow_status');
 
 
 
@@ -76,7 +69,6 @@ Route::get('/404-not-found', [PageController::class, 'not_found'])->name('not_fo
 Route::get('/500-server-error', [PageController::class, 'internal_server_error'])->name('internal_server_error');
 
 
-Route::get('/search', 'App\Http\Controllers\SearchController@search')->name('search');
 
 
 
@@ -104,6 +96,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/profile-picture', [UserController::class, 'store_profilePicture'])->name('profile_picture');
     Route::post('/user/edit-profile', [UserController::class, 'edit_profile'])->name('edit_my_profile');
     Route::post('/user/edit-address', [UserController::class, 'edit_address'])->name('edit_my_address');
+    Route::post('/user/follow/{user}', [UserController::class, 'followUser'])->name('user.follow');
+    Route::post('/user/unfollow/{user}', [UserController::class, 'unfollowUser'])->name('user.unfollow');
+    Route::get('/user/{user}/follow-status', [UserController::class, 'followStatus'])->name('user.follow_status');
 
     Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
+
+    Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
+
+    Route::get('/search', 'App\Http\Controllers\SearchController@search')->name('search');
 });

@@ -1,7 +1,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @auth
-        <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
     <link rel="stylesheet" href="/asset/css/imgContainer.css">
 </head>
@@ -29,79 +29,79 @@
         <div class="text-3xl text-[#F12E52] mt-5 mb-2"><b>See What's ☕ in the town</b></div>
         <div class="h-screen flex flex-col justify-between">
             @auth
-                @if (isset($communities) && count($communities) > 0)
-                    @foreach ($communities as $community)
-                        <div id="post-card" class="mt-5 mb-5">
-                            <div id="post" class="rounded-lg shadow-md p-3 border-2 m-1">
-                                <div class="flex items-center p-3">
-                                    <img class="w-8 h-8 rounded-full mr-4"
-                                        src="{{ $community->userID->avatar ? asset('users_img/' . $community->userID->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
-                                        alt="{{ $community->userID->us_name }}">
-                                    <h2 class="text-lg font-semibold mr-3">{{ $community->UserID->us_name }}</h2>
-                                    <h2 class="text-base text-gray-500 italic">
-                                        {{ \Carbon\Carbon::parse($community->created_at)->format('F j, Y') }}</h2>
-                                </div>
-                                <h2 class="text-lg font-semibold mb-2 pl-3">{{ $community->community_title }}</h2>
-                                <p class="text-gray-800 pl-3">{{ $community->community_desc }}</p>
-                                <div class="flex flex-row items-center pl-3 mt-2">
-                                    <button class="like-button ml-2  text-gray-500 hover:text-[#F12E52] focus:outline-none"
-                                        data-post-id="{{ $community->community_ID }}">
-                                        <i class="fa {{ $community->isLikedByCurrentUser ? 'fa-heart' : 'fa-heart-o' }}"
-                                            aria-hidden="true"></i>
-                                    </button>
-                                    <h3 class="ml-2" id="like-count-{{ $community->community_ID }}">
-                                        {{ $community->likes()->count() }}
-                                    </h3>
-                                </div>
-                            </div>
+            @if (isset($communities) && count($communities) > 0)
+            @foreach ($communities as $community)
+            <div id="post-card" class="mt-5 mb-5">
+                <div id="post" class="rounded-lg shadow-md p-3 border-2 m-1">
+                    <div class="flex items-center p-3">
+                        <img class="w-8 h-8 rounded-full mr-4"
+                            src="{{ $community->userID->avatar ? asset('users_img/' . $community->userID->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
+                            alt="{{ $community->userID->us_name }}">
+                        <h2 class="text-lg font-semibold mr-3">{{ $community->UserID->us_name }}</h2>
+                        <h2 class="text-base text-gray-500 italic">
+                            {{ \Carbon\Carbon::parse($community->created_at)->format('F j, Y') }}</h2>
+                    </div>
+                    <h2 class="text-lg font-semibold mb-2 pl-3">{{ $community->community_title }}</h2>
+                    <p class="text-gray-800 pl-3">{{ $community->community_desc }}</p>
+                    <div class="flex flex-row items-center pl-3 mt-2">
+                        <button class="like-button ml-2  text-gray-500 hover:text-[#F12E52] focus:outline-none"
+                            data-post-id="{{ $community->community_ID }}">
+                            <i class="fa {{ $community->isLikedByCurrentUser ? 'fa-heart' : 'fa-heart-o' }}"
+                                aria-hidden="true"></i>
+                        </button>
+                        <h3 class="ml-2" id="like-count-{{ $community->community_ID }}">
+                            {{ $community->likes()->count() }}
+                        </h3>
+                    </div>
+                </div>
 
-                            <button
-                                class="toggle-replies-button mr-3 mt-2 p-2 bg-[#F12E52] text-white hover:bg-white hover:text-[#F12E52] focus:outline-none shadow-md rounded-md">
-                                {{ $community->repliesVisible ? 'Hide Replies' : 'Show Replies' }}
+                <button
+                    class="toggle-replies-button mr-3 mt-2 p-2 bg-[#F12E52] text-white hover:bg-white hover:text-[#F12E52] focus:outline-none shadow-md rounded-md">
+                    {{ $community->repliesVisible ? 'Hide Replies' : 'Show Replies' }}
+                </button>
+
+                <div class="replies-container"
+                    style="{{ $community->repliesVisible ? 'display: block;' : 'display: none;' }}">
+                    <div class="w-11/12 float-right">
+                        <form class="addCommunityFeedback" data-community-id="{{ $community->community_ID }}">
+                            @csrf
+                            {{-- <b class="text-lg text-[#F12E52] underline">Add Your Replies</b> --}}
+                            <input type="hidden" id="community_ID" name="community_ID"
+                                value="{{ $community->community_ID }}">
+                            <div class="mt-3 mb-3 border-2 rounded-md">
+                                <input type="textarea" id="feedback_desc" name="feedback_desc"
+                                    class="w-full h-20 px-3 py-2 pt-0" placeholder="Give your replies">
+                            </div>
+                            <button type="submit" id="btn-community-feedback"
+                                class="bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] font-bold py-2 px-4 rounded shadow">
+                                Comment
                             </button>
-
-                            <div class="replies-container"
-                                style="{{ $community->repliesVisible ? 'display: block;' : 'display: none;' }}">
-                                <div class="w-11/12 float-right">
-                                    <form class="addCommunityFeedback" data-community-id="{{ $community->community_ID }}">
-                                        @csrf
-                                        {{-- <b class="text-lg text-[#F12E52] underline">Add Your Replies</b> --}}
-                                        <input type="hidden" id="community_ID" name="community_ID"
-                                            value="{{ $community->community_ID }}">
-                                        <div class="mt-3 mb-3 border-2 rounded-md">
-                                            <input type="textarea" id="feedback_desc" name="feedback_desc"
-                                                class="w-full h-20 px-3 py-2 pt-0" placeholder="Give your replies">
-                                        </div>
-                                        <button type="submit" id="btn-community-feedback"
-                                            class="bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] font-bold py-2 px-4 rounded shadow">
-                                            Comment
-                                        </button>
-                                    </form>
-                                </div>
-                                @foreach ($feedbacks as $feedback)
-                                    @if ($feedback->community_ID === $community->community_ID)
-                                        <div id="replies"
-                                            class="w-11/12 rounded-lg shadow-md p-5 border-2 m-1 float-right flex items-center">
-                                            <img class="w-8 h-8 rounded-full mr-4"
-                                                src="{{ $feedback->userID->avatar ? asset('users_img/' . $feedback->userID->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
-                                                alt="{{ $feedback->userID->us_name }}">
-                                            <h2 class="text-lg font-semibold mr-3">{{ $feedback->UserID->us_name }}</h2>
-                                            <h2 class="text-base text-gray-500 italic">
-                                                {{ \Carbon\Carbon::parse($feedback->created_at)->format('F j, Y') }}</h2>
-                                            <p class="text-gray-800 pl-3">{{ $feedback->feedback_desc }}</p>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
+                        </form>
+                    </div>
+                    @foreach ($feedbacks as $feedback)
+                    @if ($feedback->community_ID === $community->community_ID)
+                    <div id="replies"
+                        class="w-11/12 rounded-lg shadow-md p-5 border-2 m-1 float-right flex items-center">
+                        <img class="w-8 h-8 rounded-full mr-4"
+                            src="{{ $feedback->userID->avatar ? asset('users_img/' . $feedback->userID->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
+                            alt="{{ $feedback->userID->us_name }}">
+                        <h2 class="text-lg font-semibold mr-3">{{ $feedback->UserID->us_name }}</h2>
+                        <h2 class="text-base text-gray-500 italic">
+                            {{ \Carbon\Carbon::parse($feedback->created_at)->format('F j, Y') }}</h2>
+                        <p class="text-gray-800 pl-3">{{ $feedback->feedback_desc }}</p>
+                    </div>
+                    @endif
                     @endforeach
-                @else
-                    <p>No communities found.</p>
-                @endif
+                </div>
+            </div>
+            @endforeach
             @else
-                <p class="my-5">Please <a href="/login"
-                        class="underline font-semibold hover:text-primary duration-200 translate-x-2">log in</a> to see
-                    communities.</p>
+            <p>No communities found.</p>
+            @endif
+            @else
+            <p class="my-5">Please <a href="/login"
+                    class="underline font-semibold hover:text-primary duration-200 translate-x-2">log in</a> to see
+                communities.</p>
             @endauth
         </div>
         {{-- footer nya ga dibawah --}}

@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="px-6 py-4">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-center items-center">
                 @auth
                 <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}" id="btn_see_detail"
                     class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
@@ -71,9 +71,15 @@
                 </a>
 
                 <button
-                    class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist"
-                    id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}" data-user-id="{{ $user->us_ID }}">
-                    Add to Wishlist
+                    class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 add-to-wishlist duration-300 hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-500 add-to-wishlist"
+                    title="Add to wishlist" id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}"
+                    data-user-id="{{ $user->us_ID }}">
+                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        class="w-5 h-5 love-icon" viewBox="0 0 24 24">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
+                        </path>
+                    </svg>
                 </button>
                 @endauth
             </div>

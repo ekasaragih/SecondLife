@@ -70,22 +70,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, '\\$&');
-        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-        const results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
-
-    function sendMessage() {
+    function sendMessage(isReply = false) {
         const loggedInUserId = '{{ $loggedInUserId }}';
         const ownerUserId = '{{ $ownerUserId }}';
         const message = document.getElementById('messageInput').value.trim();
-
-        const goodsId = getParameterByName('goods');
 
         if (message === '') {
             document.getElementById('sendMessageBtn').disabled = true;
@@ -97,7 +85,7 @@
                 sender_id: loggedInUserId,
                 receiver_id: ownerUserId,
                 message: message,
-                g_ID: goodsId,
+                is_reply: isReply,
             })
             .then(function (response) {
                 const formattedMessage = `
@@ -113,7 +101,7 @@
                 </div>
                 `;
 
-                const chatMessagesContainer = document.getElementById('chatMessages');
+                const chatMessagesContainer = document.getElementById('mainChat');
                 chatMessagesContainer.appendChild(document.createRange().createContextualFragment(formattedMessage));
                 chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
 
@@ -133,11 +121,18 @@
     }
 
         
-    document.getElementById('messageInput').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
+     document.getElementById('messageInput').addEventListener('keydown', function(event) {
+        if (event.shiftKey && event.key === 'Enter') {
+            this.value += '\n';
+            event.preventDefault();
+        } else if (event.key === 'Enter' && !event.shiftKey) {
             sendMessage();
+            event.preventDefault();
         }
     });
 
-    document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+    document.getElementById('sendMessageBtn').addEventListener('click', function(event) {
+        sendMessage();
+        event.preventDefault();
+    });
 </script>
