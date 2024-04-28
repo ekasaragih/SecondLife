@@ -1,3 +1,4 @@
+<!-- userProfile.blade.php -->
 @extends('utils.layouts.navbar.topnav')
 
 <div class="flex items-center justify-center pt-52">
@@ -35,11 +36,11 @@
 
             <!-- Follower and Following Counts (moved to the right) -->
             <div class="ml-auto text-right">
-            <p class="text-lg font-semibold text-gray-800 font-rubik"> <!-- Menggunakan class `font-rubik` -->
+                <p class="text-lg font-semibold text-gray-800 font-rubik">
                     <span class="font-semibold">Followers:</span>
-                    <span class="ml-2 text-purple-600">{{ $user->followers()->count() }}</span>
+                    <span class="ml-2 text-purple-600" id="followerCount">{{ $user->followers()->count() }}</span>
                 </p>
-                <p class="text-lg font-semibold text-gray-800 font-rubik"> <!-- Menggunakan class `font-rubik` -->
+                <p class="text-lg font-semibold text-gray-800 font-rubik">
                     <span class="font-semibold">Following:</span>
                     <span class="ml-2 text-purple-600">{{ $user->following()->count() }}</span>
                 </p>
@@ -74,11 +75,11 @@
     </div>
 </div>
 
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const followForm = document.getElementById('followForm');
         const followButton = document.getElementById('followButton');
+        const followerCountSpan = document.getElementById('followerCount');
 
         // Check if the current user is following the profile user
         let isFollowing = {{ auth()->user()->isFollowing($user) ? 'true' : 'false' }};
@@ -115,6 +116,13 @@
                         // Toggle button text and appearance
                         isFollowing = !isFollowing;
                         updateButtonState(isFollowing);
+
+                        // Update follower count if following action is successful
+                        if (isFollowing) {
+                            followerCountSpan.textContent = parseInt(followerCountSpan.textContent) + 1;
+                        } else {
+                            followerCountSpan.textContent = parseInt(followerCountSpan.textContent) - 1;
+                        }
                     }
                 })
                 .catch(error => {
@@ -122,19 +130,6 @@
                 });
             });
         }
-
-        // Fetch the latest follow status from the server on page load
-        setInterval(() => {
-            fetch('{{ route('user.follow_status', $user) }}')
-            .then(response => response.json())
-            .then(data => {
-                isFollowing = data.is_following;
-                updateButtonState(isFollowing);
-            })
-            .catch(error => {
-                console.error('Error fetching follow status:', error);
-            });
-        }, 5000); // Update follow status every 5 seconds
     });
 </script>
 

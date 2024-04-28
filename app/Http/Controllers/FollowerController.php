@@ -6,9 +6,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Follower;
+use App\Models\User;
+
 
 class FollowerController extends Controller
 {
+    public function followerCount(User $user)
+    {
+        $followerCount = $user->followers()->count();
+
+        return response()->json([
+            'follower_count' => $followerCount,
+        ]);
+    }
+
+    // Method to fetch follow status
+    public function followStatus(User $user)
+    {
+        // Check if the authenticated user is following $user
+        $isFollowing = auth()->user()->isFollowing($user);
+
+        return response()->json([
+            'is_following' => $isFollowing,
+        ]);
+    }
+    
     public function followUser(Request $request)
     {
         $follower = new Follower();
