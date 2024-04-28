@@ -2,7 +2,7 @@
     style="background-color: rgba(0, 0, 0, 0.5); display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; overflow: auto;"
     data-product-id="">
     <div class="modal-content"
-    style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 800px; width: 90%; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+        style="background-color: #fff; margin: 15% auto; padding: 20px; border-radius: 10px; max-width: 800px; width: 90%; position: relative; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
 
         <span class="close" onclick="closeModal()"
             style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer; color: #888; z-index: 1;">&times;</span>
@@ -55,7 +55,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-function openModal(name, description, image, location, price, g_ID, us_name) {
+    function openModal(name, description, image, location, price, g_ID, us_name) {
     const modal = document.getElementById('productModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');

@@ -138,7 +138,8 @@
                     <div class="flex-1 border-b border-gray-300"></div>
                 </div>
             </div>
-            <form id="registration-form" action="{{ route('auth_store') }}" method="POST" class="space-y-4 mt-8" onsubmit="handleSubmit(event)">
+            <form id="registration-form" action="/register" method="POST" class="space-y-4 mt-8"
+                onsubmit="handleSubmit(event)">
                 @csrf
                 <!-- Full Name -->
                 <div>
@@ -164,14 +165,16 @@
                     <div class="relative">
                         <input type="password" id="password" name="password" placeholder="********"
                             class="mt-1 p-2 pr-10 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility()"
+                            class="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none">
                             <i class="fa fa-eye-slash text-gray-400" id="password-icon" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
                 <!-- Confirm Password -->
                 <div>
-                    <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                    <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm
+                        Password</label>
                     <input type="password" id="confirm_password" name="confirm_password" placeholder="********"
                         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>

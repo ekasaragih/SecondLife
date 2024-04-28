@@ -27,8 +27,10 @@
 
         <div class="items-center flex-1 relative">
             <form action="{{ route('search') }}" method="GET">
-                <input type="text" name="query" placeholder="Search by name..." class="p-3 border border-gray-300 rounded-lg w-full">
-                <button type="submit" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
+                <input type="text" name="query" placeholder="Search by name..."
+                    class="p-3 border border-gray-300 rounded-lg w-full">
+                <button type="submit"
+                    class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white text-gray-800 text-lg pr-2 rounded-md transition-colors duration-300 hover:text-pink-500">
                     <ion-icon name="search-outline"></ion-icon>
                 </button>
             </form>
@@ -37,36 +39,44 @@
         <div class="flex items-center gap-4 relative">
             @auth
             <div class="relative">
-                <a href="{{ route('wishlist') }}" title="My Wishlist" class="text-3xl text-gray-700 {{ Request::route()->getName() == 'wishlist' ? 'text-primary-content' : '' }}">
+                <a href="{{ route('wishlist') }}" title="My Wishlist"
+                    class="text-3xl text-gray-700 {{ Request::route()->getName() == 'wishlist' ? 'text-primary-content' : '' }}">
                     <i class="fa fa-heart" aria-hidden="true"></i>
-                    <span id="wishlist-count" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                        {{ $wishlistCount }}
-                    </span>
                 </a>
             </div>
 
-            <a href="{{ route('home_chat') }}" title="Messages" class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'home_chat' ? 'text-primary-content' : '' }}">
+            <a href="{{ route('home_chat', ['logged_in_user' => Auth::id()]) }}" title="Messages"
+                class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'home_chat' ? 'text-primary-content' : '' }}">
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
-                <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">0</span>
             </a>
+
             <div class="relative">
-    <a href="{{ route('my_profile') }}" title="My Profile" class="text-3xl text-gray-700 {{ Request::route()->getName() == 'user_profile' ? 'text-primary-content' : '' }}" style="padding-right: 20px;">
-        <i class="fa fa-user-circle" aria-hidden="true"></i>
-    </a>
-    <ul class="absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden w-36"> <!-- Mengurangi lebar menjadi w-36 -->
-        <li><a href="{{ route('wishlist') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Wishlist</a></li>
-        <li><a href="{{ route('home_chat') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Messages</a></li>
-        <li><a href="{{ route('my_profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a></li>
-        <li>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
-                @csrf
-                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
-            </form>
-        </li>
-    </ul>
-</div>
+                <a href="{{ route('my_profile') }}" title="My Profile"
+                    class="text-3xl text-gray-700 {{ Request::route()->getName() == 'user_profile' ? 'text-primary-content' : '' }}"
+                    style="padding-right: 20px;">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                </a>
+                <ul
+                    class="absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden w-36">
+                    <!-- Mengurangi lebar menjadi w-36 -->
+                    <li><a href="{{ route('wishlist') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Wishlist</a></li>
+                    <li><a href="{{ route('home_chat') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Messages</a></li>
+                    <li><a href="{{ route('my_profile') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a></li>
+                    <li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
+                            @csrf
+                            <button type="submit"
+                                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
             @else
-            <a href="{{ route('login') }}" title="Sign In" class="text-base text-gray-700 hover:text-gray-600 transition-all ease-in duration-300">Sign In</a>
+            <a href="{{ route('login') }}" title="Sign In"
+                class="text-base text-gray-700 hover:text-gray-600 transition-all ease-in duration-300">Sign In</a>
             @endauth
         </div>
     </div>
@@ -75,7 +85,7 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     const profileLink = document.querySelector('[title="My Profile"]');
     const profileDropdown = profileLink.nextElementSibling;
     let timeout;

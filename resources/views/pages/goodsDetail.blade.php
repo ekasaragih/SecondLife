@@ -28,17 +28,24 @@
                         <h2 class="text-sm title-font text-gray-500 tracking-widest">SECONDLIFE BARTER</h2>
                         <h1 class="text-primary text-3xl title-font mb-1 font-semibold">{{ $product->g_name }}</h1>
                         <p class="leading-relaxed hidden" id="productOwnerId">{{ $product->us_ID }}</p>
-                        <p class="leading-relaxed">{{ $product->g_desc }}</p>
-                        <div class="py-2">
-                            <span class="mr-3">Category:</span>
-                            <span class="">{{ $product->g_category }}</span>
+                        <p class="leading-relaxed text-gray-600">{{ $product->g_desc }}</p>
+                        <div class="flex items-center my-5 pb-5 font-medium text-sm border-b-2 border-primary-content">
+                            <h3 class="mr-2">{{ $product->g_category }}</h3>
+                            <div class="h-1 w-1 bg-primary-content rounded-full"></div>
+                            <p class="ml-2">{{ $product->g_type }}</p>
                         </div>
-                        <div class="flex border-b-2 border-gray-200 mb-5">
-                            <div class="mb-4">
-                                <span class="mr-3">Type:</span>
-                                <span class="font-semibold text-secondary">{{ $product->g_type }}</span>
-                            </div>
-                        </div>
+
+                        @if($user->us_city || $user->us_province)
+                        <p class="leading-relaxed text-gray-600">
+                            Location:
+                            @if($user->us_city)
+                            {{ $user->us_city }},
+                            @endif
+                            @if($user->us_province)
+                            {{ $user->us_province }}
+                            @endif
+                        </p>
+                        @endif
                         <div class="flex flex-col justify-center items-center">
                             <div class="text-center mb-4">
                                 <span class="title-font font-medium text-xl text-gray-900">
@@ -74,8 +81,10 @@
                                     <div data-popper-arrow></div>
                                 </div>
 
-                                <button class="text-white bg-red-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-red-600 rounded transition duration-300"
-                                        data-modal-target="productModal" onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ asset('goods_img/' . $product->images[0]->img_url) }}', '{{ $product->g_location }}', '{{ number_format($product->g_price_prediction, 0, ',', '.') }}', '{{ $product->g_ID }}')">
+                                <button
+                                    class="text-white bg-red-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-red-600 rounded transition duration-300"
+                                    data-modal-target="productModal"
+                                    onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ !empty($product->images) && count($product->images) > 0 ? asset('goods_img/' . $product->images[0]->img_url) : '' }}', '{{ $product->g_location }}', '{{ number_format($product->g_price_prediction, 0, ',', '.') }}', '{{ $product->g_ID }}')">
                                     View Comment
                                 </button>
 
@@ -106,9 +115,9 @@
         </section>
 
         @include('utils.layouts.footer.footer')
-
     </div>
 </div>
+
 
 @auth
 {{-- T&C Modal --}}

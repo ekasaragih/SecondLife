@@ -26,7 +26,7 @@
         </div><br><br><br>
         <div id="trendingPrediction">
             @include('utils.explore.trendPrediction', ['products' => $products])
-        </div> 
+        </div>
         @include('utils.layouts.footer.footer')
     </div>
 </div>

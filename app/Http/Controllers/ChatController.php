@@ -32,10 +32,6 @@ class ChatController extends Controller
 
         $product = Goods::where('us_ID', $ownerUserId)->first();
 
-        $senderIds = Message::where('receiver_ID', $loggedInUserId)->distinct()->pluck('sender_ID');
-        $receiverIds = Message::where('sender_ID', $loggedInUserId)->distinct()->pluck('receiver_ID');
-
-        
         $contactIds = Message::where('sender_id', $loggedInUserId)
         ->orWhere('receiver_id', $loggedInUserId)
         ->distinct()
@@ -46,7 +42,16 @@ class ChatController extends Controller
             ->pluck('receiver_id'))
         ->unique();
 
-        $contacts = User::whereIn('us_ID', $contactIds)->get();
+        $contacts = User::whereIn('us_ID', $contactIds)
+            ->orderByDesc(function ($query) use ($loggedInUserId) {
+                $query->select('created_at')
+                    ->from('messages')
+                    ->whereRaw('messages.sender_ID = users.us_ID')
+                    ->orWhereRaw('messages.receiver_ID = users.us_ID')
+                    ->orderByDesc('created_at')
+                    ->limit(1);
+            })
+            ->get();
 
         foreach ($contacts as $contact) {
             $lastMessage = Message::where(function ($query) use ($loggedInUserId, $contact) {
