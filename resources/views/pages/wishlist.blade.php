@@ -65,9 +65,6 @@
         {{-- Recommendation based on Categories --}}
         @include('utils.categories.recommendation')
 
-        {{-- Product Details Modal --}}
-        @include('utils.categories.modalProductDetail')
-
         {{-- T&C Modal --}}
         @include('utils.categories.modalTermsAndCondition')
 
