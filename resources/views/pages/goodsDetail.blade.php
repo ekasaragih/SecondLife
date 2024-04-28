@@ -59,6 +59,8 @@
                                     'disabled' : '' }}>
                                     Click to Barter
                                 </button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+
                                 <div data-popover id="popoverDisabled" role="tooltip"
                                     class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
                                     <div
@@ -71,6 +73,13 @@
                                     </div>
                                     <div data-popper-arrow></div>
                                 </div>
+
+                                <button
+                                    class="text-white bg-red-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-red-600 rounded transition duration-300"
+                                    data-modal-target="productModal"
+                                    onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ asset('goods_img/' . $product->images[0]->img_url) }}', '{{ $product->g_location }}', '{{ number_format($product->g_price_prediction, 0, ',', '.') }}', '{{ $product->g_ID }}')">
+                                    View Comment
+                                </button>
 
                                 <button
                                     class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 add-to-wishlist duration-300 hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-500"
@@ -99,9 +108,7 @@
         </section>
 
         @include('utils.layouts.footer.footer')
-
     </div>
-
 </div>
 
 
