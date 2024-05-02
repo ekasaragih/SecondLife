@@ -27,9 +27,8 @@
     <div class="max-w-md rounded overflow-hidden shadow-lg product-card" style="display: block; height: 550px;">
         @php
         $images = $product->images;
-        $defaultImageUrl =
-        'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
-        $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
+        $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+        $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
         $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
         @endphp
 

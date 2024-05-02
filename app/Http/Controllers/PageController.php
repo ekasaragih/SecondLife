@@ -79,7 +79,10 @@ class PageController extends Controller
     {
         $authenticatedUser = session('authenticatedUser');
         $categories = Goods::distinct('g_category')->pluck('g_category');
+        
+        // Eager loading the goodsImages relationship
         $products = Goods::getAllGoodsWithImages();
+        
         $wishlistCount = null;
         $wishlistItems = [];
 
@@ -104,6 +107,7 @@ class PageController extends Controller
             'wishlistCount' => $wishlistCount,
         ]);
     }
+
 
     public function wishlist()
     {

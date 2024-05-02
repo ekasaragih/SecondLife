@@ -34,9 +34,9 @@
                 <div id="carousel-item-{{ $index }}"
                     class="carousel-item duration-700 ease-in-out transition-transform {{ $index === 0 ? 'opacity-100' : 'opacity-0 hidden' }}">
                     @php
-                    $images = $product->images;
+                    $images = $product->goodsImages;
                     $defaultImageUrl =
-                    'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
+                    'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
                     $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
                     $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
                     @endphp
