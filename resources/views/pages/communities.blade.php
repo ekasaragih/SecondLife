@@ -15,9 +15,9 @@
                 @csrf
                 <div class="mb-4 border-2 rounded-md">
                     <input type="text" id="community_title" name="community_title"
-                        class="w-full px-3 py-2 border-b border-gray-300 font-semibold" placeholder="Title">
+                        class="w-full px-3 py-2 border-b border-gray-300 font-semibold" placeholder="Add title here...">
                     <input type="textarea" id="community_desc" name="community_desc" class="w-full h-40 px-3 py-2 pt-0"
-                        placeholder="Share your thoughts">
+                        placeholder="Share your thoughts here...">
                 </div>
                 <button type="submit" id="btn-community-post"
                     class="bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] font-bold py-2 px-4 rounded shadow">
@@ -27,7 +27,7 @@
         </div>
 
         <div class="text-3xl text-[#F12E52] mt-5 mb-2"><b>See What's ☕ in the town</b></div>
-        <div class="h-screen flex flex-col justify-between">
+        <div class="flex flex-col justify-between">
             @auth
             @if (isset($communities) && count($communities) > 0)
             @foreach ($communities as $community)
@@ -104,8 +104,8 @@
                 communities.</p>
             @endauth
         </div>
-        {{-- footer nya ga dibawah --}}
-        {{-- @include('utils.layouts.footer.footer') --}}
+
+        @include('utils.layouts.footer.footer')
     </div>
 </div>
 

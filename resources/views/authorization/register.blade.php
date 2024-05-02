@@ -143,25 +143,37 @@
                 @csrf
                 <!-- Full Name -->
                 <div>
-                    <label for="us_name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <label for="us_name" class="block text-sm font-medium text-gray-700">
+                        Full Name
+                        <span class="text-red-500">*</span>
+                    </label>
                     <input type="text" id="us_name" name="us_name" placeholder="Second Life"
                         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <!-- Username -->
                 <div>
-                    <label for="us_username" class="block text-sm font-medium text-gray-700">Username</label>
+                    <label for="us_username" class="block text-sm font-medium text-gray-700">
+                        Username
+                        <span class="text-red-500">*</span>
+                    </label>
                     <input type="text" id="us_username" name="us_username" placeholder="second_life"
                         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <!-- Email -->
                 <div>
-                    <label for="us_email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <label for="us_email" class="block text-sm font-medium text-gray-700">
+                        Email
+                        <span class="text-red-500">*</span>
+                    </label>
                     <input type="text" id="us_email" name="us_email" placeholder="user@secondlife.com"
                         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <!-- Password -->
                 <div class="mt-4 relative">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <label for="password" class="block text-sm font-medium text-gray-700">
+                        Password
+                        <span class="text-red-500">*</span>
+                    </label>
                     <div class="relative">
                         <input type="password" id="password" name="password" placeholder="********"
                             class="mt-1 p-2 pr-10 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
@@ -173,8 +185,10 @@
                 </div>
                 <!-- Confirm Password -->
                 <div>
-                    <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm
-                        Password</label>
+                    <label for="confirm_password" class="block text-sm font-medium text-gray-700">
+                        Confirm Password
+                        <span class="text-red-500">*</span>
+                    </label>
                     <input type="password" id="confirm_password" name="confirm_password" placeholder="********"
                         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>

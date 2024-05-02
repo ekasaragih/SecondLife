@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     public function search(Request $request)
-{
-    $searchTerm = $request->input('query');
+    {
+        $searchTerm = $request->input('query');
 
-    // Perform search query
-    $goods = Goods::where('g_name', 'like', "%{$searchTerm}%")->get();
+        // Perform search query
+        $goods = Goods::where('g_name', 'like', "%{$searchTerm}%")->get();
 
-    return view('utils.explore.search-results', compact('goods'));
-}
+        return view('utils.explore.search-results', compact('goods'));
+    }
 }
 
 
