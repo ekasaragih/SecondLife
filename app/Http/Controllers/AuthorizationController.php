@@ -45,7 +45,7 @@ class AuthorizationController extends Controller
     {
         $request->validate([
             'us_name' => 'required|string|max:250',
-            'us_username' => 'required|string|max:12',
+            'us_username' => 'required|string|max:12|unique:users',
             'us_email' => 'required|email:dns|max:250|unique:users',
             'password' => 'required|min:8',
             'confirm_password' => 'required|same:password',
