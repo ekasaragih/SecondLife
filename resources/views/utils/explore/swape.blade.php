@@ -23,7 +23,7 @@
         <div class="mt-6 text-gray-600">Find your perfect match now!</div>
         <div class="mt-4">
             <img src="https://png.pngtree.com/png-clipart/20200707/ourlarge/pngtree-mobile-phone-like-3d-element-png-image_2285401.jpg"
-                class="w-40 h-40 rounded-full border-2 border-white" alt="Your Image">
+                class="w-40 h-40 rounded-full border-2 border-white" alt="Product Image">
         </div>
     </div>
 
@@ -37,7 +37,7 @@
                     $images = $product->goodsImages;
                     $defaultImageUrl =
                     'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
-                    $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
+                    $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
                     $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
                     @endphp
 
