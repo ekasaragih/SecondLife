@@ -54,10 +54,8 @@ Route::get('/about-us', [PageController::class, 'about_us'])->name('about_us');
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
 Route::get('/privacy-policy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 
-
-
-
-
+Route::get('/user/{user}/follower-count', [FollowerController::class, 'followerCount'])->name('user.follower_count');
+Route::get('/user/{user}/follow-status', [FollowerController::class, 'followStatus'])->name('user.follow_status');
 
 
 /*

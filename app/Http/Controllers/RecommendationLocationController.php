@@ -6,6 +6,8 @@ use App\Models\Goods;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class RecommendationLocationController extends Controller
 {
@@ -45,6 +47,15 @@ class RecommendationLocationController extends Controller
             return response()->json(['message' => 'Product already in the wishlist'], 200);
         }
     }
+
+    public function userLogin()
+{
+    // Ambil nama pengguna yang sedang login
+    $loggedInUserName = Auth::user()->name;
+
+    // Kirimkan nama pengguna ke tampilan Blade
+    return view('pages.utils.explore.recommendationLocation.blade.php')->with('loggedInUserName', $loggedInUserName);
+}
 
 }
 
