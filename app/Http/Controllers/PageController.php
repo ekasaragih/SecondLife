@@ -42,7 +42,7 @@ class PageController extends Controller
     }
 
     // Main pages
-    public function explore()
+   public function explore()
     {
         $recentProductsByCategory = Goods::select('g_category', 'created_at')->orderBy('created_at', 'desc')->take(20)->get()->groupBy('g_category');
 
@@ -51,13 +51,7 @@ class PageController extends Controller
         $categoryCounts = $recentProductsByCategory->map->count();
         $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
 
-        if ($authenticatedUser) {
-            $products = Goods::whereIn('g_category', $topCategories)
-                ->where('us_ID', '!=', $authenticatedUser->us_ID)
-                ->get();
-        } else {
-            $products = Goods::whereIn('g_category', $topCategories)->get();
-        }
+        $products = $this->filterTrendProducts($topCategories, $authenticatedUser);
 
         if ($authenticatedUser && $authenticatedUser->us_ID) {
             $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
@@ -68,6 +62,17 @@ class PageController extends Controller
             'products' => $products,
             'wishlistCount' => $wishlistCount,
         ]);
+    }
+
+    private function filterTrendProducts($topCategories, $authenticatedUser)
+    {
+        if ($authenticatedUser) {
+            return Goods::whereIn('g_category', $topCategories)
+                ->where('us_ID', '!=', $authenticatedUser->us_ID)
+                ->get();
+        } else {
+            return Goods::whereIn('g_category', $topCategories)->get();
+        }
     }
 
     public function categories()
