@@ -107,12 +107,17 @@
                     <form action="{{ route('login') }}" method="POST" class="space-y-4">
                         @csrf
                         <div>
-                            <label for="us_username" class="block text-sm font-medium text-gray-700">Username</label>
+                            <label for="us_username" class="block text-sm font-medium text-gray-700">
+                                Username <span class="text-red-500">*</span>
+                            </label>
                             <input type="text" id="us_username" name="us_username"
                                 class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                         </div>
                         <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <label for="password" class="block text-sm font-medium text-gray-700">
+                                Password
+                                <span class="text-red-500">*</span>
+                            </label>
                             <input type="password" id="password" name="password"
                                 class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                         </div>

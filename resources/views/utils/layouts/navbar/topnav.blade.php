@@ -61,7 +61,7 @@
                     <!-- Mengurangi lebar menjadi w-36 -->
                     <li><a href="{{ route('wishlist') }}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Wishlist</a></li>
-                    <li><a href="{{ route('home_chat') }}"
+                    <li><a href="{{ route('home_chat', ['logged_in_user' => Auth::id()]) }}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Messages</a></li>
                     <li><a href="{{ route('my_profile') }}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a></li>
