@@ -44,7 +44,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/comments', [CommentController::class, 'index']);
     Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
     Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');
-    Route::get('/user/{username}', [PageController::class, 'showMyProfile'])->name('myProfile');
 });
 
 Route::get('/', [PageController::class, 'explore'])->name('explore');
