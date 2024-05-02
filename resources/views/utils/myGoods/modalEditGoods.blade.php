@@ -1,7 +1,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @auth
-        <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
     <link rel="stylesheet" href="/asset/css/imgContainer.css">
 </head>
@@ -101,12 +101,11 @@
                             <div class="mb-2">
                                 <label for="image" class="block text-sm font-medium text-gray-700">Upload
                                     Image</label>
-                                <input type="text" id="existing_images" name="existing_images">
+                                <input type="text" id="existing_images" class="hidden" name="existing_images">
                                 <div id="id-input-div" class="input-div mt-2">
                                     <p>Drag & drop photos here or click to browse</p>
-                                    <input name="files" id="edit_image" type="file" class="file"
-                                        multiple="multiple" accept="image/jpeg, image/png, image/jpg"
-                                        onchange="editPreviewImage()" />
+                                    <input name="files" id="edit_image" type="file" class="file" multiple="multiple"
+                                        accept="image/jpeg, image/png, image/jpg" onchange="editPreviewImage()" />
                                 </div>
                                 <div id="edit_queuedImages" class="queued-div p-2">
                                     <div id="edit_imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
@@ -138,6 +137,8 @@
         </div>
     </div>
 </div>
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
