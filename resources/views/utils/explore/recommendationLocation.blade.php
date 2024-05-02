@@ -37,12 +37,15 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                 @php
                 // Ambil informasi pengguna yang memiliki produk
                 $user = $product->userID;
+                $defaultImageUrl =
+                'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+                $imageUrl = isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) :
+                $defaultImageUrl;
                 @endphp
                 @if ($user && $user->us_city)
                 <div class="product-card flex-none w-1/4 border border-gray-300 {{ strtolower($user->us_city) }}"
                     data-location="{{ strtolower($user->us_city) }}">
-                    <img src="{{ $product->images->first()->img_url ?? 'https://via.placeholder.com/400' }}"
-                        alt="Product Image">
+                    <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image">
                     <div class="p-4">
                         <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product->g_name }}</h3>
                         <p class="text-sm text-gray-600">Uploaded by: {{ $user->us_name }}</p>
