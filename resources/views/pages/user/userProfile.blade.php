@@ -33,6 +33,7 @@
                     </form>
                 @endif
             </div>
+            
 
             <!-- Follower and Following Counts (moved to the right) -->
             <div class="ml-auto text-right">
@@ -132,5 +133,6 @@
         }
     });
 </script>
+
 
 @include('utils.layouts.footer.footer')
