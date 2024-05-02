@@ -104,8 +104,8 @@
                 communities.</p>
             @endauth
         </div>
-        {{-- footer nya ga dibawah --}}
-        {{-- @include('utils.layouts.footer.footer') --}}
+
+        @include('utils.layouts.footer.footer')
     </div>
 </div>
 
