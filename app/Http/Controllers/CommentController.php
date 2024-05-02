@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\Goods;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -17,10 +18,15 @@ class CommentController extends Controller
             'g_ID' => 'required|integer',
         ]);
 
-        // Simpan komentar ke dalam database
+        // Dapatkan nama pengguna yang saat ini login
+        $loggedInUser = Auth::user();
+        $us_name = $loggedInUser->us_name;
+
+        // Simpan komentar ke dalam database bersama dengan us_name
         $comment = new Comment();
         $comment->comment_desc = $request->input('comment');
-        $comment->us_ID = auth()->id();
+        $comment->us_ID = $loggedInUser->us_ID;
+        $comment->us_name = $us_name;
         $comment->g_ID = $request->input('g_ID');
         $comment->save();
 
