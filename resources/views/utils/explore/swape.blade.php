@@ -18,7 +18,7 @@
     <div class="col-span-1">
         <div class="text-3xl text-[#F12E52]"><b>Swape</b></div>
         <div class="text-xl mt-4 italic">
-            Swap your goods by swiping! Swipe to the right for match and left to unmatch!
+            Swap your goods here! Press the checklist to match and 'X' to unmatch!
         </div>
         <div class="mt-6 text-gray-600">Find your perfect match now!</div>
         <div class="mt-4">
