@@ -53,30 +53,28 @@
 
                                             <div id="Goods"
                                                 class="w-full rounded-lg shadow-md p-5 border-2 space-y-2 float-right flex items-center z-0 mb-5">
-                                                @foreach ($goods->images as $image)
+                                                @if ($goods->images->isNotEmpty())
                                                 <img class="w-32 h-32 rounded-none m-4"
-                                                    src="{{ asset('storage/' . $image->img_url) }}" alt="Goods Image">
-                                                @endforeach
+                                                    src="{{ asset('goods_img/' . $goods->images->first()->img_url) }}"
+                                                    alt="Goods Image">
+                                                @endif
                                                 <div class="w-3/4 m-4 pl-3 relative">
-                                                    <div class="flex">
-                                                        <h3 class="text-base text-gray-500 italic mr-1">{{
-                                                            $goods->g_category }}
-                                                        </h3>
-                                                        <h3 class="text-base text-gray-500 italic mr-1"> - </h3>
-                                                        <h3 class="text-base text-gray-500 italic mr-1">{{
-                                                            $goods->g_type }}
-                                                        </h3>
+                                                    <div>
+                                                        <span class="text-base text-gray-500 italic mr-1">
+                                                            {{ $goods->g_category }}
+                                                        </span>
+                                                        <span class="text-base text-gray-500 italic mr-1"> - </span>
+                                                        <span class="text-base text-gray-500 italic mr-1">
+                                                            {{ $goods->g_type }}
+                                                        </span>
                                                     </div>
                                                     <h2 class="text-2xl font-bold">{{ $goods->g_name }}</h2>
-                                                    <span class=""><i class="fa fa-map-marker mr-2"
-                                                            aria-hidden="true"></i>South
-                                                        Jakarta</span>
+
                                                     <p class="text-gray-800">{{ $goods->g_desc }}</p>
                                                     <div class="flex">
                                                         <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
-                                                        <h3 class="text-base text-gray-600 mr-1"> {{
-                                                            $goods->g_price_prediction
-                                                            }}
+                                                        <h3 class="text-base text-gray-600 mr-1">
+                                                            {{ $goods->g_price_prediction }}
                                                         </h3>
                                                     </div>
                                                 </div>
@@ -104,30 +102,28 @@
 
                                             <div id="Goods"
                                                 class="w-full rounded-lg shadow-md p-5 border-2 space-y-2 float-right flex items-center z-0 mb-5">
-                                                @foreach ($goods->images as $image)
+                                                @if ($goods->images->isNotEmpty())
                                                 <img class="w-32 h-32 rounded-none m-4"
-                                                    src="{{ asset('storage/' . $image->img_url) }}" alt="Goods Image">
-                                                @endforeach
+                                                    src="{{ asset('goods_img/' . $goods->images->first()->img_url) }}"
+                                                    alt="Goods Image">
+                                                @endif
                                                 <div class="w-3/4 m-4 pl-3 relative">
-                                                    <div class="flex">
-                                                        <h3 class="text-base text-gray-500 italic mr-1">{{
-                                                            $goods->g_category }}
-                                                        </h3>
-                                                        <h3 class="text-base text-gray-500 italic mr-1"> - </h3>
-                                                        <h3 class="text-base text-gray-500 italic mr-1">{{
-                                                            $goods->g_type }}
-                                                        </h3>
+                                                    <div>
+                                                        <span class="text-base text-gray-500 italic mr-1">
+                                                            {{ $goods->g_category }}
+                                                        </span>
+                                                        <span class="text-base text-gray-500 italic mr-1"> - </span>
+                                                        <span class="text-base text-gray-500 italic mr-1">
+                                                            {{ $goods->g_type }}
+                                                        </span>
                                                     </div>
                                                     <h2 class="text-2xl font-bold">{{ $goods->g_name }}</h2>
-                                                    <span class=""><i class="fa fa-map-marker mr-2"
-                                                            aria-hidden="true"></i>South
-                                                        Jakarta</span>
+
                                                     <p class="text-gray-800">{{ $goods->g_desc }}</p>
                                                     <div class="flex">
                                                         <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
-                                                        <h3 class="text-base text-gray-600 mr-1"> {{
-                                                            $goods->g_price_prediction
-                                                            }}
+                                                        <h3 class="text-base text-gray-600 mr-1">
+                                                            {{ $goods->g_price_prediction }}
                                                         </h3>
                                                     </div>
                                                 </div>
