@@ -8,7 +8,7 @@
             font-family: 'Rubik', sans-serif;
         }
     </style>
-        <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
 </head>
 
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-span-3 m-5 flex flex-col justify-center">
                     <div class="text-3xl font-bold">
                         <span id="full_name">{{ $user->us_name }}</span>
@@ -88,33 +88,36 @@
 
 <!-- Daftar Barang yang Diunggah Pengguna -->
 <div class="mt-8 mx-12">
-<h2 class="text-2xl font-semibold text-purple-600">My Uploaded Goods</h2>
+    <h2 class="text-2xl font-semibold text-purple-600">My Uploaded Goods</h2>
     @if ($user->goods->isEmpty())
-        <p class="text-xl text-gray-600">You haven't uploaded any goods yet.</p>
+    <p class="text-xl text-gray-600">You haven't uploaded any goods yet.</p>
     @else
-    <p class="text-base text-gray-800 mb-4">Welcome to your profile. Here's a list of the items you've given a second chance to. Thank you for bringing these products back to life and giving them another opportunity to shine.</p>
+    <p class="text-base text-gray-800 mb-4">Welcome to your profile. Here's a list of the items you've given a second
+        chance to. Thank you for bringing these products back to life and giving them another opportunity to shine.</p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         @foreach ($user->goods as $good)
-<div class="bg-white rounded-lg shadow-md overflow-hidden">
-    <img src="{{ $good->images->first()->img_url ?? 'https://via.placeholder.com/400' }}"
-        alt="Product Image">
-    <div class="p-4">
-        <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
-        <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
-        <div class="mt-2 flex justify-between items-center">
-            <p class="text-sm text-gray-500">Category: {{ $good->g_category }}</p>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img class="w-full h-64 object-cover object-center"
+                src="{{ asset('goods_img/' . ($good->images->first() ? $good->images->first()->img_url : 'placeholder.jpg')) }}"
+                alt="Product Image">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
+                <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
+                <div class="mt-2 flex justify-between items-center">
+                    <p class="text-sm text-gray-500">Category: {{ $good->g_category }}</p>
+                </div>
+                <div class="mt-4 flex justify-between items-center">
+                    <p class="text-sm font-semibold text-gray-700">Price: Rp {{ number_format($good->g_original_price,
+                        0, ',', '.') }}</p>
+                    <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
+                        class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
+                </div>
+            </div>
         </div>
-        <div class="mt-4 flex justify-between items-center">
-                            <p class="text-sm font-semibold text-gray-700">Price: Rp {{ number_format($good->g_original_price, 0, ',', '.') }}</p>
-                            <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
-                                class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
-                        </div>
-    </div>
-</div>
-@endforeach
+        @endforeach
 
-        </div>
+    </div>
     @endif
 </div>
 
@@ -146,117 +149,13 @@
 </script>
 
 <script>
-    // TO DO LIST
-    // EYOY:
-    // 1. habis input DOB ato apa gitu, datanya gak ke input ke db
-    // 2. selepas ngeupdate user data, data ke update di db, tapi di page profilenya itu gak keubah.. maybe krn sessionnya?
-    // function setProfileData(name, username, email, dob, gender, passwordUpdated, avatar){
-    //     console.log(name + " " + username + " " + email + " " + dob + " " + gender + " " + passwordUpdated + " " + avatar);
-    //     $('#full_name').text(name);
-    //     $('#user_name').text(username);
-    //     $('#user_email').text(email);
-    //     $('#user_password_updated_at').text(moment(passwordUpdated).fromNow());
-    //     if (avatar === null) {
-    //         $('#user_avatar').attr('src', 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg');
-    //     } else {
-    //         $('#user_avatar').attr('src', "{{ url('storage/avatars') }}" + '/' + avatar);
-    //     }
-
-    //     $('#input_name').text(name);
-    //     $('#input_username').text(username);
-    //     $('#input_DOB').text(dob);
-    //     $('#input_email').text(email);
-    //     // $('#input_gender').text(gender);
-    // }
-
-    // function updateProfile() {
-    //     var newName = document.getElementById('input_name').value;
-    //     var newUsername = document.getElementById('input_username').value;
-    //     var newDOB = document.getElementById('input_DOB').value;
-    //     var newEmail = document.getElementById('input_email').value;
-    //     var newGender = document.getElementById('input_gender').value;
-
-    //     var data = {
-    //         us_name: newName,
-    //         us_username: newUsername,
-    //         us_DOB: newDOB,
-    //         us_email: newEmail,
-    //         us_gender: newGender
-    //     };
-
-    //     var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    //     var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
-
-    //     $.ajax({
-    //         url: '/api/profile/update',
-    //         type: 'POST',
-    //         dataType: 'json',
-    //         headers: {
-    //         'X-CSRF-TOKEN': csrfToken,
-    //         'Authorization': 'Bearer ' + apiToken
-    //         },
-    //         data: data,
-    //         success: function(response) {
-    //             setProfileData(response.data.us_name, response.data.us_username, response.data.us_email, response.data.us_DOB,
-    //             response.data.us_gender, response.data.password_updated_at, response.data.avatar);
-
-    //             const modal = new Modal(document.getElementById('modalEditProfile'));
-    //             modal.hide();
-
-    //             Swal.fire({
-    //                 position: "top-end",
-    //                 icon: "success",
-    //                 title: response.message,
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //             });
-    //             console.log(response.message);
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.error(xhr.responseText);
-    //         }
-    //     });
-    // }
-
-    // function loadUserDetail(){
-    //     $.ajax({
-    //         url: '/api/profile/show',
-    //         method: 'GET',
-    //         dataType: 'json',
-    //         success: function(response) {
-    //             if (response && response.data) {
-    //                 setProfileData(response.data.us_name, response.data.us_username, response.data.us_email, response.data.us_DOB,
-    //                 response.data.us_gender, response.data.password_updated_at, response.data.avatar);
-
-    //                 console.log(setProfileData);
-    //                 $('#user_avatar').attr('src', response.avatar_url || 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg');
-    //             } else {
-    //                 console.error('Error: Failed to retrieve user profile data');
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             alert(error)
-    //             console.error('Error:', error);
-    //         }
-    //     });
-    // }
-
-    // $(document).ready(function() {
-    //     loadUserDetail();
-    // });
-
-    // Get the wishlist count element
     const wishlistCount = document.getElementById('wishlist-count');
-    // Get the wishlist count element
     const wishlistCount = document.getElementById('wishlist-count');
 
-    // Get the wishlist from the local storage
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
-    // Update the wishlist count
     wishlistCount.textContent = wishlist.length;
 
-    // Add an event listener to the remove button to update the wishlist count
     const removeButtons = document.querySelectorAll('.remove-button');
     removeButtons.forEach(button => {
         button.addEventListener('click', () => {
