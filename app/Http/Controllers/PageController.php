@@ -105,6 +105,7 @@ class PageController extends Controller
             'products' => $products,
             'nonWishlistProducts' => $nonWishlistProducts,
             'wishlistCount' => $wishlistCount,
+            'wishlistItems' => $wishlistItems,
         ]);
     }
 
