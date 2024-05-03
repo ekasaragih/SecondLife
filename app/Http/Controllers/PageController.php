@@ -98,9 +98,16 @@ class PageController extends Controller
         $nonExchangeProducts = $products->whereNotIn('g_ID', $exchangeGoodsIds);
 
         if (empty($wishlistItems)) {
-            $nonWishlistProducts = Goods::with('images')->inRandomOrder()->limit(8)->get();
+            $nonWishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
+                ->inRandomOrder()
+                ->limit(8)
+                ->get();
         } else {
-            $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItems)->with('images')->inRandomOrder()->limit(8)->get();
+            $nonWishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
+                ->whereNotIn('g_ID', $wishlistItems)
+                ->inRandomOrder()
+                ->limit(8)
+                ->get();
         }
 
         return view('pages.categories', [
