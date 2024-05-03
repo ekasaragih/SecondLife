@@ -20,6 +20,7 @@ class ChatController extends Controller
         
         $ownerName = User::where('us_ID', $ownerUserId)->value('us_name');
         $ownerUsername = User::where('us_ID', $ownerUserId)->value('us_username');
+        $ownerAvatar = User::where('us_ID', $ownerUserId)->value('avatar');
         
         $chatMessages = Message::where(function ($query) use ($loggedInUserId, $ownerUserId, $goodsId) {
             $query->where('sender_id', $loggedInUserId)
@@ -90,7 +91,7 @@ class ChatController extends Controller
             'wishlistCount' => $wishlistCount,
             'product' => $product,
             'goodsId' => $goodsId,
-
+            'ownerAvatar' => $ownerAvatar,
         ]);
     }
 
