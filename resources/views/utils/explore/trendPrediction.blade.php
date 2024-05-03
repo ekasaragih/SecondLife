@@ -6,7 +6,7 @@
             <!-- Product Cards -->
 
             <div class="flex" id="product_data">
-                @foreach($products as $product)
+                @foreach($trendProducts as $product)
                 <div class="product-trend-card flex-none w-1/4 border border-gray-300 location-name" id="product_detail"
                     data-location="">
                     @php

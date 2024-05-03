@@ -9,10 +9,6 @@
 
 @include('utils.explore.modalComment') {{-- Include the modalComment.blade.php file --}}
 
-@php
-$cities = \App\Models\User::distinct('us_city')->pluck('us_city');
-@endphp
-
 <div class="my-10 relative">
     <div class="mt-8">
         <h2 class="text-2xl font-bold text-red-500 mb-4">Recommended Products <span class="text-sm text-gray-600">based
@@ -30,12 +26,9 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
         </div>
         <div class="product-slider-container overflow-hidden relative">
             <div class="flex" id="productCards">
-                @php
-                $products = \App\Models\Goods::getAllGoodsWithImages();
-                @endphp
+
                 @foreach($products as $product)
                 @php
-                // Ambil informasi pengguna yang memiliki produk
                 $user = $product->userID;
                 $defaultImageUrl =
                 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
@@ -49,9 +42,7 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                     <div class="p-4">
                         <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product->g_name }}</h3>
                         <p class="text-sm text-gray-600">Uploaded by: {{ $user->us_name }}</p>
-                        <!-- Tampilkan us_name -->
                         <p class="text-sm text-gray-600">{{ $product->g_desc }}</p>
-                        <!-- Tampilkan informasi lokasi pengguna -->
                         <p class="text-sm text-gray-600">Location: {{ $user->us_city }}</p>
                         <div class="mt-4 flex justify-between items-center">
                             <span class="text-gray-600 text-xs">Price: Rp {{ number_format($product->g_original_price,
@@ -68,7 +59,6 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                                 class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist"
                                 id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}"
                                 data-user-id="{{ Auth::id() }}">
-                                <!-- Menggunakan Auth::id() untuk mendapatkan id pengguna yang login -->
                                 Add
                             </button>
 
@@ -80,14 +70,13 @@ $cities = \App\Models\User::distinct('us_city')->pluck('us_city');
                 @endforeach
             </div>
         </div>
-        <!-- Tombol untuk menggeser ke kiri -->
+
         <button class="product-slider-btn left-0" onclick="slideLeft()">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
         </button>
-        <!-- Tombol untuk menggeser ke kanan -->
         <button class="product-slider-btn right-0" onclick="slideRight()">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
