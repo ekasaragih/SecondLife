@@ -194,14 +194,12 @@ class PageController extends Controller
     {
         $authenticatedUser = session('authenticatedUser');
         $user = session('authenticatedUser');
-
-        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-        $userId = $authenticatedUser->us_ID;
-        $goods = Goods::where('us_ID', $userId)->get();
-
+        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->get();
+        $wishlistCount = $wishlistItems->count();
+        $goods = Goods::where('us_ID', $authenticatedUser->us_ID)->get();
         $product = Goods::findOrFail($id);
         $userDetails = User::findOrFail($product->us_ID);
 
-        return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'userDetails', 'goods', 'wishlistCount', 'product'));
+        return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
     }
 }
