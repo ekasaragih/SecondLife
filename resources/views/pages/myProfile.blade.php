@@ -3,11 +3,16 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @auth
+    <style>
+        body {
+            font-family: 'Rubik', sans-serif;
+        }
+    </style>
         <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
 </head>
 
-<div class="pt-52 mb-24">
+<div class="pt-52 mb-5">
     <div class="mx-12 bg-white rounded-lg overflow-hidden shadow-lg">
         <div class="border-b p-4">
             <div class="grid grid-cols-4 gap-4">
@@ -35,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="col-span-3 m-5 flex flex-col justify-center">
                     <div class="text-3xl font-bold">
                         <span id="full_name">{{ $user->us_name }}</span>
@@ -75,17 +80,47 @@
                             Following: <span class="text-purple-500">{{ auth()->user()->following()->count() }}</span>
                         </p>
                     </div>
-
-
                 </div>
             </div>
-
-            @include('utils.user.modalEditProfile')
-            @include('utils.user.modalChangeAddress')
-            @include('utils.user.modalUpdateAvatar')
         </div>
     </div>
 </div>
+
+<!-- Daftar Barang yang Diunggah Pengguna -->
+<div class="mt-8 mx-12">
+<h2 class="text-2xl font-semibold text-purple-600">My Uploaded Goods</h2>
+    @if ($user->goods->isEmpty())
+        <p class="text-xl text-gray-600">You haven't uploaded any goods yet.</p>
+    @else
+    <p class="text-base text-gray-800 mb-4">Welcome to your profile. Here's a list of the items you've given a second chance to. Thank you for bringing these products back to life and giving them another opportunity to shine.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+        @foreach ($user->goods as $good)
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <img src="{{ $good->images->first()->img_url ?? 'https://via.placeholder.com/400' }}"
+        alt="Product Image">
+    <div class="p-4">
+        <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
+        <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
+        <div class="mt-2 flex justify-between items-center">
+            <p class="text-sm text-gray-500">Category: {{ $good->g_category }}</p>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+                            <p class="text-sm font-semibold text-gray-700">Price: Rp {{ number_format($good->g_original_price, 0, ',', '.') }}</p>
+                            <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
+                                class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
+                        </div>
+    </div>
+</div>
+@endforeach
+
+        </div>
+    @endif
+</div>
+
+@include('utils.user.modalEditProfile')
+@include('utils.user.modalChangeAddress')
+@include('utils.user.modalUpdateAvatar')
 
 @include('utils.layouts.footer.footer')
 
