@@ -1,16 +1,19 @@
 {{-- Recommendation based on Categories --}}
 <div class="space-y-2 space-x-2">
-    <div class="text-3xl text-[#F12E52]"><b>Recommendation</b><span class="font-bold text-sm text-gray-600 mx-4">based
-            on your preferences</span></div>
+    <div class="text-3xl text-[#F12E52]">
+        <b>Recommendation</b><span class="font-bold text-sm text-gray-600 mx-4">based on your preferences</span>
+    </div>
 </div>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
     <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-4">
-
         @foreach ($nonWishlistProducts as $product)
+        @php
+        $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+        $imageUrl = isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) : $defaultImageUrl;
+        @endphp
         <div class="recommendation-card bg-gray-100 rounded-lg p-4 flex flex-col justify-between">
-            <img src="{{ $product->images->first()->img_url ?? 'https://via.placeholder.com/150' }}"
-                alt="{{ $product->g_name }}" class="w-full mb-2">
+            <img src="{{ $imageUrl }}" alt="{{ $product->g_name }}" class="w-full h-64 object-cover object-center">
             <h3 class="mb-1 text-xl font-semibold">{{ $product->g_name }}</h3>
             <p class="mb-1 text-lg">Price: Rp {{ number_format($product->g_original_price, 0, ',', '.') }}</p>
             <p class="mb-4 text-lg">Category: {{ $product->g_category }}</p>

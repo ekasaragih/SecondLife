@@ -35,14 +35,19 @@
                         <div>
                             <input type="hidden" id="edit_g_ID" />
                             <div class="mb-4">
-                                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                                <label for="name" class="block text-sm font-medium text-gray-700">
+                                    Name
+                                    <span class="text-red-500">*</span>
+                                </label>
                                 <input type="text" id="edit_g_name" name="g_name" placeholder="Enter name of goods"
                                     class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                             </div>
                             <div class="w-full flex">
                                 <div class="w-1/2 mb-4 mr-2">
-                                    <label for="category"
-                                        class="block text-sm font-medium text-gray-700">Category</label>
+                                    <label for="category" class="block text-sm font-medium text-gray-700">
+                                        Category
+                                        <span class="text-red-500">*</span>
+                                    </label>
                                     <select id="edit_g_category" name="category"
                                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                                         <option value="" selected disabled>-- Choose categories --</option>
@@ -59,7 +64,10 @@
                                     </select>
                                 </div>
                                 <div class="w-1/2 mb-4">
-                                    <label for="g_type" class="block text-sm font-medium text-gray-700">Type</label>
+                                    <label for="g_type" class="block text-sm font-medium text-gray-700">
+                                        Type
+                                        <span class="text-red-500">*</span>
+                                    </label>
                                     <select id="edit_g_type" name="g_type"
                                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                                         <option value="" selected disabled>-- Choose type --</option>
@@ -70,30 +78,35 @@
                             </div>
                             <div class="w-full flex space-x-2">
                                 <div class="w-full mb-4">
-                                    <label for="original_price" class="block text-sm font-medium text-gray-700">Original
-                                        Price</label>
+                                    <label for="original_price" class="block text-sm font-medium text-gray-700">
+                                        Original Price
+                                        <span class="text-red-500">*</span>
+                                    </label>
                                     <input type="number" id="edit_g_original_price" name="original_price"
                                         placeholder="ex: 500000"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                                 <div class="w-full mb-4">
-                                    <label for="age_goods" class="block text-sm font-medium text-gray-700">Age of Goods
-                                        (In years) </label>
+                                    <label for="age_goods" class="block text-sm font-medium text-gray-700">
+                                        Age of Goods (In years)
+                                        <span class="text-red-500">*</span>
+                                    </label>
                                     <input type="number" id="edit_g_age" name="age_goods" placeholder="ex: 1"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                                 <div class="w-full mb-4">
-                                    <label for="prediction_price"
-                                        class="block text-sm font-medium text-gray-700">Prediction
-                                        Price (counted by the system)</label>
+                                    <label for="prediction_price" class="block text-sm font-medium text-gray-700">
+                                        Prediction Price (counted by the system)</label>
                                     <input type="number" id="edit_g_prediction_price" name="prediction_price"
                                         placeholder="will be count by system"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md" disabled>
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <label for="description"
-                                    class="block text-sm font-medium text-gray-700">Description</label>
+                                <label for="description" class="block text-sm font-medium text-gray-700">
+                                    Description
+                                    <span class="text-red-500">*</span>
+                                </label>
                                 <textarea id="edit_g_desc" name="description" rows="3"
                                     placeholder="Give a detail explanation of your goods' condition"
                                     class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required></textarea>

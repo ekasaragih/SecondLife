@@ -18,12 +18,12 @@
     <div class="col-span-1">
         <div class="text-3xl text-[#F12E52]"><b>Swape</b></div>
         <div class="text-xl mt-4 italic">
-            Swap your goods by swiping! Swipe to the right for match and left to unmatch!
+            Swap your goods here! Press the checklist to match and 'X' to unmatch!
         </div>
         <div class="mt-6 text-gray-600">Find your perfect match now!</div>
         <div class="mt-4">
             <img src="https://png.pngtree.com/png-clipart/20200707/ourlarge/pngtree-mobile-phone-like-3d-element-png-image_2285401.jpg"
-                class="w-40 h-40 rounded-full border-2 border-white" alt="Your Image">
+                class="w-40 h-40 rounded-full border-2 border-white" alt="Product Image">
         </div>
     </div>
 
@@ -34,10 +34,10 @@
                 <div id="carousel-item-{{ $index }}"
                     class="carousel-item duration-700 ease-in-out transition-transform {{ $index === 0 ? 'opacity-100' : 'opacity-0 hidden' }}">
                     @php
-                    $images = $product->images;
+                    $images = $product->goodsImages;
                     $defaultImageUrl =
-                    'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
-                    $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
+                    'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+                    $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
                     $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
                     @endphp
 
@@ -60,7 +60,7 @@
                 </button>
                 </button>
                 <button id="saveToWishlist" type="button"
-                    class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300 btn-add-to-wishlist group absolute right-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
+                    class="bg-purple-500 text-white py-2 rounded hover:bg-gray-600 transition duration-300 btn-add-to-wishlist group absolute right-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
                     <i class="fa fa-check inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white"
                         aria-hidden="true"></i>
                 </button>

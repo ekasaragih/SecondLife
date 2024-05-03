@@ -6,14 +6,14 @@
             <!-- Product Cards -->
 
             <div class="flex" id="product_data">
-                @foreach($products as $product)
+                @foreach($trendProducts as $product)
                 <div class="product-trend-card flex-none w-1/4 border border-gray-300 location-name" id="product_detail"
                     data-location="">
                     @php
                     $images = $product->images;
                     $defaultImageUrl =
                     'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
-                    $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
+                    $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
                     $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
                     @endphp
                     <!-- Assuming no image here -->

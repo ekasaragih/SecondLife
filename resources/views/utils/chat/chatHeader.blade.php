@@ -2,8 +2,13 @@
     <div class="flex items-center">
         <a href="{{ route('userProfile', ['username' => $ownerUsername]) }}" class="flex items-center">
             <div>
+                @if ($ownerAvatar)
+                <img class="w-10 h-10 rounded-full" src="{{ asset('users_img/' . $ownerAvatar) }}" alt="User Avatar" />
+                @else
                 <img class="w-10 h-10 rounded-full"
-                    src="https://i.pinimg.com/564x/a0/55/ee/a055eeaa4c31c142ff8d94a42e6939f2.jpg" />
+                    src="https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg"
+                    alt="Default Avatar" />
+                @endif
             </div>
             <div class="ml-4">
                 <p class="text-grey-darkest">
