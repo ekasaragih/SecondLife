@@ -1,10 +1,8 @@
 <div class="bg-grey-lighter flex-1 overflow-auto">
-    {{-- Container untuk list of contacts --}}
     @foreach ($contacts as $contact)
     <a href="{{ route('home_chat', ['logged_in_user' => $loggedInUserId, 'owner_user' => $contact->us_ID]) }}"
         class="block hover:bg-grey-lighter">
         <div class="bg-white px-3 flex items-center cursor-pointer">
-            {{-- Container untuk img --}}
             <div>
                 <img class="h-12 w-12 rounded-full" src="{{ asset('users_img/' . $contact->avatar) }}"
                     alt="{{ $contact->us_name }}" />

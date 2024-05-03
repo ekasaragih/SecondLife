@@ -34,14 +34,17 @@ class ChatController extends Controller
         $product = Goods::where('us_ID', $ownerUserId)->first();
 
         $contactIds = Message::where('sender_id', $loggedInUserId)
-        ->orWhere('receiver_id', $loggedInUserId)
-        ->distinct()
-        ->pluck('sender_id')
-        ->merge(Message::where('sender_id', $loggedInUserId)
             ->orWhere('receiver_id', $loggedInUserId)
             ->distinct()
-            ->pluck('receiver_id'))
-        ->unique();
+            ->pluck('sender_id')
+            ->merge(Message::where('sender_id', $loggedInUserId)
+                ->orWhere('receiver_id', $loggedInUserId)
+                ->distinct()
+                ->pluck('receiver_id'))
+            ->unique()
+            ->reject(function ($id) use ($loggedInUserId) {
+                return $id == $loggedInUserId;
+            });
 
         $contacts = User::whereIn('us_ID', $contactIds)
             ->orderByDesc(function ($query) use ($loggedInUserId) {
