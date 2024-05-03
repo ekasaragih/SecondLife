@@ -141,7 +141,16 @@ class PageController extends Controller
             ->pluck('g_ID')
             ->toArray();
 
-        $nonWishlistProducts = Goods::whereNotIn('g_ID', $wishlistItemIds)->with('images')->inRandomOrder()->limit(8)->get();
+        $exchangeGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'));
+
+        $nonExchangeProducts = $products->whereNotIn('g_ID', $exchangeGoodsIds);
+
+        $nonWishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
+            ->whereNotIn('g_ID', $wishlistItemIds)
+            ->with('images')
+            ->inRandomOrder()
+            ->limit(8)
+            ->get();
 
         return view('pages.wishlist', [
             'user' => $authenticatedUser,
@@ -152,6 +161,7 @@ class PageController extends Controller
             'wishlistItems' => $wishlistItems,
         ]);
     }
+
 
     public function communities()
     {
