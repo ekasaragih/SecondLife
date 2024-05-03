@@ -60,7 +60,7 @@
                 </button>
                 </button>
                 <button id="saveToWishlist" type="button"
-                    class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300 btn-add-to-wishlist group absolute right-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
+                    class="bg-purple-500 text-white py-2 rounded hover:bg-gray-600 transition duration-300 btn-add-to-wishlist group absolute right-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
                     <i class="fa fa-check inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white"
                         aria-hidden="true"></i>
                 </button>
