@@ -50,30 +50,35 @@
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
             </a>
 
-            <div class="relative">
-                <a href="{{ route('my_profile') }}" title="My Profile"
-                    class="text-3xl text-gray-700 {{ Request::route()->getName() == 'user_profile' ? 'text-primary-content' : '' }}"
-                    style="padding-right: 20px;">
-                    <i class="fa fa-user-circle" aria-hidden="true"></i>
-                </a>
-                <ul
-                    class="absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden w-36">
-                    <!-- Mengurangi lebar menjadi w-36 -->
-                    <li><a href="{{ route('wishlist') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Wishlist</a></li>
-                    <li><a href="{{ route('home_chat', ['logged_in_user' => Auth::id()]) }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Messages</a></li>
-                    <li><a href="{{ route('my_profile') }}"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a></li>
-                    <li>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
-                            @csrf
-                            <button type="submit"
-                                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
+
+            <a href="{{ route('my_profile') }}" title="My Profile"
+                class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'user_profile' ? 'text-primary-content' : '' }}"
+                style="padding-right: 20px;">
+                @if (Auth::user()->avatar)
+                <img class="p-0 w-10 h-10 rounded-full" src="{{ asset('users_img/' . Auth::user()->avatar) }}"
+                    alt="User Avatar" />
+                @else
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                @endif
+            </a>
+            <ul
+                class="absolute top-full right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden w-36">
+                <!-- Mengurangi lebar menjadi w-36 -->
+                <li><a href="{{ route('wishlist') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My
+                        Wishlist</a></li>
+                <li><a href="{{ route('home_chat', ['logged_in_user' => Auth::id()]) }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Messages</a></li>
+                <li><a href="{{ route('my_profile') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a></li>
+                <li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
+                        @csrf
+                        <button type="submit"
+                            class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                    </form>
+                </li>
+            </ul>
+
             @else
             <a href="{{ route('login') }}" title="Sign In"
                 class="text-base text-gray-700 hover:text-gray-600 transition-all ease-in duration-300">Sign In</a>
@@ -86,30 +91,27 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const profileLink = document.querySelector('[title="My Profile"]');
-    const profileDropdown = profileLink.nextElementSibling;
-    let timeout;
+        const profileLink = document.querySelector('[title="My Profile"]');
+        const profileDropdown = profileLink.nextElementSibling;
+        let timeout;
 
-    profileLink.addEventListener('mouseenter', function() {
-        clearTimeout(timeout); // Menghapus timeout sebelumnya (jika ada)
-        profileDropdown.classList.remove('hidden');
-    });
+        profileLink.addEventListener('mouseenter', function() {
+            clearTimeout(timeout);
+            profileDropdown.classList.remove('hidden');
+        });
 
-    profileLink.addEventListener('mouseleave', function() {
-        timeout = setTimeout(function() {
+        profileLink.addEventListener('mouseleave', function() {
+            timeout = setTimeout(function() {
+                profileDropdown.classList.add('hidden');
+            }, 200);
+        });
+
+        profileDropdown.addEventListener('mouseenter', function() {
+            clearTimeout(timeout);
+        });
+
+        profileDropdown.addEventListener('mouseleave', function() {
             profileDropdown.classList.add('hidden');
-        }, 200); // Menunggu 200ms sebelum menyembunyikan dropdown
+        });
     });
-
-    // Menambahkan event listener ke dropdown untuk menangkap mouse masuk dan keluar
-    profileDropdown.addEventListener('mouseenter', function() {
-        clearTimeout(timeout); // Menghapus timeout sebelumnya (jika ada)
-    });
-
-    profileDropdown.addEventListener('mouseleave', function() {
-        profileDropdown.classList.add('hidden');
-    });
-});
-        
-    
 </script>
