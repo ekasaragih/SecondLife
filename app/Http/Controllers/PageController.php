@@ -10,6 +10,7 @@ use App\Models\Goods;
 use App\Models\Likes;
 use App\Models\Wishlist;
 use App\Models\User;
+use App\Models\Exchange;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
@@ -80,7 +81,6 @@ class PageController extends Controller
         $authenticatedUser = session('authenticatedUser');
         $categories = Goods::distinct('g_category')->pluck('g_category');
         
-        // Eager loading the goodsImages relationship
         $products = Goods::getAllGoodsWithImages();
         
         $wishlistCount = null;
@@ -93,6 +93,10 @@ class PageController extends Controller
                 ->toArray();
         }
 
+        $exchangeGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'));
+
+        $nonExchangeProducts = $products->whereNotIn('g_ID', $exchangeGoodsIds);
+
         if (empty($wishlistItems)) {
             $nonWishlistProducts = Goods::with('images')->inRandomOrder()->limit(8)->get();
         } else {
@@ -102,13 +106,12 @@ class PageController extends Controller
         return view('pages.categories', [
             'user' => $authenticatedUser,
             'categories' => $categories,
-            'products' => $products,
-            'nonWishlistProducts' => $nonWishlistProducts,
+            'products' => $nonExchangeProducts,
             'wishlistCount' => $wishlistCount,
             'wishlistItems' => $wishlistItems,
+            'nonWishlistProducts' => $nonWishlistProducts,
         ]);
     }
-
 
     public function wishlist()
     {
