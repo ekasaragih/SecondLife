@@ -37,7 +37,11 @@
                         <img class="w-8 h-8 rounded-full mr-4"
                             src="{{ $community->userID->avatar ? asset('users_img/' . $community->userID->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
                             alt="{{ $community->userID->us_name }}">
-                        <h2 class="text-lg font-semibold mr-3">{{ $community->UserID->us_name }}</h2>
+                            <h2 class="text-lg font-semibold mr-3">
+    <a href="{{ route('userProfile', ['username' => $community->UserID->us_name]) }}" class="text-[#F12E52] hover:underline">
+        {{ $community->UserID->us_name }}
+    </a>
+</h2>
                         <h2 class="text-base text-gray-500 italic">
                             {{ \Carbon\Carbon::parse($community->created_at)->format('F j, Y') }}</h2>
                     </div>
@@ -85,7 +89,11 @@
                         <img class="w-8 h-8 rounded-full mr-4"
                             src="{{ $feedback->userID->avatar ? asset('users_img/' . $feedback->userID->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
                             alt="{{ $feedback->userID->us_name }}">
-                        <h2 class="text-lg font-semibold mr-3">{{ $feedback->UserID->us_name }}</h2>
+                            <h2 class="text-lg font-semibold mr-3">
+    <a href="{{ route('userProfile', ['username' => $feedback->UserID->us_name]) }}" class="text-[#F12E52] hover:underline">
+        {{ $feedback->UserID->us_name }}
+    </a>
+</h2>
                         <h2 class="text-base text-gray-500 italic">
                             {{ \Carbon\Carbon::parse($feedback->created_at)->format('F j, Y') }}</h2>
                         <p class="text-gray-800 pl-3">{{ $feedback->feedback_desc }}</p>
