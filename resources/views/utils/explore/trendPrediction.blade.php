@@ -10,12 +10,12 @@
                 <div class="product-trend-card flex-none w-1/4 border border-gray-300 location-name" id="product_detail"
                     data-location="">
                     @php
-                    $images = $product->images;
-                    $defaultImageUrl =
-                    'https://cdn.eraspace.com/media/catalog/product/i/p/ipad_gen_10_10_9_inci_wi-fi_cellular_pink_1.jpg';
-                    $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
-                    $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
-                    @endphp
+                $user = $product->userID;
+                $defaultImageUrl =
+                'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+                $imageUrl = isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) :
+                $defaultImageUrl;
+                @endphp
                     <!-- Assuming no image here -->
                     <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
                         data-product-image="{{ $imageUrl }}">

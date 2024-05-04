@@ -71,8 +71,13 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             @foreach ($goods as $good)
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="{{ $good->images->first()->img_url ?? 'https://via.placeholder.com/400' }}"
-                    alt="Product Image">
+            @php
+        $images = $good->images;
+        $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+        $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
+        @endphp
+        <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
+            data-product-image="{{ $imageUrl }}">
                 <div class="p-4">
                     <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
                     <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
