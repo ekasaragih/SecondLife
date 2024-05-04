@@ -40,14 +40,16 @@
                     data-location="{{ strtolower($user->us_city) }}">
                     <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image">
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product->g_name }}</h3>
-                        <p class="text-sm text-gray-600">Uploaded by: {{ $user->us_name }}</p>
-                        <p class="text-sm text-gray-600">{{ $product->g_desc }}</p>
-                        <p class="text-sm text-gray-600">Location: {{ $user->us_city }}</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-gray-600 text-xs">Price: Rp {{ number_format($product->g_original_price,
-                                0, ',', '.') }}</span>
-                            @auth
+                    <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2">{{ $product->g_name }}</h3>
+<p class="text-sm text-gray-600 font-bold mb-1">Uploaded by:</p>
+<p class="text-sm text-gray-600 mb-1">{{ $user->us_name }}</p>
+<p class="text-sm text-gray-600 font-bold mb-1">Description:</p>
+<p class="text-sm text-gray-600 mb-1">{{ $product->g_desc }}</p>
+<p class="text-sm text-gray-600 font-bold mb-1">Location:</p>
+<p class="text-sm text-gray-600 mb-1">{{ $user->us_city }}</p>
+<div class="mt-4 flex justify-between items-center">
+    <span class="text-gray-600 text-xs font-bold">Price: Rp {{ number_format($product->g_original_price, 0, ',', '.') }}</span>
+    @auth
                             <button
                                 class="bg-purple-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
                                 style="font-size: 14px;"
