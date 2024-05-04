@@ -71,20 +71,30 @@
                     </div>
 
                     <div class="ml-auto text-right">
-                        <p class="text-lg font-semibold text-gray-800 font-rubik">
-                            <!-- Menggunakan class `font-rubik` -->
-                            Followers: <span class="text-purple-500">{{ auth()->user()->followers()->count() }}</span>
-                        </p>
-                        <p class="text-lg font-semibold text-gray-800 font-rubik">
-                            <!-- Menggunakan class `font-rubik` -->
-                            Following: <span class="text-purple-500">{{ auth()->user()->following()->count() }}</span>
-                        </p>
+                    <p class="text-lg font-semibold text-gray-800 font-rubik">
+    <span class="font-semibold">
+        <a href="#" id="viewFollowersLink" class="text-gray-800 underline">Followers:</a>
+    </span>
+    <span class="text-purple-500">   {{ auth()->user()->followers()->count() }}</span>
+</p>
+
+<p class="text-lg font-semibold text-gray-800 font-rubik">
+    <span class="font-semibold">
+        <a href="#" id="viewFollowingLink" class="text-gray-800 underline">Following:</a>
+    </span>
+    <span class="text-purple-500"> {{ auth()->user()->following()->count() }}</span>
+</p>
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 <!-- Daftar Barang yang Diunggah Pengguna -->
 <div class="mt-8 mx-12">
@@ -121,8 +131,12 @@
 @include('utils.user.modalEditProfile')
 @include('utils.user.modalChangeAddress')
 @include('utils.user.modalUpdateAvatar')
+@include('utils.user.modalFollowers')
+@include('utils.user.modalFollowing')
+
 
 @include('utils.layouts.footer.footer')
+
 
 {{--
 |--------------------------------------------------------------------------
@@ -146,6 +160,35 @@
 </script>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+// JavaScript untuk menampilkan dan menyembunyikan modal
+        const followersModal = document.getElementById('followersModal');
+        const followingModal = document.getElementById('followingModal');
+        const closeFollowersModal = document.getElementById('closeFollowersModal');
+        const closeFollowingModal = document.getElementById('closeFollowingModal');
+        const viewFollowersLink = document.getElementById('viewFollowersLink');
+        const viewFollowingLink = document.getElementById('viewFollowingLink');
+
+        // Tampilkan modal pengikut saat link di klik
+        viewFollowersLink.onclick = function() {
+            followersModal.classList.remove('hidden');
+        }
+
+        // Tampilkan modal pengguna yang diikuti saat link di klik
+        viewFollowingLink.onclick = function() {
+            followingModal.classList.remove('hidden');
+        }
+
+        // Sembunyikan modal saat tombol close diklik
+        closeFollowersModal.onclick = function() {
+            followersModal.classList.add('hidden');
+        }
+
+        closeFollowingModal.onclick = function() {
+            followingModal.classList.add('hidden');
+        }
+    });
+
     // TO DO LIST
     // EYOY:
     // 1. habis input DOB ato apa gitu, datanya gak ke input ke db
