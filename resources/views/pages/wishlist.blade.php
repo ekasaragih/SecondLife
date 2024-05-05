@@ -18,11 +18,13 @@
                 @foreach($wishlistItems as $wishlistItem)
                 @if ($wishlistItem->goods)
                 <div class="product-card bg-pink-100 rounded-lg p-4 flex flex-col justify-between">
-                    @foreach ($wishlistItem->goods->images as $image)
-                    <img src="{{ $image->img_url }}" alt="{{ $wishlistItem->goods->g_name }}" class="w-full mb-2">
-                    @break {{-- To display only the first image --}}
-                    @endforeach
-
+                    @php
+                    $firstImage = $wishlistItem->goods->images->first();
+                    $defaultImageUrl = 'https://via.placeholder.com/400';
+                    $imageUrl = $firstImage ? asset('goods_img/' . $firstImage->img_url) : $defaultImageUrl;
+                    @endphp
+                    <img src="{{ $imageUrl }}" alt="{{ $wishlistItem->goods->g_name }}"
+                        class="w-full h-64 object-cover object-center mb-3">
                     <h3 class="mb-3 text-xl font-semibold">{{ $wishlistItem->goods->g_name }}</h3>
                     <h3 class="mb-1 text-base">{{ $wishlistItem->goods->g_desc }}</h3>
 

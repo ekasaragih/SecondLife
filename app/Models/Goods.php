@@ -49,5 +49,9 @@ class Goods extends Model
         return $this->hasMany(Wishlist::class, 'g_ID');
     }
 
+    public function goodsImages(): HasMany
+    {
+        return $this->hasMany(GoodsImage::class, 'g_ID');
+    }
 
 }

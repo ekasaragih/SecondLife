@@ -27,9 +27,8 @@
     <div class="max-w-md rounded overflow-hidden shadow-lg product-card" style="display: block; height: 550px;">
         @php
         $images = $product->images;
-        $defaultImageUrl =
-        'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
-        $imageUrl = isset($images[0]) ? $images[0]->img_url : $defaultImageUrl;
+        $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+        $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
         $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
         @endphp
 
@@ -70,9 +69,12 @@
                     View Details
                 </a>
 
-                <button
-                    class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 add-to-wishlist duration-300 hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-500 add-to-wishlist"
-                    title="Add to wishlist" id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}"
+                <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 add-to-wishlist duration-300 
+                @if($wishlistCount > 0 && in_array($product->g_ID, $wishlistItems)) 
+                    hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-500 text-red-500 bg-red-50 border-red-500 
+                @else 
+                    hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-500 
+                @endif" title="Add to wishlist" id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}"
                     data-user-id="{{ $user->us_ID }}">
                     <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         class="w-5 h-5 love-icon" viewBox="0 0 24 24">

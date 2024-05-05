@@ -14,33 +14,38 @@ class ChatController extends Controller
     
     public function index(Request $request)
     {
+        // Retrieve query parameters
         $loggedInUserId = $request->query('logged_in_user');
         $ownerUserId = $request->query('owner_user');
-        $goodsId = $request->query('goods');
-        
+
+        // Fetch owner details
         $ownerName = User::where('us_ID', $ownerUserId)->value('us_name');
         $ownerUsername = User::where('us_ID', $ownerUserId)->value('us_username');
+        $ownerAvatar = User::where('us_ID', $ownerUserId)->value('avatar');
         
-        $chatMessages = Message::where(function ($query) use ($loggedInUserId, $ownerUserId, $goodsId) {
+        // Fetch chat messages
+        $chatMessages = Message::where(function ($query) use ($loggedInUserId, $ownerUserId) {
             $query->where('sender_id', $loggedInUserId)
                 ->where('receiver_id', $ownerUserId);
-        })->orWhere(function ($query) use ($loggedInUserId, $ownerUserId, $goodsId) {
-            $query->where('sender_id', $ownerUserId)
-                ->where('receiver_id', $loggedInUserId);
-        })->orderBy('created_at')
-        ->get();
+            })->orWhere(function ($query) use ($loggedInUserId, $ownerUserId) {
+                $query->where('sender_id', $ownerUserId)
+                    ->where('receiver_id', $loggedInUserId);
+            })->orderBy('created_at')
+            ->get();
 
-        $product = Goods::where('us_ID', $ownerUserId)->first();
-
+        // Fetch contacts
         $contactIds = Message::where('sender_id', $loggedInUserId)
-        ->orWhere('receiver_id', $loggedInUserId)
-        ->distinct()
-        ->pluck('sender_id')
-        ->merge(Message::where('sender_id', $loggedInUserId)
             ->orWhere('receiver_id', $loggedInUserId)
             ->distinct()
-            ->pluck('receiver_id'))
-        ->unique();
+            ->pluck('sender_id')
+            ->merge(Message::where('sender_id', $loggedInUserId)
+                ->orWhere('receiver_id', $loggedInUserId)
+                ->distinct()
+                ->pluck('receiver_id'))
+            ->unique()
+            ->reject(function ($id) use ($loggedInUserId) {
+                return $id == $loggedInUserId;
+            });
 
         $contacts = User::whereIn('us_ID', $contactIds)
             ->orderByDesc(function ($query) use ($loggedInUserId) {
@@ -53,28 +58,22 @@ class ChatController extends Controller
             })
             ->get();
 
-        foreach ($contacts as $contact) {
-            $lastMessage = Message::where(function ($query) use ($loggedInUserId, $contact) {
-                $query->where('sender_ID', $loggedInUserId)
-                    ->where('receiver_ID', $contact->us_ID);
-            })->orWhere(function ($query) use ($loggedInUserId, $contact) {
-                $query->where('sender_ID', $contact->us_ID)
-                    ->where('receiver_ID', $loggedInUserId);
-            })->orderBy('created_at', 'desc')->first();
-
-            $contact->last_message_time = $lastMessage ? $lastMessage->created_at->format('H:i') : null;
-            $contact->last_message = $lastMessage ? $lastMessage->message : null;
-        }
-
-        $authenticatedUser = session('authenticatedUser');
-        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-        $userId = $authenticatedUser->us_ID;
-        $goods = Goods::where('us_ID', $userId)->get();
-
-        $chattingUserGoods = Goods::where('us_ID', $ownerUserId)->get();
-        $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)->get();
-
+        // Fetch recent exchange
         $recentExchange = Exchange::latest()->first();
+
+        // Fetch goods excluding those in exchange table
+        $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)
+            ->whereNotIn('g_ID', function ($query) {
+                $query->select('barter_with')->from('exchange');
+            })->get();
+
+        $chattingUserGoods = Goods::where('us_ID', $ownerUserId)
+            ->whereNotIn('g_ID', function ($query) {
+                $query->select('my_goods')->from('exchange');
+            })->get();
+
+        // Fetch wishlist count
+        $wishlistCount = Wishlist::where('us_ID', $loggedInUserId)->count();
 
         return view('pages.chat.chatSection', [
             'recentExchange' => $recentExchange,
@@ -86,13 +85,11 @@ class ChatController extends Controller
             'ownerName' => $ownerName,
             'contacts' => $contacts,
             'ownerUsername' => $ownerUsername,
-            'goods' => $goods,
             'wishlistCount' => $wishlistCount,
-            'product' => $product,
-            'goodsId' => $goodsId,
-
+            'ownerAvatar' => $ownerAvatar,
         ]);
     }
+
 
 
 }

@@ -16,15 +16,19 @@
             <p id="modalPrice" style="color: purple; margin-bottom: 20px; font-size: 18px; font-weight: bold;"></p>
         </div>
         <hr style="margin: 20px 0;"> <!-- Garis penghalang -->
-        <p id="modalProductId" style="color: #666; margin-bottom: 10px;"></p>
+        <p id="modalProductId" style="color: #666; margin-bottom: 10px; display: none;"></p>
         <div class="mt-4">
-            <span class="mr-3 text-gray-500">Uploaded by:</span>
-            <a href="#" id="uploadedByLink" class="font-semibold text-fray-400"></a>
-        </div>
+    <span class="mr-3 text-gray-500 font-bold">Uploaded by:</span>
+    <a href="#" id="uploadedByLink" class="font-semibold italic text-fray-400"></a>
+</div>
 
-        <p id="modalDescription" style="color: #666; text-align: justify;"></p>
+<div class="mt-4">
+    <p class="font-bold">Description:</p>
+    <p id="modalDescription" style="color: #666; text-align: justify;"></p>
+</div>
         <hr style="margin: 20px 0;"> <!-- Garis penghalang -->
         <div id="commentSection" class="mt-4"></div>
+        <p class="font-bold">Write commentar!</p>
         <div
             style="text-align: center; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);">
             <form id="commentFormModal" class="flex items-center justify-center" action="{{ route('comment_store') }}"
@@ -44,6 +48,13 @@
                     </svg>
                 </button>
             </form>
+            <button id="seeMoreBtn" class="text-blue-500 italic border-b-2 border-blue-500 hover:border-blue-600 mb-4" style="display: none;" onclick="seeMore()">See More</button>
+        </div>
+        <!-- Tombol "See More" di bawah kotak komentar -->
+        <div class="text-center mt-4">
+            <button onclick="goToDetailPage()" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                See More
+            </button>
         </div>
     </div>
 </div>
@@ -77,6 +88,14 @@ document.getElementById('g_ID').value = g_ID; // Atur g_ID sesuai dengan produk 
 loadComments(g_ID,us_name);
 }
 
+function goToDetailPage() {
+    // Mendapatkan g_ID dari input tersembunyi
+    const g_ID = document.getElementById('g_ID').value;
+    // Membuat URL untuk halaman detail barang menggunakan route
+    const detailPageURL = "{{ route('goods_detail', ['id' => ':g_ID']) }}".replace(':g_ID', g_ID);
+    // Pergi ke halaman detail barang
+    window.location.href = detailPageURL;
+}
 // Tentukan rute yang akan diarahkan saat tautan diklik
 const userProfileRoute = "{{ route('userProfile', ['username' => ':username']) }}";
 

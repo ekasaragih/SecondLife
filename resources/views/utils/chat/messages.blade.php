@@ -1,6 +1,5 @@
 <div class="flex-1 overflow-auto" style="background-color: #DAD3CC">
     <div class="py-2 px-3">
-
         <div class="flex justify-center mb-4">
             <div class="rounded py-2 px-4" style="background-color: #FCF4CB">
                 <p class="text-xs">
@@ -10,38 +9,24 @@
         </div>
 
         {{-- Display chat messages --}}
-        @php
-        $prevDate = null;
-        @endphp
+
         @foreach($chatMessages as $message)
 
-        @if($message->created_at->format('d/m/Y') !== $prevDate)
-        <div class="flex justify-center mb-2">
-            <div class="rounded py-2 px-4" style="background-color: #DDECF2">
-                <p class="text-sm uppercase">
-                    {{ $message->created_at->format('d/m/Y') }}
-                </p>
-            </div>
-        </div>
-        @endif
 
-        {{-- Update previous date --}}
-        @php
-        $prevDate = $message->created_at->format('d/m/Y');
-        @endphp
+
+        {{-- Display chat message --}}
+        <div id="mainChat"></div>
+        <div id="chatMessages"></div>
 
         @endforeach
-        <div id="mainChat"></div>
-        {{-- Chat from logged in user --}}
-        <div id="chatMessages"></div>
 
         <div class="flex justify-center mb-4">
             <div class="rounded py-2 px-4 bg-white">
                 <p class="text-xs">
                     @if ($recentExchange && $recentExchange->otherUser && $ownerName ===
                     $recentExchange->otherUser->us_name)
-                    You have bartered {{ $recentExchange->userGoods->g_name }} with
-                    {{ $recentExchange->otherUser->us_name }}'s {{ $recentExchange->otherUserGoods->g_name }}
+                    You have bartered {{ $recentExchange->userGoods->g_name }} with {{
+                    $recentExchange->otherUser->us_name }}'s {{ $recentExchange->otherUserGoods->g_name }}
                     @else
                     No recent barter found
                     @endif
@@ -49,7 +34,7 @@
             </div>
         </div>
 
-        {{-- ini keknya cuma buat user yg logged in aja --}}
+        {{-- Accept barter section --}}
         <div class="flex justify-center mt-5">
             <div
                 class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -68,8 +53,6 @@
     </div>
 </div>
 
-
-
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     function fetchMessages() {
@@ -87,36 +70,32 @@
             success: function(response) {
                 $('#mainChat').empty();
 
-                response.chatMessages.forEach(function(message) {
-                    var messageHtml = '';
+                let currentDate = null;
 
-                    const messageDate = new Date(message.created_at);
+                response.chatMessages.forEach(function(message) {
+                    const messageDate = new Date(message.created_at).toLocaleDateString('en-GB');
+                    const messageTime = new Date(message.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
                     
-                    const timeOptions = {
-                        timeZone: 'Asia/Jakarta',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    };
-                    const formattedTime = messageDate.toLocaleTimeString('id-ID', timeOptions);
+                    // Display date header if date changes
+                    if (messageDate !== currentDate) {
+                    $('#mainChat').append(`<div class="flex justify-center mb-2">
+                        <div class="rounded py-2 px-4" style="background-color: #DDECF2">
+                            <p class="text-sm uppercase">${messageDate}</p>
+                        </div>
+                    </div>`);
+                    currentDate = messageDate;
+                    }
 
                     // Check if the message is from the logged-in user or the other user
-                    if (message.sender_id == loggedInUserId) {
-                    // Right section chat from logged-in user
-                    messageHtml += '<div class="flex justify-end mb-2">';
-                        messageHtml += '<div class="rounded py-2 px-3 max-w-96 break-words overflow-hidden" style="background-color: #E2F7CB">';
-                            messageHtml += '<p class="text-sm mt-1 whitespace-normal max-w-full text-left">' + message.message + '</p>';
-                            messageHtml += '<p class="text-right text-xs text-grey-dark mt-1">You • ' + formattedTime + '</p>';
-                            messageHtml += '</div>';
-                        messageHtml += '</div>';
-                    } else {
-                    // Left section chat from other user
-                    messageHtml += '<div class="flex mb-2">';
-                        messageHtml += '<div class="rounded py-2 px-3 max-w-96 overflow-hidden" style="background-color: #F2F2F2">';
-                            messageHtml += '<p class="text-sm mt-1 whitespace-normal max-w-full">' + message.message + '</p>';
-                            messageHtml += '<p class="text-right text-xs text-grey-dark mt-1">' + ownerName + ' • ' + formattedTime + '</p>';
-                            messageHtml += '</div>';
-                        messageHtml += '</div>';
-                    }
+                    const senderName = message.sender_id == loggedInUserId ? 'You' : ownerName;
+                    const backgroundColor = message.sender_id == loggedInUserId ? '#E2F7CB' : '#F2F2F2';
+
+                    const messageHtml = `<div class="${message.sender_id == loggedInUserId ? 'flex justify-end' : 'flex'} mb-2">
+                        <div class="rounded py-2 px-3 max-w-96 break-words overflow-hidden" style="background-color: ${backgroundColor}">
+                            <p class="text-sm mt-1 whitespace-normal max-w-full text-left">${message.message}</p>
+                            <p class="text-right text-xs text-grey-dark mt-1">${senderName} • ${messageTime}</p>
+                        </div>
+                    </div>`;
 
                     // Append the message HTML to the chatMessages container
                     $('#mainChat').append(messageHtml);

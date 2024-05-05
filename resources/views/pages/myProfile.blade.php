@@ -72,19 +72,29 @@
 
                     <div class="ml-auto text-right">
                         <p class="text-lg font-semibold text-gray-800 font-rubik">
-                            <!-- Menggunakan class `font-rubik` -->
-                            Followers: <span class="text-purple-500">{{ auth()->user()->followers()->count() }}</span>
+                            <span class="font-semibold">
+                                <a href="#" id="viewFollowersLink" class="text-gray-800 underline">Followers:</a>
+                            </span>
+                            <span class="text-purple-500"> {{ auth()->user()->followers()->count() }}</span>
                         </p>
+
                         <p class="text-lg font-semibold text-gray-800 font-rubik">
-                            <!-- Menggunakan class `font-rubik` -->
-                            Following: <span class="text-purple-500">{{ auth()->user()->following()->count() }}</span>
+                            <span class="font-semibold">
+                                <a href="#" id="viewFollowingLink" class="text-gray-800 underline">Following:</a>
+                            </span>
+                            <span class="text-purple-500"> {{ auth()->user()->following()->count() }}</span>
                         </p>
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 <!-- Daftar Barang yang Diunggah Pengguna -->
 <div class="mt-8 mx-12">
@@ -98,9 +108,14 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         @foreach ($user->goods as $good)
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img class="w-full h-64 object-cover object-center"
-                src="{{ asset('goods_img/' . ($good->images->first() ? $good->images->first()->img_url : 'placeholder.jpg')) }}"
-                alt="Product Image">
+            @php
+            $images = $good->images;
+            $defaultImageUrl =
+            'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+            $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
+            @endphp
+            <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
+                data-product-image="{{ $imageUrl }}">
             <div class="p-4">
                 <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
                 <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
@@ -124,8 +139,12 @@
 @include('utils.user.modalEditProfile')
 @include('utils.user.modalChangeAddress')
 @include('utils.user.modalUpdateAvatar')
+@include('utils.user.modalFollowers')
+@include('utils.user.modalFollowing')
+
 
 @include('utils.layouts.footer.footer')
+
 
 {{--
 |--------------------------------------------------------------------------
@@ -149,6 +168,135 @@
 </script>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+// JavaScript untuk menampilkan dan menyembunyikan modal
+        const followersModal = document.getElementById('followersModal');
+        const followingModal = document.getElementById('followingModal');
+        const closeFollowersModal = document.getElementById('closeFollowersModal');
+        const closeFollowingModal = document.getElementById('closeFollowingModal');
+        const viewFollowersLink = document.getElementById('viewFollowersLink');
+        const viewFollowingLink = document.getElementById('viewFollowingLink');
+
+        // Tampilkan modal pengikut saat link di klik
+        viewFollowersLink.onclick = function() {
+            followersModal.classList.remove('hidden');
+        }
+
+        // Tampilkan modal pengguna yang diikuti saat link di klik
+        viewFollowingLink.onclick = function() {
+            followingModal.classList.remove('hidden');
+        }
+
+        // Sembunyikan modal saat tombol close diklik
+        closeFollowersModal.onclick = function() {
+            followersModal.classList.add('hidden');
+        }
+
+        closeFollowingModal.onclick = function() {
+            followingModal.classList.add('hidden');
+        }
+    });
+
+    // TO DO LIST
+    // EYOY:
+    // 1. habis input DOB ato apa gitu, datanya gak ke input ke db
+    // 2. selepas ngeupdate user data, data ke update di db, tapi di page profilenya itu gak keubah.. maybe krn sessionnya?
+    // function setProfileData(name, username, email, dob, gender, passwordUpdated, avatar){
+    //     console.log(name + " " + username + " " + email + " " + dob + " " + gender + " " + passwordUpdated + " " + avatar);
+    //     $('#full_name').text(name);
+    //     $('#user_name').text(username);
+    //     $('#user_email').text(email);
+    //     $('#user_password_updated_at').text(moment(passwordUpdated).fromNow());
+    //     if (avatar === null) {
+    //         $('#user_avatar').attr('src', 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg');
+    //     } else {
+    //         $('#user_avatar').attr('src', "{{ url('storage/avatars') }}" + '/' + avatar);
+    //     }
+
+    //     $('#input_name').text(name);
+    //     $('#input_username').text(username);
+    //     $('#input_DOB').text(dob);
+    //     $('#input_email').text(email);
+    //     // $('#input_gender').text(gender);
+    // }
+
+    // function updateProfile() {
+    //     var newName = document.getElementById('input_name').value;
+    //     var newUsername = document.getElementById('input_username').value;
+    //     var newDOB = document.getElementById('input_DOB').value;
+    //     var newEmail = document.getElementById('input_email').value;
+    //     var newGender = document.getElementById('input_gender').value;
+
+    //     var data = {
+    //         us_name: newName,
+    //         us_username: newUsername,
+    //         us_DOB: newDOB,
+    //         us_email: newEmail,
+    //         us_gender: newGender
+    //     };
+
+    //     var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    //     var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
+
+    //     $.ajax({
+    //         url: '/api/profile/update',
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         headers: {
+    //         'X-CSRF-TOKEN': csrfToken,
+    //         'Authorization': 'Bearer ' + apiToken
+    //         },
+    //         data: data,
+    //         success: function(response) {
+    //             setProfileData(response.data.us_name, response.data.us_username, response.data.us_email, response.data.us_DOB,
+    //             response.data.us_gender, response.data.password_updated_at, response.data.avatar);
+
+    //             const modal = new Modal(document.getElementById('modalEditProfile'));
+    //             modal.hide();
+
+    //             Swal.fire({
+    //                 position: "top-end",
+    //                 icon: "success",
+    //                 title: response.message,
+    //                 showConfirmButton: false,
+    //                 timer: 1500
+    //             });
+    //             console.log(response.message);
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error(xhr.responseText);
+    //         }
+    //     });
+    // }
+
+    // function loadUserDetail(){
+    //     $.ajax({
+    //         url: '/api/profile/show',
+    //         method: 'GET',
+    //         dataType: 'json',
+    //         success: function(response) {
+    //             if (response && response.data) {
+    //                 setProfileData(response.data.us_name, response.data.us_username, response.data.us_email, response.data.us_DOB,
+    //                 response.data.us_gender, response.data.password_updated_at, response.data.avatar);
+
+    //                 console.log(setProfileData);
+    //                 $('#user_avatar').attr('src', response.avatar_url || 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg');
+    //             } else {
+    //                 console.error('Error: Failed to retrieve user profile data');
+    //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             alert(error)
+    //             console.error('Error:', error);
+    //         }
+    //     });
+    // }
+
+    // $(document).ready(function() {
+    //     loadUserDetail();
+    // });
+
+    // Get the wishlist count element
     const wishlistCount = document.getElementById('wishlist-count');
     const wishlistCount = document.getElementById('wishlist-count');
 
