@@ -1,3 +1,5 @@
+@include('utils.layouts.navbar.topnav')
+
 <head>
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="tailwind.css">
@@ -5,7 +7,7 @@
     @yield('head')
 </head>
 
-<div class="">
+<div class="relative font-rubik h-screen pt-52 pb-100 font-rubik">
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-4 text-secondary text-center">Privacy Policy</h1>
 
