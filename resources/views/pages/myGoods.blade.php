@@ -40,7 +40,7 @@
                 <p class="text-gray-800">{{ $goods->g_desc }}</p>
                 <div class="flex">
                     <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
-                    <h3 class="text-base text-gray-600 mr-1"> {{ $goods->g_price_prediction }} </h3>
+                    <h3 class="text-base text-gray-600 mr-1">{{ number_format($goods->g_price_prediction, 0, '.', ',') }}</h3>
                 </div>
             </div>
             <div class="relative">
