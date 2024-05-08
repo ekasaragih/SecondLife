@@ -10,12 +10,12 @@
                 <div class="product-trend-card flex-none w-1/4 border border-gray-300 location-name" id="product_detail"
                     data-location="">
                     @php
-                $user = $product->userID;
-                $defaultImageUrl =
-                'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
-                $imageUrl = isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) :
-                $defaultImageUrl;
-                @endphp
+                    $user = $product->userID;
+                    $defaultImageUrl =
+                    'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+                    $imageUrl = isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) :
+                    $defaultImageUrl;
+                    @endphp
                     <!-- Assuming no image here -->
                     <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
                         data-product-image="{{ $imageUrl }}">
@@ -23,8 +23,8 @@
                         <h3 class="text-lg font-semibold text-gray-800 mb-2" id="goods_name">{{ $product->g_name }}</h3>
                         <p class="text-sm text-gray-600" id="goods_desc">{{ $product->g_desc }}</p>
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-gray-600 text-xs" id="goods_ori_price">Price: Rp{{
-                                number_format($product->g_original_price, 0, ',', '.')
+                            <span class="text-gray-600 text-xs" id="goods_ori_price">Price Prediction: Rp{{
+                                number_format($product->g_price_prediction, 0, ',', '.')
                                 }}</span>
                             @auth
                             <div class="flex justify-center items-center">

@@ -49,7 +49,7 @@
                         <p class="mb-0 text-lg font-bold hidden" id="product_ID">ID: {{ $product->g_ID }}</p>
                         <p class="mb-0 text-lg font-bold">Name: {{ $product->g_name }}</p>
                         <p class="mb-2">Description: {{ $product->g_desc }}</p>
-                        <p>Prediction Price: Rp {{ number_format($product->g_original_price, 0, ',', '.') }}</p>
+                        <p>Prediction Price: Rp {{ number_format($product->g_price_prediction, 0, ',', '.') }}</p>
                     </div>
                 </div>
                 @endforeach

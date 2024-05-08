@@ -123,7 +123,8 @@
                     <p class="text-sm text-gray-500">Category: {{ $good->g_category }}</p>
                 </div>
                 <div class="mt-4 flex justify-between items-center">
-                    <p class="text-sm font-semibold text-gray-700">Price: Rp {{ number_format($good->g_original_price,
+                    <p class="text-sm font-semibold text-gray-700">Price Prediction: Rp {{
+                        number_format($good->g_original_price,
                         0, ',', '.') }}</p>
                     <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
                         class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>

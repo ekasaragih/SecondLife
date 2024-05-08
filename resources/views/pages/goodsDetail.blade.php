@@ -169,7 +169,7 @@
         modalDescription.textContent = description;
         modalImage.src = image;
         modalLocation.textContent = "Location: " + location;
-        modalPrice.textContent = "Price: " + price;
+        modalPrice.textContent = "Price Prediction: " + price;
         modalProductId.textContent = "Product ID: " + g_ID;
 
         // Load comments based on the g_ID of the current product
