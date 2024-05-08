@@ -1,3 +1,5 @@
+@include('utils.layouts.navbar.topnav')
+
 <head>
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="tailwind.css">
@@ -5,7 +7,7 @@
     @yield('head')
 </head>
 
-<section class="bg-white">
+<section class="relative font-rubik h-screen pt-52 pb-100 font-rubik">
     <div class="py-8 px-4 mx-auto max-w-screen-md">
         <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-secondary">Contact Us
         </h2>

@@ -1,13 +1,13 @@
 <div class="my-10 relative">
-    <div class="mt-8">
-        <h2 class="text-2xl font-bold text-red-500 mb-4">What's trend now? </h2>
+    <div class="mt-3">
+        <h2 class="text-2xl font-bold text-[#F12E52] mb-4">What's trend now? </h2>
 
         <div class="product-trend-slider-container overflow-hidden relative">
             <!-- Product Cards -->
 
             <div class="flex" id="product_data">
                 @foreach($trendProducts as $product)
-                <div class="product-trend-card flex-none w-1/4 border border-gray-300 location-name" id="product_detail"
+                <div class="product-trend-card flex-none w-1/4 border border-gray-300 bg-white rounded-lg shadow-md location-name" id="product_detail"
                     data-location="">
                     @php
                     $user = $product->userID;
@@ -20,7 +20,7 @@
                     <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
                         data-product-image="{{ $imageUrl }}">
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-2" id="goods_name">{{ $product->g_name }}</h3>
+                        <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2" id="goods_name">{{ $product->g_name }}</h3>
                         <p class="text-sm text-gray-600" id="goods_desc">{{ $product->g_desc }}</p>
                         <div class="mt-4 flex justify-between items-center">
                             <span class="text-gray-600 text-xs" id="goods_ori_price">Price Prediction: Rp{{

@@ -168,10 +168,12 @@
                     });
                 },
                 error: function(xhr, status, error) {
+                    var response = xhr.responseJSON;
+                    var errorMessage = response.message;
                     Swal.fire({
                         icon: "error",
-                        title: "Oops...",
-                        text: "Something went wrong!",
+                        title: "Oops..",
+                        text: errorMessage,
                     });
                 }
             });
@@ -212,10 +214,12 @@
                     });
                 },
                 error: function(xhr, status, error) {
+                    var response = xhr.responseJSON;
+                    var errorMessage = response.message;
                     Swal.fire({
                         icon: "error",
-                        title: "Oops...",
-                        text: "Something went wrong!",
+                        title: "Oops..",
+                        text: errorMessage,
                     });
                 }
             });
@@ -255,10 +259,12 @@
                     });
                 },
                 error: function(xhr, status, error) {
+                    var response = xhr.responseJSON;
+                    var errorMessage = response.message;
                     Swal.fire({
                         icon: "error",
-                        title: "Oops...",
-                        text: "Something went wrong!",
+                        title: "Oops..",
+                        text: errorMessage,
                     });
                 }
             });
