@@ -63,12 +63,15 @@ class PageController extends Controller
 
         $cities = User::distinct('us_city')->pluck('us_city');
 
+        $userAvatar = $authenticatedUser ? $authenticatedUser->avatar : null;
+
         return view('pages.explore', [
             'user' => $authenticatedUser,
             'products' => $products,
             'trendProducts' => $trendProducts,
             'wishlistCount' => $wishlistCount,
             'cities' => $cities,
+            'userAvatar' => $userAvatar,
         ]);
     }
 

@@ -58,6 +58,19 @@ class ChatController extends Controller
             })
             ->get();
 
+        foreach ($contacts as $contact) {
+            $lastMessage = Message::where(function ($query) use ($loggedInUserId, $contact) {
+                $query->where('sender_ID', $loggedInUserId)
+                    ->where('receiver_ID', $contact->us_ID);
+            })->orWhere(function ($query) use ($loggedInUserId, $contact) {
+                $query->where('sender_ID', $contact->us_ID)
+                    ->where('receiver_ID', $loggedInUserId);
+            })->orderBy('created_at', 'desc')->first();
+
+            $contact->last_message_time = $lastMessage ? $lastMessage->created_at->format('H:i') : null;
+            $contact->last_message = $lastMessage ? $lastMessage->message : null;
+        }
+        
         // Fetch recent exchange
         $recentExchange = Exchange::latest()->first();
 

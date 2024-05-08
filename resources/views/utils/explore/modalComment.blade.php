@@ -30,7 +30,7 @@
         </div>
         <hr style="margin: 20px 0;">
         <div id="commentSection" class="mt-4"></div>
-        <p class="font-bold">Write commentar!</p>
+        <p class="font-bold">Write comments!</p>
 
         <div
             style="text-align: center; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);">
@@ -66,7 +66,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    function openModal(encodedName, encodedDescription, image, encodedLocation, price, g_ID, us_name) {
+    function openModal(encodedName, encodedDescription, image, encodedLocation, price, g_ID, us_name, userAvatar) {
         var name = decodeURIComponent(encodedName);
         var description = decodeURIComponent(encodedDescription);
         var location = decodeURIComponent(encodedLocation);
@@ -79,6 +79,8 @@
         const modalPrice = document.getElementById('modalPrice');
         const modalProductId = document.getElementById('modalProductId');
         const uploadedByLink = document.getElementById('uploadedByLink');
+        const userAvatarImg = document.getElementById('userAvatarImg');
+        const userAvatarPP = document.getElementById('userAvatarPP');
 
         modal.style.display = 'block';
         modalTitle.textContent = name;
@@ -89,10 +91,13 @@
         modalProductId.textContent = "Product ID: " + g_ID;
         uploadedByLink.textContent = us_name;
         uploadedByLink.href = "{{ route('userProfile', ['username' => ':username']) }}".replace(':username', us_name); // Tautkan nama pengguna dengan rute userProfile
+        // userAvatarPP.src = userAvatar;
+        // userAvatarImg.src = userAvatar;
 
         document.getElementById('g_ID').value = g_ID;
+        console.log(g_ID);
 
-        loadComments(g_ID,us_name);
+        loadComments(g_ID, us_name);
     }
 
     function goToDetailPage() {
@@ -119,7 +124,7 @@
                     const commentDiv = document.createElement('div');
                     commentDiv.classList.add('flex', 'items-start', 'mb-4');
                     commentDiv.innerHTML = `
-                        <img src="profile_picture.jpg" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
+                        <img src="" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarImg">
                         <div>
                         <p class="font-semibold" style="margin-bottom: 4px;">
                                 <a href="${userProfileRoute.replace(':username', comment.us_name)}" class="text-blue-500">${comment.us_name}</a>
@@ -145,7 +150,7 @@
             .catch(function(error) {
                 console.error('Error fetching comments:', error);
             });
-}
+    }
 
     // Function to load all comments
     function loadAllComments(g_ID, us_name) {
@@ -158,7 +163,7 @@
                     const commentDiv = document.createElement('div');
                     commentDiv.classList.add('flex', 'items-start', 'mb-4');
                     commentDiv.innerHTML = `
-                        <img src="profile_picture.jpg" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
+                        <img src="" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarPP">
                         <div>
                         <p class="font-semibold" style="margin-bottom: 4px;">
                                 <a href="${userProfileRoute.replace(':username', comment.us_name)}" class="text-blue-500">${comment.us_name}</a>

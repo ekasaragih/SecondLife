@@ -11,7 +11,8 @@
 
 <div class="my-5 relative">
     <div class="mt-8">
-    <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Recommended Products <span class="text-sm text-gray-600">based
+        <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Recommended Products <span
+                class="text-sm text-gray-600">based
                 on location</span></h2>
         <div class="flex gap-2 px-2">
             <select
@@ -55,7 +56,7 @@
                             <button
                                 class="bg-red-400 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
                                 style="font-size: 14px;"
-                                onclick="openModal('{{ rawurlencode($product->g_name) }}', '{{ rawurlencode($product->g_desc) }}', '{{ isset($product->images[0]) ? asset('goods_img/' . rawurlencode($product->images[0]->img_url)) : 'https://via.placeholder.com/400' }}', '{{ rawurlencode($user->us_city) }}', '{{ rawurlencode(number_format($product->g_price_prediction, 0, ',', '.')) }}', '{{ rawurlencode($product->g_ID) }}', '{{ rawurlencode($user->us_name) }}')">
+                                onclick="openModal('{{ rawurlencode($product->g_name) }}', '{{ rawurlencode($product->g_desc) }}', '{{ isset($product->images[0]) ? asset('goods_img/' . rawurlencode($product->images[0]->img_url)) : 'https://via.placeholder.com/400' }}', '{{ rawurlencode($user->us_city) }}', '{{ rawurlencode(number_format($product->g_price_prediction, 0, ',', '.')) }}', '{{ $product->g_ID }}', '{{ rawurlencode($user->us_name) }}', '{{ $user->avatar ? asset('users_img/' . $user->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}')">
                                 Detail
                             </button>
 
