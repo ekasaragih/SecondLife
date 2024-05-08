@@ -1,3 +1,6 @@
+@include('utils.layouts.navbar.topnav')
+
+
 <head>
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="tailwind.css">
@@ -8,13 +11,13 @@
     @yield('head')
 </head>
 
-<div id="about" class="relative bg-white overflow-hidden font-rubik">
+<div id="about" class="relative font-rubik h-screen pt-48 pb-100 font-rubik">
     <div class="max-w-7xl px-10">
         <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full">
 
             <div class="pt-1"></div>
 
-            <div class="mt-5 max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8">
+            <div class="mt-1 max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8">
                 <div class="sm:text-center lg:text-left">
                     <h2 class="my-6 text-2xl tracking-tight font-extrabold text-gray-900 sm:text-3xl md:text-4xl">
                         About us —
