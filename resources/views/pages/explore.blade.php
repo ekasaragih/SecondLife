@@ -1,4 +1,16 @@
 @include('utils.layouts.navbar.topnav')
+<style>
+    body {
+        background-image: url('/asset/img/bg3.gif');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 300vh; /* Mengatur tinggi body menjadi 300% tinggi layar (viewport height) */
+        margin: 0; /* Menghapus margin default pada body */
+    }
+</style>
+
+
 
 <head>
     @yield('head')
