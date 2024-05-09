@@ -44,13 +44,19 @@
                     <img src="{{ $imageUrl }}"
                         class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full"
                         alt="{{ $product->g_name }}" data-product-image="{{ $imageUrl }}" />
-                    <div
-                        class="carousel-item-caption bg-black bg-opacity-50 p-4 text-white rounded-md absolute top-0 left-0 right-0">
-                        <p class="mb-0 text-lg font-bold hidden" id="product_ID">ID: {{ $product->g_ID }}</p>
-                        <p class="mb-0 text-lg font-bold">Name: {{ $product->g_name }}</p>
-                        <p class="mb-2">Description: {{ $product->g_desc }}</p>
-                        <p>Prediction Price: Rp {{ number_format($product->g_original_price, 0, ',', '.') }}</p>
-                    </div>
+                        <div class="carousel-item-caption bg-black bg-opacity-50 p-4 text-white rounded-md absolute top-0 left-0 right-0">
+    <p class="mb-0 text-lg font-bold hidden" id="product_ID">ID: {{ $product->g_ID }}</p>
+    <div class="flex items-center">
+        <p class="mb-0 text-lg font-bold">Name: {{ $product->g_name }}</p>
+        <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}"
+            class="ml-2 text-sm font-semibold text-purple-500 hover:text-[#F12E52]">
+            Click for more
+        </a>
+    </div>
+    <p class="mb-2">Description: {{ $product->g_desc }}</p>
+    <p>Prediction Price: Rp {{ number_format($product->g_original_price, 0, ',', '.') }}</p>
+</div>
+
                 </div>
                 @endforeach
                 <button id="data-carousel" type="button"
