@@ -63,12 +63,15 @@ class PageController extends Controller
 
         $cities = User::distinct('us_city')->pluck('us_city');
 
+        $userAvatar = $authenticatedUser ? $authenticatedUser->avatar : null;
+
         return view('pages.explore', [
             'user' => $authenticatedUser,
             'products' => $products,
             'trendProducts' => $trendProducts,
             'wishlistCount' => $wishlistCount,
             'cities' => $cities,
+            'userAvatar' => $userAvatar,
         ]);
     }
 
@@ -203,10 +206,17 @@ class PageController extends Controller
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         $goods = Goods::with('images')->where('us_ID', $authenticatedUser->us_ID)->get();
 
+        $exchangedGoods = Exchange::where('my_ID', $authenticatedUser->us_ID)
+            ->orWhere('goods_owner_ID', $authenticatedUser->us_ID)
+            ->with(['userGoods', 'otherUserGoods'])
+            ->distinct()
+            ->get();
+
         return view('pages.myProfile', [
             'authenticatedUser' => $authenticatedUser,
             'user' => $user,
             'goods' => $goods,
+            'exchangedGoods' => $exchangedGoods,
             'wishlistCount' => $wishlistCount,
         ]);
     }

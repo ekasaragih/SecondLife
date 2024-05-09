@@ -7,17 +7,18 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-@include('utils.explore.modalComment') {{-- Include the modalComment.blade.php file --}}
+@include('utils.explore.modalComment')
 
 <div class="my-5 relative">
     <div class="mt-8">
-    <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Recommended Products <span class="text-sm text-gray-600">based
+        <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Recommended Products <span
+                class="text-sm text-gray-600">based
                 on location</span></h2>
         <div class="flex gap-2 px-2">
             <select
                 class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"
                 onchange="filterByCity(this.value)">
-                <option value="Current">Current Location</option> <!-- New option for Current Location -->
+                <option value="Current">Current Location</option>
                 <option value="All">All</option>
                 @foreach($cities as $city)
                 <option value="{{ $city }}">{{ $city }}</option>
@@ -37,39 +38,51 @@
                 @endphp
                 @if ($user && $user->us_city)
                 <div class="product-card flex-none w-1/4 border border-gray-300 bg-white rounded-lg shadow-md {{ strtolower($user->us_city) }}"
-     data-location="{{ strtolower($user->us_city) }}">
-    <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image">
-    <div class="p-4">
-    <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2" style="height: 3.5rem; line-height: 1.75rem; /* Set to two lines of text */">
-            {{ $product->g_name }}
-        </h3>        
-        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">Uploaded by:</p>
-        <p class="text-sm text-gray-600 mb-1" style="height: 1.5rem; line-height: 1.5rem;">{{ $user->us_name }}</p>
-        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">Description:</p>
-        <p class="text-sm text-gray-600 mb-1" style="height: 3rem; line-height: 1.5rem; overflow: hidden;">{{ $product->g_desc }}</p>
-        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">Location:</p>
-        <p class="text-sm text-gray-600 mb-1" style="height: 1.5rem; line-height: 1.5rem;">{{ $user->us_city }}</p>
-        <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
-        <div class="mt-4 flex justify-between items-center">
-            <span class="text-gray-600 text-xs font-bold">Price: Rp {{ number_format($product->g_original_price, 0, ',', '.') }}</span>
-            @auth
-            <div>
-                <button class="bg-red-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
-                        style="font-size: 14px;"
-                        onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) : 'https://via.placeholder.com/400' }}', '{{ $user->us_city }}', '{{ number_format($product->g_original_price, 0, ',', '.') }}', '{{ $product->g_ID }}', '{{ $user->us_name }}')">
-                    Detail
-                </button>
-            </div>
-            <div>
-                <button class="bg-red-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist" 
-                style="font-size: 14px;" id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}" data-user-id="{{ Auth::id() }}">
-                    Add
-                </button>
-            </div>
-            @endauth
-        </div>
-    </div>
-</div>
+                    data-location="{{ strtolower($user->us_city) }}">
+                    <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
+                            style="height: 3.5rem; line-height: 1.75rem; /* Set to two lines of text */">
+                            {{ $product->g_name }}
+                        </h3>
+                        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Uploaded by:</p>
+                        <p class="text-sm text-gray-600 mb-1" style="height: 1.5rem; line-height: 1.5rem;">{{
+                            $user->us_name }}</p>
+                        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Description:</p>
+                        <p class="text-sm text-gray-600 mb-1"
+                            style="height: 3rem; line-height: 1.5rem; overflow: hidden;">{{ $product->g_desc }}</p>
+                        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Location:</p>
+                        <p class="text-sm text-gray-600 mb-1" style="height: 1.5rem; line-height: 1.5rem;">{{
+                            $user->us_city }}</p>
+                        <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-gray-600 text-xs font-bold">Price Prediction: Rp {{
+                                number_format($product->g_price_prediction, 0, ',', '.') }}</span>
+
+                            @auth
+                            <div>
+                                <button
+                                    class="bg-red-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
+                                    style="font-size: 14px;"
+                                    onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) : 'https://via.placeholder.com/400' }}', '{{ $user->us_city }}', '{{ number_format($product->g_original_price, 0, ',', '.') }}', '{{ $product->g_ID }}', '{{ $user->us_name }}')">
+                                    Detail
+                                </button>
+                            </div>
+                            <div>
+                                <button
+                                    class="bg-red-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist"
+                                    id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}"
+                                    data-user-id="{{ Auth::id() }}">
+                                    Add
+                                </button>
+                            </div>
+                            @endauth
+                        </div>
+                    </div>
+                </div>
 
                 @endif
                 @endforeach
@@ -156,15 +169,15 @@
         addToWishlist(productId, userId);
     });
     
-const productSlider = document.querySelector('.product-slider-container');
-const slideLeftBtn = document.querySelector('.product-slider-btn.left-0');
-const slideRightBtn = document.querySelector('.product-slider-btn.right-0');
-const productCards = document.querySelectorAll('.product-card');
-const cardWidth = productCards[0].offsetWidth + parseInt(getComputedStyle(productCards[0]).marginLeft) + parseInt(getComputedStyle(productCards[0]).marginRight);
-const visibleCards = 4;
-let startIndex = 0;
-let endIndex = visibleCards - 1;
-let filteredProducts = [];
+    const productSlider = document.querySelector('.product-slider-container');
+    const slideLeftBtn = document.querySelector('.product-slider-btn.left-0');
+    const slideRightBtn = document.querySelector('.product-slider-btn.right-0');
+    const productCards = document.querySelectorAll('.product-card');
+    const cardWidth = productCards[0].offsetWidth + parseInt(getComputedStyle(productCards[0]).marginLeft) + parseInt(getComputedStyle(productCards[0]).marginRight);
+    const visibleCards = 4;
+    let startIndex = 0;
+    let endIndex = visibleCards - 1;
+    let filteredProducts = [];
 
     // Panggil fungsi resetIndexes saat struktur HTML lengkap dimuat
     window.addEventListener('load', resetIndexes);
@@ -221,8 +234,8 @@ let filteredProducts = [];
             }
         });
         resetIndexes(); // Reset indexes for the slider
-    }
-}
+        }
+    }   
 
     function getCurrentLocationAndFilter() {
         if (navigator.geolocation) {
