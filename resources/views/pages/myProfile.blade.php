@@ -97,7 +97,7 @@
 
 
 <!-- Daftar Barang yang Diunggah Pengguna -->
-<div class="mt-8 mx-12">
+<div class="mt-10 mx-12">
     <h2 class="text-2xl font-semibold text-purple-600">My Uploaded Goods</h2>
     @if ($user->goods->isEmpty())
     <p class="text-xl text-gray-600">You haven't uploaded any goods yet.</p>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="mt-4 flex justify-between items-center">
                     <p class="text-sm font-semibold text-gray-700">Price Prediction: Rp {{
-                        number_format($good->g_original_price,
+                        number_format($good->g_price_prediction,
                         0, ',', '.') }}</p>
                     <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
                         class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
@@ -136,6 +136,44 @@
     </div>
     @endif
 </div>
+
+
+<!-- Daftar Barang yang Sudah Dibarter Pengguna -->
+<div class="mt-10 mx-12">
+    <h2 class="text-2xl font-semibold text-purple-600">Exchanged Goods</h2>
+    @if ($user->goods->isEmpty())
+    <p class="text-xl text-gray-600">You haven't exchanged any goods yet.</p>
+    @else
+    <p class="text-base text-gray-800 mb-4">List of goods that you have exchanged with other user.</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+        @foreach ($exchangedGoods as $exchange)
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <!-- Display exchanged goods information -->
+            <img class="w-full h-64 object-cover object-center"
+                src="{{ asset('goods_img/' . $exchange->userGoods->images->first()->img_url) }}" alt="Product Image"
+                data-product-image="{{ asset('goods_img/' . $exchange->userGoods->images->first()->img_url) }}">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold">{{ $exchange->userGoods->g_name }}</h3>
+                <p class="text-sm text-gray-600">{{ $exchange->userGoods->g_desc }}</p>
+                <div class="mt-2 flex justify-between items-center">
+                    <p class="text-sm text-gray-500">Category: {{ $exchange->userGoods->g_category }}</p>
+                </div>
+                <div class="mt-4 flex justify-between items-center">
+                    <p class="text-sm font-semibold text-gray-700">Price Prediction: Rp {{
+                        number_format($exchange->userGoods->g_price_prediction, 0, ',', '.') }}</p>
+                    <a href="{{ route('goods_detail', ['id' => $exchange->userGoods->g_ID]) }}"
+                        class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @endif
+</div>
+
+
+
 
 @include('utils.user.modalEditProfile')
 @include('utils.user.modalChangeAddress')
