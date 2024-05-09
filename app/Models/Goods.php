@@ -54,4 +54,9 @@ class Goods extends Model
         return $this->hasMany(GoodsImage::class, 'g_ID');
     }
 
+    public function isExchanged()
+    {
+        return Exchange::where('my_goods', $this->g_ID)->orWhere('barter_with', $this->g_ID)->exists();
+    }
+
 }

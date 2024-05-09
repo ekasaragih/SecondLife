@@ -40,8 +40,12 @@
                 <p class="text-gray-800">{{ $goods->g_desc }}</p>
                 <div class="flex">
                     <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
-                    <h3 class="text-base text-gray-600 mr-1">{{ number_format($goods->g_price_prediction, 0, '.', ',') }}</h3>
+                    <h3 class="text-base text-gray-600 mr-1">{{ number_format($goods->g_price_prediction, 0, '.', ',')
+                        }}</h3>
                 </div>
+                @if ($goods->isExchanged())
+                <p class="text-red-500 italic mt-2">This goods has been bartered.</p>
+                @endif
             </div>
             <div class="relative">
                 <div class="p-2 m-1 bg-[#F12E52] hover:bg-white text-white hover:text-[#F12E52] shadow-lg rounded-md">

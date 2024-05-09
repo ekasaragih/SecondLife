@@ -95,6 +95,9 @@
                         <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
                             class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
                     </div>
+                    @if ($good->isExchanged())
+                    <p class="text-red-500 italic mt-2">This goods has been bartered.</p>
+                    @endif
                 </div>
             </div>
             @endforeach
