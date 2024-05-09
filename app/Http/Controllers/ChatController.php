@@ -74,16 +74,15 @@ class ChatController extends Controller
         // Fetch recent exchange
         $recentExchange = Exchange::latest()->first();
 
-        // Fetch goods excluding those in exchange table
+        $exchangedGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'))->unique();
+
         $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)
-            ->whereNotIn('g_ID', function ($query) {
-                $query->select('barter_with')->from('exchange');
-            })->get();
+            ->whereNotIn('g_ID', $exchangedGoodsIds)
+            ->get();
 
         $chattingUserGoods = Goods::where('us_ID', $ownerUserId)
-            ->whereNotIn('g_ID', function ($query) {
-                $query->select('my_goods')->from('exchange');
-            })->get();
+            ->whereNotIn('g_ID', $exchangedGoodsIds)
+            ->get();
 
         // Fetch wishlist count
         $wishlistCount = Wishlist::where('us_ID', $loggedInUserId)->count();
@@ -102,6 +101,7 @@ class ChatController extends Controller
             'ownerAvatar' => $ownerAvatar,
         ]);
     }
+
 
 
 
