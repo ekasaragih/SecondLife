@@ -234,7 +234,6 @@ class PageController extends Controller
         return view("pages.myGoods", compact('goods', 'wishlistCount'));
     }
 
-
     public function goods_detail($id)
     {
         $authenticatedUser = session('authenticatedUser');
