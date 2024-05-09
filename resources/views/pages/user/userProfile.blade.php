@@ -6,15 +6,16 @@
         <div class="container mx-auto max-w-screen-lg flex items-center justify-between mb-4">
             <!-- Foto profil -->
             <img class="h-32 w-32 rounded-full border-4 border-white mr-4" id="user_avatar"
-                src="{{ $user->avatar ?? 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}" alt="User Avatar"> <!-- Menggunakan atribut avatar dari model pengguna -->
+                src="{{ $user->avatar ? asset('users_img/' . $user->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}"
+                alt="User Avatar"> <!-- Menggunakan atribut avatar dari model pengguna -->
 
             <!-- Informasi profil -->
             <div>
                 <!-- Nama -->
                 <h1 class="text-3xl font-semibold font-rubik text-purple-600">{{ $user->us_name }}'s Profile</h1>
 
-    <!-- Lokasi -->
-    <p class="text-sm text-gray-600 font-rubik">Location: {{ $user->us_city ?? 'Not specified' }}</p>
+                <!-- Lokasi -->
+                <p class="text-sm text-gray-600 font-rubik">Location: {{ $user->us_city ?? 'Not specified' }}</p>
                 <!-- Follow button -->
                 @if(auth()->user()->isFollowing($user))
                 <div>
@@ -54,12 +55,14 @@
             <div class="ml-auto text-right">
                 <p class="text-lg font-semibold text-gray-800 font-rubik">
                     <!-- Menggunakan class `font-rubik` -->
-                    <span class="font-semibold"><a href="#followersModal" id="viewFollowersLink" class="text-gray-800 underline">Followers:</a></span>
+                    <span class="font-semibold"><a href="#followersModal" id="viewFollowersLink"
+                            class="text-gray-800 underline">Followers:</a></span>
                     <span class="ml-2 text-purple-600" id="followerCount">{{ $user->followers()->count() }}</span>
                 </p>
                 <p class="text-lg font-semibold text-gray-800 font-rubik">
                     <!-- Menggunakan class `font-rubik` -->
-                    <span class="font-semibold"><a href="#followingModal" id="viewFollowingLink" class="text-gray-800 underline">Following:</a></span>
+                    <span class="font-semibold"><a href="#followingModal" id="viewFollowingLink"
+                            class="text-gray-800 underline">Following:</a></span>
                     <span class="ml-2 text-purple-600">{{ $user->following()->count() }}</span>
                 </p>
             </div>
@@ -71,13 +74,14 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             @foreach ($goods as $good)
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            @php
-        $images = $good->images;
-        $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
-        $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
-        @endphp
-        <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
-            data-product-image="{{ $imageUrl }}">
+                @php
+                $images = $good->images;
+                $defaultImageUrl =
+                'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+                $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
+                @endphp
+                <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
+                    data-product-image="{{ $imageUrl }}">
                 <div class="p-4">
                     <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
                     <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
@@ -86,8 +90,8 @@
                         <p class="text-sm text-gray-500">Age: {{ $good->g_age }} Years</p>
                     </div>
                     <div class="mt-4 flex justify-between items-center">
-                        <p class="text-sm font-semibold text-gray-700">Price: Rp {{
-                            number_format($good->g_original_price, 0, ',', '.') }}</p>
+                        <p class="text-sm font-semibold text-gray-700">Price Prediction: Rp {{
+                            number_format($good->g_price_prediction, 0, ',', '.') }}</p>
                         <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
                             class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
                     </div>
@@ -100,17 +104,20 @@
 </div>
 
 <!-- Followers Modal -->
-<div id="followersModal" class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50 hidden">
+<div id="followersModal"
+    class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50 hidden">
     <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
-        <span id="closeFollowersModal" class="absolute top-4 right-4 p-2 cursor-pointer text-purple-700 font-semibold font-rubik text-2xl">&times;</span>
+        <span id="closeFollowersModal"
+            class="absolute top-4 right-4 p-2 cursor-pointer text-purple-700 font-semibold font-rubik text-2xl">&times;</span>
         <h2 class="text-2xl font-semibold mb-4 text-center text-purple-600 font-rubik">Followers</h2>
         <hr class="my-2 border-purple-700"> <!-- Garis pembatas dengan sedikit spasi -->
-        <ul id="followersList" class="text-left" >
+        <ul id="followersList" class="text-left">
             @foreach ($user->followers as $follower)
             <li class="flex items-center mb-2">
-    <img src="{{ $follower->avatar }}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
-    <a href="{{ route('userProfile', ['username' => $follower->us_name]) }}" class="text-purple-700 font-rubik">{{ $follower->us_name }}</a>
-</li>
+                <img src="{{ $follower->avatar }}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
+                <a href="{{ route('userProfile', ['username' => $follower->us_name]) }}"
+                    class="text-purple-700 font-rubik">{{ $follower->us_name }}</a>
+            </li>
 
             @endforeach
         </ul>
@@ -118,17 +125,20 @@
 </div>
 
 <!-- Following Modal -->
-<div id="followingModal" class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50 hidden">
+<div id="followingModal"
+    class="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50 hidden">
     <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
-        <span id="closeFollowingModal" class="absolute top-4 right-4 p-2 cursor-pointer text-purple-700 font-semibold font-rubik text-2xl">&times;</span>
+        <span id="closeFollowingModal"
+            class="absolute top-4 right-4 p-2 cursor-pointer text-purple-700 font-semibold font-rubik text-2xl">&times;</span>
         <h2 class="text-2xl font-semibold mb-4 text-center text-purple-600 font-rubik">Following</h2>
         <hr class="my-2 border-purple-700"> <!-- Garis pembatas dengan sedikit spasi -->
         <ul id="followingList" class="text-left">
             @foreach ($user->following as $followed)
             <li class="flex items-center mb-2">
-    <img src="{{ $followed->avatar }}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
-    <a href="{{ route('userProfile', ['username' => $followed->us_name]) }}" class="text-purple-700 font-rubik">{{ $followed->us_name }}</a>
-</li>
+                <img src="{{ $followed->avatar }}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2">
+                <a href="{{ route('userProfile', ['username' => $followed->us_name]) }}"
+                    class="text-purple-700 font-rubik">{{ $followed->us_name }}</a>
+            </li>
 
             @endforeach
         </ul>

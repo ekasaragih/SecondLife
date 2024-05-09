@@ -8,7 +8,7 @@
             font-family: 'Rubik', sans-serif;
         }
     </style>
-        <meta name="api-token" content="{{ Auth::user()->api_token }}">
+    <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
 </head>
 
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-span-3 m-5 flex flex-col justify-center">
                     <div class="text-3xl font-bold">
                         <span id="full_name">{{ $user->us_name }}</span>
@@ -71,19 +71,19 @@
                     </div>
 
                     <div class="ml-auto text-right">
-                    <p class="text-lg font-semibold text-gray-800 font-rubik">
-    <span class="font-semibold">
-        <a href="#" id="viewFollowersLink" class="text-gray-800 underline">Followers:</a>
-    </span>
-    <span class="text-purple-500">   {{ auth()->user()->followers()->count() }}</span>
-</p>
+                        <p class="text-lg font-semibold text-gray-800 font-rubik">
+                            <span class="font-semibold">
+                                <a href="#" id="viewFollowersLink" class="text-gray-800 underline">Followers:</a>
+                            </span>
+                            <span class="text-purple-500"> {{ auth()->user()->followers()->count() }}</span>
+                        </p>
 
-<p class="text-lg font-semibold text-gray-800 font-rubik">
-    <span class="font-semibold">
-        <a href="#" id="viewFollowingLink" class="text-gray-800 underline">Following:</a>
-    </span>
-    <span class="text-purple-500"> {{ auth()->user()->following()->count() }}</span>
-</p>
+                        <p class="text-lg font-semibold text-gray-800 font-rubik">
+                            <span class="font-semibold">
+                                <a href="#" id="viewFollowingLink" class="text-gray-800 underline">Following:</a>
+                            </span>
+                            <span class="text-purple-500"> {{ auth()->user()->following()->count() }}</span>
+                        </p>
 
 
                     </div>
@@ -97,41 +97,83 @@
 
 
 <!-- Daftar Barang yang Diunggah Pengguna -->
-<div class="mt-8 mx-12">
-<h2 class="text-2xl font-semibold text-purple-600">My Uploaded Goods</h2>
+<div class="mt-10 mx-12">
+    <h2 class="text-2xl font-semibold text-purple-600">My Uploaded Goods</h2>
     @if ($user->goods->isEmpty())
-        <p class="text-xl text-gray-600">You haven't uploaded any goods yet.</p>
+    <p class="text-xl text-gray-600">You haven't uploaded any goods yet.</p>
     @else
-    <p class="text-base text-gray-800 mb-4">Welcome to your profile. Here's a list of the items you've given a second chance to. Thank you for bringing these products back to life and giving them another opportunity to shine.</p>
+    <p class="text-base text-gray-800 mb-4">Welcome to your profile. Here's a list of the items you've given a second
+        chance to. Thank you for bringing these products back to life and giving them another opportunity to shine.</p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         @foreach ($user->goods as $good)
-<div class="bg-white rounded-lg shadow-md overflow-hidden">
-@php
-        $images = $good->images;
-        $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
-        $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
-        @endphp
-        <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
-            data-product-image="{{ $imageUrl }}">
-    <div class="p-4">
-        <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
-        <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
-        <div class="mt-2 flex justify-between items-center">
-            <p class="text-sm text-gray-500">Category: {{ $good->g_category }}</p>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            @php
+            $images = $good->images;
+            $defaultImageUrl =
+            'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+            $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
+            @endphp
+            <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
+                data-product-image="{{ $imageUrl }}">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
+                <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
+                <div class="mt-2 flex justify-between items-center">
+                    <p class="text-sm text-gray-500">Category: {{ $good->g_category }}</p>
+                </div>
+                <div class="mt-4 flex justify-between items-center">
+                    <p class="text-sm font-semibold text-gray-700">Price Prediction: Rp {{
+                        number_format($good->g_price_prediction,
+                        0, ',', '.') }}</p>
+                    <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
+                        class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
+                </div>
+            </div>
         </div>
-        <div class="mt-4 flex justify-between items-center">
-                            <p class="text-sm font-semibold text-gray-700">Price: Rp {{ number_format($good->g_original_price, 0, ',', '.') }}</p>
-                            <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
-                                class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
-                        </div>
-    </div>
-</div>
-@endforeach
+        @endforeach
 
-        </div>
+    </div>
     @endif
 </div>
+
+
+<!-- Daftar Barang yang Sudah Dibarter Pengguna -->
+<div class="mt-10 mx-12">
+    <h2 class="text-2xl font-semibold text-purple-600">Exchanged Goods</h2>
+    @if ($user->goods->isEmpty())
+    <p class="text-xl text-gray-600">You haven't exchanged any goods yet.</p>
+    @else
+    <p class="text-base text-gray-800 mb-4">List of goods that you have exchanged with other user.</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+        @foreach ($exchangedGoods as $exchange)
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <!-- Display exchanged goods information -->
+            <img class="w-full h-64 object-cover object-center"
+                src="{{ asset('goods_img/' . $exchange->userGoods->images->first()->img_url) }}" alt="Product Image"
+                data-product-image="{{ asset('goods_img/' . $exchange->userGoods->images->first()->img_url) }}">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold">{{ $exchange->userGoods->g_name }}</h3>
+                <p class="text-sm text-gray-600">{{ $exchange->userGoods->g_desc }}</p>
+                <div class="mt-2 flex justify-between items-center">
+                    <p class="text-sm text-gray-500">Category: {{ $exchange->userGoods->g_category }}</p>
+                </div>
+                <div class="mt-4 flex justify-between items-center">
+                    <p class="text-sm font-semibold text-gray-700">Price Prediction: Rp {{
+                        number_format($exchange->userGoods->g_price_prediction, 0, ',', '.') }}</p>
+                    <a href="{{ route('goods_detail', ['id' => $exchange->userGoods->g_ID]) }}"
+                        class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @endif
+</div>
+
+
+
 
 @include('utils.user.modalEditProfile')
 @include('utils.user.modalChangeAddress')
@@ -197,16 +239,12 @@
 
     // Get the wishlist count element
     const wishlistCount = document.getElementById('wishlist-count');
-    // Get the wishlist count element
     const wishlistCount = document.getElementById('wishlist-count');
 
-    // Get the wishlist from the local storage
     let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
-    // Update the wishlist count
     wishlistCount.textContent = wishlist.length;
 
-    // Add an event listener to the remove button to update the wishlist count
     const removeButtons = document.querySelectorAll('.remove-button');
     removeButtons.forEach(button => {
         button.addEventListener('click', () => {

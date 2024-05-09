@@ -50,7 +50,7 @@
                     <p class="text-gray-700"><span class="font-bold">Age:</span>
                         {{ $product->g_age }} <span>Years</span>
                     </p>
-                    <p class="hidden text-gray-700"><span class="font-bold">Prediction price:</span>
+                    <p class="hidden text-gray-700"><span class="font-bold">Price Prediction:</span>
                         {{$formattedPrice }}
                     </p>
                 </div>

@@ -34,7 +34,7 @@
                         <p class="ml-2 mb-1">{{ $wishlistItem->goods->g_type }}</p>
                     </div>
 
-                    <p class="mb-1 text-lg hidden">Price: {{ $wishlistItem->goods->g_original_price }}</p>
+                    <p class="mb-1 text-lg hidden">Price Prediction: {{ $wishlistItem->goods->g_original_price }}</p>
                     <div class="px-6 py-4 mx-2 flex justify-center">
                         @auth
                         <a href="{{ route('goods_detail', ['id' => $wishlistItem->goods->g_ID]) }}"
@@ -229,7 +229,7 @@
                 // document.getElementById('productImage').src = productImage;
                 document.getElementById('productCategory').textContent = 'Category: ' + productCategory;
                 document.getElementById('productType').textContent = 'Type: ' + productType;
-                document.getElementById('productPrice').textContent = 'Price: ' + productPrice;
+                document.getElementById('productPrice').textContent = 'Price Prediction: ' + productPrice;
 
             });
         });
