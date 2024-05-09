@@ -41,7 +41,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/goods-detail/{id}', [PageController::class, 'goods_detail'])->name('goods_detail');
     Route::get('/chat', [ChatController::class, 'index'])->name('home_chat');
     Route::get('/comments', [CommentController::class, 'index']);
-    Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
     Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');
 });
 
@@ -96,7 +95,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
 
+    // Comments
     Route::post('/comments', [CommentController::class, 'storeComment'])->name('comment_store');
+    Route::get('/comments/{g_ID}', [CommentController::class, 'getByProductId']);
 
     Route::get('/search', 'App\Http\Controllers\SearchController@search')->name('search');
 });

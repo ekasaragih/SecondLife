@@ -66,6 +66,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
+    const avatarBaseUrl = "{{ asset('users_img/') }}";
+
     function openModal(encodedName, encodedDescription, image, encodedLocation, price, g_ID, us_name, userAvatar) {
         var name = decodeURIComponent(encodedName);
         var description = decodeURIComponent(encodedDescription);
@@ -79,8 +81,6 @@
         const modalPrice = document.getElementById('modalPrice');
         const modalProductId = document.getElementById('modalProductId');
         const uploadedByLink = document.getElementById('uploadedByLink');
-        const userAvatarImg = document.getElementById('userAvatarImg');
-        const userAvatarPP = document.getElementById('userAvatarPP');
 
         modal.style.display = 'block';
         modalTitle.textContent = name;
@@ -90,9 +90,7 @@
         modalPrice.textContent = "Price Prediction: " + price;
         modalProductId.textContent = "Product ID: " + g_ID;
         uploadedByLink.textContent = us_name;
-        uploadedByLink.href = "{{ route('userProfile', ['username' => ':username']) }}".replace(':username', us_name); // Tautkan nama pengguna dengan rute userProfile
-        // userAvatarPP.src = userAvatar;
-        // userAvatarImg.src = userAvatar;
+        uploadedByLink.href = "{{ route('userProfile', ['username' => ':username']) }}".replace(':username', us_name);
 
         document.getElementById('g_ID').value = g_ID;
         console.log(g_ID);
@@ -124,7 +122,7 @@
                     const commentDiv = document.createElement('div');
                     commentDiv.classList.add('flex', 'items-start', 'mb-4');
                     commentDiv.innerHTML = `
-                        <img src="" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarImg">
+                        <img src="${avatarBaseUrl}/${comment.user.avatar ? comment.user.avatar : 'default-avatar.jpg'}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarImg">
                         <div>
                         <p class="font-semibold" style="margin-bottom: 4px;">
                                 <a href="${userProfileRoute.replace(':username', comment.us_name)}" class="text-blue-500">${comment.us_name}</a>
@@ -139,7 +137,7 @@
                 if (response.data.length > 4) {
                     const showMoreBtn = document.createElement('button');
                     showMoreBtn.textContent = 'Show more';
-                    showMoreBtn.classList.add('text-blue-500', 'mb-4', 'italic', 'border-b-2', 'border-blue-500', 'hover:border-blue-600'); // Tambahkan kelas Tailwind untuk gaya tambahan
+                    showMoreBtn.classList.add('text-blue-500', 'mb-4', 'italic', 'border-b-2', 'border-blue-500', 'hover:border-blue-600');
                     showMoreBtn.onclick = function() {
                         loadAllComments(g_ID);
                         showMoreBtn.style.display = 'none';
@@ -163,7 +161,7 @@
                     const commentDiv = document.createElement('div');
                     commentDiv.classList.add('flex', 'items-start', 'mb-4');
                     commentDiv.innerHTML = `
-                        <img src="" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarPP">
+                        <img src="${avatarBaseUrl}/${comment.user.avatar ? comment.user.avatar : 'default-avatar.jpg'}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarImg">
                         <div>
                         <p class="font-semibold" style="margin-bottom: 4px;">
                                 <a href="${userProfileRoute.replace(':username', comment.us_name)}" class="text-blue-500">${comment.us_name}</a>
