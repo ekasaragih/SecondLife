@@ -41,36 +41,49 @@
                     data-location="{{ strtolower($user->us_city) }}">
                     <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image">
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2">{{
-                            $product->g_name }}</h3>
-                        <p class="text-sm text-gray-600 font-bold mb-1">Uploaded by:</p>
-                        <p class="text-sm text-gray-600 mb-1">{{ $user->us_name }}</p>
-                        <p class="text-sm text-gray-600 font-bold mb-1">Description:</p>
-                        <p class="text-sm text-gray-600 mb-1">{{ $product->g_desc }}</p>
-                        <p class="text-sm text-gray-600 font-bold mb-1">Location:</p>
-                        <p class="text-sm text-gray-600 mb-1">{{ $user->us_city }}</p>
+                        <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
+                            style="height: 3.5rem; line-height: 1.75rem; /* Set to two lines of text */">
+                            {{ $product->g_name }}
+                        </h3>
+                        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Uploaded by:</p>
+                        <p class="text-sm text-gray-600 mb-1" style="height: 1.5rem; line-height: 1.5rem;">{{
+                            $user->us_name }}</p>
+                        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Description:</p>
+                        <p class="text-sm text-gray-600 mb-1"
+                            style="height: 3rem; line-height: 1.5rem; overflow: hidden;">{{ $product->g_desc }}</p>
+                        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Location:</p>
+                        <p class="text-sm text-gray-600 mb-1" style="height: 1.5rem; line-height: 1.5rem;">{{
+                            $user->us_city }}</p>
+                        <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
                         <div class="mt-4 flex justify-between items-center">
                             <span class="text-gray-600 text-xs font-bold">Price Prediction: Rp {{
                                 number_format($product->g_price_prediction, 0, ',', '.') }}</span>
+
                             @auth
-                            <button
-                                class="bg-red-400 text-white px-4 py-2 ml-2 rounded hover:bg-gray-600 transition duration-300"
-                                style="font-size: 14px;"
-                                onclick="openModal('{{ rawurlencode($product->g_name) }}', '{{ rawurlencode($product->g_desc) }}', '{{ isset($product->images[0]) ? asset('goods_img/' . rawurlencode($product->images[0]->img_url)) : 'https://via.placeholder.com/400' }}', '{{ rawurlencode($user->us_city) }}', '{{ rawurlencode(number_format($product->g_price_prediction, 0, ',', '.')) }}', '{{ $product->g_ID }}', '{{ rawurlencode($user->us_name) }}', '{{ $user->avatar ? asset('users_img/' . $user->avatar) : 'https://i.pinimg.com/564x/9d/d2/90/9dd2906190f0c1813429fe0c8695ed04.jpg' }}')">
-                                Detail
-                            </button>
-
-                            <button
-                                class="bg-red-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist"
-                                id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}"
-                                data-user-id="{{ Auth::id() }}">
-                                Add
-                            </button>
-
+                            <div>
+                                <button
+                                    class="bg-red-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
+                                    style="font-size: 14px;"
+                                    onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) : 'https://via.placeholder.com/400' }}', '{{ $user->us_city }}', '{{ number_format($product->g_original_price, 0, ',', '.') }}', '{{ $product->g_ID }}', '{{ $user->us_name }}')">
+                                    Detail
+                                </button>
+                            </div>
+                            <div>
+                                <button
+                                    class="bg-red-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300 add-to-wishlist"
+                                    id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}"
+                                    data-user-id="{{ Auth::id() }}">
+                                    Add
+                                </button>
+                            </div>
                             @endauth
                         </div>
                     </div>
                 </div>
+
                 @endif
                 @endforeach
             </div>

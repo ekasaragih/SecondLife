@@ -47,10 +47,17 @@
                     <div
                         class="carousel-item-caption bg-black bg-opacity-50 p-4 text-white rounded-md absolute top-0 left-0 right-0">
                         <p class="mb-0 text-lg font-bold hidden" id="product_ID">ID: {{ $product->g_ID }}</p>
-                        <p class="mb-0 text-lg font-bold">Name: {{ $product->g_name }}</p>
+                        <div class="flex items-center">
+                            <p class="mb-0 text-lg font-bold">Name: {{ $product->g_name }}</p>
+                            <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}"
+                                class="ml-2 text-sm font-semibold text-purple-500 hover:text-[#F12E52]">
+                                Click for more
+                            </a>
+                        </div>
                         <p class="mb-2">Description: {{ $product->g_desc }}</p>
                         <p>Prediction Price: Rp {{ number_format($product->g_price_prediction, 0, ',', '.') }}</p>
                     </div>
+
                 </div>
                 @endforeach
                 <button id="data-carousel" type="button"

@@ -7,8 +7,8 @@
 
             <div class="flex" id="product_data">
                 @foreach($trendProducts as $product)
-                <div class="product-trend-card flex-none w-1/4 border border-gray-300 bg-white rounded-lg shadow-md location-name" id="product_detail"
-                    data-location="">
+                <div class="product-trend-card flex-none w-1/4 border border-gray-300 bg-white rounded-lg shadow-md location-name"
+                    id="product_detail" data-location="">
                     @php
                     $user = $product->userID;
                     $defaultImageUrl =
@@ -20,12 +20,28 @@
                     <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
                         data-product-image="{{ $imageUrl }}">
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2" id="goods_name">{{ $product->g_name }}</h3>
-                        <p class="text-sm text-gray-600" id="goods_desc">{{ $product->g_desc }}</p>
+                        <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
+                            style="height: 3.5rem; line-height: 1.75rem; /* Set to two lines of text */">
+                            {{ $product->g_name }}
+                        </h3>
+                        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Uploaded by:</p>
+                        <p class="text-sm text-gray-600 mb-1" style="height: 1.5rem; line-height: 1.5rem;">{{
+                            $user->us_name }}</p>
+                        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Description:</p>
+                        <p class="text-sm text-gray-600 mb-1"
+                            style="height: 3rem; line-height: 1.5rem; overflow: hidden;">{{ $product->g_desc }}</p>
+                        <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Location:</p>
+                        <p class="text-sm text-gray-600 mb-1" style="height: 1.5rem; line-height: 1.5rem;">{{
+                            $user->us_city }}</p>
+                        <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-gray-600 text-xs" id="goods_ori_price">Price Prediction: Rp{{
-                                number_format($product->g_price_prediction, 0, ',', '.')
-                                }}</span>
+                            <span class="text-gray-600 text-xs" id="goods_ori_price">
+                                Price Prediction: Rp{{ number_format($product->g_price_prediction, 0, ',', '.') }}
+                            </span>
+
                             @auth
                             <div class="flex justify-center items-center">
                                 <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}"
