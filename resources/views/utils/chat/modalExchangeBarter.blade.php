@@ -46,8 +46,7 @@
                                     @foreach ($loggedInUserGoods as $goods)
                                     <li class="">
                                         <input type="checkbox" id="{{ $goods->g_ID }}" name="user_goods"
-                                            value="{{ $goods->g_ID }}" class="hidden peer" required
-                                            onchange="handleCheckboxChange(this.id)" />
+                                            value="{{ $goods->g_ID }}" class="hidden peer" required />
                                         <label for="{{ $goods->g_ID }}"
                                             class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
 
@@ -160,16 +159,7 @@
     </div>
 </div>
 
-<script>
-    function handleCheckboxChange(checkboxId) {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach((checkbox) => {
-            if (checkbox.id !== checkboxId) {
-                checkbox.checked = false;
-            }
-        });
-    }
-</script>
+
 
 <script>
     $('#btn_send_exchange').click(function () {
@@ -182,15 +172,15 @@
         const userGoodsId = $('input[name="user_goods"]:checked').val();
         const otherUserGoodsId = $('input[name="other_user_goods"]:checked').val();
 
-        // if (userGoodsId > 1 || otherUserGoodsId > 1) {
-        //     Swal.fire({
-        //         icon: 'error',
-        //         title: 'Oops...',
-        //         text: 'You can only choose 1 goods for each user!'
-        //     });
-        //     return;
-        // }
-
+        if ($('input[name="user_goods"]:checked').length > 1 || $('input[name="other_user_goods"]:checked').length > 1) {
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'You can only choose 1 goods for each user!'
+            });
+            return;
+        }
+        
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         var apiToken = $('meta[name="api-token"]').attr('content');
 

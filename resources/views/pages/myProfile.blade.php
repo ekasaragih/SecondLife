@@ -141,8 +141,8 @@
 <!-- Daftar Barang yang Sudah Dibarter Pengguna -->
 <div class="mt-10 mx-12">
     <h2 class="text-2xl font-semibold text-purple-600">Exchanged Goods</h2>
-    @if ($user->goods->isEmpty())
-    <p class="text-xl text-gray-600">You haven't exchanged any goods yet.</p>
+    @if ($exchangedGoods->isEmpty())
+    <p class="text-lg text-gray-600">You haven't exchanged any goods yet.</p>
     @else
     <p class="text-base text-gray-800 mb-4">List of goods that you have exchanged with other user.</p>
 
