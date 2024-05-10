@@ -34,28 +34,30 @@
 
         <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
             data-product-image="{{ $imageUrl }}">
-        <div class="px-6 py-4">
+        <div class="px-4 py-4">
             <input type="hidden" id="goods_owner" value="{{ $product->us_ID }}" />
-            <div class="font-bold text-xl mb-2">{{ $product->g_name }}</div>
+            <div class="font-bold text-lg mb-2">{{ $product->g_name }}</div>
+            <hr class="my-2 border-b-2 border-gray-800"> <!-- Garis pembatas -->
             <p class="hidden text-gray-700 text-base mb-2">{{ $product->g_desc }}
             </p>
-            <div class="grid grid-cols-1 gap-2 mt-3">
+            <div class="grid grid-cols-1 gap-2 mt-3 bg-pink-100 border border-gray-300 rounded-lg p-4">
                 <div>
-                    <p class="text-gray-700"><span class="font-bold">Category:</span>
+                    <p class="text-gray-700" style="font-size: 1em;"><span class="font-bold">Category:</span>
                         {{ $product->g_category }}
                     </p>
-                    <p class="hidden text-gray-700"><span class="font-bold">Condition:</span>
+                    <p class=" text-gray-700"><span class="font-bold">Condition:</span>
                         {{ $product->g_type }}
                     </p>
                     <p class="text-gray-700"><span class="font-bold">Age:</span>
                         {{ $product->g_age }} <span>Years</span>
                     </p>
-                    <p class="hidden text-gray-700"><span class="font-bold">Price Prediction:</span>
+                    <p class=" text-gray-700"><span class="font-bold">Price Prediction:</span>
                         {{$formattedPrice }}
                     </p>
                 </div>
             </div>
         </div>
+        <hr class="my-1 border-b-2 border-gray-800"> <!-- Garis pembatas -->
         <div class="px-6 py-4">
             <div class="flex justify-center items-center">
                 @auth
