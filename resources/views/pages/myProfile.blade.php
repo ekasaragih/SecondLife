@@ -157,8 +157,10 @@
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <!-- Display exchanged goods information -->
             <img class="w-full h-64 object-cover object-center"
-                src="{{ asset('goods_img/' . $exchange->userGoods->images->first()->img_url) }}" alt="Product Image"
-                data-product-image="{{ asset('goods_img/' . $exchange->userGoods->images->first()->img_url) }}">
+    src="{{ optional($exchange->userGoods->images->first())->img_url ? asset('goods_img/' . $exchange->userGoods->images->first()->img_url) : '' }}"
+    alt="Product Image"
+    data-product-image="{{ optional($exchange->userGoods->images->first())->img_url ? asset('goods_img/' . $exchange->userGoods->images->first()->img_url) : '' }}">
+
             <div class="p-4">
             <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
                             style="height: 3.5rem; line-height: 1.75rem; /* Set to two lines of text */">{{ $exchange->userGoods->g_name }}</h3>
