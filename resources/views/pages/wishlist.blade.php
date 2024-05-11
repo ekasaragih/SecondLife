@@ -37,7 +37,7 @@
                     <p class="mb-1 text-lg hidden">Price Prediction: {{ $wishlistItem->goods->g_original_price }}</p>
                     <div class="px-6 py-4 mx-2 flex justify-center">
                         @auth
-                        <a href="{{ route('goods_detail', ['id' => $wishlistItem->goods->g_ID]) }}"
+                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($wishlistItem->goods->g_ID)]) }}"
                             class="btn-details bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition duration-300 flex-grow-0 flex-shrink-0 text-center"
                             data-product-id="{{ $wishlistItem->goods->g_ID }}"
                             data-product-user-id="{{ $wishlistItem->goods->us_ID }}"
