@@ -56,7 +56,6 @@
         </div>
         <!-- Tombol "See More" di bawah kotak komentar -->
         <div class="text-center mt-4">
-        <input type="hidden" id="hashed_ID" name="hashed_ID" value="">
             <button onclick="goToDetailPage()"
                 class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
                 See More
@@ -82,7 +81,6 @@
         const modalPrice = document.getElementById('modalPrice');
         const modalProductId = document.getElementById('modalProductId');
         const uploadedByLink = document.getElementById('uploadedByLink');
-        
 
         modal.style.display = 'block';
         modalTitle.textContent = name;
@@ -95,19 +93,16 @@
         uploadedByLink.href = "{{ route('userProfile', ['username' => ':username']) }}".replace(':username', us_name);
 
         document.getElementById('g_ID').value = g_ID;
-        document.getElementById('hashed_id').value = hashed_id; // Tambahkan baris ini di dalam fungsi openModal()
-
         console.log(g_ID);
 
         loadComments(g_ID, us_name);
     }
 
     function goToDetailPage() {
-    const hashed_id = document.getElementById('hashed_id').value; // Ubah 'g_ID' menjadi 'hashed_id'
-    const detailPageURL = "{{ route('goods_detail', ['hashed_id' => ':hashed_id']) }}".replace(':hashed_id', hashed_id);
-    window.location.href = detailPageURL;
-}
-
+        const g_ID = document.getElementById('g_ID').value;
+        const detailPageURL = "{{ route('goods_detail', ['hashed_id' => ':g_ID']) }}".replace(':g_ID', g_ID);
+        window.location.href = detailPageURL;
+    }
     const userProfileRoute = "{{ route('userProfile', ['username' => ':username']) }}";
 
     function loadComments(g_ID, us_name) {

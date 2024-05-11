@@ -67,7 +67,7 @@
                                 <button
                                     class="bg-red-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
                                     style="font-size: 14px;"
-                                    onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) : 'https://via.placeholder.com/400' }}', '{{ $user->us_city }}', '{{ number_format($product->g_original_price, 0, ',', '.') }}', '{{ $product->g_ID }}', '{{ Hashids::encode($product->hashed_ID) }}', '{{ $user->us_name }}')">
+                                    onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) : 'https://via.placeholder.com/400' }}', '{{ $user->us_city }}', '{{ number_format($product->g_original_price, 0, ',', '.') }}', '{{ $product->g_ID }}', '{{ $user->us_name }}')">
                                     Detail
                                 </button>
                             </div>
