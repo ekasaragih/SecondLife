@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
     Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
     Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
-    Route::get('/goods-detail/{id}', [PageController::class, 'goods_detail'])->name('goods_detail');
+    Route::get('/goods-detail/{hashed_id}', [PageController::class, 'goods_detail'])->name('goods_detail');
     Route::get('/chat', [ChatController::class, 'index'])->name('home_chat');
     Route::get('/comments', [CommentController::class, 'index']);
     Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');

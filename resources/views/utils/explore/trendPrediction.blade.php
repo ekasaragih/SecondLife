@@ -44,7 +44,7 @@
 
                             @auth
                             <div class="flex justify-center items-center">
-                                <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}"
+                            <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
                                     class="bg-red-400 text-white text-sm px-4 py-2 rounded hover:bg-red-600 transition duration-300 text-center">
                                     Detail
                                 </a>

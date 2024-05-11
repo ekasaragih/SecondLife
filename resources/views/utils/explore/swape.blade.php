@@ -49,7 +49,7 @@
                         <p class="mb-0 text-lg font-bold hidden" id="product_ID">ID: {{ $product->g_ID }}</p>
                         <div class="flex items-center">
                             <p class="mb-0 text-lg font-bold">Name: {{ $product->g_name }}</p>
-                            <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}"
+                            <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
                                 class="ml-2 text-sm font-semibold text-purple-500 hover:text-[#F12E52]">
                                 Click for more
                             </a>
