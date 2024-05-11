@@ -29,7 +29,7 @@
                     <div class="mt-4 flex justify-between items-center">
                         <p class="text-sm font-semibold text-gray-700">Price Prediction: Rp {{
                             number_format($good->g_price_prediction, 0, ',', '.') }}</p>
-                        <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
+                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($good->g_ID)]) }}"
                             class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
                     </div>
                 </div>

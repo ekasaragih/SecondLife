@@ -12,6 +12,8 @@ use App\Models\Wishlist;
 use App\Models\User;
 use App\Models\Exchange;
 use Illuminate\Support\Facades\DB;
+use Vinkla\Hashids\Facades\Hashids; // Tambahkan baris ini
+
 
 class PageController extends Controller
 {
@@ -234,16 +236,20 @@ class PageController extends Controller
         return view("pages.myGoods", compact('goods', 'wishlistCount'));
     }
 
-    public function goods_detail($id)
-    {
-        $authenticatedUser = session('authenticatedUser');
-        $user = session('authenticatedUser');
-        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->get();
-        $wishlistCount = $wishlistItems->count();
-        $goods = Goods::where('us_ID', $authenticatedUser->us_ID)->get();
-        $product = Goods::findOrFail($id);
-        $userDetails = User::findOrFail($product->us_ID);
+    public function goods_detail($hashed_id)
+{
+    // Decode hashed ID
+    $g_ID = Hashids::decode($hashed_id)[0];
 
-        return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
-    }
+    $authenticatedUser = session('authenticatedUser');
+    $user = session('authenticatedUser');
+    $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->get();
+    $wishlistCount = $wishlistItems->count();
+    $goods = Goods::where('us_ID', $authenticatedUser->us_ID)->get();
+    $product = Goods::findOrFail($g_ID);
+    $userDetails = User::findOrFail($product->us_ID);
+
+    return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
+}
+
 }
