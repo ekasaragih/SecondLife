@@ -67,7 +67,7 @@ class UserController extends Controller
         }
 
         $avatar = $request->file('avatar');
-        $userName = str_replace(' ', '_', $user->us_name);
+        $userName = str_replace(' ', '_', $user->us_username);
         $timestamp = now()->timestamp;
         $extension = $avatar->getClientOriginalExtension();
 
