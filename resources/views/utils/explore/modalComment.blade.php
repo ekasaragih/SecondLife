@@ -68,10 +68,11 @@
 <script>
     const avatarBaseUrl = "{{ asset('users_img/') }}";
 
-    function openModal(encodedName, encodedDescription, image, encodedLocation, price, g_ID, us_name, userAvatar) {
+    function openModal(encodedName, encodedDescription, image, encodedLocation, price, g_ID, encodedUserName, userAvatar) {
         var name = decodeURIComponent(encodedName);
         var description = decodeURIComponent(encodedDescription);
         var location = decodeURIComponent(encodedLocation);
+        var us_name = decodeURIComponent(encodedUserName);
 
         const modal = document.getElementById('productModal');
         const modalTitle = document.getElementById('modalTitle');
