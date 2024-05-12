@@ -100,7 +100,7 @@
 
     function goToDetailPage() {
         const g_ID = document.getElementById('g_ID').value;
-        const detailPageURL = "{{ route('goods_detail', ['id' => ':g_ID']) }}".replace(':g_ID', g_ID);
+        const detailPageURL = "{{ route('goods_detail', ['hashed_id' => ':g_ID']) }}".replace(':g_ID', g_ID);
         window.location.href = detailPageURL;
     }
     const userProfileRoute = "{{ route('userProfile', ['username' => ':username']) }}";

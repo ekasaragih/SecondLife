@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Goods;
 use App\Models\GoodsImage;
+use Vinkla\Hashids\Facades\Hashids; // Tambahkan baris ini
+
 
 class GoodsController extends Controller
 {
@@ -34,6 +36,10 @@ class GoodsController extends Controller
         $goods->g_age = $request->input('g_age');
         $goods->g_category = $request->input('g_category');
 
+        $goods->save();
+
+        $hashedID = Hashids::encode($goods->g_ID);
+        $goods->hashed_id = $hashedID; // Assuming 'hashed_id' is the column name for the hashed ID
         $goods->save();
 
         return response()->json(['message' => 'Data stored successfully', 'g_ID' => $goods->g_ID], 200);

@@ -35,17 +35,6 @@
                             <p class="ml-2">{{ $product->g_type }}</p>
                         </div>
 
-                        @if($user->us_city || $user->us_province)
-                        <p class="leading-relaxed text-gray-600">
-                            Location:
-                            @if($user->us_city)
-                            {{ $user->us_city }},
-                            @endif
-                            @if($user->us_province)
-                            {{ $user->us_province }}
-                            @endif
-                        </p>
-                        @endif
                         <div class="flex flex-col justify-center items-center">
                             <div class="text-center mb-4">
                                 <span class="title-font font-medium text-xl text-gray-900">
@@ -114,7 +103,8 @@
             <div class="mt-4">
                 <span class="mr-3 text-gray-500">Uploaded by:</span>
                 <a href="{{ route('userProfile', ['username' => $userDetails->us_name]) }}"
-                    class="font-semibold text-fray-400">{{ $userDetails->us_name }}</a>
+                    class="font-semibold text-fray-400">{{ $userDetails->us_name }}</a><br>
+                <span class="text-gray-500">Located in <strong class="text-black font-bold">{{ $userDetails->us_city }}</strong></span>
             </div>
         </section>
 

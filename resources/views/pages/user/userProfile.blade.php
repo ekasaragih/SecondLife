@@ -68,6 +68,8 @@
             </div>
         </div>
 
+        <hr class="my-4 border-b-2 border-gray-300 shadow-md"> 
+
         @if ($goods->isEmpty())
         <p class="text-xl text-gray-600">No goods found for this user.</p>
         @else
@@ -83,17 +85,25 @@
                 <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
                     data-product-image="{{ $imageUrl }}">
                 <div class="p-4">
-                    <h3 class="text-lg font-semibold">{{ $good->g_name }}</h3>
-                    <p class="text-sm text-gray-600">{{ $good->g_desc }}</p>
+                <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
+                            style="height: 3.5rem; line-height: 1.75rem; /* Set to two lines of text */">{{ $good->g_name }}</h3>
+                            <p class="text-sm text-gray-600 font-bold mb-1" style="height: 1.5rem; line-height: 1.5rem;">
+                            Description:</p>
+                        <p class="text-sm text-gray-600 mb-1"
+                            style="height: 3rem; line-height: 1.5rem; overflow: hidden;">{{ $good->g_desc }}</p>
                     <div class="mt-2 flex justify-between items-center">
                         <p class="text-sm text-gray-500">Category: {{ $good->g_category }}</p>
                         <p class="text-sm text-gray-500">Age: {{ $good->g_age }} Years</p>
                     </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <p class="text-sm font-semibold text-gray-700">Price Prediction: Rp {{
-                            number_format($good->g_price_prediction, 0, ',', '.') }}</p>
-                        <a href="{{ route('goods_detail', ['id' => $good->g_ID]) }}"
-                            class="text-sm font-medium text-purple-600 hover:text-purple-800">View Details</a>
+                    <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
+<div class="mt-4 flex justify-between items-center">
+    <span class="text-gray-600 text-xs font-bold order-last">Price Prediction: <br> Rp {{ number_format($good->g_price_prediction, 0, ',', '.') }}</span>
+    <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($good->g_ID)]) }}"
+       class="inline-block bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-sm">
+        Detail
+    </a>
+
+
                     </div>
                     @if ($good->isExchanged())
                     <p class="text-red-500 italic mt-2">This goods has been bartered.</p>

@@ -61,7 +61,7 @@
         <div class="px-6 py-4">
             <div class="flex justify-center items-center">
                 @auth
-                <a href="{{ route('goods_detail', ['id' => $product->g_ID]) }}" id="btn_see_detail"
+                <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}" id="btn_see_detail"
                     class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
                     data-product-image="{{ $imageUrl }}" data-product-id="{{ $product->g_ID }}"
                     data-product-name="{{ $product->g_name }}" data-product-user-id="{{ $product->us_ID }}"
