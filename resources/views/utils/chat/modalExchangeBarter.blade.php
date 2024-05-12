@@ -219,7 +219,7 @@
         const userGoodsId = $('input[name="user_goods"]:checked').val();
         const otherUserGoodsId = $('input[name="other_user_goods"]:checked').val();
 
-        if ($('input[name="user_goods"]:checked').length > 1 || $('input[name="other_user_goods"]:checked').length > 1) {
+        if ($('input[name="user_goods"]:checked').length > 1 || $('input[name="other_user_goods"]:checked').length > 1 || $('input[name="wishlist_goods"]:checked').length > 1) {
             Swal.fire({
             icon: 'error',
             title: 'Oops...',
