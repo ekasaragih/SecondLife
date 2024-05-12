@@ -125,7 +125,7 @@
                         <img src="${avatarBaseUrl}/${comment.user.avatar ? comment.user.avatar : 'default-avatar.jpg'}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarImg">
                         <div>
                         <p class="font-semibold" style="margin-bottom: 4px;">
-                                <a href="${userProfileRoute.replace(':username', comment.us_name)}" class="text-blue-500">${comment.us_name}</a>
+                                <a href="${userProfileRoute.replace(':username', comment.user.us_username)}" class="text-blue-500">${comment.us_name}</a>
                             </p>
                         <p class="text-sm text-gray-600" style="margin-bottom: 0;">${comment.comment_desc}</p>
                         </div>
@@ -164,7 +164,7 @@
                         <img src="${avatarBaseUrl}/${comment.user.avatar ? comment.user.avatar : 'default-avatar.jpg'}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarImg">
                         <div>
                         <p class="font-semibold" style="margin-bottom: 4px;">
-                                <a href="${userProfileRoute.replace(':username', comment.us_name)}" class="text-blue-500">${comment.us_name}</a>
+                                <a href="${userProfileRoute.replace(':username', comment.user.us_username)}" class="text-blue-500">${comment.us_name}</a>
                             </p>
                         <p class="text-sm text-gray-600" style="margin-bottom: 0;">${comment.comment_desc}</p>
                         </div>

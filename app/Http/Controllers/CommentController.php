@@ -44,7 +44,7 @@ class CommentController extends Controller
     public function getByProductId($g_ID)
     {
         // Return comments for a specific product (g_ID)
-        $comments = Comment::with('user:us_ID,avatar')->where('g_ID', $g_ID)->get();
+        $comments = Comment::with('user:us_ID,avatar,us_username')->where('g_ID', $g_ID)->get();
         return response()->json($comments);
     }
 }
