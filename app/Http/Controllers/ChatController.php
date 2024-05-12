@@ -89,12 +89,29 @@ class ChatController extends Controller
 
         $exchangedGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'))->unique();
 
+        // $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)
+        //     ->whereNotIn('g_ID', $exchangedGoodsIds)
+        //     ->get();
+
+        // Fetch user's wishlist
+        $wishlist = Wishlist::where('us_ID', auth()->id())->get();
+        $wishlistGoodsIds = $wishlist->pluck('g_ID')->toArray();
+
+        // Fetch goods from the user's wishlist
+        $wishlistGoods = Goods::whereIn('g_ID', $wishlistGoodsIds)->get();
+
+        // Fetch goods uploaded by the user, excluding those from the wishlist
         $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)
             ->whereNotIn('g_ID', $exchangedGoodsIds)
             ->get();
 
+        // Merge wishlist goods with user's goods
+        $goods = $wishlistGoods->merge($loggedInUserGoods);
+
+
         $chattingUserGoods = Goods::where('us_ID', $ownerUserId)
             ->whereNotIn('g_ID', $exchangedGoodsIds)
+            ->whereNotIn('g_ID', $wishlistGoodsIds)
             ->get();
 
         // Fetch wishlist count
@@ -112,6 +129,7 @@ class ChatController extends Controller
             'ownerUsername' => $ownerUsername,
             'wishlistCount' => $wishlistCount,
             'ownerAvatar' => $ownerAvatar,
+            'wishlistGoods' => $wishlistGoods,
         ]);
     }
 

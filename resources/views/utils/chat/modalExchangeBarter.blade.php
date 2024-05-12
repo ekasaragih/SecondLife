@@ -40,6 +40,7 @@
                     <div class="space-y-4 flex justify-between">
                         {{-- Goods from user that logged in --}}
                         <div class="max-w-[45%] px-4">
+
                             <div>
                                 <p class="font-bold top-0 mb-2">Your Goods:</p>
                                 <ul class="grid w-full gap-6 md:grid-cols-1">
@@ -89,6 +90,52 @@
 
                         {{-- Goods from user that the current user is chatting (goods owner id) --}}
                         <div class="max-w-[45%] px-4">
+                            <div>
+                                <p class="font-bold top-0 mb-2">Goods you favorited from {{ $ownerName }}:</p>
+                                <ul class="grid w-full gap-6 md:grid-cols-1 mb-10">
+                                    @foreach ($wishlistGoods as $goods)
+                                    <li class="">
+                                        <input type="checkbox" id="{{ $goods->g_ID }}" name="wishlist_goods"
+                                            value="{{ $goods->g_ID }}" class="hidden peer" required />
+                                        <label for="{{ $goods->g_ID }}"
+                                            class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+
+                                            <div id="Goods"
+                                                class="w-full rounded-lg shadow-md p-5 border-2 space-y-2 float-right flex items-center z-0 mb-5">
+                                                @if ($goods->images->isNotEmpty())
+                                                <img class="w-32 h-32 rounded-none m-4"
+                                                    src="{{ asset('goods_img/' . $goods->images->first()->img_url) }}"
+                                                    alt="Goods Image">
+                                                @endif
+                                                <div class="w-3/4 m-4 pl-3 relative">
+                                                    <div>
+                                                        <span class="text-base text-gray-500 italic mr-1">
+                                                            {{ $goods->g_category }}
+                                                        </span>
+                                                        <span class="text-base text-gray-500 italic mr-1"> - </span>
+                                                        <span class="text-base text-gray-500 italic mr-1">
+                                                            {{ $goods->g_type }}
+                                                        </span>
+                                                    </div>
+                                                    <h2 class="text-2xl font-bold">{{ $goods->g_name }}</h2>
+
+                                                    <p class="text-gray-800">{{ $goods->g_desc }}</p>
+                                                    <div class="flex">
+                                                        <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
+                                                        <h3 class="text-base text-gray-600 mr-1">
+                                                            {{ $goods->g_price_prediction }}
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </label>
+                                    </li>
+                                    @endforeach
+
+                                </ul>
+                            </div>
+
                             <div>
                                 <p class="font-bold top-0 mb-2">Goods from {{ $ownerName }}:</p>
                                 <ul class="grid w-full gap-6 md:grid-cols-1">
