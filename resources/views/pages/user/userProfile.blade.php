@@ -50,6 +50,11 @@
                     </a>
                 </div>
                 @endif
+                @else
+                <a href="{{ route('my_profile') }}" title="My Profile" class="text-xl mt-5 underline text-blue-700">
+                    <i>Edit profile</i>
+                    <span><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                </a>
                 @endif
             </div>
 
