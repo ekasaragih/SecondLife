@@ -8,6 +8,8 @@ use App\Models\Message;
 use App\Models\User;
 use App\Models\Wishlist;
 use App\Models\Exchange;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class ChatController extends Controller
 {
@@ -15,6 +17,17 @@ class ChatController extends Controller
     public function index(Request $request)
     {
         // Retrieve query parameters
+        // $hashedLoggedInUserId = $request->query('logged_in_user');
+        // $hashedOwnerUserId = $request->query('owner_user');
+
+        // // dd($hashedLoggedInUserId, $hashedOwnerUserId);
+
+        // // Decode hashed IDs to get the real user IDs
+        // $loggedInUserId = $this->decodeHashId($hashedLoggedInUserId);
+        // $ownerUserId = $this->decodeHashId($hashedOwnerUserId);
+
+        // dd($loggedInUserId, $ownerUserId);
+
         $loggedInUserId = $request->query('logged_in_user');
         $ownerUserId = $request->query('owner_user');
 
@@ -101,6 +114,25 @@ class ChatController extends Controller
             'ownerAvatar' => $ownerAvatar,
         ]);
     }
+
+private function decodeHashId($hashedId) 
+{
+    try {
+        // Convert the hexadecimal representation to decimal
+        $userId = hexdec($hashedId);
+        
+        // Return the decrypted user ID
+        return $userId;
+    } catch (\Exception $e) {
+        // Handle decryption failure, maybe log an error
+        return null;
+    }
+}
+
+
+
+
+
 
 
 

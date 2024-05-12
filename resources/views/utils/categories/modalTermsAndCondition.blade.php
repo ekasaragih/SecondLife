@@ -110,6 +110,45 @@
     </div>
 </div>
 
+{{-- <script>
+    // Function to continue to the chat page
+    
+    async function continueToChat() {
+        const loggedInUserId = await hashId("{{ $user->us_ID }}");
+        const ownerUserId = await hashId($('#productOwnerId').text());
+        const goodsId = await hashId($('#goodsId').text());
+        // const productDetailUrl = window.location.href;
+
+        const modal = document.getElementById('modalTermsAndCondition');
+        const ownerIdElement = modal.querySelector('#ownerId');
+        const goodsIdElement = modal.querySelector('#goods_ID');
+        if (ownerIdElement, goodsIdElement) {
+            ownerIdElement.textContent = ownerUserId;
+            goodsIdElement.textContent = goodsId;
+        }
+
+        const productDetailUrl = window.location.href; // Get the current page URL
+        sessionStorage.setItem('productDetailUrl', productDetailUrl);
+
+        window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId;
+    }
+
+    async function hashId(id) {
+        // You can use a cryptographic hashing algorithm like SHA-256
+        // This is a simple example, you should use a more secure hashing algorithm
+        const hashedId = await sha256(id.toString());
+        return hashedId;
+    }
+
+    // Example of SHA-256 hashing function (not secure for production)
+    function sha256(str) {
+        return crypto.subtle.digest("SHA-256", new TextEncoder().encode(str))
+            .then(buffer => {
+                return Array.prototype.map.call(new Uint8Array(buffer), x=>(('00'+x.toString(16)).slice(-2))).join('');
+            });
+    }
+</script> --}}
+
 <script>
     // Function to continue to the chat page
     
