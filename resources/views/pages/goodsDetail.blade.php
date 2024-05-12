@@ -102,9 +102,10 @@
             </div>
             <div class="mt-4">
                 <span class="mr-3 text-gray-500">Uploaded by:</span>
-                <a href="{{ route('userProfile', ['username' => $userDetails->us_name]) }}"
+                <a href="{{ route('userProfile', ['username' => $userDetails->us_username]) }}"
                     class="font-semibold text-fray-400">{{ $userDetails->us_name }}</a><br>
-                <span class="text-gray-500">Located in <strong class="text-black font-bold">{{ $userDetails->us_city }}</strong></span>
+                <span class="text-gray-500">Located in <strong class="text-black font-bold">{{ $userDetails->us_city
+                        }}</strong></span>
             </div>
         </section>
 
