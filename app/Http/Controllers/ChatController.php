@@ -15,7 +15,7 @@ class ChatController extends Controller
     public function index(Request $request)
     {
         // Retrieve query parameters
-        $loggedInUserId = $request->query('logged_in_user');
+        $loggedInUserId = auth()->id();
         $ownerUserId = $request->query('owner_user');
 
         // Fetch owner details
