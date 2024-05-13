@@ -237,19 +237,19 @@ class PageController extends Controller
     }
 
     public function goods_detail($hashed_id)
-{
-    // Decode hashed ID
-    $g_ID = Hashids::decode($hashed_id)[0];
+    {
+        // Decode hashed ID
+        $g_ID = Hashids::decode($hashed_id)[0];
 
-    $authenticatedUser = session('authenticatedUser');
-    $user = session('authenticatedUser');
-    $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->get();
-    $wishlistCount = $wishlistItems->count();
-    $goods = Goods::where('us_ID', $authenticatedUser->us_ID)->get();
-    $product = Goods::findOrFail($g_ID);
-    $userDetails = User::findOrFail($product->us_ID);
+        $authenticatedUser = session('authenticatedUser');
+        $user = session('authenticatedUser');
+        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->get();
+        $wishlistCount = $wishlistItems->count();
+        $goods = Goods::where('us_ID', $authenticatedUser->us_ID)->get();
+        $product = Goods::findOrFail($g_ID);
+        $userDetails = User::findOrFail($product->us_ID);
 
-    return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
-}
+        return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
+    }
 
 }

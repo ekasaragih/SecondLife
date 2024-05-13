@@ -12,7 +12,7 @@ class UserController extends Controller
     public function showUserProfile($username)
     {
         // Ambil data pengguna berdasarkan username
-        $user = User::where('us_name', $username)->firstOrFail();
+        $user = User::where('us_username', $username)->firstOrFail();
 
         // Ambil barang-barang (goods) yang dimiliki oleh pengguna
         $goods = $user->goods;
@@ -67,7 +67,7 @@ class UserController extends Controller
         }
 
         $avatar = $request->file('avatar');
-        $userName = str_replace(' ', '_', $user->us_name);
+        $userName = str_replace(' ', '_', $user->us_username);
         $timestamp = now()->timestamp;
         $extension = $avatar->getClientOriginalExtension();
 
