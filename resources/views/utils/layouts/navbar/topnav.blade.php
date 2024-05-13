@@ -45,10 +45,11 @@
                 </a>
             </div>
 
-            <a href="{{ route('home_chat', ['logged_in_user' => Auth::id()]) }}" title="Messages"
-                class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'home_chat' ? 'text-primary-content' : '' }}">
-                <i class="fa fa-comments-o" aria-hidden="true"></i>
-            </a>
+            <a href="{{ route('home_chat') }}" title="Messages"
+    class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'home_chat' ? 'text-primary-content' : '' }}">
+    <i class="fa fa-comments-o" aria-hidden="true"></i>
+</a>
+
 
 
             <a href="{{ route('my_profile') }}" title="My Profile"
