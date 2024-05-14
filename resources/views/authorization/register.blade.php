@@ -101,20 +101,22 @@
         }
 
         // Function to toggle password visibility
-        function togglePasswordVisibility() {
-            var passwordInput = document.getElementById('password');
-            var passwordIcon = document.getElementById('password-icon');
+        // Function to toggle password visibility
+function togglePasswordVisibility(inputId) {
+    var passwordInput = document.getElementById(inputId);
+    var passwordIcon = document.getElementById(inputId + '-icon');
 
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                passwordIcon.classList.remove('fa-eye-slash');
-                passwordIcon.classList.add('fa-eye');
-            } else {
-                passwordInput.type = "password";
-                passwordIcon.classList.remove('fa-eye');
-                passwordIcon.classList.add('fa-eye-slash');
-            }
-        }
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        passwordIcon.classList.remove('fa-eye-slash');
+        passwordIcon.classList.add('fa-eye');
+    } else {
+        passwordInput.type = "password";
+        passwordIcon.classList.remove('fa-eye');
+        passwordIcon.classList.add('fa-eye-slash');
+    }
+}
+
     </script>
 </head>
 
@@ -169,29 +171,37 @@
                         class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                 </div>
                 <!-- Password -->
-                <div class="mt-4 relative">
-                    <label for="password" class="block text-sm font-medium text-gray-700">
-                        Password
-                        <span class="text-red-500">*</span>
-                    </label>
-                    <div class="relative">
-                        <input type="password" id="password" name="password" placeholder="********"
-                            class="mt-1 p-2 pr-10 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                        <button type="button" onclick="togglePasswordVisibility()"
-                            class="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none">
-                            <i class="fa fa-eye-slash text-gray-400" id="password-icon" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-                <!-- Confirm Password -->
-                <div>
-                    <label for="confirm_password" class="block text-sm font-medium text-gray-700">
-                        Confirm Password
-                        <span class="text-red-500">*</span>
-                    </label>
-                    <input type="password" id="confirm_password" name="confirm_password" placeholder="********"
-                        class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
-                </div>
+                <!-- Password -->
+<div class="mt-4 relative">
+    <label for="password" class="block text-sm font-medium text-gray-700">
+        Password
+        <span class="text-red-500">*</span>
+    </label>
+    <div class="relative">
+        <input type="password" id="password" name="password" placeholder="********"
+            class="mt-1 p-2 pr-10 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+        <button type="button" onclick="togglePasswordVisibility('password')"
+            class="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none">
+            <i class="fa fa-eye-slash text-gray-400" id="password-icon" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+<!-- Confirm Password -->
+<div class="mt-4 relative">
+    <label for="confirm_password" class="block text-sm font-medium text-gray-700">
+        Confirm Password
+        <span class="text-red-500">*</span>
+    </label>
+    <div class="relative">
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="********"
+            class="mt-1 p-2 pr-10 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
+        <button type="button" onclick="togglePasswordVisibility('confirm_password')"
+            class="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none">
+            <i class="fa fa-eye-slash text-gray-400" id="confirm_password-icon" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+
                 <!-- Submit Button -->
                 <div class="mt-10">
                     <button type="submit"
