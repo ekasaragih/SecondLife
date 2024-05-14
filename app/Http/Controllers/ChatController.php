@@ -28,7 +28,8 @@ class ChatController extends Controller
 
         // dd($loggedInUserId, $ownerUserId);
 
-        $loggedInUserId = $request->query('logged_in_user');
+        // $loggedInUserId = $request->query('logged_in_user');
+        $loggedInUserId = auth()->id();
         $ownerUserId = $request->query('owner_user');
 
         // Fetch owner details

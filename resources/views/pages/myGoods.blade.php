@@ -35,8 +35,9 @@
                     <h3 class="text-base text-gray-500 italic mr-1">{{ $goods->g_type }}</h3>
                 </div>
                 <h2 class="text-2xl font-bold">{{ $goods->g_name }}</h2>
-                <span class=""><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>South
-                    Jakarta</span>
+                <span class=""><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>
+                    {{ $goods->userId->us_city }}
+                </span>
                 <p class="text-gray-800">{{ $goods->g_desc }}</p>
                 <div class="flex">
                     <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
