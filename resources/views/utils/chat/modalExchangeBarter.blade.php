@@ -100,7 +100,7 @@
                                 <ul class="grid w-full gap-6 md:grid-cols-1 mb-10">
                                     @foreach ($wishlistGoods as $goods)
                                     <li class="">
-                                        <input type="checkbox" id="{{ $goods->g_ID }}" name="wishlist_goods"
+                                        <input type="checkbox" id="{{ $goods->g_ID }}" name="other_user_goods"
                                             value="{{ $goods->g_ID }}" class="hidden peer" required />
                                         <label for="{{ $goods->g_ID }}"
                                             class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -146,7 +146,8 @@
                             <div>
                                 <p class="font-bold top-0 mb-2">Goods from {{ $ownerName }}:</p>
                                 @if($chattingUserGoods->isEmpty())
-                                <p class="mb-6 italic text-red-500">No goods available from this user for bartering.</p>
+                                <p class="mb-6 italic text-red-500">No goods available from this user for bartering or
+                                    you can select the goods from Goods you favorited.</p>
                                 @else
                                 <ul class="grid w-full gap-6 md:grid-cols-1">
                                     @foreach ($chattingUserGoods as $goods)
