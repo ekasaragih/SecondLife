@@ -100,7 +100,29 @@ class ChatController extends Controller
         $wishlistGoodsIds = $wishlist->pluck('g_ID')->toArray();
 
         // Fetch goods from the user's wishlist
-        $wishlistGoods = Goods::whereIn('g_ID', $wishlistGoodsIds)->get();
+        $wishlistGoods = Goods::whereIn('g_ID', $wishlistGoodsIds)
+            ->where('us_ID', $ownerUserId)
+            ->whereNotIn('g_ID', function ($query) use ($ownerUserId) {
+                $query->select('my_goods')
+                    ->from('exchange')
+                    ->where('goods_owner_ID', $ownerUserId);
+            })
+            ->whereNotIn('g_ID', function ($query) use ($ownerUserId) {
+                $query->select('barter_with')
+                    ->from('exchange')
+                    ->where('goods_owner_ID', $ownerUserId);
+            })
+            ->whereNotIn('g_ID', function ($query) use ($ownerUserId) {
+                $query->select('my_goods')
+                    ->from('exchange')
+                    ->where('my_ID', $ownerUserId);
+            })
+            ->whereNotIn('g_ID', function ($query) use ($ownerUserId) {
+                $query->select('barter_with')
+                    ->from('exchange')
+                    ->where('my_ID', $ownerUserId);
+            })
+            ->get();
 
         // Fetch goods uploaded by the user, excluding those from the wishlist
         $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)
