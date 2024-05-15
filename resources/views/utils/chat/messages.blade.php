@@ -9,13 +9,10 @@
         </div>
 
         {{-- Display chat messages --}}
+        <div id="mainChat"></div>
 
         @foreach($chatMessages as $message)
-
-
-
         {{-- Display chat message --}}
-        <div id="mainChat"></div>
         <div id="chatMessages"></div>
 
         @endforeach
