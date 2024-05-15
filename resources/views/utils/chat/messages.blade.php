@@ -9,24 +9,22 @@
         </div>
 
         {{-- Display chat messages --}}
+        <div id="mainChat"></div>
 
         @foreach($chatMessages as $message)
-
-
-
         {{-- Display chat message --}}
-        <div id="mainChat"></div>
         <div id="chatMessages"></div>
 
         @endforeach
 
         <div class="flex justify-center mb-4">
             <div class="rounded py-2 px-4 bg-white">
-                <p class="text-xs">
-                    @if ($recentExchange && $recentExchange->otherUser && $ownerName ===
-                    $recentExchange->otherUser->us_name)
-                    You have bartered {{ $recentExchange->userGoods->g_name }} with {{
-                    $recentExchange->otherUser->us_name }}'s {{ $recentExchange->otherUserGoods->g_name }}
+                <p class="text-xs my-2">
+                    @if ($exchangedGoods->isNotEmpty())
+                    @foreach($exchangedGoods as $exchange)
+                    You have bartered {{ $exchange->userGoods->g_name }} with {{ $exchange->otherUser->us_name }}'s {{
+                    $exchange->otherUserGoods->g_name }}<br>
+                    @endforeach
                     @else
                     No recent barter found
                     @endif

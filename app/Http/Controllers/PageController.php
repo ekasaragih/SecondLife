@@ -208,11 +208,24 @@ class PageController extends Controller
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         $goods = Goods::with('images')->where('us_ID', $authenticatedUser->us_ID)->get();
 
+        $availableGoodsCount = Goods::where('us_ID', $authenticatedUser->us_ID)
+            ->whereNotExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('exchange')
+                    ->whereRaw('exchange.my_goods = goods.g_ID')
+                    ->orWhereRaw('exchange.barter_with = goods.g_ID');
+            })
+            ->count();
+
         $exchangedGoods = Exchange::where('my_ID', $authenticatedUser->us_ID)
             ->orWhere('goods_owner_ID', $authenticatedUser->us_ID)
             ->with(['userGoods', 'otherUserGoods'])
             ->distinct()
             ->get();
+
+        $totalBarteredGoods = Exchange::where('my_ID', $authenticatedUser->us_ID)
+            ->orWhere('goods_owner_ID', $authenticatedUser->us_ID)
+            ->count();
 
         return view('pages.myProfile', [
             'authenticatedUser' => $authenticatedUser,
@@ -220,6 +233,8 @@ class PageController extends Controller
             'goods' => $goods,
             'exchangedGoods' => $exchangedGoods,
             'wishlistCount' => $wishlistCount,
+            'totalBarteredGoods' => $totalBarteredGoods,
+            'availableGoodsCount' => $availableGoodsCount,
         ]);
     }
 

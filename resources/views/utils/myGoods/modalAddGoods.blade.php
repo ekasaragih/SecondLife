@@ -86,8 +86,8 @@
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                                 <div class="w-full mb-4">
-                                    <label for="age_goods" class="block text-sm font-medium text-gray-700">A
-                                        ge of Goods (In years)
+                                    <label for="age_goods" class="block text-sm font-medium text-gray-700">
+                                        Age of Goods (In years)
                                         <span class="text-red-500">*</span>
                                     </label>
                                     <input type="number" id="age_goods" name="age_goods" placeholder="ex: 1"
