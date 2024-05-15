@@ -98,7 +98,7 @@
                 <div class="m-5">
                     <div class="flex items-center mb-4">
                         <div class="flex-1 border-b border-gray-300"></div>
-                        <p class="mx-4">Sign in with Email</p>
+                        <p class="mx-4">Sign in with Username</p>
                         <div class="flex-1 border-b border-gray-300"></div>
                     </div>
                 </div>
