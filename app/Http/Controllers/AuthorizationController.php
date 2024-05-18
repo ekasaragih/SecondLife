@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Vinkla\Hashids\Facades\Hashids; // Tambahkan baris ini
 use App\Mail\ForgotPasswordMail;
 
 class AuthorizationController extends Controller
@@ -61,6 +62,11 @@ class AuthorizationController extends Controller
         ]);    
 
         if($user) {
+            // Tambahkan hash_id di sini
+            $hashedID = Hashids::encode($user->us_ID);
+            $user->hash_id = $hashedID;
+            $user->save();
+
             return redirect()->route('login')->withSuccess('You have successfully registered!');
         } else {
             return back()->withError('Failed to register user. Please try again.');

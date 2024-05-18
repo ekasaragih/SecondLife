@@ -91,7 +91,7 @@
         modalPrice.textContent = "Price Prediction: " + price;
         modalProductId.textContent = "Product ID: " + g_ID;
         uploadedByLink.textContent = us_name;
-        uploadedByLink.href = "{{ route('userProfile', ['username' => ':username']) }}".replace(':username', us_name);
+        uploadedByLink.href = "{{ route('userProfile', ['hash_id' => ':hash_id']) }}".replace(':hash_id', hash_id);
 
         document.getElementById('g_ID').value = g_ID;
         console.log(g_ID);
@@ -104,7 +104,7 @@
         const detailPageURL = "{{ route('goods_detail', ['hashed_id' => ':g_ID']) }}".replace(':g_ID', g_ID);
         window.location.href = detailPageURL;
     }
-    const userProfileRoute = "{{ route('userProfile', ['username' => ':username']) }}";
+    const userProfileRoute = "{{ route('userProfile', ['hash_id' => ':hash_id']) }}";
 
     function loadComments(g_ID, us_name) {
         axios.get('/comments/' + g_ID)
@@ -126,7 +126,7 @@
                         <img src="${avatarBaseUrl}/${comment.user.avatar ? comment.user.avatar : 'default-avatar.jpg'}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarImg">
                         <div>
                         <p class="font-semibold" style="margin-bottom: 4px;">
-                                <a href="${userProfileRoute.replace(':username', comment.user.us_username)}" class="text-blue-500">${comment.us_name}</a>
+                        <a href="${userProfileRoute.replace(':hash_id', comment.user.hash_id)}" class="text-blue-500">${comment.us_name}</a>
                             </p>
                         <p class="text-sm text-gray-600" style="margin-bottom: 0;">${comment.comment_desc}</p>
                         </div>
