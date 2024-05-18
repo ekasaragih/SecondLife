@@ -1,6 +1,6 @@
 <div id="modalExchangeBarter" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-7xl max-h-full">
+    <div class="relative p-4 w-[100rem] max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
@@ -19,7 +19,7 @@
             </div>
             <!-- Modal body -->
             <div class="p-4 md:p-5 space-y-4">
-                <div class="max-w-7xl px-4 py-8 mx-auto">
+                <div class="max-w-[100rem] px-4 py-8 mx-auto">
 
                     <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 my-3 shadow-md"
                         role="alert">
@@ -74,7 +74,8 @@
                                                     <div class="flex">
                                                         <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
                                                         <h3 class="text-base text-gray-600 mr-1">
-                                                            {{ $goods->g_price_prediction }}
+                                                            Rp. {{ number_format($goods->g_price_prediction, 0, '.',
+                                                            ',') }}
                                                         </h3>
                                                     </div>
                                                 </div>
@@ -92,10 +93,14 @@
                         <div class="max-w-[45%] px-4">
                             <div>
                                 <p class="font-bold top-0 mb-2">Goods you favorited from {{ $ownerName }}:</p>
+                                @if($wishlistGoods->isEmpty())
+                                <p class="mb-6 italic text-red-500">No goods you favorited from this user or no
+                                    available favorited goods from this user is available to be bartered.</p>
+                                @else
                                 <ul class="grid w-full gap-6 md:grid-cols-1 mb-10">
                                     @foreach ($wishlistGoods as $goods)
                                     <li class="">
-                                        <input type="checkbox" id="{{ $goods->g_ID }}" name="wishlist_goods"
+                                        <input type="checkbox" id="{{ $goods->g_ID }}" name="other_user_goods"
                                             value="{{ $goods->g_ID }}" class="hidden peer" required />
                                         <label for="{{ $goods->g_ID }}"
                                             class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -123,7 +128,8 @@
                                                     <div class="flex">
                                                         <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
                                                         <h3 class="text-base text-gray-600 mr-1">
-                                                            {{ $goods->g_price_prediction }}
+                                                            Rp. {{ number_format($goods->g_price_prediction, 0, '.',
+                                                            ',') }}
                                                         </h3>
                                                     </div>
                                                 </div>
@@ -134,10 +140,15 @@
                                     @endforeach
 
                                 </ul>
+                                @endif
                             </div>
 
                             <div>
                                 <p class="font-bold top-0 mb-2">Goods from {{ $ownerName }}:</p>
+                                @if($chattingUserGoods->isEmpty())
+                                <p class="mb-6 italic text-red-500">No goods available from this user for bartering or
+                                    you can select the goods from Goods you favorited.</p>
+                                @else
                                 <ul class="grid w-full gap-6 md:grid-cols-1">
                                     @foreach ($chattingUserGoods as $goods)
                                     <li class="">
@@ -169,7 +180,8 @@
                                                     <div class="flex">
                                                         <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
                                                         <h3 class="text-base text-gray-600 mr-1">
-                                                            {{ $goods->g_price_prediction }}
+                                                            Rp. {{ number_format($goods->g_price_prediction, 0, '.',
+                                                            ',') }}
                                                         </h3>
                                                     </div>
                                                 </div>
@@ -180,6 +192,7 @@
                                     @endforeach
 
                                 </ul>
+                                @endif
                             </div>
                         </div>
                     </div>

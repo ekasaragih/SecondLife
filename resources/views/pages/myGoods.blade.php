@@ -35,13 +35,14 @@
                     <h3 class="text-base text-gray-500 italic mr-1">{{ $goods->g_type }}</h3>
                 </div>
                 <h2 class="text-2xl font-bold">{{ $goods->g_name }}</h2>
-                <span class=""><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>South
-                    Jakarta</span>
+                <span class=""><i class="fa fa-map-marker mr-2" aria-hidden="true"></i>
+                    {{ $goods->userId->us_city }}
+                </span>
                 <p class="text-gray-800">{{ $goods->g_desc }}</p>
                 <div class="flex">
                     <h3 class="text-base text-gray-600 mr-1">Price Prediction: </h3>
-                    <h3 class="text-base text-gray-600 mr-1">{{ number_format($goods->g_price_prediction, 0, '.', ',')
-                        }}</h3>
+                    <h3 class="text-base text-gray-600 mr-1">Rp. {{ number_format($goods->g_price_prediction, 0, '.',
+                        ',') }}</h3>
                 </div>
                 @if ($goods->isExchanged())
                 <p class="text-red-500 italic mt-2">This goods has been bartered.</p>
