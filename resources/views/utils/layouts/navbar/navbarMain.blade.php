@@ -36,6 +36,17 @@
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Communities</a></li>
             </ul>
         </li>
+
+        <li class="relative text-xl" id="faq-menu">
+            <a href="{{ route('faq') }}"
+                class="font-semibold uppercase transition duration-300 hover:text-primary hover:opacity-75 relative {{ request()->routeIs('faq') ? 'text-primary underline transition duration-300' : 'focus:text-secondary' }}">FAQ</a>
+            <ul id="faq-dropdown"
+                class="hidden absolute bg-white mt-2 w-64 border border-gray-200 rounded-lg shadow-lg z-10">
+                <li><a href="{{ route('faq') }}#faq"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">FAQ</a></li>
+                </li>
+            </ul>
+        </li>
     </ul>
 </nav>
 
@@ -49,6 +60,8 @@
     const communitiesMenu = document.getElementById('communities-menu');
     const communitiesLink = communitiesMenu.querySelector('a[href="{{ route("communities") }}"]');
     const communitiesDropdown = document.getElementById('communities-dropdown');
+    const faqLink = communitiesMenu.querySelector('a[href="{{ route("faq") }}"]');
+    const faqDropdown = document.getElementById('faq-dropdown');
 
     let currentDropdown = null;
 
@@ -71,6 +84,13 @@
         hideDropdown();
         communitiesDropdown.classList.remove('hidden');
         currentDropdown = communitiesDropdown;
+    });
+
+     // Menampilkan dropdown Communities saat di-hover
+     faqMenu.addEventListener('mouseenter', function () {
+        hideDropdown();
+        faqDropdown.classList.remove('hidden');
+        currentDropdown = faqDropdown;
     });
 
     // Menyembunyikan dropdown saat mouse meninggalkan item atau dropdown

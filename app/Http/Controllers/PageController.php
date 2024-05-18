@@ -44,6 +44,11 @@ class PageController extends Controller
         return view('utils.menu.privacyPolicy');
     }
 
+    public function faq()
+    {
+        return view('utils.explore.faq');
+    }
+
     // Main pages
     public function explore()
     {
