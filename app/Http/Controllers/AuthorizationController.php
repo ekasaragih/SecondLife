@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Constants\Roles;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Mail\ForgotPasswordMail;
 
 class AuthorizationController extends Controller
 {
@@ -18,6 +16,7 @@ class AuthorizationController extends Controller
     {
         return view("authorization.login");
     }
+
     public function forgotPassword()
     {
         return view("authorization.forgotPassword");
@@ -58,7 +57,7 @@ class AuthorizationController extends Controller
             'us_email' => $request->us_email,
             'password' => Hash::make($request->password),
             'password_updated_at' => now()
-        ]);    
+        ]);
 
         if($user) {
             return redirect()->route('login')->withSuccess('You have successfully registered!');
@@ -82,17 +81,14 @@ class AuthorizationController extends Controller
     
         $user = User::where('us_username', $credentials['us_username'])->first();
     
-        if ($user && password_verify($credentials['password'], $user->password)) {
+        if ($user && Hash::check($credentials['password'], $user->password)) {
             if (Auth::loginUsingId($user->us_ID)) {
-
-                session([
-                    'authenticatedUser' => $user,
-                ]);
-
+                session(['authenticatedUser' => $user]);
                 return redirect()->route('explore');
             }
         }
-
-        return redirect()->back()->withErrors(['message' => 'Invalid credentials'])->withInput();
-    } 
+    
+        return redirect()->back()->withErrors(['login_error' => 'Wrong input, please try again.'])->withInput();
+    }
+    
 }

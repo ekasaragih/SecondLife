@@ -1,62 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="tailwind.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
     <link rel="shortcut icon" href="/asset/img/mini-logo.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    @yield('head')
-
-    <script>
-        // Function to toggle password visibility
-        function togglePasswordVisibility() {
-            var passwordInput = document.getElementById('password');
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-            } else {
-                passwordInput.type = "password";
-            }
-        }
-
-        // Function to handle form submission
-        function handleSubmit(event) {
-            event.preventDefault(); // Prevent form submission
-
-            removeValidationMessage('us_username');
-            removeValidationMessage('password');
-
-            var username = document.getElementById('us_username').value;
-            if (username.trim() === '') {
-                displayValidationMessage('us_username', 'Please enter your username');
-                return; 
-            }
-
-            var password = document.getElementById('password').value;
-            if (password.trim() === '') {
-                displayValidationMessage('password', 'Please enter your password');
-                return;
-            }
-
-            event.target.submit();
-        }
-
-        function displayValidationMessage(inputId, message) {
-            var inputElement = document.getElementById(inputId);
-            var messageElement = document.createElement('span');
-            messageElement.className = 'text-red-500 text-sm';
-            messageElement.textContent = message;
-            inputElement.parentNode.appendChild(messageElement);
-        }
-
-        function removeValidationMessage(inputId) {
-            var inputElement = document.getElementById(inputId);
-            var messageElement = inputElement.parentNode.querySelector('.text-red-500');
-            if (messageElement) {
-                messageElement.parentNode.removeChild(messageElement);
-            }
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
-
 <body>
     <div class="flex h-screen">
         <!-- Left Pane -->
@@ -114,11 +67,76 @@
                 </form>
                 <div class="mt-4 text-sm text-gray-600 text-center">
                     <p>Don't have an account? <a href="register" class="hover:underline"
-                            style="color: #EC297B;">Create
-                            Account</a>
+                            style="color: #EC297B;">Create Account</a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Function to toggle password visibility
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById('password');
+            var passwordIcon = document.getElementById('password-icon');
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                passwordIcon.classList.remove('fa-eye-slash');
+                passwordIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = "password";
+                passwordIcon.classList.remove('fa-eye');
+                passwordIcon.classList.add('fa-eye-slash');
+            }
+        }
+
+        // Function to handle form submission
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent form submission
+
+            removeValidationMessage('us_username');
+            removeValidationMessage('password');
+
+            var username = document.getElementById('us_username').value;
+            if (username.trim() === '') {
+                displayValidationMessage('us_username', 'Please enter your username');
+                return; 
+            }
+
+            var password = document.getElementById('password').value;
+            if (password.trim() === '') {
+                displayValidationMessage('password', 'Please enter your password');
+                return;
+            }
+
+            event.target.submit();
+        }
+
+        function displayValidationMessage(inputId, message) {
+            var inputElement = document.getElementById(inputId);
+            var messageElement = document.createElement('span');
+            messageElement.className = 'text-red-500 text-sm';
+            messageElement.textContent = message;
+            inputElement.parentNode.appendChild(messageElement);
+        }
+
+        function removeValidationMessage(inputId) {
+            var inputElement = document.getElementById(inputId);
+            var messageElement = inputElement.parentNode.querySelector('.text-red-500');
+            if (messageElement) {
+                messageElement.parentNode.removeChild(messageElement);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            @if($errors->has('login_error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '{{ $errors->first('login_error') }}',
+                });
+            @endif
+        });
+    </script>
 </body>
+</html>
