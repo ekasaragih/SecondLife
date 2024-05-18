@@ -20,7 +20,7 @@
         width: 100%;
         position: absolute;
         backface-visibility: hidden;
-        padding: 20px;
+        padding: 10px;
         display: flex; /* Membuat konten vertikal di tengah */
         flex-direction: column; /* Membuat konten vertikal di tengah */
         justify-content: center; /* Posisi vertikal ke tengah */
@@ -34,7 +34,7 @@
     <div class="container w-4/5">
         <div class="my-0 text-secondary flex items-center">
             <div>
-            <h1 class="text-3xl md:text-5xl font-bold mb-4">Welcome to our FAQ!</h1>
+            <h1 class="text-3xl text-[#F12E52] font-bold mb-4">Welcome to our FAQ!</h1>
             </div>
         </div>
         <p class="text-lg md:text-xl">Answers to your Frequently Asked Questions! Click to your preferable questions!</p>
@@ -44,8 +44,9 @@
                 <!-- FAQ Item 1 -->
                 <div class="faq-card h-40" onclick="this.classList.toggle('flip')">
                     <div class="inner rounded-lg transition-transform duration-500 ease-in-out transform">
-                        <div class="front p-6 bg-white">
-                            <h2 class="text-xl md:text-2xl font-bold text-gray-800">What is SecondLife?</h2>
+                    <div class="front p-6 bg-white flex items-center justify-center"> <!-- Added classes to center content -->
+                            <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" /> <!-- Added image -->
+                            <h2 class="text-xl md:text-2xl font-bold text-gray-800 ml-4">What is SecondLife?</h2> <!-- Added margin for spacing -->
                         </div>
                         <div class="back p-6 bg-white">
                             <p class="text-gray-700 leading-relaxed">SecondLife is a web-based platform for bartering. This website adopts the ancient theme of bartering and implements it into the modern era, which is a website.</p>
@@ -56,7 +57,8 @@
                 <!-- FAQ Item 2 -->
                 <div class="faq-card h-40" onclick="this.classList.toggle('flip')">
                     <div class="inner rounded-lg transition-transform duration-500 ease-in-out transform">
-                        <div class="front p-6 bg-white">
+                    <div class="front p-6 bg-white flex items-center justify-center"> <!-- Added classes to center content -->
+                            <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" /> <!-- Added image -->
                             <h2 class="text-xl md:text-2xl font-bold text-gray-800">What features are available here?</h2>
                         </div>
                         <div class="back p-6 bg-white">
@@ -68,7 +70,8 @@
                 <!-- FAQ Item 3 -->
                 <div class="faq-card h-40" onclick="this.classList.toggle('flip')">
                     <div class="inner rounded-lg transition-transform duration-500 ease-in-out transform">
-                        <div class="front p-6 bg-white">
+                    <div class="front p-6 bg-white flex items-center justify-center"> <!-- Added classes to center content -->
+                            <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" /> <!-- Added image -->
                             <h2 class="text-xl md:text-2xl font-bold text-gray-800">Swape feature?</h2>
                         </div>
                         <div class="back p-6 bg-white">
@@ -84,7 +87,8 @@
                 <!-- FAQ Item 4 -->
                 <div class="faq-card h-40" onclick="this.classList.toggle('flip')">
                     <div class="inner rounded-lg transition-transform duration-500 ease-in-out transform">
-                        <div class="front p-6 bg-white">
+                    <div class="front p-6 bg-white flex items-center justify-center"> <!-- Added classes to center content -->
+                            <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" /> <!-- Added image -->
                             <h2 class="text-xl md:text-2xl font-bold text-gray-800">Recommendation by Location?</h2>
                         </div>
                         <div class="back p-6 bg-white">
@@ -96,7 +100,8 @@
                 <!-- FAQ Item 5 -->
                 <div class="faq-card h-40" onclick="this.classList.toggle('flip')">
                     <div class="inner rounded-lg transition-transform duration-500 ease-in-out transform">
-                        <div class="front p-6 bg-white">
+                    <div class="front p-6 bg-white flex items-center justify-center"> <!-- Added classes to center content -->
+                            <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" /> <!-- Added image -->
                             <h2 class="text-xl md:text-2xl font-bold text-gray-800">Recommendation by Trend?</h2>
                         </div>
                         <div class="back p-6 bg-white">
@@ -108,7 +113,8 @@
                 <!-- FAQ Item 6 -->
                 <div class="faq-card h-40" onclick="this.classList.toggle('flip')">
                     <div class="inner rounded-lg transition-transform duration-500 ease-in-out transform">
-                        <div class="front p-6 bg-white">
+                    <div class="front p-6 bg-white flex items-center justify-center"> <!-- Added classes to center content -->
+                            <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" /> <!-- Added image -->
                             <h2 class="text-xl md:text-2xl font-bold text-gray-800">Auto price prediction?</h2>
                         </div>
                         <div class="back p-6 bg-white">
@@ -124,7 +130,8 @@
                 <!-- FAQ Item 7 -->
                 <div class="faq-card h-40" onclick="this.classList.toggle('flip')">
                         <div class="inner rounded-lg transition-transform duration-500 ease-in-out transform">
-                        <div class="front p-6 bg-white">
+                        <div class="front p-6 bg-white flex items-center justify-center"> <!-- Added classes to center content -->
+                            <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" /> <!-- Added image -->
                             <h2 class="text-xl md:text-2xl font-bold text-gray-800">Communities feature?</h2>
                         </div>
                         <div class="back p-6 bg-white">
@@ -136,7 +143,8 @@
                 <!-- FAQ Item 8 -->
                 <div class="faq-card h-40" onclick="this.classList.toggle('flip')">
                     <div class="inner rounded-lg transition-transform duration-500 ease-in-out transform">
-                        <div class="front p-6 bg-white">
+                    <div class="front p-6 bg-white flex items-center justify-center"> <!-- Added classes to center content -->
+                            <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" /> <!-- Added image -->
                             <h2 class="text-xl md:text-2xl font-bold text-gray-800">Chat feature?</h2>
                         </div>
                         <div class="back p-6 bg-white">
@@ -148,7 +156,8 @@
                 <!-- FAQ Item 9 -->
                 <div class="faq-card h-40" onclick="this.classList.toggle('flip')">
                     <div class="inner rounded-lg transition-transform duration-500 ease-in-out transform">
-                        <div class="front p-6 bg-white">
+                    <div class="front p-6 bg-white flex items-center justify-center"> <!-- Added classes to center content -->
+                            <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" /> <!-- Added image -->
                             <h2 class="text-xl md:text-2xl font-bold text-gray-800">Barter flow?</h2>
                         </div>
                         <div class="back p-6 bg-white">
