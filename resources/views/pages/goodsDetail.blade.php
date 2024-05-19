@@ -73,7 +73,7 @@
                                 <button
                                     class="text-white bg-red-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-red-600 rounded transition duration-300"
                                     data-modal-target="productModal"
-                                    onclick="openModal('{{ rawurlencode($product->g_name) }}', '{{ rawurlencode($product->g_desc) }}', '{{ isset($product->images[0]) ? asset('goods_img/' . rawurlencode($product->images[0]->img_url)) : 'https://via.placeholder.com/400' }}', '{{ rawurlencode($user->us_city) }}', '{{ rawurlencode(number_format($product->g_price_prediction, 0, ',', '.')) }}', '{{ rawurlencode($product->g_ID) }}', '{{ rawurlencode($user->us_username) }}')">
+                                    onclick="openModal('{{ rawurlencode($product->g_name) }}', '{{ rawurlencode($product->g_desc) }}', '{{ isset($product->images[0]) ? asset('goods_img/' . rawurlencode($product->images[0]->img_url)) : 'https://via.placeholder.com/400' }}', '{{ rawurlencode($user->us_city) }}', '{{ rawurlencode(number_format($product->g_price_prediction, 0, ',', '.')) }}', '{{ rawurlencode($product->g_ID) }}', '{{ rawurlencode($userDetails->us_username) }}')">
                                     View Comment
                                 </button>
 

@@ -244,7 +244,7 @@
                 const longitude = position.coords.longitude;
 
                 // Use Google Maps Geocoding API to fetch the address from coordinates
-                axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCo37QBCTFooHIQH-Lwk-XrD6gL_uPeWVI&language=en`)
+                axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyCo37QBCTFooHIQH-Lwk-XrD6gL_uPeWVI`)
                     .then(function(response) {
                         // Log the entire API response for examination
                         console.log('Geocoding API response:', response.data);

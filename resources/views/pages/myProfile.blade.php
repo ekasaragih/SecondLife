@@ -89,7 +89,7 @@
 </div>
 
 <div class="mt-10 mx-12">
-    <div class="flex flex-wrap gap-7">
+<div class="flex flex-wrap justify-center gap-7">
         <a href="/profile"
             class="flex flex-col w-52 max-w-52 justify-center items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
