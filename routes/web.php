@@ -47,6 +47,8 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/', [PageController::class, 'explore'])->name('explore');
 Route::get('/categories', [PageController::class, 'categories'])->name('categories');
 Route::get('/communities', [PageController::class, 'communities'])->name('communities');
+Route::get('/faq', [PageController::class, 'faq'])->name('faq');
+
 
 Route::get('/about-us', [PageController::class, 'about_us'])->name('about_us');
 Route::get('/contact-us', [PageController::class, 'contact_us'])->name('contact_us');
