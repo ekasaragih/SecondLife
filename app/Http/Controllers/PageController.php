@@ -51,36 +51,52 @@ class PageController extends Controller
 
     // Main pages
     public function explore()
-    {
-        $recentProductsByCategory = Goods::select('g_category', 'created_at')->orderBy('created_at', 'desc')->take(20)->get()->groupBy('g_category');
+{
+    $recentProductsByCategory = Goods::select('g_category', 'created_at')->orderBy('created_at', 'desc')->take(20)->get()->groupBy('g_category');
 
-        $authenticatedUser = session('authenticatedUser');
-        $wishlistCount = null;
-        $categoryCounts = $recentProductsByCategory->map->count();
-        $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
+    $authenticatedUser = session('authenticatedUser');
+    $wishlistCount = null;
+    $categoryCounts = $recentProductsByCategory->map->count();
+    $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
 
-        $exchangeGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'));
+    $exchangeGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'));
 
-        $products = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->get();
-        $trendProducts = $this->filterTrendProducts($topCategories, $authenticatedUser, $exchangeGoodsIds);
-
-        if ($authenticatedUser && $authenticatedUser->us_ID) {
-            $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-        }
-
-        $cities = User::distinct('us_city')->pluck('us_city');
-
-        $userAvatar = $authenticatedUser ? $authenticatedUser->avatar : null;
-
-        return view('pages.explore', [
-            'user' => $authenticatedUser,
-            'products' => $products,
-            'trendProducts' => $trendProducts,
-            'wishlistCount' => $wishlistCount,
-            'cities' => $cities,
-            'userAvatar' => $userAvatar,
-        ]);
+    // Ambil semua produk, tanpa filter wishlist untuk konten explore lainnya
+    $products = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->get();
+    
+    // Ambil produk yang tidak ada di wishlist khusus untuk swape
+    $swapeProducts = collect();
+    if ($authenticatedUser && $authenticatedUser->us_ID) {
+        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)
+            ->pluck('g_ID')
+            ->toArray();
+        $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)
+            ->whereNotIn('g_ID', $wishlistItems)
+            ->get();
+    } else {
+        $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->get();
     }
+
+    $trendProducts = $this->filterTrendProducts($topCategories, $authenticatedUser, $exchangeGoodsIds);
+
+    if ($authenticatedUser && $authenticatedUser->us_ID) {
+        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+    }
+
+    $cities = User::distinct('us_city')->pluck('us_city');
+
+    $userAvatar = $authenticatedUser ? $authenticatedUser->avatar : null;
+
+    return view('pages.explore', [
+        'user' => $authenticatedUser,
+        'products' => $products,
+        'swapeProducts' => $swapeProducts,  // Pass variabel khusus untuk swape
+        'trendProducts' => $trendProducts,
+        'wishlistCount' => $wishlistCount,
+        'cities' => $cities,
+        'userAvatar' => $userAvatar,
+    ]);
+}
 
     private function filterTrendProducts($topCategories, $authenticatedUser)
     {

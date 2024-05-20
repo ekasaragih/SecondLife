@@ -30,7 +30,7 @@
     <div class="col-span-3 place-items-center p-6 bg-white border border-black rounded-lg shadow-lg relative">
         <div id="carousel-example" class="relative w-full">
             <div class="relative h-64 overflow-hidden rounded-lg sm:h-64 xl:h-80 2xl:h-96">
-                @foreach ($products as $index => $product)
+            @foreach ($swapeProducts as $index => $product)
                 <div id="carousel-item-{{ $index }}"
                     class="carousel-item duration-700 ease-in-out transition-transform {{ $index === 0 ? 'opacity-100' : 'opacity-0 hidden' }}">
                     @php
@@ -57,7 +57,6 @@
                         <p class="mb-2">Description: {{ $product->g_desc }}</p>
                         <p>Prediction Price: Rp {{ number_format($product->g_price_prediction, 0, ',', '.') }}</p>
                     </div>
-
                 </div>
                 @endforeach
                 <button id="data-carousel" type="button"
