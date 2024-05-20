@@ -3,49 +3,6 @@
     <link rel="stylesheet" href="tailwind.css">
     <link rel="shortcut icon" href="/asset/img/mini-logo.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Function to validate email format
-        function validateEmail(email) {
-            var re = /\S+@\S+\.\S+/;
-            return re.test(email);
-        }
-
-        // Function to display validation messages
-        function displayValidationMessage(inputId, message) {
-            var inputElement = document.getElementById(inputId);
-            var messageElement = document.createElement('span');
-            messageElement.className = 'text-red-500 text-sm';
-            messageElement.textContent = message;
-            inputElement.parentNode.appendChild(messageElement);
-        }
-
-        // Function to remove validation messages
-        function removeValidationMessage(inputId) {
-            var inputElement = document.getElementById(inputId);
-            var messageElement = inputElement.parentNode.querySelector('.text-red-500');
-            if (messageElement) {
-                messageElement.parentNode.removeChild(messageElement);
-            }
-        }
-
-        // Function to handle form submission
-        function handleSubmit(event) {
-            event.preventDefault(); // Prevent form submission
-
-            // Reset validation messages
-            removeValidationMessage('email');
-
-            // Validate email
-            var email = document.getElementById('email').value;
-            if (!validateEmail(email)) {
-                displayValidationMessage('email', 'Please enter a valid email address');
-                return; // Stop submission if email is invalid
-            }
-
-            // If email is valid, proceed with form submission
-            event.target.submit();
-        }
-    </script>
 </head>
 
 <body>
@@ -63,11 +20,11 @@
                     Don't panic! Just type in your email and we will send you a code to reset your password!
                 </h1>
 
-                <form action="{{ route('login') }}" method="POST" class="space-y-4" onsubmit="handleSubmit(event)">
-                @csrf                
+                <form id="password-reset-form" class="space-y-4">
+                    @csrf
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
-                        <input type="email" id="email" name="email"
+                        <input type="email" id="email" name="us_email"
                             class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300">
                     </div>
                     <div class="mt-10">
@@ -77,12 +34,68 @@
                     </div>
                 </form>
                 <div class="mt-4 text-sm text-gray-600 text-center">
-                    <p>Remembered your password? <a href="login" class="hover:underline"
-                            style="color: #EC297B;">Back
+                    <p>Remembered your password? <a href="login" class="hover:underline" style="color: #EC297B;">Back
                             to Login</a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        function displayValidationMessage(inputId, message) {
+            var inputElement = document.getElementById(inputId);
+            var messageElement = document.createElement('span');
+            messageElement.className = 'text-red-500 text-sm';
+            messageElement.textContent = message;
+            inputElement.parentNode.appendChild(messageElement);
+        }
+
+        function removeValidationMessage(inputId) {
+            var inputElement = document.getElementById(inputId);
+            var messageElement = inputElement.parentNode.querySelector('.text-red-500');
+            if (messageElement) {
+                messageElement.parentNode.removeChild(messageElement);
+            }
+        }
+
+        $(document).ready(function () {
+            $('#password-reset-form').on('submit', function (event) {
+                event.preventDefault(); // Prevent form submission
+
+                // Reset validation messages
+                removeValidationMessage('email');
+
+                // Validate email
+                var email = $('#email').val();
+                if (!validateEmail(email)) {
+                    displayValidationMessage('email', 'Please enter a valid email address');
+                    return; // Stop submission if email is invalid
+                }
+
+                // Send AJAX request
+                $.ajax({
+                    url: "{{ route('sendEmail') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        us_email: email
+                    },
+                    success: function (response) {
+                        // Handle success
+                        alert('A password reset link has been sent to your email.');
+                    },
+                    error: function (xhr) {
+                        // Handle error
+                        displayValidationMessage('email', 'Failed to send password reset email. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>

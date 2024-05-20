@@ -12,7 +12,6 @@ use App\Http\Controllers\UserController;
 
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Authorization
@@ -26,6 +25,8 @@ Route::post('/login', [AuthorizationController::class, 'authenticate']);
 Route::get('/register', [AuthorizationController::class, 'register'])->name('register');
 Route::post('/register', [AuthorizationController::class, 'store'])->name('auth_store');
 Route::get('/forgotPassword', [AuthorizationController::class, 'forgotPassword'])->name('forgotPassword');
+Route::get('/resetPassword', [AuthorizationController::class, 'resetPassword'])->name('resetPassword');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/follow/{user}', [UserController::class, 'followUser'])->name('user.follow');
     Route::post('/user/unfollow/{user}', [UserController::class, 'unfollowUser'])->name('user.unfollow');
     Route::get('/user/{user}/follow-status', [UserController::class, 'followStatus'])->name('user.follow_status');
+   
+    
 
     Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
 
