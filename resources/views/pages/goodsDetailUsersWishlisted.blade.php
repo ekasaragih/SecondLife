@@ -19,6 +19,11 @@
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">SECONDLIFE BARTER</h2>
                     <h1 class="text-primary text-3xl title-font mb-1 font-semibold">{{ $product->g_name }}</h1>
                     <p class="leading-relaxed text-gray-600">{{ $product->g_desc }}</p>
+                    <div class="flex items-center my-5 pb-5 font-medium text-sm border-b-2 border-primary-content">
+                            <h3 class="mr-2">{{ $product->g_category }}</h3>
+                            <div class="h-1 w-1 bg-primary-content rounded-full"></div>
+                            <p class="ml-2">{{ $product->g_type }}</p>
+                        </div>
 
                     <!-- Tambahkan tabel pengguna yang memasukkan item keinginan di bawah deskripsi produk -->
                     @if($users->isEmpty())
