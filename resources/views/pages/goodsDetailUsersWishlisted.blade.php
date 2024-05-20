@@ -9,8 +9,8 @@
             <div class="lg:w-4/5 mx-auto flex flex-wrap">
                 <div id="productImages" class="lg:w-1/2 w-full flex justify-center items-center">
                     <div class="flex items-center">
-                        @foreach ($product->images as $image)
-                        <img class="product-image hidden h-64 object-cover object-center"
+                        @foreach ($product->images as $index => $image)
+                        <img class="product-image {{ $index === 0 ? '' : 'hidden' }} h-64 object-cover object-center"
                             src="{{ asset('goods_img/' . $image->img_url) }}">
                         @endforeach
                     </div>
@@ -47,8 +47,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-</div>  
+</div>
 
 @include('utils.layouts.footer.footer')
