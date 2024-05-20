@@ -128,6 +128,77 @@
             @else
                 <div>tidak ada</div>
             @endif
+            <!-- After displaying the current product's details, fetch and shuffle similar products -->
+@php
+    // Get the predicted price of the current product
+    $predictedPrice = $product->g_price_prediction;
+
+    // Calculate price range for fetching similar products (e.g., +/- 20%)
+    $minPrice = $predictedPrice * 0.8;
+    $maxPrice = $predictedPrice * 1.2;
+
+    // Fetch similar products within the price range
+    $similarProducts = App\Models\Goods::whereBetween('g_price_prediction', [$minPrice, $maxPrice])
+                        ->where('g_ID', '!=', $product->g_ID) // Exclude the current product
+                        ->inRandomOrder() // Shuffle the products
+                        ->limit(5) // Limit the number of similar products to display
+                        ->get();
+@endphp
+
+<!-- Display shuffled similar products -->
+@if($similarProducts->count() > 0)
+    <div class="text-2xl mt-8 mb-4 text-[#F12E52]"><b>Similar Products</b><span class="font-bold text-sm text-gray-600 mx-4">based on Similar Price</span></div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        @foreach ($similarProducts as $similarProduct)
+            <!-- Display similar product card here -->
+            <div class="max-w-md rounded overflow-hidden shadow-lg product-card">
+                    @php
+                        $images = $product->images;
+                        $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+                        $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
+                        $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
+                    @endphp
+
+                <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image" data-product-image="{{ $imageUrl }}">
+               <div class="px-4 py-4">
+                <input type="hidden" id="goods_owner" value="{{ $product->us_ID }}" />
+                <div class="font-bold text-lg mb-2">{{ $similarProduct->g_name }}</div>
+                <hr class="my-2 border-b-2 border-gray-800"> <!-- Garis pembatas -->
+                <p class="hidden text-gray-700 text-base mb-2">{{ $similarProduct->g_desc }}
+                </p>
+                <div class="grid grid-cols-1 gap-2 mt-3 bg-pink-100 border border-gray-300 rounded-lg p-4">
+                    <div>
+                        <p class="text-gray-700" style="font-size: 1em;"><span class="font-bold">Category:</span>
+                            {{ $similarProduct->g_category }}
+                        </p>
+                        <p class=" text-gray-700"><span class="font-bold">Condition:</span>
+                            {{ $similarProduct->g_type }}
+                        </p>
+                        <p class="text-gray-700"><span class="font-bold">Age:</span>
+                            {{ $similarProduct->g_age }} <span>Years</span>
+                        </p>
+                        <p class=" text-gray-700"><span class="font-bold">Price Prediction:</span>
+                            {{$formattedPrice }}
+                        </p>
+                        <span class="hidden product-price">{{ $similarProduct->g_price_prediction }}</span>
+                    </div>
+                </div>
+                </div>
+                
+                <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($similarProduct->g_ID)]) }}" id="btn_see_detail" class="bg-purple-500 text-white px-4 py-3 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center justify-center" style="min-width: 200px;"
+                    data-product-image="{{ $imageUrl }}" data-product-id="{{ $product->g_ID }}"
+                    data-product-name="{{ $similarProduct->g_name }}" data-product-user-id="{{ $similarProduct->us_ID }}"
+                    data-product-desc="{{ $similarProduct->g_desc }}" data-product-category="{{ $similarProduct->g_category }}"
+                    data-product-category="{{ $similarProduct->g_age }}" data-product-type="{{ $similarProduct->g_type }}"
+                    data-product-price="{{ $formattedPrice }}">
+                    View Details
+                </a>
+
+            </div>
+        @endforeach
+    </div>
+@endif
+
         </section>
 
         @include('utils.layouts.footer.footer')
