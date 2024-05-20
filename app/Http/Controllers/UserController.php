@@ -11,20 +11,10 @@ use Vinkla\Hashids\Facades\Hashids; // Tambahkan baris ini
 
 class UserController extends Controller
 {
-    public function showUserProfile($hash_id)
+    public function showUserProfile($username)
     {
-        // Decode hash_id untuk mendapatkan us_ID yang sesuai
-        $user_id = Hashids::decode($hash_id);
-
-        if (!$user_id) {
-            abort(404); // Tampilkan halaman 404 jika hash_id tidak valid
-        }
-
-        // Ubah user_id menjadi id setelah mendekode hash_id
-        $id = $user_id[0];
-
-        // Ambil data pengguna berdasarkan id
-        $user = User::findOrFail($id);
+        // Ambil data pengguna berdasarkan username
+        $user = User::where('us_username', $username)->firstOrFail();
 
         // Ambil barang-barang (goods) yang dimiliki oleh pengguna
         $goods = $user->goods;

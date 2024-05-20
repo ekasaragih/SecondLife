@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/goods-detail/{hashed_id}', [PageController::class, 'goods_detail'])->name('goods_detail');
     Route::get('/chat', [ChatController::class, 'index'])->name('home_chat');
     Route::get('/comments', [CommentController::class, 'index']);
-    Route::get('/user/profile/{hash_id}', [UserController::class, 'showUserProfile'])->name('userProfile');
+    Route::get('/user/profile/{username}', [UserController::class, 'showUserProfile'])->name('userProfile');
 });
 
 Route::get('/', [PageController::class, 'explore'])->name('explore');

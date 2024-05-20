@@ -63,7 +63,7 @@ class User extends Authenticatable
 
     public function goods()
     {
-        return $this->hasMany(Goods::class, 'us_ID', 'hash_id');
+        return $this->hasMany(Goods::class, 'us_ID', 'us_ID');    
     }    
 
     public function following(): BelongsToMany

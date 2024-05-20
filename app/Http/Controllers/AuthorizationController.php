@@ -60,11 +60,6 @@ class AuthorizationController extends Controller
         ]);
 
         if($user) {
-            // Tambahkan hash_id di sini
-            $hashedID = Hashids::encode($user->us_ID);
-            $user->hash_id = $hashedID;
-            $user->save();
-
             return redirect()->route('login')->withSuccess('You have successfully registered!');
         } else {
             return back()->withError('Failed to register user. Please try again.');

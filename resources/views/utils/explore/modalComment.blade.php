@@ -91,8 +91,8 @@
         modalPrice.textContent = "Price Prediction: " + price;
         modalProductId.textContent = "Product ID: " + g_ID;
         uploadedByLink.textContent = us_name;
-        uploadedByLink.href = "{{ route('userProfile', ['hash_id' => ':hash_id']) }}".replace(':hash_id', hash_id);
-
+        uploadedByLink.href = "{{ route('userProfile', ['username' => ':username']) }}".replace(':username', us_name);
+        
         document.getElementById('g_ID').value = g_ID;
         console.log(g_ID);
 
@@ -104,8 +104,8 @@
         const detailPageURL = "{{ route('goods_detail', ['hashed_id' => ':g_ID']) }}".replace(':g_ID', g_ID);
         window.location.href = detailPageURL;
     }
-    const userProfileRoute = "{{ route('userProfile', ['hash_id' => ':hash_id']) }}";
-
+    const userProfileRoute = "{{ route('userProfile', ['username' => ':username']) }}";
+    
     function loadComments(g_ID, us_name) {
         axios.get('/comments/' + g_ID)
             .then(function(response) {
