@@ -5,18 +5,40 @@
     @endauth
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.0/nouislider.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.0/nouislider.min.js"></script>
+    <style>
+        #price-range {
+            width: 300px;
+            margin: 20px 0;
+        }
+        .filter-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .filter-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            padding: 20px 0;
+        }
+    </style>
 </head>
 
-{{-- Filter categories --}}
-<div class="flex gap-2 px-2">
+{{-- Filter categories and price range --}}
+<div class="filter-container">
     <select
         class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-        onchange="filterByCategory(this.value)">
+        onchange="filterProducts()">
         <option value="All">All</option>
         @foreach ($categories as $category)
         <option value="{{ $category }}">{{ $category }}</option>
         @endforeach
     </select>
+
+    <div id="price-range"></div>
+    <span id="price-range-value" class="ml-2 text-sm font-medium text-gray-900"></span>
 </div>
 
 <br>
@@ -54,6 +76,7 @@
                     <p class=" text-gray-700"><span class="font-bold">Price Prediction:</span>
                         {{$formattedPrice }}
                     </p>
+                    <span class="hidden product-price">{{ $product->g_price_prediction }}</span>
                 </div>
             </div>
         </div>
@@ -93,7 +116,6 @@
 </div>
 
 <br><br>
-
 
 {{--
 |--------------------------------------------------------------------------
@@ -174,18 +196,55 @@
 </script>
 
 <script>
-    // Filter by Category
-    function filterByCategory(category) {
+    document.addEventListener('DOMContentLoaded', function () {
+        var slider = document.getElementById('price-range');
+        var priceRangeValue = document.getElementById('price-range-value');
+
+        noUiSlider.create(slider, {
+            start: [0, 1000000],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 1000000
+            },
+            step: 5000,
+            format: {
+                to: function (value) {
+                    return 'Rp ' + value.toLocaleString();
+                },
+                from: function (value) {
+                    return Number(value.replace('Rp ', '').replace(/,/g, ''));
+                }
+            }
+        });
+
+        slider.noUiSlider.on('update', function (values, handle) {
+            priceRangeValue.innerHTML = values.join(' - ');
+            filterProducts();
+        });
+    });
+
+    function filterProducts() {
+        const category = document.querySelector('select').value;
+        const slider = document.getElementById('price-range').noUiSlider;
+        const [minPrice, maxPrice] = slider.get().map(value => parseFloat(value.replace('Rp ', '').replace(/,/g, '')));
+
         const productCards = document.querySelectorAll('.product-card');
         productCards.forEach(card => {
             const productCategoryElement = card.querySelector('p:nth-child(1)');
-            if (productCategoryElement) {
+            const productPriceElement = card.querySelector('.product-price');
+
+            if (productCategoryElement && productPriceElement) {
                 const productCategoryText = productCategoryElement.textContent.trim();
                 const categoryIndex = productCategoryText.indexOf('Category:');
+                const productPrice = parseFloat(productPriceElement.textContent.trim());
+
                 if (categoryIndex !== -1) {
-                    const productCategory = productCategoryText.slice(categoryIndex + 'Category:'.length)
-                .trim();
-                    if (category === 'All' || productCategory.toLowerCase() === category.toLowerCase()) {
+                    const productCategory = productCategoryText.slice(categoryIndex + 'Category:'.length).trim();
+                    const isCategoryMatch = (category === 'All' || productCategory.toLowerCase() === category.toLowerCase());
+                    const isPriceMatch = (productPrice >= minPrice && productPrice <= maxPrice);
+
+                    if (isCategoryMatch && isPriceMatch) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
@@ -194,6 +253,4 @@
             }
         });
     }
-
-
 </script>
