@@ -98,6 +98,10 @@
                             </div>
                         </div>
                     </div>
+                    <a href="{{ route('goods.wishlisted.users', ['hashed_id' => Hashids::encode($product->g_ID)]) }}" class="text-white bg-blue-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-blue-600 rounded transition duration-300">
+    View Users Who Wishlisted This Item
+</a>
+
                 </div>
             </div>
             <div class="mt-4">

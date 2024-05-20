@@ -287,5 +287,24 @@ class PageController extends Controller
 
         return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
     }
+    
+    public function getUsersWishlistedItem($hashed_id)
+{
+    // Decode hashed ID
+    $g_ID = Hashids::decode($hashed_id)[0];
+
+    // Retrieve all user IDs who have wishlisted the given g_ID
+    $userIDs = Wishlist::where('g_ID', $g_ID)->pluck('us_ID')->toArray();
+
+    // Retrieve user details based on the user IDs
+    $users = User::whereIn('us_ID', $userIDs)->get();
+
+    // Retrieve product details
+    $product = Goods::findOrFail($g_ID);
+
+    // Pass the users and product to the view
+    return view('pages.goodsDetailUsersWishlisted', compact('users', 'product'));
+}
+
 
 }
