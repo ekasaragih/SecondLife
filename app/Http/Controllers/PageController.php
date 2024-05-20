@@ -188,6 +188,7 @@ class PageController extends Controller
     public function communities()
     {
         $authenticatedUser = session('authenticatedUser');
+
         if ($authenticatedUser !== null) {
             $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         } else {
@@ -197,11 +198,16 @@ class PageController extends Controller
         $communities = Communities::with('feedbacks')->withCount('likes')->orderByDesc('likes_count')->get();
 
         foreach ($communities as $community) {
-            $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
-                ->where('community_ID', $community->community_ID)
-                ->exists();
-            $community->isLikedByCurrentUser = $isLiked;
+            if ($authenticatedUser !== null) {
+                $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
+                    ->where('community_ID', $community->community_ID)
+                    ->exists();
+                $community->isLikedByCurrentUser = $isLiked;
+            } else {
+                $community->isLikedByCurrentUser = false;
+            }
         }
+
         $feedbacks = Feedbacks::all();
         return view('pages.communities', compact('communities', 'feedbacks', 'wishlistCount', 'authenticatedUser'));
     }
