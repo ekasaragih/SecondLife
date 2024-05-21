@@ -225,7 +225,7 @@
                         $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
                     @endphp
 
-                <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image" data-product-image="{{ $imageUrl }}">
+                <img class="w-full h-64 object-cover object-center" src="{{ $similarProduct -> $imageUrl }}" alt="Product Image" data-product-image="{{ $similarProduct -> $imageUrl }}">
                <div class="px-4 py-4">
                 <input type="hidden" id="goods_owner" value="{{ $product->us_ID }}" />
                 <div class="font-bold text-lg mb-2">{{ $similarProduct->g_name }}</div>
