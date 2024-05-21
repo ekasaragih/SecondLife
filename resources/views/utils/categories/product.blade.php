@@ -201,7 +201,7 @@
         var priceRangeValue = document.getElementById('price-range-value');
 
         noUiSlider.create(slider, {
-            start: [0, 1000000],
+            start: [0, 2000000],
             connect: true,
             range: {
                 'min': 0,
