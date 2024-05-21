@@ -120,12 +120,12 @@ class PageController extends Controller
         $nonExchangeProducts = $products->whereNotIn('g_ID', $exchangeGoodsIds);
 
         if (empty($wishlistItems)) {
-            $nonWishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
+            $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
                 ->inRandomOrder()
                 ->limit(8)
                 ->get();
         } else {
-            $nonWishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
+            $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
                 ->whereNotIn('g_ID', $wishlistItems)
                 ->inRandomOrder()
                 ->limit(8)
@@ -138,7 +138,7 @@ class PageController extends Controller
             'products' => $nonExchangeProducts,
             'wishlistCount' => $wishlistCount,
             'wishlistItems' => $wishlistItems,
-            'nonWishlistProducts' => $nonWishlistProducts,
+            'WishlistProducts' => $WishlistProducts,
         ]);
     }
 
@@ -167,7 +167,7 @@ class PageController extends Controller
 
         $nonExchangeProducts = $products->whereNotIn('g_ID', $exchangeGoodsIds);
 
-        $nonWishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
+        $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
             ->whereNotIn('g_ID', $wishlistItemIds)
             ->with('images')
             ->inRandomOrder()
@@ -178,7 +178,7 @@ class PageController extends Controller
             'user' => $authenticatedUser,
             'categories' => $categories,
             'products' => $products,
-            'nonWishlistProducts' => $nonWishlistProducts,
+            'WishlistProducts' => $WishlistProducts,
             'wishlistCount' => $wishlistCount,
             'wishlistItems' => $wishlistItems,
         ]);

@@ -205,7 +205,7 @@
             connect: true,
             range: {
                 'min': 0,
-                'max': 1000000
+                'max': 2000000
             },
             step: 5000,
             format: {
