@@ -11,9 +11,8 @@
 
 <div class="my-5 relative">
     <div class="mt-8">
-        <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Recommended Products <span
-                class="text-sm text-gray-600">based
-                on location</span></h2>
+        <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Products <span class="text-sm text-gray-600">based
+                on your current location</span></h2>
         <div class="flex gap-2 px-2">
             <select
                 class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"

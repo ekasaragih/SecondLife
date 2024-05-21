@@ -1,7 +1,7 @@
 {{-- Recommendation based on Categories --}}
 <div class="space-y-2 space-x-2">
     <div class="text-3xl text-[#F12E52]">
-        <b>Recommendation</b><span class="font-bold text-sm text-gray-600 mx-4">based on your preferences</span>
+        <b>Similar products</b><span class="font-bold text-sm text-gray-600 mx-4">based on your wishlist</span>
     </div>
 </div>
 
