@@ -279,13 +279,15 @@ class PageController extends Controller
 
         $authenticatedUser = session('authenticatedUser');
         $user = session('authenticatedUser');
+        $myGoods = Goods::where('us_ID', $authenticatedUser->us_ID)->get();
+        $wishlist = Wishlist::get();
         $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)->get();
         $wishlistCount = $wishlistItems->count();
         $goods = Goods::where('us_ID', $authenticatedUser->us_ID)->get();
         $product = Goods::findOrFail($g_ID);
         $userDetails = User::findOrFail($product->us_ID);
 
-        return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
+        return view('pages.goodsDetail', compact('user', 'authenticatedUser','myGoods','wishlist', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
     }
     
     public function getUsersWishlistedItem($hashed_id)
