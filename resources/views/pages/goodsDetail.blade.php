@@ -96,10 +96,6 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('goods.wishlisted.users', ['hashed_id' => Hashids::encode($product->g_ID)]) }}" class="text-white bg-blue-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-blue-600 rounded transition duration-300">
-    View Users Who Wishlisted This Item
-</a>
-
                 </div>
             </div>
             <div class="mt-4">
@@ -111,27 +107,63 @@
             </div>
 
             @if ($wishlistCount > 0 && $wishlistItems->contains('g_ID', $product->g_ID))
-                <div>ada</div>
-                @php
-                    $messageDisplayed = false;
-                @endphp
-                @foreach ($wishlist as $wishcheck)
-                    @foreach ($myGoods as $mygood)
-                        @if ($wishcheck->us_ID == $userDetails->us_ID && $wishcheck->g_ID == $mygood->g_ID)
-                            @if (!$messageDisplayed)
-                                <div>Hey! {{ $userDetails->us_name }} also wishlist your goods!</div>
-                                @php
-                                    $messageDisplayed = true;
-                                @endphp
-                            @endif
-                            <div>{{ $mygood->g_ID }}</div>
-                            <div>{{ $mygood->g_name }}</div>
-                        @endif
-                    @endforeach
-                @endforeach
-            @else
-                <div>tidak ada</div>
-            @endif
+    @php
+        $messageDisplayed = false;
+    @endphp
+    <div>
+    <div class="text-2xl mt-8 mb-4 text-[#F12E52]"><b>Matched!</b><span class="font-bold text-sm text-gray-600 mx-4">{{ $userDetails->us_name }} also wishlisted your goods!</span></div>
+    </div>
+    <div class="flex flex-wrap">
+        @foreach ($wishlist as $wishcheck)
+            @foreach ($myGoods as $mygood)
+                @if ($wishcheck->us_ID == $userDetails->us_ID && $wishcheck->g_ID == $mygood->g_ID)
+                    <div class="max-w-md rounded overflow-hidden shadow-lg product-card flex flex-col mr-4 mb-4">
+                        @php
+                            $images = $mygood->images;
+                            $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
+                            $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
+                            $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
+                        @endphp
+
+                        <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image" data-product-image="{{ $imageUrl }}">
+                        <div class="px-4 py-4">
+                            <input type="hidden" id="goods_owner" value="{{ $product->us_ID }}" />
+                            <div class="font-bold text-lg mb-2">{{ $mygood->g_name }}</div>
+                            <hr class="my-2 border-b-2 border-gray-800"> <!-- Garis pembatas -->
+                            <p class="hidden text-gray-700 text-base mb-2">{{ $mygood->g_desc }}</p>
+                            <div class="grid grid-cols-1 gap-2 mt-3 bg-pink-100 border border-gray-300 rounded-lg p-4">
+                                <div>
+                                    <p class="text-gray-700" style="font-size: 1em;"><span class="font-bold">Category:</span>
+                                        {{ $mygood->g_category }}
+                                    </p>
+                                    <p class="text-gray-700"><span class="font-bold">Condition:</span>
+                                        {{ $mygood->g_type }}
+                                    </p>
+                                    <p class="text-gray-700"><span class="font-bold">Age:</span>
+                                        {{ $mygood->g_age }} <span>Years</span>
+                                    </p>
+                                    <p class="text-gray-700"><span class="font-bold">Price Prediction:</span>
+                                        {{$formattedPrice }}
+                                    </p>
+                                    <span class="hidden product-price">{{ $mygood->g_price_prediction }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @php
+                        // Mark message as displayed
+                        $messageDisplayed = true;
+                    @endphp
+                @endif
+            @endforeach
+        @endforeach
+    </div>
+@else
+    <div>Tidak ada</div>
+@endif
+
+
+
             <!-- After displaying the current product's details, fetch and shuffle similar products -->
 @php
     // Get the predicted price of the current product
