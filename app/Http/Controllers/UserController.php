@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\File;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
+use Vinkla\Hashids\Facades\Hashids; // Tambahkan baris ini
+
 
 class UserController extends Controller
 {
@@ -20,6 +22,7 @@ class UserController extends Controller
         // Tampilkan halaman profil pengguna dengan data yang diperlukan
         return view('pages.user.userProfile', ['user' => $user, 'goods' => $goods]);
     }
+
 
     public function followUser(User $user)
     {
