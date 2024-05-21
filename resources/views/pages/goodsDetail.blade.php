@@ -96,6 +96,9 @@
                             </div>
                         </div>
                     </div>
+                    <a href="{{ route('goods.wishlisted.users', ['hashed_id' => Hashids::encode($product->g_ID)]) }}" class="text-white bg-blue-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-blue-600 rounded transition duration-300">
+    View Users Who Wishlisted This Item
+</a>
                 </div>
             </div>
             <div class="mt-4">
@@ -110,10 +113,30 @@
     @php
         $messageDisplayed = false;
     @endphp
-    <div>
-    <div class="text-2xl mt-8 mb-4 text-[#F12E52]"><b>Matched!</b><span class="font-bold text-sm text-gray-600 mx-4">{{ $userDetails->us_name }} also wishlisted your goods!</span></div>
-    </div>
+
     <div class="flex flex-wrap">
+        @foreach ($wishlist as $wishcheck)
+            @foreach ($myGoods as $mygood)
+                @if ($wishcheck->us_ID == $userDetails->us_ID && $wishcheck->g_ID == $mygood->g_ID)
+                    @if (!$messageDisplayed)
+                        <div class="text-2xl mt-8 mb-4 text-[#F12E52] flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#F12E52] mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18.293 5.293a1 1 0 00-1.414-1.414L8 13.586l-3.293-3.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l10-10z" clip-rule="evenodd" />
+                            </svg>
+                            <b>Matched!</b>
+                            <span class="font-bold text-sm text-gray-600 mx-4">{{ $userDetails->us_name }} also wishlisted your goods!</span>
+                        </div>
+                        @php
+                            $messageDisplayed = true;
+                        @endphp
+                    @endif
+
+                    @break
+                @endif
+            @endforeach
+        @endforeach
+
+        {{-- Menampilkan daftar barang yang cocok --}}
         @foreach ($wishlist as $wishcheck)
             @foreach ($myGoods as $mygood)
                 @if ($wishcheck->us_ID == $userDetails->us_ID && $wishcheck->g_ID == $mygood->g_ID)
@@ -122,7 +145,7 @@
                             $images = $mygood->images;
                             $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
                             $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
-                            $formattedPrice = 'Rp ' . number_format($product->g_price_prediction, 0, ',', '.');
+                            $formattedPrice = 'Rp ' . number_format($mygood->g_price_prediction, 0, ',', '.');
                         @endphp
 
                         <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image" data-product-image="{{ $imageUrl }}">
@@ -150,19 +173,26 @@
                             </div>
                         </div>
                     </div>
-                    @php
-                        // Mark message as displayed
-                        $messageDisplayed = true;
-                    @endphp
+                    {{-- Keluar dari foreach setelah menemukan hasil cocok pertama --}}
+                    @break
                 @endif
             @endforeach
         @endforeach
     </div>
+
 @else
-    <div>Tidak ada</div>
+    <div>
+        <div class="text-lg text-gray-600 mt-4 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v8a1 1 0 002 0V4a1 1 0 00-1-1zm0 12a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+            </svg>
+            <span>Tidak ada</span>
+        </div>
+    </div>
 @endif
 
 
+<hr class="my-4 border-b-1 border-gray-800"> <!-- Garis pembatas -->
 
             <!-- After displaying the current product's details, fetch and shuffle similar products -->
 @php
