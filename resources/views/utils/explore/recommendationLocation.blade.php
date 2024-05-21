@@ -14,19 +14,28 @@
         <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Recommended Products <span
                 class="text-sm text-gray-600">based
                 on location</span></h2>
-        <div class="flex gap-2 px-2">
-        <select
-    class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"
-    onchange="filterByCity(this.value)">
-    <option value="Current">Current Location</option>
-    <option value="All">All</option>
-    @foreach($cities as $city)
-        @if($city !== null)
-            <option value="{{ $city }}">{{ $city }}</option>
-        @endif
-    @endforeach
-</select>
+                <div class="flex gap-2 px-2">
+                <select
+                class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"
+                onchange="filterByCity(this.value)">
+                <option value="Current">Current Location</option>
+                <option value="All">All</option>
+                @php
+                $alphabeticalCities = [];
+                foreach ($cities as $city) {
+                    if ($city !== null) {
+                        $alphabeticalCities[$city] = strtolower($city);
+                    }
+                }
 
+                ksort($alphabeticalCities);
+                @endphp
+
+                @foreach($alphabeticalCities as $cityName => $cityCode)
+                <option value="{{ $cityCode }}">{{ $cityName }}</option>
+                @endforeach
+            </select>
+            <input type="text" id="citySearchInput" class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4" placeholder="Search City" onkeyup="searchCity()">
         </div>
         <div class="product-slider-container overflow-hidden relative">
             <div class="flex" id="productCards">
@@ -232,17 +241,46 @@
     }
 
     function filterByCity(location) {
-    let productsFound = false; // Flag to track if any products are found
+        let productsFound = false; // Flag to track if any products are found
 
-    if (location === 'Current') {
-        getCurrentLocationAndFilter(); // Get and filter by current location
-    } else {
+        if (location === 'Current') {
+            getCurrentLocationAndFilter(); // Get and filter by current location
+        } else {
+            // Loop through each product card
+            productCards.forEach(card => {
+                const cardLocation = card.getAttribute('data-location');
+
+                // Check if the user's location matches the selected city or "All"
+                if (location === 'All' || cardLocation.toLowerCase() === location.toLowerCase()) {
+                    card.style.display = 'block'; // Show the product if it matches
+                    productsFound = true; // Set the flag to true since products are found
+                } else {
+                    card.style.display = 'none'; // Hide the product if it doesn't match
+                }
+            });
+
+            // Reset indexes for the slider
+            resetIndexes();
+
+            // If no products are found, display the message
+            if (!productsFound) {
+                showNoProductMessage();
+            } else {
+                hideNoProductMessage();
+            }
+        }
+    }
+
+    function searchCity() {
+        const searchInput = document.getElementById('citySearchInput').value.toLowerCase();
+        let productsFound = false; // Flag to track if any products are found
+
         // Loop through each product card
         productCards.forEach(card => {
             const cardLocation = card.getAttribute('data-location');
 
-            // Check if the user's location matches the selected city or "All"
-            if (location === 'All' || cardLocation.toLowerCase() === location.toLowerCase()) {
+            // Check if the user's location includes the search input value
+            if (cardLocation.includes(searchInput)) {
                 card.style.display = 'block'; // Show the product if it matches
                 productsFound = true; // Set the flag to true since products are found
             } else {
@@ -260,22 +298,20 @@
             hideNoProductMessage();
         }
     }
-}
 
-function showNoProductMessage() {
-    const noProductMessage = document.querySelector('.no-product-message');
-    if (noProductMessage) {
-        noProductMessage.style.display = 'block';
+    function showNoProductMessage() {
+        const noProductMessage = document.querySelector('.no-product-message');
+        if (noProductMessage) {
+            noProductMessage.style.display = 'block';
+        }
     }
-}
 
-function hideNoProductMessage() {
-    const noProductMessage = document.querySelector('.no-product-message');
-    if (noProductMessage) {
-        noProductMessage.style.display = 'none';
+    function hideNoProductMessage() {
+        const noProductMessage = document.querySelector('.no-product-message');
+        if (noProductMessage) {
+            noProductMessage.style.display = 'none';
+        }
     }
-}
-
 
     function getCurrentLocationAndFilter() {
         if (navigator.geolocation) {
@@ -312,25 +348,26 @@ function hideNoProductMessage() {
                             productCards.forEach(card => {
                                 const cardLocation = card.getAttribute('data-location');
 
-                            // Check if the detected city matches the user's city
-                            if (detectedCity.toLowerCase() === cardLocation.toLowerCase()) {
-                                card.style.display = 'block'; // Show the product if it matches
-                            } else {
-                                card.style.display = 'none'; // Hide the product if it doesn't match
-                            }
-                        });
-                        resetIndexes(); // Reset indexes for the slider
-                    } else {
-                        console.error('City (locality) not found in address components.');
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Error fetching current location:', error);
-                });
-        });
-    } else {
-        console.error('Geolocation is not supported by this browser.');
+                                // Check if the detected city matches the user's city
+                                if (cardLocation.toLowerCase().includes(detectedCity.toLowerCase())) {
+                                    card.style.display = 'block'; // Show the product if it matches
+                                } else {
+                                    card.style.display = 'none'; // Hide the product if it doesn't match
+                                }
+                            });
+                            resetIndexes(); // Reset indexes for the slider
+                        } else {
+                            console.error('City (locality) not found in address components.');
+                        }
+                    })
+                    .catch(function(error) {
+                        console.error('Error fetching current location:', error);
+                    });
+            });
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
     }
-}
+
     getCurrentLocationAndFilter();
 </script>
