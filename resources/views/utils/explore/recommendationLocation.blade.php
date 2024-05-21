@@ -75,13 +75,11 @@
                                 number_format($product->g_price_prediction, 0, ',', '.') }}</span>
 
                             @auth
-                            <div>
-                                <button
-                                    class="bg-red-400 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
-                                    style="font-size: 14px;"
-                                    onclick="openModal('{{ $product->g_name }}', '{{ $product->g_desc }}', '{{ isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) : 'https://via.placeholder.com/400' }}', '{{ $user->us_city }}', '{{ number_format($product->g_original_price, 0, ',', '.') }}', '{{ $product->g_ID }}', '{{ $user->us_username }}')">
+                            <div class="flex justify-center items-center">
+                            <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
+                                    class="bg-red-400 text-white text-sm px-4 py-2 rounded hover:bg-red-600 transition duration-300 text-center">
                                     Detail
-                                </button>
+                                </a>
                             </div>
                             <div>
                                 <button
