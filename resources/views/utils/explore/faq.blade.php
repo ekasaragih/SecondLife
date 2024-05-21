@@ -1,45 +1,48 @@
 @extends('utils.layouts.navbar.topnav')
 
-<style>
-    .faq-card {
-        perspective: 1000px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        margin-bottom: 120px;
-    }
+<head>
+    <link rel="shortcut icon" href="/asset/img/mini-logo.png" type="image/x-icon">
+    <style>
+        .faq-card {
+            perspective: 1000px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 120px;
+        }
 
-    .inner {
-        transition: transform 0.5s;
-        transform-style: preserve-3d;
-        height: auto;
-        /* Menyesuaikan ketinggian FAQ */
-        display: flex;
-        /* Membuat konten vertikal di tengah */
-        flex-direction: column;
-        /* Membuat konten vertikal di tengah */
-    }
+        .inner {
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+            height: auto;
+            display: flex;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+            flex-direction: column;
+            /* Membuat konten vertikal di tengah */
+        }
 
-    .faq-card.flip .inner {
-        transform: rotateY(180deg);
-    }
+        .faq-card.flip .inner {
+            transform: rotateY(180deg);
+        }
 
-    .front,
-    .back {
-        width: 100%;
-        position: absolute;
-        backface-visibility: hidden;
-        padding: 10px;
-        display: flex;
-        /* Membuat konten vertikal di tengah */
-        flex-direction: column;
-        /* Membuat konten vertikal di tengah */
-        justify-content: center;
-        /* Posisi vertikal ke tengah */
-    }
+        .front,
+        .back {
+            width: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            padding: 10px;
+            display: flex;
+            /* Membuat konten vertikal di tengah */
+            flex-direction: column;
+            /* Membuat konten vertikal di tengah */
+            justify-content: center;
+            /* Posisi vertikal ke tengah */
+        }
 
-    .back {
-        transform: rotateY(180deg);
-    }
-</style>
+        .back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
 
 <div class="flex items-center justify-center pt-52">
     <div class="container w-4/5">
