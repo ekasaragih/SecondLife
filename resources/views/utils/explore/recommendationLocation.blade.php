@@ -14,15 +14,18 @@
         <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Products <span class="text-sm text-gray-600">based
                 on your current location</span></h2>
         <div class="flex gap-2 px-2">
-            <select
-                class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"
-                onchange="filterByCity(this.value)">
-                <option value="Current">Current Location</option>
-                <option value="All">All</option>
-                @foreach($cities as $city)
-                <option value="{{ $city }}">{{ $city }}</option>
-                @endforeach
-            </select>
+        <select
+    class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"
+    onchange="filterByCity(this.value)">
+    <option value="Current">Current Location</option>
+    <option value="All">All</option>
+    @foreach($cities as $city)
+        @if($city !== null)
+            <option value="{{ $city }}">{{ $city }}</option>
+        @endif
+    @endforeach
+</select>
+
         </div>
         <div class="product-slider-container overflow-hidden relative">
             <div class="flex" id="productCards">
@@ -87,6 +90,16 @@
                 @endforeach
             </div>
         </div>
+
+        <div class="flex justify-center no-product-message" style="display: none;">
+    <div class="text-xl text-[#F12E52] mt-4 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v8a1 1 0 002 0V4a1 1 0 00-1-1zm0 12a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+        </svg>
+        <span>There is no product in this location. Select another location.</span>
+    </div>
+</div>
+
 
         <button class="product-slider-btn left-0" onclick="slideLeft()">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -218,23 +231,50 @@
     }
 
     function filterByCity(location) {
-        if (location === 'Current') {
-            getCurrentLocationAndFilter(); // Get and filter by current location
-        } else {
-            // Loop through each product card
-            productCards.forEach(card => {
-                const cardLocation = card.getAttribute('data-location');
+    let productsFound = false; // Flag to track if any products are found
+
+    if (location === 'Current') {
+        getCurrentLocationAndFilter(); // Get and filter by current location
+    } else {
+        // Loop through each product card
+        productCards.forEach(card => {
+            const cardLocation = card.getAttribute('data-location');
 
             // Check if the user's location matches the selected city or "All"
             if (location === 'All' || cardLocation.toLowerCase() === location.toLowerCase()) {
                 card.style.display = 'block'; // Show the product if it matches
+                productsFound = true; // Set the flag to true since products are found
             } else {
                 card.style.display = 'none'; // Hide the product if it doesn't match
             }
         });
-        resetIndexes(); // Reset indexes for the slider
+
+        // Reset indexes for the slider
+        resetIndexes();
+
+        // If no products are found, display the message
+        if (!productsFound) {
+            showNoProductMessage();
+        } else {
+            hideNoProductMessage();
         }
-    }   
+    }
+}
+
+function showNoProductMessage() {
+    const noProductMessage = document.querySelector('.no-product-message');
+    if (noProductMessage) {
+        noProductMessage.style.display = 'block';
+    }
+}
+
+function hideNoProductMessage() {
+    const noProductMessage = document.querySelector('.no-product-message');
+    if (noProductMessage) {
+        noProductMessage.style.display = 'none';
+    }
+}
+
 
     function getCurrentLocationAndFilter() {
         if (navigator.geolocation) {

@@ -7,7 +7,7 @@
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
     <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-4">
-        @foreach ($nonWishlistProducts as $product)
+        @foreach ($WishlistProducts as $product)
         @php
         $defaultImageUrl = 'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
         $imageUrl = isset($product->images[0]) ? asset('goods_img/' . $product->images[0]->img_url) : $defaultImageUrl;
