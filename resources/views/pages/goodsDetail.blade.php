@@ -41,7 +41,7 @@
                                     Prediction price:
                                 </span>
                                 <span class="text-base">
-                                    {{-- Format the prediction price in rupiah --}}
+
                                     Rp{{ number_format($product->g_price_prediction, 0, ',', '.') }}
                                 </span>
                             </div>
@@ -89,6 +89,7 @@
                                         </path>
                                     </svg>
                                 </button>
+
                                 <!-- Modal Comment Component -->
                                 @include('utils.explore.modalComment')
                             </div>
@@ -126,7 +127,7 @@
             @else
             <div>tidak ada</div>
             @endif
-            <!-- After displaying the current product's details, fetch and shuffle similar products -->
+
             @php
             // Get the predicted price of the current product
             $predictedPrice = $product->g_price_prediction;
@@ -137,9 +138,9 @@
 
             // Fetch similar products within the price range
             $similarProducts = App\Models\Goods::whereBetween('g_price_prediction', [$minPrice, $maxPrice])
-            ->where('g_ID', '!=', $product->g_ID) // Exclude the current product
-            ->inRandomOrder() // Shuffle the products
-            ->limit(5) // Limit the number of similar products to display
+            ->where('g_ID', '!=', $product->g_ID)
+            ->inRandomOrder()
+            ->limit(5)
             ->get();
             @endphp
 
@@ -149,7 +150,7 @@
                     class="font-bold text-sm text-gray-600 mx-4">similar price</span></div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 @foreach ($similarProducts as $similarProduct)
-                <!-- Display similar product card here -->
+
                 <div class="max-w-md rounded overflow-hidden shadow-lg product-card">
                     @php
                     $images = $similarProduct->images;
@@ -164,7 +165,7 @@
                     <div class="px-4 py-4">
                         <input type="hidden" id="goods_owner" value="{{ $similarProduct->us_ID }}" />
                         <div class="font-bold text-lg mb-2">{{ $similarProduct->g_name }}</div>
-                        <hr class="my-2 border-b-2 border-gray-800"> <!-- Garis pembatas -->
+                        <hr class="my-2 border-b-2 border-gray-800">
                         <p class="hidden text-gray-700 text-base mb-2">{{ $similarProduct->g_desc }}
                         </p>
                         <div class="grid grid-cols-1 gap-2 mt-3 bg-pink-100 border border-gray-300 rounded-lg p-4">
