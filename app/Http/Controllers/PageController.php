@@ -140,14 +140,14 @@ class PageController extends Controller
                 ->pluck('g_category')
                 ->toArray();
 
-            $nonWishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
+            $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
                 ->whereNotIn('g_ID', $wishlistItems)
                 ->whereIn('g_category', $wishlistCategories)
                 ->inRandomOrder()
                 ->limit(8)
                 ->get();
         } else {
-            $nonWishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
+            $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
                 ->inRandomOrder()
                 ->limit(8)
                 ->get();
