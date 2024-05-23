@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Exchange;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Goods;
 
 class ExchangeController extends Controller
 {
@@ -23,10 +25,11 @@ class ExchangeController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'my_ID' => 'required|integer',
+            'requested_by' => 'required|integer',
             'goods_owner_ID' => 'required|integer',
             'my_goods' => 'required|integer',
             'barter_with' => 'required|integer',
+            'status' => 'required|string',
         ]);
 
         // Create a new exchange record
@@ -39,6 +42,27 @@ class ExchangeController extends Controller
         }
     }
 
+    public function confirmExchange($exchangeId)
+    {
+        $exchange = Exchange::find($exchangeId);
+        if ($exchange && $exchange->goods_owner_ID == Auth::id()) {
+            $exchange->status = 'Confirmed';
+            $exchange->save();
+            return response()->json(['message' => 'Exchange confirmed']);
+        }
+        return response()->json(['message' => 'Unauthorized'], 403);
+    }
+
+    public function rejectExchange($exchangeId)
+    {
+        $exchange = Exchange::find($exchangeId);
+        if ($exchange && $exchange->goods_owner_ID == Auth::id()) {
+            $exchange->status = 'Rejected';
+            $exchange->save();
+            return response()->json(['message' => 'Exchange rejected']);
+        }
+        return response()->json(['message' => 'Unauthorized'], 403);
+    }
     /**
      * Display the specified resource.
      */

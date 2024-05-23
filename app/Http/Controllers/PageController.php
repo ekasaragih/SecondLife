@@ -51,52 +51,52 @@ class PageController extends Controller
 
     // Main pages
     public function explore()
-{
-    $recentProductsByCategory = Goods::select('g_category', 'created_at')->orderBy('created_at', 'desc')->take(20)->get()->groupBy('g_category');
+    {
+        $recentProductsByCategory = Goods::select('g_category', 'created_at')->orderBy('created_at', 'desc')->take(20)->get()->groupBy('g_category');
 
-    $authenticatedUser = session('authenticatedUser');
-    $wishlistCount = null;
-    $categoryCounts = $recentProductsByCategory->map->count();
-    $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
+        $authenticatedUser = session('authenticatedUser');
+        $wishlistCount = null;
+        $categoryCounts = $recentProductsByCategory->map->count();
+        $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
 
-    $exchangeGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'));
+        $exchangeGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'));
 
-    // Ambil semua produk, tanpa filter wishlist untuk konten explore lainnya
-    $products = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->get();
-    
-    // Ambil produk yang tidak ada di wishlist khusus untuk swape
-    $swapeProducts = collect();
-    if ($authenticatedUser && $authenticatedUser->us_ID) {
-        $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)
-            ->pluck('g_ID')
-            ->toArray();
-        $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)
-            ->whereNotIn('g_ID', $wishlistItems)
-            ->get();
-    } else {
-        $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->get();
+        // Ambil semua produk, tanpa filter wishlist untuk konten explore lainnya
+        $products = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->get();
+        
+        // Ambil produk yang tidak ada di wishlist khusus untuk swape
+        $swapeProducts = collect();
+        if ($authenticatedUser && $authenticatedUser->us_ID) {
+            $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)
+                ->pluck('g_ID')
+                ->toArray();
+            $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)
+                ->whereNotIn('g_ID', $wishlistItems)
+                ->get();
+        } else {
+            $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->get();
+        }
+
+        $trendProducts = $this->filterTrendProducts($topCategories, $authenticatedUser, $exchangeGoodsIds);
+
+        if ($authenticatedUser && $authenticatedUser->us_ID) {
+            $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        }
+
+        $cities = User::distinct('us_city')->pluck('us_city');
+
+        $userAvatar = $authenticatedUser ? $authenticatedUser->avatar : null;
+
+        return view('pages.explore', [
+            'user' => $authenticatedUser,
+            'products' => $products,
+            'swapeProducts' => $swapeProducts,  // Pass variabel khusus untuk swape
+            'trendProducts' => $trendProducts,
+            'wishlistCount' => $wishlistCount,
+            'cities' => $cities,
+            'userAvatar' => $userAvatar,
+        ]);
     }
-
-    $trendProducts = $this->filterTrendProducts($topCategories, $authenticatedUser, $exchangeGoodsIds);
-
-    if ($authenticatedUser && $authenticatedUser->us_ID) {
-        $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-    }
-
-    $cities = User::distinct('us_city')->pluck('us_city');
-
-    $userAvatar = $authenticatedUser ? $authenticatedUser->avatar : null;
-
-    return view('pages.explore', [
-        'user' => $authenticatedUser,
-        'products' => $products,
-        'swapeProducts' => $swapeProducts,  // Pass variabel khusus untuk swape
-        'trendProducts' => $trendProducts,
-        'wishlistCount' => $wishlistCount,
-        'cities' => $cities,
-        'userAvatar' => $userAvatar,
-    ]);
-}
 
     private function filterTrendProducts($topCategories, $authenticatedUser)
     {
@@ -238,13 +238,32 @@ class PageController extends Controller
             })
             ->count();
 
-        $exchangedGoods = Exchange::where('my_ID', $authenticatedUser->us_ID)
-            ->orWhere('goods_owner_ID', $authenticatedUser->us_ID)
-            ->with(['userGoods', 'otherUserGoods'])
-            ->distinct()
-            ->get();
+       $exchangedGoodsAsOwner = Exchange::where('goods_owner_ID', $authenticatedUser->us_ID)
+            ->with(['otherUserGoods.images']) // Load images for the goods in barter_with
+            ->get()
+            ->map(function ($exchange) {
+                $exchange->displayedGoods = $exchange->otherUserGoods;
+                return $exchange;
+            });
 
-        $totalBarteredGoods = Exchange::where('my_ID', $authenticatedUser->us_ID)
+        // Fetch exchanged goods where the logged-in user made the request
+        $exchangedGoodsAsRequester = Exchange::where('requested_by', $authenticatedUser->us_ID)
+            ->with(['userGoods.images'])
+            ->get()
+            ->map(function ($exchange) {
+                $exchange->displayedGoods = $exchange->userGoods;
+                return $exchange;
+            });
+
+        // Merge both collections
+        $exchangedGoods = $exchangedGoodsAsOwner->merge($exchangedGoodsAsRequester);
+
+        $pendingExchanges = Exchange::where('goods_owner_ID', $authenticatedUser->us_ID)
+            ->where('status', 'Pending')
+            ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
+            ->count();
+
+        $totalBarteredGoods = Exchange::where('requested_by', $authenticatedUser->us_ID)
             ->orWhere('goods_owner_ID', $authenticatedUser->us_ID)
             ->count();
 
@@ -256,6 +275,7 @@ class PageController extends Controller
             'wishlistCount' => $wishlistCount,
             'totalBarteredGoods' => $totalBarteredGoods,
             'availableGoodsCount' => $availableGoodsCount,
+            'pendingExchanges' => $pendingExchanges,
         ]);
     }
 
@@ -291,22 +311,38 @@ class PageController extends Controller
     }
     
     public function getUsersWishlistedItem($hashed_id)
-{
-    // Decode hashed ID
-    $g_ID = Hashids::decode($hashed_id)[0];
+    {
+        // Decode hashed ID
+        $g_ID = Hashids::decode($hashed_id)[0];
 
-    // Retrieve all user IDs who have wishlisted the given g_ID
-    $userIDs = Wishlist::where('g_ID', $g_ID)->pluck('us_ID')->toArray();
+        // Retrieve all user IDs who have wishlisted the given g_ID
+        $userIDs = Wishlist::where('g_ID', $g_ID)->pluck('us_ID')->toArray();
 
-    // Retrieve user details based on the user IDs
-    $users = User::whereIn('us_ID', $userIDs)->get();
+        // Retrieve user details based on the user IDs
+        $users = User::whereIn('us_ID', $userIDs)->get();
 
-    // Retrieve product details
-    $product = Goods::findOrFail($g_ID);
+        // Retrieve product details
+        $product = Goods::findOrFail($g_ID);
 
-    // Pass the users and product to the view
-    return view('pages.goodsDetailUsersWishlisted', compact('users', 'product'));
-}
+        // Pass the users and product to the view
+        return view('pages.goodsDetailUsersWishlisted', compact('users', 'product'));
+    }
+
+    public function exchangeRequest()
+    {
+        $userId = Auth::id();
+        $requestExchanges = Exchange::where('requested_by', $userId)
+            ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
+            ->orderByDesc('created_at') 
+            ->get();
+
+        $pendingExchanges = Exchange::where('goods_owner_ID', $userId)
+            ->where('status', 'Pending')
+            ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
+            ->orderByDesc('created_at') 
+            ->get();
 
 
+        return view('pages.exchangeRequest', compact('requestExchanges', 'pendingExchanges'));
+    }
 }

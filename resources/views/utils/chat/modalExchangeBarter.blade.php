@@ -249,6 +249,7 @@
         const otherUserId = {{ $ownerUserId }};
         const userGoodsId = $('input[name="user_goods"]:checked').val();
         const otherUserGoodsId = $('input[name="other_user_goods"]:checked').val();
+        const status = "Pending";
 
         if ($('input[name="user_goods"]:checked').length > 1 || $('input[name="other_user_goods"]:checked').length > 1 || $('input[name="wishlist_goods"]:checked').length > 1) {
             Swal.fire({
@@ -271,10 +272,11 @@
                 'Authorization': 'Bearer ' + apiToken
             },
             data: {
-                my_ID: loggedInUserId,
+                requested_by: loggedInUserId,
                 goods_owner_ID: otherUserId,
                 my_goods: userGoodsId,
-                barter_with: otherUserGoodsId
+                barter_with: otherUserGoodsId,
+                status: status
             },
             success: function(response) {
                 Swal.fire({
@@ -284,7 +286,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    window.location.href = '/categories';
+                    window.location.href = '/exchange-request';
                 });
 
             },
