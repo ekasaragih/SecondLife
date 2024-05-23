@@ -7,14 +7,13 @@
     @endauth
     <link rel="shortcut icon" href="/asset/img/mini-logo.png" type="image/x-icon">
 </head>
-
 <div class="pt-52 mb-5 font-rubik">
 
     <div class="container mx-auto mb-5">
-        <div class="text-3xl text-[#F12E52]"><b>Goods confirmation</b></div><br>
+        <div class="text-3xl text-[#F12E52]"><b>Goods confirmation</b> <p class="text-lg">List of goods that are waiting for user's approval to be confirmed:</p></div><br>
         <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
             <div class="mb-4">
-                <p class="text-lg">List of goods that are waiting for user's approval to be confirmed:</p>
+               
 
                 @if($requestExchanges->isEmpty())
                 <p class="text-center text-gray-500">No goods need confirmation at this time.</p>
@@ -27,7 +26,7 @@
                                 <div class="flex space-x-4">
                                     <div>
                                         <p class="font-semibold">My Goods:</p>
-                                        <a href="/exchange-request"
+                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->userGoods->g_ID)]) }}"
                                             class="flex flex-col w-48 h-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                                             <div class="flex flex-col justify-between p-4 leading-normal my-auto">
                                                 <div class="flex space-x-2">
@@ -54,7 +53,7 @@
                                 <div class="flex space-x-4">
                                     <div>
                                         <p class="font-semibold">Goods Offered:</p>
-                                        <a href="/exchange-request"
+                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->otherUserGoods->g_ID)]) }}"
                                             class="flex flex-col w-48 h-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                                             <div class="flex flex-col justify-between p-4 leading-normal my-auto">
                                                 <div class="flex space-x-2">
@@ -80,20 +79,32 @@
                                 </div>
                             </div>
                             <div class="flex space-x-4">
-                                <p class="font-semibold">Status:</p>
-                                <p class="text-primary text-center mt-5">{{
-                                    $exchange->status }}</p>
-                            </div>
+    <p class="font-semibold">Status:</p>
+    <div class="flex items-center">
+    <span class="text-xs font-semibold px-2 py-1 uppercase rounded-full {{ $exchange->status === 'pending' ? 'bg-red-500 text-white' : ($exchange->status === 'confirmed' ? 'bg-green-500 text-white' : 'bg-purple-500 text-white') }}">
+            {{ ucfirst($exchange->status) }}
+        </span>
+    </div>
+</div>
+
                         </div>
                     </li>
                     @endforeach
                 </ul>
                 @endif
             </div>
+        </div>
+    </div>
+</div>
 
 
+<div class="pt-42 mb-5 font-rubik">
+
+    <div class="container mx-auto mb-5">
+        <div class="text-3xl text-[#F12E52]"><b>Goods confirmation</b><p class="text-lg">List of goods you need to confirm for exchange:</p></div><br>
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
             <div>
-                <p class="text-lg">List of goods you need to confirm for exchange:</p>
+                
                 @if($pendingExchanges->isEmpty())
                 <p class="text-center text-gray-500">No goods need confirmation at this time.</p>
                 @else
@@ -174,6 +185,7 @@
         </div>
     </div>
 </div>
+
 
 @include('utils.layouts.footer.footer')
 
