@@ -11,11 +11,10 @@
 
 <div class="my-5 relative">
     <div class="mt-8">
-        <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Recommended Products <span
-                class="text-sm text-gray-600">based
+        <h2 class="text-2xl font-bold text-[#F12E52] mb-4">Products <span class="text-sm text-gray-600">based
                 on location</span></h2>
-                <div class="flex gap-2 px-2">
-                <select
+        <div class="flex gap-2 px-2">
+            <select
                 class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"
                 onchange="filterByCity(this.value)">
                 <option value="Current">Current Location</option>
@@ -23,9 +22,9 @@
                 @php
                 $alphabeticalCities = [];
                 foreach ($cities as $city) {
-                    if ($city !== null) {
-                        $alphabeticalCities[$city] = strtolower($city);
-                    }
+                if ($city !== null) {
+                $alphabeticalCities[$city] = strtolower($city);
+                }
                 }
 
                 ksort($alphabeticalCities);
@@ -35,7 +34,9 @@
                 <option value="{{ $cityCode }}">{{ $cityName }}</option>
                 @endforeach
             </select>
-            <input type="text" id="citySearchInput" class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4" placeholder="Search City" onkeyup="searchCity()">
+            <input type="text" id="citySearchInput"
+                class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 mb-4"
+                placeholder="Search City" onkeyup="searchCity()">
         </div>
         <div class="product-slider-container overflow-hidden relative">
             <div class="flex" id="productCards">
@@ -76,7 +77,7 @@
 
                             @auth
                             <div class="flex justify-center items-center">
-                            <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
+                                <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
                                     class="bg-red-400 text-white text-sm px-4 py-2 rounded hover:bg-red-600 transition duration-300 text-center">
                                     Detail
                                 </a>
@@ -100,13 +101,16 @@
         </div>
 
         <div class="flex justify-center no-product-message" style="display: none;">
-    <div class="text-xl text-[#F12E52] mt-4 flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v8a1 1 0 002 0V4a1 1 0 00-1-1zm0 12a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-        </svg>
-        <span>There is no product in this location. Select another location.</span>
-    </div>
-</div>
+            <div class="text-xl text-[#F12E52] mt-4 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600 mr-2" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 3a1 1 0 00-1 1v8a1 1 0 002 0V4a1 1 0 00-1-1zm0 12a1 1 0 100-2 1 1 0 000 2z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span>There is no product in this location. Select another location.</span>
+            </div>
+        </div>
 
 
         <button class="product-slider-btn left-0" onclick="slideLeft()">

@@ -135,14 +135,19 @@ class PageController extends Controller
 
         $nonExchangeProducts = $products->whereNotIn('g_ID', $exchangeGoodsIds);
 
-        if (empty($wishlistItems)) {
+        if (!empty($wishlistItems)) {
+            $wishlistCategories = Goods::whereIn('g_ID', $wishlistItems)
+                ->pluck('g_category')
+                ->toArray();
+
             $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
+                ->whereNotIn('g_ID', $wishlistItems)
+                ->whereIn('g_category', $wishlistCategories)
                 ->inRandomOrder()
                 ->limit(8)
                 ->get();
         } else {
             $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
-                ->whereNotIn('g_ID', $wishlistItems)
                 ->inRandomOrder()
                 ->limit(8)
                 ->get();
@@ -157,6 +162,7 @@ class PageController extends Controller
             'WishlistProducts' => $WishlistProducts,
         ]);
     }
+
 
     public function wishlist()
     {
@@ -179,12 +185,17 @@ class PageController extends Controller
             ->pluck('g_ID')
             ->toArray();
 
+        $wishlistCategories = Goods::whereIn('g_ID', $wishlistItemIds)
+            ->pluck('g_category')
+            ->toArray();
+
         $exchangeGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'));
 
         $nonExchangeProducts = $products->whereNotIn('g_ID', $exchangeGoodsIds);
 
         $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
             ->whereNotIn('g_ID', $wishlistItemIds)
+            ->whereIn('g_category', $wishlistCategories)
             ->with('images')
             ->inRandomOrder()
             ->limit(8)
@@ -200,10 +211,10 @@ class PageController extends Controller
         ]);
     }
 
-
     public function communities()
     {
         $authenticatedUser = session('authenticatedUser');
+
         if ($authenticatedUser !== null) {
             $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         } else {
@@ -213,11 +224,16 @@ class PageController extends Controller
         $communities = Communities::with('feedbacks')->withCount('likes')->orderByDesc('likes_count')->get();
 
         foreach ($communities as $community) {
-            $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
-                ->where('community_ID', $community->community_ID)
-                ->exists();
-            $community->isLikedByCurrentUser = $isLiked;
+            if ($authenticatedUser !== null) {
+                $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
+                    ->where('community_ID', $community->community_ID)
+                    ->exists();
+                $community->isLikedByCurrentUser = $isLiked;
+            } else {
+                $community->isLikedByCurrentUser = false;
+            }
         }
+
         $feedbacks = Feedbacks::all();
         return view('pages.communities', compact('communities', 'feedbacks', 'wishlistCount', 'authenticatedUser'));
     }
