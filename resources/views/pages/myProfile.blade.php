@@ -90,19 +90,6 @@
 
 <div class="mt-10 mx-12">
     <div class="flex flex-wrap justify-center gap-7">
-        <a href="/profile"
-            class="flex flex-col w-64 max-w-64 justify-center items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
-            <div class="flex flex-col justify-between p-4 leading-normal">
-                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" />
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
-                    Bartered goods
-                </h5>
-                <p class="mb-3  text-xl font-semibold text-gray-700 text-center">
-                    {{ $totalBarteredGoods }}
-                </p>
-            </div>
-        </a>
-
         <a href="/wishlist"
             class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
@@ -138,6 +125,19 @@
                 </h5>
                 <p class="mb-3  text-xl font-semibold text-gray-700 text-center">
                     {{ $pendingExchanges }}
+                </p>
+            </div>
+        </a>
+
+        <a href="/profile"
+            class="flex flex-col w-64 max-w-64 justify-center items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" />
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
+                    Bartered goods
+                </h5>
+                <p class="mb-3  text-xl font-semibold text-gray-700 text-center">
+                    {{ $totalBarteredGoods }}
                 </p>
             </div>
         </a>
