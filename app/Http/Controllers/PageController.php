@@ -258,6 +258,11 @@ class PageController extends Controller
         // Merge both collections
         $exchangedGoods = $exchangedGoodsAsOwner->merge($exchangedGoodsAsRequester);
 
+        $pendingExchanges = Exchange::where('goods_owner_ID', $authenticatedUser->us_ID)
+            ->where('status', 'Pending')
+            ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
+            ->count();
+
         $totalBarteredGoods = Exchange::where('requested_by', $authenticatedUser->us_ID)
             ->orWhere('goods_owner_ID', $authenticatedUser->us_ID)
             ->count();
@@ -270,6 +275,7 @@ class PageController extends Controller
             'wishlistCount' => $wishlistCount,
             'totalBarteredGoods' => $totalBarteredGoods,
             'availableGoodsCount' => $availableGoodsCount,
+            'pendingExchanges' => $pendingExchanges,
         ]);
     }
 

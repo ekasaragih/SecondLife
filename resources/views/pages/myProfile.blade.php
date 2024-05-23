@@ -137,7 +137,7 @@
                     Exchange requests
                 </h5>
                 <p class="mb-3  text-xl font-semibold text-gray-700 text-center">
-                    {{ $availableGoodsCount }}
+                    {{ $pendingExchanges }}
                 </p>
             </div>
         </a>
