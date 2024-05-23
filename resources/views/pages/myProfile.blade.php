@@ -90,6 +90,26 @@
 
 <div class="mt-10 mx-12">
     <div class="flex flex-wrap justify-center gap-7">
+        <a href="/my-goods"
+            class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/avail.png" alt="" />
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
+                    Available goods
+                </h5>
+                <p class="mb-3  text-xl font-semibold text-gray-700 text-center">
+                    {{ $availableGoodsCount }}
+                </p>
+            </div>
+        </a>
+
+        <!-- Arrow icon -->
+        <div class="flex items-center justify-center">
+            <svg class="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </div>
+
         <a href="/wishlist"
             class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
@@ -103,18 +123,12 @@
             </div>
         </a>
 
-        <a href="/my-goods"
-            class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
-            <div class="flex flex-col justify-between p-4 leading-normal">
-                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/avail.png" alt="" />
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
-                    Available goods
-                </h5>
-                <p class="mb-3  text-xl font-semibold text-gray-700 text-center">
-                    {{ $availableGoodsCount }}
-                </p>
-            </div>
-        </a>
+        <!-- Arrow icon -->
+        <div class="flex items-center justify-center">
+            <svg class="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </div>
 
         <a href="/exchange-request"
             class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
@@ -129,6 +143,13 @@
             </div>
         </a>
 
+        <!-- Arrow icon -->
+        <div class="flex items-center justify-center">
+            <svg class="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </div>
+        
         <a href="/profile"
             class="flex flex-col w-64 max-w-64 justify-center items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
