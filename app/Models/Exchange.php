@@ -17,6 +17,7 @@ class Exchange extends Model
         'goods_owner_ID',
         'my_goods',
         'barter_with',
+        'status',
     ];
 
     public function user()

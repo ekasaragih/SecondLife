@@ -89,9 +89,9 @@
 </div>
 
 <div class="mt-10 mx-12">
-<div class="flex flex-wrap justify-center gap-7">
+    <div class="flex flex-wrap justify-center gap-7">
         <a href="/profile"
-            class="flex flex-col w-52 max-w-52 justify-center items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            class="flex flex-col w-64 max-w-64 justify-center items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
                 <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" />
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
@@ -104,9 +104,9 @@
         </a>
 
         <a href="/wishlist"
-            class="flex flex-col w-52 max-w-52 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
-                <img class="mx-auto w-20 h-20" src="/asset/img/wishlist.png" alt="" />
+                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/wishlist.png" alt="" />
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
                     Your wishlist
                 </h5>
@@ -117,9 +117,9 @@
         </a>
 
         <a href="/my-goods"
-            class="flex flex-col w-52 max-w-52 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
-                <img class="mx-auto w-20 h-20" src="/asset/img/avail.png" alt="" />
+                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/avail.png" alt="" />
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
                     Available goods
                 </h5>
@@ -129,6 +129,18 @@
             </div>
         </a>
 
+        <a href="/exchange-request"
+            class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/avail.png" alt="" />
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
+                    Exchange Requests
+                </h5>
+                <p class="mb-3  text-xl font-semibold text-gray-700 text-center">
+                    {{ $availableGoodsCount }}
+                </p>
+            </div>
+        </a>
     </div>
 </div>
 

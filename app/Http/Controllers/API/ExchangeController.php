@@ -27,6 +27,7 @@ class ExchangeController extends Controller
             'goods_owner_ID' => 'required|integer',
             'my_goods' => 'required|integer',
             'barter_with' => 'required|integer',
+            'status' => 'required|string',
         ]);
 
         // Create a new exchange record
