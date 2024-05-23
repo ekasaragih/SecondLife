@@ -26,7 +26,7 @@
                                 <div class="flex space-x-4">
                                     <div>
                                         <p class="font-semibold">My Goods:</p>
-                                        <a href="/exchange-request"
+                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->userGoods->g_ID)]) }}"
                                             class="flex flex-col w-48 h-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                                             <div class="flex flex-col justify-between p-4 leading-normal my-auto">
                                                 <div class="flex space-x-2">
@@ -53,7 +53,7 @@
                                 <div class="flex space-x-4">
                                     <div>
                                         <p class="font-semibold">Goods Offered:</p>
-                                        <a href="/exchange-request"
+                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->otherUserGoods->g_ID)]) }}"
                                             class="flex flex-col w-48 h-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                                             <div class="flex flex-col justify-between p-4 leading-normal my-auto">
                                                 <div class="flex space-x-2">
