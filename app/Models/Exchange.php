@@ -13,7 +13,7 @@ class Exchange extends Model
     protected $primaryKey = 'ex_ID';
 
     protected $fillable = [
-        'my_ID',
+        'requested_by',
         'goods_owner_ID',
         'my_goods',
         'barter_with',
@@ -22,7 +22,7 @@ class Exchange extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'my_ID');
+        return $this->belongsTo(User::class, 'requested_by');
     }
 
     public function otherUser()

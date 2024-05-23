@@ -11,7 +11,6 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\UserController;
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Authorization
@@ -98,8 +97,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/unfollow/{user}', [UserController::class, 'unfollowUser'])->name('user.unfollow');
     Route::get('/user/{user}/follow-status', [UserController::class, 'followStatus'])->name('user.follow_status');
    
-    
-
+    // Explore
     Route::post('/explore/swipe', [ProductController::class, 'addToWishlist'])->name('swipe');  
 
     // Comments

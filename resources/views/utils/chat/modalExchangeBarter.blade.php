@@ -254,7 +254,7 @@
                 'Authorization': 'Bearer ' + apiToken
             },
             data: {
-                my_ID: loggedInUserId,
+                requested_by: loggedInUserId,
                 goods_owner_ID: otherUserId,
                 my_goods: userGoodsId,
                 barter_with: otherUserGoodsId,
@@ -268,7 +268,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    window.location.href = '/categories';
+                    window.location.href = '/exchange-request';
                 });
 
             },
