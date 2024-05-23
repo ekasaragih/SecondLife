@@ -226,6 +226,7 @@
         @else
         <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-2 gap-6">
             @foreach ($exchangedGoods as $exchange)
+            @if ($exchange->status === 'Confirmed') <!-- Check if status is confirmed -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <!-- Display exchanged goods information -->
                 <div class="flex flex-col md:flex-row">
@@ -269,6 +270,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             @endforeach
         </div>
         @endif
