@@ -89,9 +89,9 @@
 </div>
 
 <div class="mt-10 mx-12">
-<div class="flex flex-wrap justify-center gap-7">
+    <div class="flex flex-wrap justify-center gap-7">
         <a href="/profile"
-            class="flex flex-col w-52 max-w-52 justify-center items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            class="flex flex-col w-64 max-w-64 justify-center items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
                 <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" />
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
@@ -104,9 +104,9 @@
         </a>
 
         <a href="/wishlist"
-            class="flex flex-col w-52 max-w-52 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
-                <img class="mx-auto w-20 h-20" src="/asset/img/wishlist.png" alt="" />
+                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/wishlist.png" alt="" />
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
                     Your wishlist
                 </h5>
@@ -117,9 +117,9 @@
         </a>
 
         <a href="/my-goods"
-            class="flex flex-col w-52 max-w-52 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
             <div class="flex flex-col justify-between p-4 leading-normal">
-                <img class="mx-auto w-20 h-20" src="/asset/img/avail.png" alt="" />
+                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/avail.png" alt="" />
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
                     Available goods
                 </h5>
@@ -129,6 +129,18 @@
             </div>
         </a>
 
+        <a href="/exchange-request"
+            class="flex flex-col w-64 max-w-64 items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success.png" alt="" />
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-primary">
+                    Exchange requests
+                </h5>
+                <p class="mb-3  text-xl font-semibold text-gray-700 text-center">
+                    {{ $pendingExchanges }}
+                </p>
+            </div>
+        </a>
     </div>
 </div>
 
@@ -190,29 +202,29 @@
     @if ($exchangedGoods->isEmpty())
     <p class="text-lg text-gray-600">You haven't exchanged any goods yet.</p>
     @else
-    <p class="text-base text-gray-800 mb-4">List of goods that you have exchanged with other user.</p>
+    <p class="text-base text-gray-800 mb-4">List of goods that you have exchanged with other users.</p>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         @foreach ($exchangedGoods as $exchange)
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <!-- Display exchanged goods information -->
             <img class="w-full h-64 object-cover object-center"
-                src="{{ optional($exchange->userGoods->images->first())->img_url ? asset('goods_img/' . $exchange->userGoods->images->first()->img_url) : '' }}"
+                src="{{ optional($exchange->displayedGoods->images->first())->img_url ? asset('goods_img/' . $exchange->displayedGoods->images->first()->img_url) : '' }}"
                 alt="Product Image"
-                data-product-image="{{ optional($exchange->userGoods->images->first())->img_url ? asset('goods_img/' . $exchange->userGoods->images->first()->img_url) : '' }}">
+                data-product-image="{{ optional($exchange->displayedGoods->images->first())->img_url ? asset('goods_img/' . $exchange->displayedGoods->images->first()->img_url) : '' }}">
 
             <div class="p-4">
                 <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
                     style="height: 3.5rem; line-height: 1.75rem;">{{
-                    $exchange->userGoods->g_name }}</h3>
-                <p class="text-sm text-gray-600">{{ $exchange->userGoods->g_desc }}</p>
+                    $exchange->displayedGoods->g_name }}</h3>
+                <p class="text-sm text-gray-600">{{ $exchange->displayedGoods->g_desc }}</p>
                 <div class="mt-2 flex justify-between items-center">
-                    <p class="text-sm text-gray-500">Category: {{ $exchange->userGoods->g_category }}</p>
+                    <p class="text-sm text-gray-500">Category: {{ $exchange->displayedGoods->g_category }}</p>
                 </div>
                 <div class="mt-4 flex justify-between items-center">
                     <p class="text-sm font-semibold text-gray-700">Price Prediction: Rp {{
-                        number_format($exchange->userGoods->g_price_prediction, 0, ',', '.') }}</p>
-                    <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->userGoods->g_ID)]) }}"
+                        number_format($exchange->displayedGoods->g_price_prediction, 0, ',', '.') }}</p>
+                    <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->displayedGoods->g_ID)]) }}"
                         class="inline-block bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-sm">View
                         Details</a>
                 </div>
