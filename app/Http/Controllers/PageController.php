@@ -248,7 +248,7 @@ class PageController extends Controller
 
         // Fetch exchanged goods where the logged-in user made the request
         $exchangedGoodsAsRequester = Exchange::where('requested_by', $authenticatedUser->us_ID)
-            ->with(['userGoods.images']) // Load images for the goods in my_goods
+            ->with(['userGoods.images'])
             ->get()
             ->map(function ($exchange) {
                 $exchange->displayedGoods = $exchange->userGoods;
@@ -257,7 +257,7 @@ class PageController extends Controller
 
         // Merge both collections
         $exchangedGoods = $exchangedGoodsAsOwner->merge($exchangedGoodsAsRequester);
-        
+
         $totalBarteredGoods = Exchange::where('requested_by', $authenticatedUser->us_ID)
             ->orWhere('goods_owner_ID', $authenticatedUser->us_ID)
             ->count();
@@ -327,11 +327,13 @@ class PageController extends Controller
         $userId = Auth::id();
         $requestExchanges = Exchange::where('requested_by', $userId)
             ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
+            ->orderByDesc('created_at') 
             ->get();
 
         $pendingExchanges = Exchange::where('goods_owner_ID', $userId)
             ->where('status', 'Pending')
             ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
+            ->orderByDesc('created_at') 
             ->get();
 
 
