@@ -25,45 +25,51 @@
                         <div class="flex justify-between items-center">
                             <div class="flex space-x-8">
                                 <div class="flex space-x-4">
-                                    <div class="w-64">
+                                    <div class="w-80">
                                         <p class="font-semibold">My Goods:</p>
-                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->userGoods->g_ID)]) }}" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->userGoods->g_ID)]) }}"
+                                            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                                             <div class="flex flex-col justify-between p-4 leading-normal my-auto">
-                                            <div class="flex justify-center w-full">
-                                                @php
+                                                <div class="flex justify-center w-full">
+                                                    @php
                                                     $firstImage = $exchange->userGoods->goodsImages->first();
-                                                @endphp
-                                                @if($firstImage)
+                                                    @endphp
+                                                    @if($firstImage)
                                                     <img src="{{ asset('goods_img/' . $firstImage->img_url) }}"
-                                                         alt="{{ $exchange->userGoods->g_name }}"
-                                                         class="border border-1 object-cover rounded-lg">
-                                                @endif
-                                            </div>
-                                                <p class="text-primary text-center mt-5">{{ $exchange->userGoods->g_name }}</p>
+                                                        alt="{{ $exchange->userGoods->g_name }}"
+                                                        class="border border-1 object-cover h-64 w-64 rounded-lg">
+                                                    @endif
+                                                </div>
+                                                <p class="text-primary text-center mt-5">{{ $exchange->userGoods->g_name
+                                                    }}</p>
                                                 {{-- (ini nanti mau di get based on username aja) --}}
-                                                <p class="text-center">From: <span class="italic bold">{{ $exchange->userGoods->userID->us_username }}</span></p>
+                                                <p class="text-center">From: <span class="italic bold">You</span>
+                                                </p>
                                             </div>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="flex space-x-4">
-                                    <div class="w-64">
+                                    <div class="w-80">
                                         <p class="font-semibold">Goods Offered:</p>
-                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->otherUserGoods->g_ID)]) }}" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->otherUserGoods->g_ID)]) }}"
+                                            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                                             <div class="flex flex-col justify-between p-4 leading-normal my-auto">
-                                            <div class="flex justify-center w-full">
-                                                @php
+                                                <div class="flex justify-center w-full">
+                                                    @php
                                                     $firstImage = $exchange->otherUserGoods->goodsImages->first();
-                                                @endphp
-                                                @if($firstImage)
+                                                    @endphp
+                                                    @if($firstImage)
                                                     <img src="{{ asset('goods_img/' . $firstImage->img_url) }}"
-                                                         alt="{{ $exchange->otherUserGoods->g_name }}"
-                                                         class="border border-1 object-cover rounded-lg">
-                                                @endif
-                                            </div>
-                                                <p class="text-primary text-center mt-5">{{ $exchange->otherUserGoods->g_name }}</p>
+                                                        alt="{{ $exchange->otherUserGoods->g_name }}"
+                                                        class="border border-1 object-cover h-64 w-64 rounded-lg">
+                                                    @endif
+                                                </div>
+                                                <p class="text-primary text-center mt-5">{{
+                                                    $exchange->otherUserGoods->g_name }}</p>
                                                 {{-- (ini nanti mau di get based on username aja) --}}
-                                                <p class="text-center">From: <span class="italic bold">{{ $exchange->otherUserGoods->userID->us_username }}</span></p>
+                                                <p class="text-center">From: <span class="italic bold">{{
+                                                        $exchange->otherUserGoods->userID->us_username }}</span></p>
                                             </div>
                                         </a>
                                     </div>
@@ -72,7 +78,9 @@
                             <div class="flex space-x-4">
                                 <p class="font-semibold">Status:</p>
                                 <div class="flex items-center">
-                                    <span class="text-xs font-semibold px-2 py-1 uppercase rounded-full {{ $exchange->status === 'Awaiting Confirmation' ? 'bg-red-500 text-white' : ($exchange->status === 'confirmed' ? 'bg-green-500 text-white' : 'bg-purple-500 text-white') }}">{{ ucfirst($exchange->status) }}</span>
+                                    <span
+                                        class="text-xs font-semibold px-2 py-1 uppercase rounded-full {{ $exchange->status === 'Awaiting Confirmation' ? 'bg-red-500 text-white' : ($exchange->status === 'confirmed' ? 'bg-green-500 text-white' : 'bg-purple-500 text-white') }}">{{
+                                        ucfirst($exchange->status) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -106,50 +114,58 @@
                                 <div class="flex space-x-4">
                                     <div class="w-64">
                                         <p class="font-semibold">Other user goods:</p>
-                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->userGoods->g_ID)]) }}" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->userGoods->g_ID)]) }}"
+                                            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                                             <div class="flex justify-center w-full">
                                                 @php
-                                                    $firstImage = $exchange->userGoods->goodsImages->first();
+                                                $firstImage = $exchange->userGoods->goodsImages->first();
                                                 @endphp
                                                 @if($firstImage)
-                                                    <img src="{{ asset('goods_img/' . $firstImage->img_url) }}"
-                                                         alt="{{ $exchange->userGoods->g_name }}"
-                                                         class="border border-1 object-cover rounded-lg">
+                                                <img src="{{ asset('goods_img/' . $firstImage->img_url) }}"
+                                                    alt="{{ $exchange->userGoods->g_name }}"
+                                                    class="border border-1 object-cover rounded-lg">
                                                 @endif
                                             </div>
-                                            <div class="text-primary text-center mt-5">{{ $exchange->userGoods->g_name }}</div>
+                                            <div class="text-primary text-center mt-5">{{ $exchange->userGoods->g_name
+                                                }}</div>
                                         </a>
                                         <p class="text-center mt-3">
-                                            <span class="italic bold">{{ $exchange->userGoods->userID->us_username }}</span>
+                                            <span class="italic bold">{{ $exchange->userGoods->userID->us_username
+                                                }}</span>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="flex space-x-4">
                                     <div class="w-64">
                                         <p class="font-semibold">My goods:</p>
-                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->otherUserGoods->g_ID)]) }}" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                                        <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($exchange->otherUserGoods->g_ID)]) }}"
+                                            class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
                                             <div class="flex justify-center w-full">
                                                 @php
-                                                    $firstImage = $exchange->otherUserGoods->goodsImages->first();
+                                                $firstImage = $exchange->otherUserGoods->goodsImages->first();
                                                 @endphp
                                                 @if($firstImage)
-                                                    <img src="{{ asset('goods_img/' . $firstImage->img_url) }}"
-                                                         alt="{{ $exchange->otherUserGoods->g_name }}"
-                                                         class="border border-1 object-cover rounded-lg">
+                                                <img src="{{ asset('goods_img/' . $firstImage->img_url) }}"
+                                                    alt="{{ $exchange->otherUserGoods->g_name }}"
+                                                    class="border border-1 object-cover rounded-lg">
                                                 @endif
                                             </div>
-                                            <div class="text-primary text-center mt-5">{{ $exchange->otherUserGoods->g_name }}</div>
+                                            <div class="text-primary text-center mt-5">{{
+                                                $exchange->otherUserGoods->g_name }}</div>
                                         </a>
                                         <p class="text-center mt-3">
-                                            <span class="italic bold">{{ $exchange->otherUserGoods->userID->us_username }}</span>
+                                            <span class="italic bold">{{ $exchange->otherUserGoods->userID->us_username
+                                                }}</span>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex space-x-4">
                                 <div class="flex space-x-4">
-                                    <button onclick="handleConfirm({{ $exchange->ex_ID }})" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Confirm</button>
-                                    <button onclick="handleReject({{ $exchange->ex_ID }})" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Reject</button>
+                                    <button onclick="handleConfirm({{ $exchange->ex_ID }})"
+                                        class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Confirm</button>
+                                    <button onclick="handleReject({{ $exchange->ex_ID }})"
+                                        class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Reject</button>
                                 </div>
                             </div>
                         </div>
