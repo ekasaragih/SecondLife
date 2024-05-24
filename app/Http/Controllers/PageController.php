@@ -345,4 +345,13 @@ class PageController extends Controller
 
         return view('pages.exchangeRequest', compact('requestExchanges', 'pendingExchanges'));
     }
+
+    public function showExchangeDetails($userGoodsId, $otherUserGoodsId)
+    {
+        $userGoods = Goods::with('images')->findOrFail($userGoodsId);
+        $otherUserGoods = Goods::with('images')->findOrFail($otherUserGoodsId);
+
+        return view('pages.exchangeDetails', compact('userGoods', 'otherUserGoods'));
+    }
+
 }
