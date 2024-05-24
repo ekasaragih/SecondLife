@@ -14,19 +14,20 @@
                 <p class="italic">How can we assist you today?</p>
 
                 <div class="flex justify-between items-center py-5 bg-gray-100 mb-6 gap-3">
-                    <a href=""
-                        class="bg-primary hover:bg-white text-white hover:text-[#F12E52] duration-300 font-bold py-2 px-4 rounded shadow">
-                        Update Profile
-                    </a>
-                    <a href=""
-                        class="bg-primary hover:bg-white text-white hover:text-[#F12E52] duration-300 font-bold py-2 px-4 rounded shadow">
-                        Exchange Request
-                    </a>
-                    <a href=""
-                        class="bg-primary hover:bg-white text-white hover:text-[#F12E52] duration-300 font-bold py-2 px-4 rounded shadow">
-                        Upload New Goods
-                    </a>
-                </div>
+    <a href="/profile"
+        class="bg-primary hover:bg-white text-white hover:text-[#F12E52] duration-300 font-bold py-2 px-4 rounded shadow">
+        Update Profile
+    </a>
+    <a href="/exchange-request"
+        class="bg-primary hover:bg-white text-white hover:text-[#F12E52] duration-300 font-bold py-2 px-4 rounded shadow">
+        Exchange Request
+    </a>
+    <a href="/my-goods"
+        class="bg-primary hover:bg-white text-white hover:text-[#F12E52] duration-300 font-bold py-2 px-4 rounded shadow">
+        Upload New Goods
+    </a>
+</div>
+
             </div>
 
             @else
