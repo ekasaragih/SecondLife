@@ -291,7 +291,9 @@
                 @endforeach
             </div>
             @endif
+            @include('utils.layouts.footer.footer')
         </div>
+
     </div>
 </div>
 
@@ -307,7 +309,7 @@
 @include('utils.user.modalFollowing')
 
 
-@include('utils.layouts.footer.footer')
+
 
 
 {{--
