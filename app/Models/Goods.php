@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Goods extends Model
 {
@@ -57,6 +58,11 @@ class Goods extends Model
     public function isExchanged()
     {
         return Exchange::where('my_goods', $this->g_ID)->orWhere('barter_with', $this->g_ID)->exists();
+    }
+
+    public function exchanges(): BelongsToMany
+    {
+        return $this->belongsToMany(Exchange::class, 'exchange', 'my_goods', 'barter_with');
     }
 
 }
