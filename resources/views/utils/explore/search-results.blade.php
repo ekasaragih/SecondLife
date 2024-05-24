@@ -24,8 +24,10 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             @foreach ($goods as $good)
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="{{ $good->images->first()->img_url ?? 'https://via.placeholder.com/400' }}"
-                    alt="Product Image">
+                @if ($good->images->isNotEmpty())
+                <img class="w-full h-64 object-cover object-center"
+                    src="{{ asset('goods_img/' . $good->images->first()->img_url) }}" alt="Goods Image">
+                @endif
                 <div class="p-4">
                     <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
                         style="height: 3.5rem; line-height: 1.75rem; /* Set to two lines of text */">{{ $good->g_name }}
