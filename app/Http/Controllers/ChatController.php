@@ -31,7 +31,7 @@ class ChatController extends Controller
         // $loggedInUserId = $request->query('logged_in_user');
         $loggedInUserId = auth()->id();
         $ownerUserId = $request->query('owner_user');
-
+        // dd($ownerUserId);
         // Fetch owner details
         $ownerName = User::where('us_ID', $ownerUserId)->value('us_name');
         $ownerUsername = User::where('us_ID', $ownerUserId)->value('us_username');
@@ -89,8 +89,12 @@ class ChatController extends Controller
         $recentExchange = Exchange::latest()->first();
 
         $exchangedGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'))->unique();
-        $exchangedGoods = Exchange::where('goods_owner_ID', $ownerUserId)->get();
-
+        $exchangedGoods = Exchange::where(function ($query) use ($ownerUserId, $loggedInUserId) {
+            $query->where('requested_by', $ownerUserId)
+                ->orWhere('goods_owner_ID', $ownerUserId);
+        })->where('status', 'Confirmed')->get();
+  
+        // dd($exchangedGoods);
         // $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)
         //     ->whereNotIn('g_ID', $exchangedGoodsIds)
         //     ->get();
@@ -115,12 +119,12 @@ class ChatController extends Controller
             ->whereNotIn('g_ID', function ($query) use ($ownerUserId) {
                 $query->select('my_goods')
                     ->from('exchange')
-                    ->where('my_ID', $ownerUserId);
+                    ->where('requested_by', $ownerUserId);
             })
             ->whereNotIn('g_ID', function ($query) use ($ownerUserId) {
                 $query->select('barter_with')
                     ->from('exchange')
-                    ->where('my_ID', $ownerUserId);
+                    ->where('requested_by', $ownerUserId);
             })
             ->get();
 

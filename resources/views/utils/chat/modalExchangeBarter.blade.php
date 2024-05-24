@@ -43,7 +43,8 @@
 
                             <div>
                                 <p class="font-bold top-0 mb-2">Your Goods:</p>
-                                <ul class="grid w-full gap-6 md:grid-cols-1">
+                                <input type="text" id="userGoodsSearch" placeholder="Search your goods..." class="px-3 py-2 border rounded-md w-full mr-2">
+                                <ul id="userGoodsList" class="grid w-full gap-6 md:grid-cols-1">
                                     @foreach ($loggedInUserGoods as $goods)
                                     <li class="">
                                         <input type="checkbox" id="{{ $goods->g_ID }}" name="user_goods"
@@ -64,8 +65,8 @@
                                                             {{ $goods->g_category }}
                                                         </span>
                                                         <span class="text-base text-gray-500 italic mr-1"> - </span>
-                                                        <span class="text-base text-gray-500 italic mr-1">
-                                                            {{ $goods->g_type }}
+                                                        <span class="text-base text-gray-500 italic mr-1 item-name">
+                                                            {{ $goods->g_name }}
                                                         </span>
                                                     </div>
                                                     <h2 class="text-2xl font-bold">{{ $goods->g_name }}</h2>
@@ -118,8 +119,8 @@
                                                             {{ $goods->g_category }}
                                                         </span>
                                                         <span class="text-base text-gray-500 italic mr-1"> - </span>
-                                                        <span class="text-base text-gray-500 italic mr-1">
-                                                            {{ $goods->g_type }}
+                                                        <span class="text-base text-gray-500 italic mr-1 item-name">
+                                                            {{ $goods->g_name }}
                                                         </span>
                                                     </div>
                                                     <h2 class="text-2xl font-bold">{{ $goods->g_name }}</h2>
@@ -149,7 +150,8 @@
                                 <p class="mb-6 italic text-red-500">No goods available from this user for bartering or
                                     you can select the goods from Goods you favorited.</p>
                                 @else
-                                <ul class="grid w-full gap-6 md:grid-cols-1">
+                                <input type="text" id="ownerGoodsSearch" placeholder="Search owner's goods..." class="px-3 py-2 border rounded-md w-full">
+                                <ul id="ownerGoodsList" class="grid w-full gap-6 md:grid-cols-1">
                                     @foreach ($chattingUserGoods as $goods)
                                     <li class="">
                                         <input type="checkbox" id="{{ $goods->g_ID }}" name="other_user_goods"
@@ -170,8 +172,8 @@
                                                             {{ $goods->g_category }}
                                                         </span>
                                                         <span class="text-base text-gray-500 italic mr-1"> - </span>
-                                                        <span class="text-base text-gray-500 italic mr-1">
-                                                            {{ $goods->g_type }}
+                                                        <span class="text-base text-gray-500 italic mr-1 item-name">
+                                                            {{ $goods->g_name }}
                                                         </span>
                                                     </div>
                                                     <h2 class="text-2xl font-bold">{{ $goods->g_name }}</h2>
@@ -219,9 +221,25 @@
     </div>
 </div>
 
-
-
 <script>
+      // Function to filter user goods
+      $('#userGoodsSearch').on('input', function() {
+        const searchText = $(this).val().toLowerCase();
+        $('#userGoodsList li').each(function() {
+            const itemName = $(this).find('.item-name').text().toLowerCase();
+            $(this).toggle(itemName.includes(searchText));
+        });
+    });
+
+    // Function to filter owner goods
+    $('#ownerGoodsSearch').on('input', function() {
+        const searchText = $(this).val().toLowerCase();
+        $('#ownerGoodsList li').each(function() {
+            const itemName = $(this).find('.item-name').text().toLowerCase();
+            $(this).toggle(itemName.includes(searchText));
+        });
+    });
+
     $('#btn_send_exchange').click(function () {
         confirmExchange();
     });
@@ -231,6 +249,7 @@
         const otherUserId = {{ $ownerUserId }};
         const userGoodsId = $('input[name="user_goods"]:checked').val();
         const otherUserGoodsId = $('input[name="other_user_goods"]:checked').val();
+        const status = "Pending";
 
         if ($('input[name="user_goods"]:checked').length > 1 || $('input[name="other_user_goods"]:checked').length > 1 || $('input[name="wishlist_goods"]:checked').length > 1) {
             Swal.fire({
@@ -253,10 +272,11 @@
                 'Authorization': 'Bearer ' + apiToken
             },
             data: {
-                my_ID: loggedInUserId,
+                requested_by: loggedInUserId,
                 goods_owner_ID: otherUserId,
                 my_goods: userGoodsId,
-                barter_with: otherUserGoodsId
+                barter_with: otherUserGoodsId,
+                status: status
             },
             success: function(response) {
                 Swal.fire({
@@ -266,7 +286,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
-                    window.location.href = '/categories';
+                    window.location.href = '/exchange-request';
                 });
 
             },

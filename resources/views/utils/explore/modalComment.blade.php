@@ -54,13 +54,6 @@
             <button id="seeMoreBtn" class="text-blue-500 italic border-b-2 border-blue-500 hover:border-blue-600 mb-4"
                 style="display: none;" onclick="seeMore()">See More</button>
         </div>
-        <!-- Tombol "See More" di bawah kotak komentar -->
-        <div class="text-center mt-4">
-            <button onclick="goToDetailPage()"
-                class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
-                See More
-            </button>
-        </div>
     </div>
 </div>
 
@@ -99,11 +92,6 @@
         loadComments(g_ID, us_name);
     }
 
-    function goToDetailPage() {
-        const g_ID = document.getElementById('g_ID').value;
-        const detailPageURL = "{{ route('goods_detail', ['hashed_id' => ':g_ID']) }}".replace(':g_ID', g_ID);
-        window.location.href = detailPageURL;
-    }
     const userProfileRoute = "{{ route('userProfile', ['username' => ':username']) }}";
     
     function loadComments(g_ID, us_name) {
@@ -126,8 +114,7 @@
                         <img src="${avatarBaseUrl}/${comment.user.avatar ? comment.user.avatar : 'default-avatar.jpg'}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarImg">
                         <div>
                         <p class="font-semibold" style="margin-bottom: 4px;">
-                        <a href="${userProfileRoute.replace(':hash_id', comment.user.hash_id)}" class="text-blue-500">${comment.us_name}</a>
-                            </p>
+                        <a href="${userProfileRoute.replace(':username', comment.user.us_username)}" class="text-blue-500">${comment.us_name}</a>                            </p>
                         <p class="text-sm text-gray-600" style="margin-bottom: 0;">${comment.comment_desc}</p>
                         </div>
                     `;
@@ -165,7 +152,7 @@
                         <img src="${avatarBaseUrl}/${comment.user.avatar ? comment.user.avatar : 'default-avatar.jpg'}" alt="Profile Picture" class="w-8 h-8 rounded-full mr-2" id="userAvatarImg">
                         <div>
                         <p class="font-semibold" style="margin-bottom: 4px;">
-                                <a href="${userProfileRoute.replace(':username', comment.user.us_username)}" class="text-blue-500">${comment.us_name}</a>
+                        <a href="${userProfileRoute.replace(':username', comment.us_name)}" class="text-blue-500">${comment.us_name}</a>
                             </p>
                         <p class="text-sm text-gray-600" style="margin-bottom: 0;">${comment.comment_desc}</p>
                         </div>
