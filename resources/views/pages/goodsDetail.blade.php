@@ -16,15 +16,17 @@
 
         <section class="text-gray-700 body-font overflow-hidden bg-white">
             <div class="my-10 mx-auto">
-                <div class="lg:w-4/5 mx-auto flex flex-wrap">
-                    <div id="productImages" class="lg:w-1/2 w-full flex justify-center items-center">
-                        <div class="flex items-center">
-                            @foreach ($product->images as $image)
-                            <img class="product-image hidden h-64 object-cover object-center"
-                                src="{{ asset('goods_img/' . $image->img_url) }}">
-                            @endforeach
-                        </div>
-                    </div>
+                <div class="lg:w-5/5 mx-auto flex flex-wrap">
+                <div id="productImages" class="lg:w-1/2 w-full flex justify-center items-center bg-gray-100 p-4 rounded-lg shadow-md mb-4">
+    <div class="flex items-center">
+        @foreach ($product->images as $image)
+        <img class="product-image hidden h-64 object-cover object-center transition duration-300 transform hover:scale-110 rounded-lg"
+            src="{{ asset('goods_img/' . $image->img_url) }}">
+        @endforeach
+    </div>
+</div>
+
+
                     <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                         <h2 class="text-sm title-font text-gray-500 tracking-widest">SECONDLIFE BARTER</h2>
                         <h1 class="text-primary text-3xl title-font mb-1 font-semibold">{{ $product->g_name }}</h1>
