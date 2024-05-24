@@ -52,6 +52,7 @@
                         @endauth
 
                         <button type="button" title="Remove from wishlist"
+                            data-wishlist-id="{{ $wishlistItem->wishlist_ID }}"
                             class="bg-red-500 ml-2 text-white text-xl px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 flex-grow-0 flex-shrink-0 text-center remove-from-wishlist">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
@@ -156,10 +157,12 @@
 <script>
     $(document).on('click', '.remove-from-wishlist', function() {
         var wishlistId = $(this).data('wishlist-id');
+        console.log(wishlistId);
         removeFromWishlist(wishlistId);
     });
 
     function removeFromWishlist(wishlistId) {
+        console.log("triggered");
         var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var apiToken = document.querySelector('meta[name="api-token"]').getAttribute('content');
 

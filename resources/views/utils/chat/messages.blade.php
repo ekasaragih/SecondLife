@@ -22,8 +22,13 @@
                 <p class="text-xs my-2">
                     @if ($exchangedGoods->isNotEmpty())
                     @foreach($exchangedGoods as $exchange)
-                    You have bartered {{ $exchange->userGoods->g_name }} with {{ $exchange->otherUser->us_name }}'s {{
-                    $exchange->otherUserGoods->g_name }}<br>
+                    @if ($exchange->goods_owner_ID == $loggedInUserId)
+                    You have bartered your {{ $exchange->otherUserGoods->g_name }} with this user's {{
+                    $exchange->userGoods->g_name }}<br>
+                    @else
+                    You have bartered this user's {{ $exchange->otherUserGoods->g_name }} with your {{
+                    $exchange->userGoods->g_name }}<br>
+                    @endif
                     @endforeach
                     @else
                     No recent barter found
