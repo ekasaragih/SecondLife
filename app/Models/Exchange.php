@@ -18,6 +18,10 @@ class Exchange extends Model
         'my_goods',
         'barter_with',
         'status',
+        'meet_up_at',
+        'exchanged_at',
+        'reason_reject',
+        'confirmed_at',
     ];
 
     public function user()

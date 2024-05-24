@@ -259,7 +259,7 @@ class PageController extends Controller
         $exchangedGoods = $exchangedGoodsAsOwner->merge($exchangedGoodsAsRequester);
 
         $pendingExchanges = Exchange::where('goods_owner_ID', $authenticatedUser->us_ID)
-            ->where('status', 'Pending')
+            ->where('status', 'Awaiting Confirmation')
             ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
             ->count();
 
@@ -337,7 +337,7 @@ class PageController extends Controller
             ->get();
 
         $pendingExchanges = Exchange::where('goods_owner_ID', $userId)
-            ->where('status', 'Pending')
+            ->where('status', 'Awaiting Confirmation')
             ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
             ->orderByDesc('created_at') 
             ->get();
@@ -350,8 +350,11 @@ class PageController extends Controller
     {
         $userGoods = Goods::with('images')->findOrFail($userGoodsId);
         $otherUserGoods = Goods::with('images')->findOrFail($otherUserGoodsId);
+        $exchange = Exchange::where('my_goods', $userGoodsId)
+                        ->where('barter_with', $otherUserGoodsId)
+                        ->firstOrFail();
 
-        return view('pages.exchangeDetails', compact('userGoods', 'otherUserGoods'));
+        return view('pages.exchangeDetails', compact('userGoods', 'otherUserGoods', 'exchange'));
     }
 
 }

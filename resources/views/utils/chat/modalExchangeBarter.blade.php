@@ -43,7 +43,8 @@
 
                             <div>
                                 <p class="font-bold top-0 mb-2">Your Goods:</p>
-                                <input type="text" id="userGoodsSearch" placeholder="Search your goods..." class="px-3 py-2 border rounded-md w-full mr-2">
+                                <input type="text" id="userGoodsSearch" placeholder="Search your goods..."
+                                    class="px-3 py-2 border rounded-md w-full mr-2">
                                 <ul id="userGoodsList" class="grid w-full gap-6 md:grid-cols-1">
                                     @foreach ($loggedInUserGoods as $goods)
                                     <li class="">
@@ -150,7 +151,8 @@
                                 <p class="mb-6 italic text-red-500">No goods available from this user for bartering or
                                     you can select the goods from Goods you favorited.</p>
                                 @else
-                                <input type="text" id="ownerGoodsSearch" placeholder="Search owner's goods..." class="px-3 py-2 border rounded-md w-full">
+                                <input type="text" id="ownerGoodsSearch" placeholder="Search owner's goods..."
+                                    class="px-3 py-2 border rounded-md w-full">
                                 <ul id="ownerGoodsList" class="grid w-full gap-6 md:grid-cols-1">
                                     @foreach ($chattingUserGoods as $goods)
                                     <li class="">
@@ -222,7 +224,7 @@
 </div>
 
 <script>
-      // Function to filter user goods
+    // Function to filter user goods
       $('#userGoodsSearch').on('input', function() {
         const searchText = $(this).val().toLowerCase();
         $('#userGoodsList li').each(function() {
@@ -249,7 +251,7 @@
         const otherUserId = {{ $ownerUserId }};
         const userGoodsId = $('input[name="user_goods"]:checked').val();
         const otherUserGoodsId = $('input[name="other_user_goods"]:checked').val();
-        const status = "Pending";
+        const status = "Awaiting Confirmation";
 
         if ($('input[name="user_goods"]:checked').length > 1 || $('input[name="other_user_goods"]:checked').length > 1 || $('input[name="wishlist_goods"]:checked').length > 1) {
             Swal.fire({
