@@ -28,18 +28,32 @@
 
 {{-- Filter categories and price range --}}
 <div class="filter-container">
-    <select
-        class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-        onchange="filterProducts()">
+    <select class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100" onchange="filterProducts()">
         <option value="All">All</option>
         @foreach ($categories as $category)
         <option value="{{ $category }}">{{ $category }}</option>
         @endforeach
     </select>
 
+
+    <!-- Improved search input field for price -->
+    <div class="relative">
+        <input type="text" id="price-search" placeholder="Search Price" oninput="filterProducts()" class="py-2.5 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:border-gray-300 focus:border-blue-400 transition duration-300">
+        <span class="absolute right-3 top-2.5 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM19 14l-3 3m0 0l-3-3m3 3V10"></path>
+            </svg>
+        </span>
+    </div>
+
     <div id="price-range"></div>
     <span id="price-range-value" class="ml-2 text-sm font-medium text-gray-900"></span>
 </div>
+
+<!-- Notification for unavailable price -->
+<div id="price-notif" class="hidden p-2 bg-red-200 text-red-800 rounded-md mt-2">The price you searched for is not available.</div>
+
+
 
 <br>
 
@@ -200,12 +214,15 @@
         var slider = document.getElementById('price-range');
         var priceRangeValue = document.getElementById('price-range-value');
 
+        // Get the maximum price prediction among products
+        var maxPricePrediction = Math.max(...{!! json_encode($products->pluck('g_price_prediction')->toArray()) !!});
+
         noUiSlider.create(slider, {
-            start: [0, 2000000],
+            start: [0, maxPricePrediction],
             connect: true,
             range: {
                 'min': 0,
-                'max': 2000000
+                'max': maxPricePrediction
             },
             step: 5000,
             format: {
@@ -225,32 +242,42 @@
     });
 
     function filterProducts() {
-        const category = document.querySelector('select').value;
-        const slider = document.getElementById('price-range').noUiSlider;
-        const [minPrice, maxPrice] = slider.get().map(value => parseFloat(value.replace('Rp ', '').replace(/,/g, '')));
+    const category = document.querySelector('select').value;
+    const slider = document.getElementById('price-range').noUiSlider;
+    const [minPrice, maxPrice] = slider.get().map(value => parseFloat(value.replace('Rp ', '').replace(/,/g, '')));
 
-        const productCards = document.querySelectorAll('.product-card');
-        productCards.forEach(card => {
-            const productCategoryElement = card.querySelector('p:nth-child(1)');
-            const productPriceElement = card.querySelector('.product-price');
+    // Get the price search input value
+    const priceSearch = parseFloat(document.getElementById('price-search').value.trim());
 
-            if (productCategoryElement && productPriceElement) {
-                const productCategoryText = productCategoryElement.textContent.trim();
-                const categoryIndex = productCategoryText.indexOf('Category:');
-                const productPrice = parseFloat(productPriceElement.textContent.trim());
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        const productCategoryElement = card.querySelector('p:nth-child(1)');
+        const productPriceElement = card.querySelector('.product-price');
 
-                if (categoryIndex !== -1) {
-                    const productCategory = productCategoryText.slice(categoryIndex + 'Category:'.length).trim();
-                    const isCategoryMatch = (category === 'All' || productCategory.toLowerCase() === category.toLowerCase());
-                    const isPriceMatch = (productPrice >= minPrice && productPrice <= maxPrice);
+        if (productCategoryElement) {
+            const productCategoryText = productCategoryElement.textContent.trim();
+            const categoryIndex = productCategoryText.indexOf('Category:');
+            let shouldDisplay = false;
 
-                    if (isCategoryMatch && isPriceMatch) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
+            if (categoryIndex !== -1) {
+                const productCategory = productCategoryText.slice(categoryIndex + 'Category:'.length).trim();
+                const isCategoryMatch = (category === 'All' || productCategory.toLowerCase() === category.toLowerCase());
+                
+                // Check if the product has a price prediction
+                if (productPriceElement) {
+                    const productPricePrediction = parseFloat(productPriceElement.textContent.trim().replace('Rp ', '').replace('.', '').replace(',', ''));
+                    // If the price search value is not NaN and matches the product's price prediction, display the product
+                    shouldDisplay = ((isNaN(priceSearch) || productPricePrediction === priceSearch) && isCategoryMatch && productPricePrediction >= minPrice && productPricePrediction <= maxPrice);
+                } else {
+                    // If the product does not have a price prediction, only display if it matches the category
+                    shouldDisplay = isCategoryMatch;
                 }
             }
-        });
-    }
+
+            // Apply display style based on the shouldDisplay flag
+            card.style.display = shouldDisplay ? 'block' : 'none';
+        }
+    });
+}
+    
 </script>
