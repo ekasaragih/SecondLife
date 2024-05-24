@@ -7,7 +7,7 @@
     @endauth
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
 </head>
 
 <div class="flex justify-center h-screen pt-48 pb-64 font-rubik">
@@ -77,10 +77,10 @@
                                     View Comment
                                 </button>
 
-                               <!-- Check if the authenticated user is the owner of the goods -->
-                               @php
-                                    $isOwner = $product->us_ID === auth()->id();
-                                    $isInWishlist = $wishlistItems->contains('g_ID', $product->g_ID);
+                                <!-- Check if the authenticated user is the owner of the goods -->
+                                @php
+                                $isOwner = $product->us_ID === auth()->id();
+                                $isInWishlist = $wishlistItems->contains('g_ID', $product->g_ID);
                                 @endphp
 
                                 <button
@@ -93,30 +93,30 @@
                                         bg-gray-200 text-gray-500 hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-500 
                                     @endif 
                                     p-0 border-0 inline-flex items-center justify-center ml-4 add-to-wishlist duration-300"
-                                    title="Add to wishlist" 
-                                    id="btn_add_wishlist"
-                                    data-product-id="{{ $product->g_ID }}"
-                                    data-user-id="{{ $authenticatedUser->us_ID }}"
-                                    @if ($isOwner) 
-                                        disabled 
-                                        data-popover-target="popoverDisabled1" 
-                                    @endif>
-                                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5 love-icon" viewBox="0 0 24 24">
-                                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                                    title="Add to wishlist" id="btn_add_wishlist" data-product-id="{{ $product->g_ID }}"
+                                    data-user-id="{{ $authenticatedUser->us_ID }}" @if ($isOwner) disabled
+                                    data-popover-target="popoverDisabled1" @endif>
+                                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" class="w-5 h-5 love-icon" viewBox="0 0 24 24">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
+                                        </path>
                                     </svg>
                                 </button>
 
                                 @if ($isOwner)
-                                    <div data-popover id="popoverDisabled1" role="tooltip"
-                                        class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
-                                        <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
-                                            <h3 class="font-semibold text-gray-900 dark:text-white">Why can't I click this?</h3>
-                                        </div>
-                                        <div class="px-3 py-2">
-                                            <p>This is your own goods. You can't add your own goods to the wishlist.</p>
-                                        </div>
-                                        <div data-popper-arrow></div>
+                                <div data-popover id="popoverDisabled1" role="tooltip"
+                                    class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                    <div
+                                        class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+                                        <h3 class="font-semibold text-gray-900 dark:text-white">Why can't I click this?
+                                        </h3>
                                     </div>
+                                    <div class="px-3 py-2">
+                                        <p>This is your own goods. You can't add your own goods to the wishlist.</p>
+                                    </div>
+                                    <div data-popper-arrow></div>
+                                </div>
                                 @endif
 
                                 <!-- Modal Comment Component -->
@@ -124,7 +124,8 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('goods.wishlisted.users', ['hashed_id' => Hashids::encode($product->g_ID)]) }}" class="text-white bg-blue-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-blue-600 rounded transition duration-300">
+                    <a href="{{ route('goods.wishlisted.users', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
+                        class="text-white bg-blue-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-blue-600 rounded transition duration-300">
                         View Users Who Wishlisted This Item
                     </a>
                 </div>
@@ -265,8 +266,8 @@
                     $formattedPrice = 'Rp ' . number_format($similarProduct->g_price_prediction, 0, ',', '.');
                     @endphp
 
-                    <img class="w-full h-64 object-cover object-center" src="{{ $similarProduct -> $imageUrl }}"
-                        alt="Product Image" data-product-image="{{ $similarProduct -> $imageUrl }}">
+                    <img class="w-full h-64 object-cover object-center" src="{{ $imageUrl }}" alt="Product Image"
+                        data-product-image="{{ $imageUrl }}">
                     <div class="px-4 py-4">
                         <input type="hidden" id="goods_owner" value="{{ $product->us_ID }}" />
                         <div class="font-bold text-lg mb-2">{{ $similarProduct->g_name }}</div>

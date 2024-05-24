@@ -307,7 +307,22 @@ class PageController extends Controller
         $product = Goods::findOrFail($g_ID);
         $userDetails = User::findOrFail($product->us_ID);
 
-        return view('pages.goodsDetail', compact('user', 'authenticatedUser','myGoods','wishlist', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
+        // Get the predicted price of the current product
+        $predictedPrice = $product->g_price_prediction;
+
+        // Calculate price range for fetching similar products (e.g., +/- 20%)
+        $minPrice = $predictedPrice * 0.8;
+        $maxPrice = $predictedPrice * 1.2;
+
+        // Fetch similar products within the price range
+        $similarProducts = Goods::with('images')
+            ->whereBetween('g_price_prediction', [$minPrice, $maxPrice])
+            ->where('g_ID', '!=', $product->g_ID)
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
+
+        return view('pages.goodsDetail', compact('user', 'authenticatedUser','myGoods','wishlist', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails', 'similarProducts'));
     }
     
     public function getUsersWishlistedItem($hashed_id)
