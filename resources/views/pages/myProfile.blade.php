@@ -204,7 +204,7 @@
                         </div>
                         <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-gray-600 text-xs font-bold order-last">Current Price Estimation: <br> Rp
+                            <span class="text-gray-600 text-xs font-bold order-last">Current Price Est.: <br> Rp
                                 {{
                                 number_format($good->g_price_prediction, 0, ',', '.') }}</span>
                             <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($good->g_ID)]) }}"
@@ -250,7 +250,7 @@
                                     {{ $exchange->userGoods->g_desc }}</p>
                                 <p class="text-sm text-gray-500 mt-2">Category: {{ $exchange->userGoods->g_category }}
                                 </p>
-                                <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Estimation: Rp {{
+                                <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Est.: Rp {{
                                     number_format($exchange->userGoods->g_price_prediction, 0, ',', '.') }}</p>
                             </div>
                             <!-- Barter with goods -->
@@ -275,7 +275,7 @@
                                     {{ $exchange->otherUserGoods->g_desc }}</p>
                                 <p class="text-sm text-gray-500 mt-2">Category: {{ $exchange->otherUserGoods->g_category
                                     }}</p>
-                                <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Estimation: Rp {{
+                                <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Est.: Rp {{
                                     number_format($exchange->otherUserGoods->g_price_prediction, 0, ',', '.') }}</p>
                             </div>
                         </div>

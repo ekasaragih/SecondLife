@@ -95,7 +95,7 @@
                     <p class="text-gray-700"><span class="font-bold">Age:</span>
                         {{ $product->g_age }} <span>Years</span>
                     </p>
-                    <p class=" text-gray-700"><span class="font-bold">Current Price Estimation:</span>
+                    <p class=" text-gray-700"><span class="font-bold">Current Price Est.:</span>
                         {{$formattedPrice }}
                     </p>
                     <span class="hidden product-price">{{ $product->g_price_prediction }}</span>

@@ -81,7 +81,7 @@
         modalDescription.textContent = description;
         modalImage.src = image;
         modalLocation.textContent = "Location: " + location;
-        modalPrice.textContent = "Current Price Estimation: " + price;
+        modalPrice.textContent = "Current Price Est.: " + price;
         modalProductId.textContent = "Product ID: " + g_ID;
         uploadedByLink.textContent = us_name;
         uploadedByLink.href = "{{ route('userProfile', ['username' => ':username']) }}".replace(':username', us_name);

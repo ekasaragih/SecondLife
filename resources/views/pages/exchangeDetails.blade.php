@@ -124,7 +124,7 @@
                         $userGoods->g_name }}</h3>
                     <p class="text-sm text-gray-600 mb-1">{{ $userGoods->g_desc }}</p>
                     <p class="text-sm text-gray-500 mt-2">Category: {{ $userGoods->g_category }}</p>
-                    <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Estimation: Rp {{
+                    <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Est.: Rp {{
                         number_format($userGoods->g_price_prediction, 0, ',', '.') }}</p>
                 </div>
             </div>
@@ -139,7 +139,7 @@
                         $otherUserGoods->g_name }}</h3>
                     <p class="text-sm text-gray-600 mb-1">{{ $otherUserGoods->g_desc }}</p>
                     <p class="text-sm text-gray-500 mt-2">Category: {{ $otherUserGoods->g_category }}</p>
-                    <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Estimation: Rp {{
+                    <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Est.: Rp {{
                         number_format($otherUserGoods->g_price_prediction, 0, ',', '.') }}</p>
                 </div>
             </div>

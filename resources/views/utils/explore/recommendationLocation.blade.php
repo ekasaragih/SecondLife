@@ -72,7 +72,7 @@
                             $user->us_city }}</p>
                         <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-gray-600 text-xs font-bold">Current Price Estimation: Rp {{
+                            <span class="text-gray-600 text-xs font-bold">Current Price Est.: Rp {{
                                 number_format($product->g_price_prediction, 0, ',', '.') }}</span>
 
                             @auth

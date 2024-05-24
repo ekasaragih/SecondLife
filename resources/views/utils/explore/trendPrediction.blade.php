@@ -39,7 +39,7 @@
                         <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
                         <div class="mt-4 flex justify-between items-center">
                             <span class="text-gray-600 text-xs" id="goods_ori_price">
-                                Current Price Estimation: Rp{{ number_format($product->g_price_prediction, 0, ',', '.')
+                                Current Price Est.: Rp{{ number_format($product->g_price_prediction, 0, ',', '.')
                                 }}
                             </span>
 

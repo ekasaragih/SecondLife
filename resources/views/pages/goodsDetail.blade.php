@@ -272,7 +272,7 @@
                                 <p class="text-gray-700"><span class="font-bold">Age:</span>
                                     {{ $similarProduct->g_age }} <span>Years</span>
                                 </p>
-                                <p class=" text-gray-700"><span class="font-bold">Current Price Estimation:</span>
+                                <p class=" text-gray-700"><span class="font-bold">Current Price Est.:</span>
                                     {{$formattedPrice }}
                                 </p>
                                 <span class="hidden product-price">{{ $similarProduct->g_price_prediction }}</span>
