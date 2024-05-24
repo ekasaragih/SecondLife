@@ -229,73 +229,60 @@
             @if ($exchangedGoods->isEmpty())
             <p class="text-lg text-gray-600">You haven't exchanged any goods yet.</p>
             @else
-            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-6">
                 @foreach ($exchangedGoods as $exchange)
-
-
                 <a href="{{ route('exchange.details', ['userGoodsId' => $exchange->userGoods->g_ID, 'otherUserGoodsId' => $exchange->otherUserGoods->g_ID]) }}"
                     class="block hover:opacity-75">
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
                         <!-- Display exchanged goods information -->
-                        <div class="flex flex-col md:flex-row">
+                        <div class="flex flex-col">
                             <!-- Your goods -->
-                            <div class="md:w-1/2">
+                            <div class="p-6">
                                 <img class="w-full h-64 object-cover object-center"
                                     src="{{ optional($exchange->userGoods->images->first())->img_url ? asset('goods_img/' . $exchange->userGoods->images->first()->img_url) : '' }}"
                                     alt="Your Product Image">
-                                <div class="p-6">
-                                    <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
-                                        style="height: 3.5rem; line-height: 1.75rem; /* Set to two lines of text */">{{
-                                        $exchange->userGoods->g_name }}</h3>
-                                    <p class="text-sm text-gray-600 mb-1"
-                                        style="height: 3rem; line-height: 1.5rem; overflow: hidden;">
-                                        {{ $exchange->userGoods->g_desc }}</p>
-                                    <p class="text-sm text-gray-500 mt-2">Category: {{ $exchange->userGoods->g_category
-                                        }}</p>
-                                    <p class="text-sm font-semibold text-gray-700 mt-4">Price Prediction: Rp {{
-                                        number_format($exchange->userGoods->g_price_prediction, 0, ',', '.') }}</p>
-                                </div>
+                                <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
+                                    style="height: 3.5rem; line-height: 1.75rem;">{{ $exchange->userGoods->g_name }}</h3>
+                                <p class="text-sm text-gray-600 mb-1"
+                                    style="height: 3rem; line-height: 1.5rem; overflow: hidden;">
+                                    {{ $exchange->userGoods->g_desc }}</p>
+                                <p class="text-sm text-gray-500 mt-2">Category: {{ $exchange->userGoods->g_category }}</p>
+                                <p class="text-sm font-semibold text-gray-700 mt-4">Price Prediction: Rp {{
+                                    number_format($exchange->userGoods->g_price_prediction, 0, ',', '.') }}</p>
                             </div>
-
                             <!-- Barter with goods -->
-                            <div class="md:w-1/2 flex flex-col justify-center items-center">
+                            <div class="p-6 flex flex-col items-center">
                                 <div class="flex items-center justify-center mb-4">
                                     <svg class="w-6 h-6 mr-2 text-purple-600" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7"></path>
                                     </svg>
-                                    <p class="text-lg font-semibold text-white bg-green-500 rounded-lg p-2">Barter with
-                                    </p>
+                                    <p class="text-lg font-semibold text-white bg-green-500 rounded-lg p-2">Barter with</p>
                                 </div>
                                 <img class="w-full h-64 object-cover object-center mb-4"
                                     src="{{ optional($exchange->otherUserGoods->images->first())->img_url ? asset('goods_img/' . $exchange->otherUserGoods->images->first()->img_url) : '' }}"
                                     alt="Bartered Product Image">
-                                <div class="p-6">
-                                    <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
-                                        style="height: 3.5rem; line-height: 1.75rem; /* Set to two lines of text */">{{
-                                        $exchange->otherUserGoods->g_name }}</h3>
-                                    <p class="text-sm text-gray-600 mb-1"
-                                        style="height: 3rem; line-height: 1.5rem; overflow: hidden;">
-                                        {{ $exchange->otherUserGoods->g_desc }}</p>
-                                    <p class="text-sm text-gray-500 mt-2">Category: {{
-                                        $exchange->otherUserGoods->g_category }}</p>
-                                    <p class="text-sm font-semibold text-gray-700 mt-4">Price Prediction: Rp {{
-                                        number_format($exchange->otherUserGoods->g_price_prediction, 0, ',', '.') }}</p>
-                                </div>
+                                <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
+                                    style="height: 3.5rem; line-height: 1.75rem;">{{ $exchange->otherUserGoods->g_name }}</h3>
+                                <p class="text-sm text-gray-600 mb-1"
+                                    style="height: 3rem; line-height: 1.5rem; overflow: hidden;">
+                                    {{ $exchange->otherUserGoods->g_desc }}</p>
+                                <p class="text-sm text-gray-500 mt-2">Category: {{ $exchange->otherUserGoods->g_category }}</p>
+                                <p class="text-sm font-semibold text-gray-700 mt-4">Price Prediction: Rp {{
+                                    number_format($exchange->otherUserGoods->g_price_prediction, 0, ',', '.') }}</p>
                             </div>
                         </div>
                     </div>
                 </a>
-
                 @endforeach
             </div>
             @endif
             @include('utils.layouts.footer.footer')
         </div>
-
     </div>
 </div>
+
 
 
 
