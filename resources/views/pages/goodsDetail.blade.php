@@ -233,23 +233,6 @@
 
             <hr class="my-4 border-b-1 border-gray-800"> <!-- Garis pembatas -->
 
-            <!-- After displaying the current product's details, fetch and shuffle similar products -->
-            @php
-            // Get the predicted price of the current product
-            $predictedPrice = $product->g_price_prediction;
-
-            // Calculate price range for fetching similar products (e.g., +/- 20%)
-            $minPrice = $predictedPrice * 0.8;
-            $maxPrice = $predictedPrice * 1.2;
-
-            // Fetch similar products within the price range
-            $similarProducts = App\Models\Goods::whereBetween('g_price_prediction', [$minPrice, $maxPrice])
-            ->where('g_ID', '!=', $product->g_ID)
-            ->inRandomOrder()
-            ->limit(5)
-            ->get();
-            @endphp
-
             <!-- Display shuffled similar products -->
             @if($similarProducts->count() > 0)
             <div class="text-2xl mt-8 mb-4 text-[#F12E52]"><b>Goods with</b><span
