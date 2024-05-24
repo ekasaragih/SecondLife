@@ -204,7 +204,8 @@
                         </div>
                         <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
                         <div class="mt-4 flex justify-between items-center">
-                            <span class="text-gray-600 text-xs font-bold order-last">Price Prediction: <br> Rp {{
+                            <span class="text-gray-600 text-xs font-bold order-last">Current Price Estimation: <br> Rp
+                                {{
                                 number_format($good->g_price_prediction, 0, ',', '.') }}</span>
                             <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($good->g_ID)]) }}"
                                 class="inline-block bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-sm">
@@ -242,12 +243,14 @@
                                     src="{{ optional($exchange->userGoods->images->first())->img_url ? asset('goods_img/' . $exchange->userGoods->images->first()->img_url) : '' }}"
                                     alt="Your Product Image">
                                 <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
-                                    style="height: 3.5rem; line-height: 1.75rem;">{{ $exchange->userGoods->g_name }}</h3>
+                                    style="height: 3.5rem; line-height: 1.75rem;">{{ $exchange->userGoods->g_name }}
+                                </h3>
                                 <p class="text-sm text-gray-600 mb-1"
                                     style="height: 3rem; line-height: 1.5rem; overflow: hidden;">
                                     {{ $exchange->userGoods->g_desc }}</p>
-                                <p class="text-sm text-gray-500 mt-2">Category: {{ $exchange->userGoods->g_category }}</p>
-                                <p class="text-sm font-semibold text-gray-700 mt-4">Price Prediction: Rp {{
+                                <p class="text-sm text-gray-500 mt-2">Category: {{ $exchange->userGoods->g_category }}
+                                </p>
+                                <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Estimation: Rp {{
                                     number_format($exchange->userGoods->g_price_prediction, 0, ',', '.') }}</p>
                             </div>
                             <!-- Barter with goods -->
@@ -258,18 +261,21 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7"></path>
                                     </svg>
-                                    <p class="text-lg font-semibold text-white bg-green-500 rounded-lg p-2">Barter with</p>
+                                    <p class="text-lg font-semibold text-white bg-green-500 rounded-lg p-2">Barter with
+                                    </p>
                                 </div>
                                 <img class="w-full h-64 object-cover object-center mb-4"
                                     src="{{ optional($exchange->otherUserGoods->images->first())->img_url ? asset('goods_img/' . $exchange->otherUserGoods->images->first()->img_url) : '' }}"
                                     alt="Bartered Product Image">
                                 <h3 class="text-lg font-semibold text-purple-600 mb-2 border-b-2 border-purple-800 pb-2"
-                                    style="height: 3.5rem; line-height: 1.75rem;">{{ $exchange->otherUserGoods->g_name }}</h3>
+                                    style="height: 3.5rem; line-height: 1.75rem;">{{ $exchange->otherUserGoods->g_name
+                                    }}</h3>
                                 <p class="text-sm text-gray-600 mb-1"
                                     style="height: 3rem; line-height: 1.5rem; overflow: hidden;">
                                     {{ $exchange->otherUserGoods->g_desc }}</p>
-                                <p class="text-sm text-gray-500 mt-2">Category: {{ $exchange->otherUserGoods->g_category }}</p>
-                                <p class="text-sm font-semibold text-gray-700 mt-4">Price Prediction: Rp {{
+                                <p class="text-sm text-gray-500 mt-2">Category: {{ $exchange->otherUserGoods->g_category
+                                    }}</p>
+                                <p class="text-sm font-semibold text-gray-700 mt-4">Current Price Estimation: Rp {{
                                     number_format($exchange->otherUserGoods->g_price_prediction, 0, ',', '.') }}</p>
                             </div>
                         </div>

@@ -39,12 +39,13 @@
                         <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
                         <div class="mt-4 flex justify-between items-center">
                             <span class="text-gray-600 text-xs" id="goods_ori_price">
-                                Price Prediction: Rp{{ number_format($product->g_price_prediction, 0, ',', '.') }}
+                                Current Price Estimation: Rp{{ number_format($product->g_price_prediction, 0, ',', '.')
+                                }}
                             </span>
 
                             @auth
                             <div class="flex justify-center items-center">
-                            <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
+                                <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
                                     class="bg-red-400 text-white text-sm px-4 py-2 rounded hover:bg-red-600 transition duration-300 text-center">
                                     Detail
                                 </a>

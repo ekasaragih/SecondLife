@@ -105,7 +105,7 @@
                     </div>
                     <hr class="my-4 border-b-2 border-gray-800"> <!-- Garis pembatas -->
                     <div class="mt-4 flex justify-between items-center">
-                        <span class="text-gray-600 text-xs font-bold order-last">Price Prediction: <br> Rp {{
+                        <span class="text-gray-600 text-xs font-bold order-last">Current Price Estimation: <br> Rp {{
                             number_format($good->g_price_prediction, 0, ',', '.') }}</span>
                         <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($good->g_ID)]) }}"
                             class="inline-block bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded text-sm">
