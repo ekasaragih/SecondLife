@@ -48,7 +48,7 @@
                                         Category
                                         <span class="text-red-500">*</span>
                                     </label>
-                                    <select id="edit_g_category" name="category"
+                                    <select id="edit_g_category" name="edit_g_category"
                                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                                         <option value="" selected disabled>-- Choose categories --</option>
                                         <option value="Electronics">Electronics</option>
@@ -68,7 +68,7 @@
                                         Type
                                         <span class="text-red-500">*</span>
                                     </label>
-                                    <select id="edit_g_type" name="g_type"
+                                    <select id="edit_g_type" name="edit_g_type"
                                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md" required>
                                         <option value="" selected disabled>-- Choose type --</option>
                                         <option value="New">New</option>
@@ -82,7 +82,7 @@
                                         Original Price
                                         <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="number" id="edit_g_original_price" name="original_price"
+                                    <input type="number" id="edit_g_original_price" name="edit_original_price"
                                         placeholder="ex: 500000"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
@@ -91,13 +91,13 @@
                                         Age of Goods (In years)
                                         <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="number" id="edit_g_age" name="age_goods" placeholder="ex: 1"
+                                    <input type="number" id="edit_g_age" name="edit_age_goods" placeholder="ex: 1"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md">
                                 </div>
                                 <div class="w-full mb-4">
                                     <label for="prediction_price" class="block text-sm font-medium text-gray-700">
                                         Prediction Price (counted by the system)</label>
-                                    <input type="number" id="edit_g_prediction_price" name="prediction_price"
+                                    <input type="number" id="edit_g_prediction_price" name="edit_prediction_price"
                                         placeholder="will be count by system"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md" disabled>
                                 </div>
@@ -160,6 +160,7 @@
 
         $('#btn_edit_goods').click(function(event) {
             event.preventDefault();
+            var predictionPrice = calculatePredictionPrice();
 
             var goods = {
                 g_ID: $("#edit_g_ID").val(),
@@ -167,7 +168,7 @@
                 g_desc: $("#edit_g_desc").val(),
                 g_type: $("#edit_g_type").val(),
                 g_original_price: $("#edit_g_original_price").val(),
-                g_price_prediction: $("#edit_g_prediction_price").val(),
+                g_price_prediction: predictionPrice,
                 g_age: $("#edit_g_age").val(),
                 g_category: $("#edit_g_category").val(),
 
@@ -196,6 +197,75 @@
             });
         });
 
+        function calculatePredictionPrice() {
+            var g_type = $("#edit_g_type").val();
+            var g_category = $("#edit_g_category").val();
+            var g_original_price = parseInt($("#edit_g_original_price").val());
+            var g_age = parseInt($("#edit_g_age").val());
+            var estimatedPrice;
+            if (g_age === 0) {
+                estimatedPrice = g_original_price - (0.0286 * g_original_price / 2);
+            } else if (g_type === 'New') {
+                estimatedPrice = g_original_price - (g_age * (0.0286 * g_original_price));
+            } else if (g_type === 'Used') {
+                var marginalSalvage, lifeSpan;
+
+                switch (g_category) {
+                    case 'Electronics':
+                        marginalSalvage = 0.10;
+                        lifeSpan = 5.8;
+                        break;
+                    case 'Clothing and Accessories':
+                        marginalSalvage = 0.25;
+                        lifeSpan = 5.4;
+                        break;
+                    case 'Home Decor':
+                        marginalSalvage = 0.15;
+                        lifeSpan = 10;
+                        break;
+                    case 'Collectibles':
+                        marginalSalvage = 0.04;
+                        lifeSpan = null;
+                        break;
+                    case 'Books and Media':
+                        marginalSalvage = 0.20;
+                        lifeSpan = 15;
+                        break;
+                    case 'Tools and Equipment':
+                        marginalSalvage = 0.08;
+                        lifeSpan = 7.45;
+                        break;
+                    case 'Musical Instruments':
+                        marginalSalvage = 0.06;
+                        lifeSpan = null;
+                        break;
+                    case 'Sports and Fitness Equipment':
+                        marginalSalvage = 0.07;
+                        lifeSpan = 10;
+                        break;
+                    case 'Kitchenware':
+                        marginalSalvage = 0.05;
+                        lifeSpan = 9.9;
+                        break;
+                    default:
+                        throw new Error('Invalid category');
+                }
+
+                if (lifeSpan === null) {
+                    estimatedPrice = g_original_price - (marginalSalvage * g_original_price / g_age);
+                } else {
+                    var depreciationExpense = (g_original_price - (g_original_price * marginalSalvage)) /
+                        lifeSpan;
+                    estimatedPrice = g_original_price - (g_age * depreciationExpense);
+                }
+            } else {
+                throw new Error('Invalid type');
+            }
+
+            console.log(estimatedPrice);
+            return estimatedPrice;
+        }
+
         function postGoodsImage(goodsId) {
             var goods_img = new FormData();
             var inputImage = document.getElementById('edit_image');
@@ -204,19 +274,10 @@
 
             const existingImageUrls = existingImages.map(image => image.img_url);
 
-            // existingImageUrls.forEach(img_url => {
-            //     goods_img.append('existing_images[]', img_url);
-            // });
             existingImageUrls.forEach(img_url => {
                 goods_img.append('existing_images[]', img_url);
             });
 
-
-
-            // existingImages.forEach(
-            //     img_url => {
-            //         goods_img.append('existing_images[]', img_url);
-            //     });
 
             for (var i = 0; i < inputImage.files.length; i++) {
                 goods_img.append('files[]', inputImage.files[i]);
