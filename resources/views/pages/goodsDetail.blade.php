@@ -7,6 +7,7 @@
     @endauth
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 </head>
 
 <div class="flex justify-center h-screen pt-48 pb-64 font-rubik">
@@ -76,29 +77,54 @@
                                     View Comment
                                 </button>
 
-                                <button
-                                    class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4 add-to-wishlist duration-300 
-                                @if ($wishlistCount > 0 && $wishlistItems->contains('g_ID', $product->g_ID)) hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-500 text-red-500 bg-red-50 border-red-500 
-                                @else 
-                                    hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-500 @endif"
-                                    title="Add to wishlist" id="btn_add_wishlist"
-                                    data-product-id="{{ $product->g_ID }}"
-                                    data-user-id="{{ $authenticatedUser->us_ID }}">
-                                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" class="w-5 h-5 love-icon" viewBox="0 0 24 24">
-                                        <path
-                                            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
-                                        </path>
-                                    </svg>
-                                </button>
+                                                               <!-- Check if the authenticated user is the owner of the goods -->
+                               @php
+                               $isOwner = $product->us_ID === auth()->id();
+                               $isInWishlist = $wishlistItems->contains('g_ID', $product->g_ID);
+                           @endphp
+
+                           <button
+                               class="rounded-full w-10 h-10 
+                               @if ($isOwner) 
+                                   bg-gray-400 text-gray-500 
+                               @elseif ($isInWishlist) 
+                                   text-red-500 bg-red-50 border-red-500 
+                               @else 
+                                   bg-gray-200 text-gray-500 hover:text-red-500 hover:bg-red-50 hover:border hover:border-red-500 
+                               @endif 
+                               p-0 border-0 inline-flex items-center justify-center ml-4 add-to-wishlist duration-300"
+                               title="Add to wishlist" 
+                               id="btn_add_wishlist"
+                               data-product-id="{{ $product->g_ID }}"
+                               data-user-id="{{ $authenticatedUser->us_ID }}"
+                               @if ($isOwner) 
+                                   disabled 
+                                   data-popover-target="popoverDisabled1" 
+                               @endif>
+                               <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5 love-icon" viewBox="0 0 24 24">
+                                   <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                               </svg>
+                           </button>
+
+                                @if ($isOwner)
+                                    <div data-popover id="popoverDisabled1" role="tooltip"
+                                        class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                        <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+                                            <h3 class="font-semibold text-gray-900 dark:text-white">Why can't I click this?</h3>
+                                        </div>
+                                        <div class="px-3 py-2">
+                                            <p>This is your own goods. You can't add your own goods to the wishlist.</p>
+                                        </div>
+                                        <div data-popper-arrow></div>
+                                    </div>
+                                @endif
 
                                 <!-- Modal Comment Component -->
                                 @include('utils.explore.modalComment')
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('goods.wishlisted.users', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
-                        class="text-white bg-blue-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-blue-600 rounded transition duration-300">
+                    <a href="{{ route('goods.wishlisted.users', ['hashed_id' => Hashids::encode($product->g_ID)]) }}" class="text-white bg-blue-500 border-0 py-2 px-2 text-sm focus:outline-none hover:bg-blue-600 rounded transition duration-300">
                         View Users Who Wishlisted This Item
                     </a>
                 </div>
@@ -388,12 +414,17 @@
     $(document).on('click', '.add-to-wishlist', function() {
         var productId = $(this).data('product-id');
         var userId = $(this).data('user-id');
-        addToWishlist(productId, userId);
+        
+        // Check if the user is the owner of the goods
+        if (userId == {{ $product->us_ID }}) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You cannot add your own goods to the wishlist.',
+            });
+            return;
+        }
 
-        // Setelah tombol diklik, ubah kelasnya untuk membuatnya tetap merah
-        $(this).find('.love-icon').addClass('text-red-500');
-        $(this).find('.love-icon').addClass('bg-red-50');
-        $(this).find('.love-icon').addClass('border');
-        $(this).find('.love-icon').addClass('border-red-500');
+        addToWishlist(productId, userId);
     });
 </script>

@@ -32,6 +32,12 @@ class ProductController extends Controller
         $g_ID = $request->input('goods_ID');
         $us_ID = $authenticatedUser->us_ID;
 
+        $goods = Goods::find($g_ID);
+
+        if ($goods && $goods->us_ID == $us_ID) {
+            return response()->json(['message' => 'You cannot add your own goods to the wishlist'], 403);
+        }
+
         $goodsDetails = Goods::where('g_ID', $g_ID)->first();
         if (!$goodsDetails) {
             return response()->json(['message' => 'Goods not found'], 404);
