@@ -145,34 +145,32 @@
             @php
             $messageDisplayed = false;
             @endphp
+            @foreach ($wishlist as $wishcheck)
+            @foreach ($myGoods as $mygood)
+            @if ($wishcheck->us_ID == $userDetails->us_ID && $wishcheck->g_ID == $mygood->g_ID)
+            @if (!$messageDisplayed)
+            <div class="text-2xl mt-8 mb-4 text-[#F12E52] flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#F12E52] mr-2" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M18.293 5.293a1 1 0 00-1.414-1.414L8 13.586l-3.293-3.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l10-10z"
+                        clip-rule="evenodd" />
+                </svg>
+                <b>Matched!</b>
+                <span class="font-bold text-sm text-gray-600 mx-4">{{ $userDetails->us_name }}
+                    also wishlisted your
+                    goods!</span>
+            </div>
+            @php
+            $messageDisplayed = true;
+            @endphp
+            @endif
+            @break
+            @endif
+            @endforeach
+            @endforeach
 
             <div class="flex flex-wrap">
-                @foreach ($wishlist as $wishcheck)
-                @foreach ($myGoods as $mygood)
-                @if ($wishcheck->us_ID == $userDetails->us_ID && $wishcheck->g_ID == $mygood->g_ID)
-                @if (!$messageDisplayed)
-                <div class="text-2xl mt-8 mb-4 text-[#F12E52] flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#F12E52] mr-2" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M18.293 5.293a1 1 0 00-1.414-1.414L8 13.586l-3.293-3.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l10-10z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <b>Matched!</b>
-                    <span class="font-bold text-sm text-gray-600 mx-4">{{ $userDetails->us_name }} also wishlisted your
-                        goods!</span>
-                </div>
-                @php
-                $messageDisplayed = true;
-                @endphp
-                @endif
-
-                @break
-                @endif
-                @endforeach
-                @endforeach
-
-                {{-- Menampilkan daftar barang yang cocok --}}
                 @foreach ($wishlist as $wishcheck)
                 @foreach ($myGoods as $mygood)
                 @if ($wishcheck->us_ID == $userDetails->us_ID && $wishcheck->g_ID == $mygood->g_ID)
@@ -181,7 +179,9 @@
                     $images = $mygood->images;
                     $defaultImageUrl =
                     'https://t3.ftcdn.net/jpg/02/48/55/64/360_F_248556444_mfV4MbFD2UnfSofsOJeA8G7pIU8Yzfqc.jpg';
-                    $imageUrl = isset($images[0]) ? asset('goods_img/' . $images[0]->img_url) : $defaultImageUrl;
+                    $imageUrl = isset($images[0])
+                    ? asset('goods_img/' . $images[0]->img_url)
+                    : $defaultImageUrl;
                     $formattedPrice = 'Rp ' . number_format($mygood->g_price_prediction, 0, ',', '.');
                     @endphp
 
@@ -204,21 +204,20 @@
                                 <p class="text-gray-700"><span class="font-bold">Age:</span>
                                     {{ $mygood->g_age }} <span>Years</span>
                                 </p>
-                                <p class="text-gray-700"><span class="font-bold">Price Prediction:</span>
-                                    {{$formattedPrice }}
+                                <p class="text-gray-700"><span class="font-bold">Price
+                                        Prediction:</span>
+                                    {{ $formattedPrice }}
                                 </p>
                                 <span class="hidden product-price">{{ $mygood->g_price_prediction }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                {{-- Keluar dari foreach setelah menemukan hasil cocok pertama --}}
                 @break
                 @endif
                 @endforeach
                 @endforeach
             </div>
-
             @else
             <div class="flex justify-center">
                 <div class="text-xl text-[#F12E52] mt-4 flex items-center">
@@ -237,12 +236,11 @@
             <hr class="my-4 border-b-1 border-gray-800"> <!-- Garis pembatas -->
 
             <!-- Display shuffled similar products -->
-            @if($similarProducts->count() > 0)
+            @if ($similarProducts->count() > 0)
             <div class="text-2xl mt-8 mb-4 text-[#F12E52]"><b>Goods with</b><span
                     class="font-bold text-sm text-gray-600 mx-4">similar price</span></div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 @foreach ($similarProducts as $similarProduct)
-
                 <div class="max-w-md rounded overflow-hidden shadow-lg product-card">
                     @php
                     $images = $similarProduct->images;

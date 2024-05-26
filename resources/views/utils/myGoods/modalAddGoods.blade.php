@@ -1,7 +1,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @auth
-    <meta name="api-token" content="{{ Auth::user()->api_token }}">
+        <meta name="api-token" content="{{ Auth::user()->api_token }}">
     @endauth
     <link rel="stylesheet" href="/asset/css/imgContainer.css">
 </head>
@@ -116,8 +116,9 @@
                                     Image</label>
                                 <div id="id-input-div" class="input-div mt-2">
                                     <p>Drag & drop photos here or click to browse</p>
-                                    <input name="files" id="input_image" type="file" class="file" multiple="multiple"
-                                        accept="image/jpeg, image/png, image/jpg" onchange="previewImage()" />
+                                    <input name="files" id="input_image" type="file" class="file"
+                                        multiple="multiple" accept="image/jpeg, image/png, image/jpg"
+                                        onchange="previewImage()" />
                                 </div>
                                 <div id="queuedImages" class="queued-div p-2">
                                     <div id="imagePreviewContainer" class="d-flex flex-wrap mr-3"></div>
@@ -245,56 +246,71 @@
             var g_original_price = parseInt($("#original_price").val());
             var g_age = parseInt($("#age_goods").val());
 
-            if(g_age === 0){
-                var predictionPrice = g_original_price - (0.0286 * g_original_price/2);
-                return predictionPrice;
+            if (!g_type || !g_category || isNaN(g_original_price) || isNaN(g_age)) {
+                throw new Error('Invalid input');
             }
-            if (g_type === 'New') {
-                var predictionPrice = g_original_price - (g_age * (0.0286 * g_original_price));
-                return predictionPrice;
+
+            var estimatedPrice;
+            if (g_age === 0) {
+                estimatedPrice = g_original_price - (0.0286 * g_original_price / 2);
+            } else if (g_type === 'New') {
+                estimatedPrice = g_original_price - (g_age * (0.0286 * g_original_price));
             } else if (g_type === 'Used') {
                 var marginalSalvage, lifeSpan;
 
-                if (g_category === 'Electronics') {
-                    marginalSalvage = 0.10;
-                    lifeSpan = 5.8;
-                } else if (g_category === 'Clothing and Accessories') {
-                    marginalSalvage = 0.25;
-                    lifeSpan = 5.4;
-                } else if (g_category === 'Home Decor') {
-                    marginalSalvage = 0.15;
-                    lifeSpan = 10;
-                } else if (g_category === 'Collectibles') {
-                    marginalSalvage = 0.04;
-                    lifeSpan = null; // Assign a value for lifeSpan
-                } else if (g_category === 'Books and Media') {
-                    marginalSalvage = 0.20;
-                    lifeSpan = 15;
-                } else if (g_category === 'Tools and Equipment') {
-                    marginalSalvage = 0.08;
-                    lifeSpan = 7.45;
-                } else if (g_category === 'Musical Instruments') {
-                    marginalSalvage = 0.06;
-                    lifeSpan = null;
-                } else if (g_category === 'Sports and Fitness Equipment') {
-                    marginalSalvage = 0.07;
-                    lifeSpan = 10;
-                } else if (g_category === 'Kitchenware') {
-                    marginalSalvage = 0.05;
-                    lifeSpan = 9.9;
+                switch (g_category) {
+                    case 'Electronics':
+                        marginalSalvage = 0.10;
+                        lifeSpan = 5.8;
+                        break;
+                    case 'Clothing and Accessories':
+                        marginalSalvage = 0.25;
+                        lifeSpan = 5.4;
+                        break;
+                    case 'Home Decor':
+                        marginalSalvage = 0.15;
+                        lifeSpan = 10;
+                        break;
+                    case 'Collectibles':
+                        marginalSalvage = 0.04;
+                        lifeSpan = null;
+                        break;
+                    case 'Books and Media':
+                        marginalSalvage = 0.20;
+                        lifeSpan = 15;
+                        break;
+                    case 'Tools and Equipment':
+                        marginalSalvage = 0.08;
+                        lifeSpan = 7.45;
+                        break;
+                    case 'Musical Instruments':
+                        marginalSalvage = 0.06;
+                        lifeSpan = null;
+                        break;
+                    case 'Sports and Fitness Equipment':
+                        marginalSalvage = 0.07;
+                        lifeSpan = 10;
+                        break;
+                    case 'Kitchenware':
+                        marginalSalvage = 0.05;
+                        lifeSpan = 9.9;
+                        break;
+                    default:
+                        throw new Error('Invalid category');
                 }
 
                 if (lifeSpan === null) {
-                    var predictionPrice = g_original_price - (marginalSalvage * g_original_price / g_age);
+                    estimatedPrice = g_original_price - (marginalSalvage * g_original_price / g_age);
                 } else {
                     var depreciationExpense = (g_original_price - (g_original_price * marginalSalvage)) /
                         lifeSpan;
-                    var predictionPrice = g_original_price - (g_age * depreciationExpense);
+                    estimatedPrice = g_original_price - (g_age * depreciationExpense);
                 }
-                return predictionPrice;
             } else {
                 throw new Error('Invalid type');
             }
+
+            return estimatedPrice;
         }
 
 

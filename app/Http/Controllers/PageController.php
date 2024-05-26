@@ -14,7 +14,6 @@ use App\Models\Exchange;
 use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids; // Tambahkan baris ini
 
-
 class PageController extends Controller
 {
     // Error pages
@@ -55,32 +54,37 @@ class PageController extends Controller
         $recentProductsByCategory = Goods::select('g_category', 'created_at')->orderBy('created_at', 'desc')->take(20)->get()->groupBy('g_category');
 
         $authenticatedUser = session('authenticatedUser');
+        $userId = $authenticatedUser ? $authenticatedUser->us_ID : null;
         $wishlistCount = null;
         $categoryCounts = $recentProductsByCategory->map->count();
         $topCategories = $categoryCounts->sortDesc()->keys()->take(3);
 
         $exchangeGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'));
 
-        // Ambil semua produk, tanpa filter wishlist untuk konten explore lainnya
-        $products = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->get();
-        
-        // Ambil produk yang tidak ada di wishlist khusus untuk swape
+        // All Products, excluding those owned by the authenticated user
+        $products = Goods::whereNotIn('g_ID', $exchangeGoodsIds)
+            ->when($userId, function ($query, $userId) {
+                return $query->where('us_ID', '!=', $userId);
+            })
+            ->get();
+
+        // Swape Products, excluding those owned by the authenticated user and in the wishlist
         $swapeProducts = collect();
-        if ($authenticatedUser && $authenticatedUser->us_ID) {
-            $wishlistItems = Wishlist::where('us_ID', $authenticatedUser->us_ID)
-                ->pluck('g_ID')
-                ->toArray();
-            $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)
-                ->whereNotIn('g_ID', $wishlistItems)
-                ->get();
+        if ($userId) {
+            $wishlistItems = Wishlist::where('us_ID', $userId)->pluck('g_ID')->toArray();
+            $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->whereNotIn('g_ID', $wishlistItems)->where('us_ID', '!=', $userId)->get();
         } else {
-            $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)->get();
+            $swapeProducts = Goods::whereNotIn('g_ID', $exchangeGoodsIds)
+                ->when($userId, function ($query, $userId) {
+                    return $query->where('us_ID', '!=', $userId);
+                })
+                ->get();
         }
 
         $trendProducts = $this->filterTrendProducts($topCategories, $authenticatedUser, $exchangeGoodsIds);
 
-        if ($authenticatedUser && $authenticatedUser->us_ID) {
-            $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
+        if ($userId) {
+            $wishlistCount = Wishlist::where('us_ID', $userId)->count();
         }
 
         $cities = User::distinct('us_city')->pluck('us_city');
@@ -90,7 +94,7 @@ class PageController extends Controller
         return view('pages.explore', [
             'user' => $authenticatedUser,
             'products' => $products,
-            'swapeProducts' => $swapeProducts,  // Pass variabel khusus untuk swape
+            'swapeProducts' => $swapeProducts, // Pass variabel khusus untuk swape
             'trendProducts' => $trendProducts,
             'wishlistCount' => $wishlistCount,
             'cities' => $cities,
@@ -98,29 +102,24 @@ class PageController extends Controller
         ]);
     }
 
-    private function filterTrendProducts($topCategories, $authenticatedUser)
+    private function filterTrendProducts($topCategories, $authenticatedUser, $exchangeGoodsIds)
     {
-        $exchangeGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'));
-
-        if ($authenticatedUser) {
-            return Goods::whereIn('g_category', $topCategories)
-                ->where('us_ID', '!=', $authenticatedUser->us_ID)
-                ->whereNotIn('g_ID', $exchangeGoodsIds)
-                ->get();
-        } else {
-            return Goods::whereIn('g_category', $topCategories)
-                ->whereNotIn('g_ID', $exchangeGoodsIds)
-                ->get();
-        }
+        $userId = $authenticatedUser ? $authenticatedUser->us_ID : null;
+        return Goods::whereIn('g_category', $topCategories)
+            ->whereNotIn('g_ID', $exchangeGoodsIds)
+            ->when($userId, function ($query, $userId) {
+                return $query->where('us_ID', '!=', $userId);
+            })
+            ->get();
     }
 
     public function categories()
     {
         $authenticatedUser = session('authenticatedUser');
         $categories = Goods::distinct('g_category')->pluck('g_category');
-        
+
         $products = Goods::getAllGoodsWithImages();
-        
+
         $wishlistCount = null;
         $wishlistItems = [];
 
@@ -136,16 +135,9 @@ class PageController extends Controller
         $nonExchangeProducts = $products->whereNotIn('g_ID', $exchangeGoodsIds);
 
         if (empty($wishlistItems)) {
-            $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
-                ->inRandomOrder()
-                ->limit(8)
-                ->get();
+            $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())->inRandomOrder()->limit(8)->get();
         } else {
-            $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
-                ->whereNotIn('g_ID', $wishlistItems)
-                ->inRandomOrder()
-                ->limit(8)
-                ->get();
+            $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())->whereNotIn('g_ID', $wishlistItems)->inRandomOrder()->limit(8)->get();
         }
 
         return view('pages.categories', [
@@ -183,12 +175,7 @@ class PageController extends Controller
 
         $nonExchangeProducts = $products->whereNotIn('g_ID', $exchangeGoodsIds);
 
-        $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())
-            ->whereNotIn('g_ID', $wishlistItemIds)
-            ->with('images')
-            ->inRandomOrder()
-            ->limit(8)
-            ->get();
+        $WishlistProducts = Goods::whereIn('g_ID', $nonExchangeProducts->pluck('g_ID')->toArray())->whereNotIn('g_ID', $wishlistItemIds)->with('images')->inRandomOrder()->limit(8)->get();
 
         return view('pages.wishlist', [
             'user' => $authenticatedUser,
@@ -199,7 +186,6 @@ class PageController extends Controller
             'wishlistItems' => $wishlistItems,
         ]);
     }
-
 
     public function communities()
     {
@@ -236,18 +222,17 @@ class PageController extends Controller
         $authenticatedUser = session('authenticatedUser');
         $user = User::where('us_ID', $authenticatedUser->us_ID)->first();
         $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
-        $goods = Goods::with('images')->where('us_ID', $authenticatedUser->us_ID)->get();
+        $goods = Goods::with('images')
+            ->where('us_ID', $authenticatedUser->us_ID)
+            ->get();
 
         $availableGoodsCount = Goods::where('us_ID', $authenticatedUser->us_ID)
             ->whereNotExists(function ($query) {
-                $query->select(DB::raw(1))
-                    ->from('exchange')
-                    ->whereRaw('exchange.my_goods = goods.g_ID')
-                    ->orWhereRaw('exchange.barter_with = goods.g_ID');
+                $query->select(DB::raw(1))->from('exchange')->whereRaw('exchange.my_goods = goods.g_ID')->orWhereRaw('exchange.barter_with = goods.g_ID');
             })
             ->count();
 
-       $exchangedGoodsAsOwner = Exchange::where('goods_owner_ID', $authenticatedUser->us_ID)
+        $exchangedGoodsAsOwner = Exchange::where('goods_owner_ID', $authenticatedUser->us_ID)
             ->with(['otherUserGoods.images']) // Load images for the goods in barter_with
             ->get()
             ->map(function ($exchange) {
@@ -292,13 +277,13 @@ class PageController extends Controller
     {
         $authenticatedUser = session('authenticatedUser');
         $userId = $authenticatedUser->us_ID;
-        
+
         // Fetch goods with their associated images
         $goods = Goods::with('images')->where('us_ID', $userId)->get();
-        
+
         $wishlistCount = Wishlist::where('us_ID', $userId)->count();
 
-        return view("pages.myGoods", compact('goods', 'wishlistCount'));
+        return view('pages.myGoods', compact('goods', 'wishlistCount'));
     }
 
     public function goods_detail($hashed_id)
@@ -333,7 +318,7 @@ class PageController extends Controller
 
         return view('pages.goodsDetail', compact('user', 'authenticatedUser','myGoods','wishlist', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails', 'similarProducts'));
     }
-    
+
     public function getUsersWishlistedItem($hashed_id)
     {
         // Decode hashed ID
@@ -357,15 +342,14 @@ class PageController extends Controller
         $userId = Auth::id();
         $requestExchanges = Exchange::where('requested_by', $userId)
             ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
-            ->orderByDesc('created_at') 
+            ->orderByDesc('created_at')
             ->get();
 
         $pendingExchanges = Exchange::where('goods_owner_ID', $userId)
             ->where('status', 'Awaiting Confirmation')
             ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
-            ->orderByDesc('created_at') 
+            ->orderByDesc('created_at')
             ->get();
-
 
         return view('pages.exchangeRequest', compact('requestExchanges', 'pendingExchanges'));
     }
