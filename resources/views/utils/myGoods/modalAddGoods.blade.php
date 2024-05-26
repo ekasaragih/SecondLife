@@ -95,8 +95,8 @@
                                 </div>
                                 <div class="w-full mb-4">
                                     <label for="prediction_price"
-                                        class="block text-sm font-medium text-gray-700">Prediction
-                                        Price</label>
+                                        class="block text-sm font-medium text-gray-700">Current
+                                        Price Est.</label>
                                     <input type="number" id="prediction_price" name="prediction_price"
                                         placeholder="will be count by system"
                                         class="mt-1 p-2 w-full border border-gray-300 rounded-md" disabled>

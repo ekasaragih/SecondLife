@@ -12,11 +12,13 @@
             width: 300px;
             margin: 20px 0;
         }
+
         .filter-label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
+
         .filter-container {
             display: flex;
             gap: 20px;
@@ -28,7 +30,9 @@
 
 {{-- Filter categories and price range --}}
 <div class="filter-container">
-    <select class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100" onchange="filterProducts()">
+    <select
+        class="py-2.5 px-5 flex-1 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+        onchange="filterProducts()">
         <option value="All">All</option>
         @foreach ($categories as $category)
         <option value="{{ $category }}">{{ $category }}</option>
@@ -38,10 +42,13 @@
 
     <!-- Improved search input field for price -->
     <div class="relative">
-        <input type="text" id="price-search" placeholder="Search Price" oninput="filterProducts()" class="py-2.5 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:border-gray-300 focus:border-blue-400 transition duration-300">
+        <input type="text" id="price-search" placeholder="Search Price" oninput="filterProducts()"
+            class="py-2.5 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:border-gray-300 focus:border-blue-400 transition duration-300">
         <span class="absolute right-3 top-2.5 text-gray-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM19 14l-3 3m0 0l-3-3m3 3V10"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM19 14l-3 3m0 0l-3-3m3 3V10"></path>
             </svg>
         </span>
     </div>
@@ -51,7 +58,8 @@
 </div>
 
 <!-- Notification for unavailable price -->
-<div id="price-notif" class="hidden p-2 bg-red-200 text-red-800 rounded-md mt-2">The price you searched for is not available.</div>
+<div id="price-notif" class="hidden p-2 bg-red-200 text-red-800 rounded-md mt-2">The price you searched for is not
+    available.</div>
 
 
 
@@ -87,7 +95,7 @@
                     <p class="text-gray-700"><span class="font-bold">Age:</span>
                         {{ $product->g_age }} <span>Years</span>
                     </p>
-                    <p class=" text-gray-700"><span class="font-bold">Price Prediction:</span>
+                    <p class=" text-gray-700"><span class="font-bold">Current Price Est.:</span>
                         {{$formattedPrice }}
                     </p>
                     <span class="hidden product-price">{{ $product->g_price_prediction }}</span>
@@ -98,7 +106,8 @@
         <div class="px-6 py-4">
             <div class="flex justify-center items-center">
                 @auth
-                <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}" id="btn_see_detail"
+                <a href="{{ route('goods_detail', ['hashed_id' => Hashids::encode($product->g_ID)]) }}"
+                    id="btn_see_detail"
                     class="bg-purple-500 text-white px-2 py-2 rounded hover:bg-gray-600 transition duration-300"
                     data-product-image="{{ $imageUrl }}" data-product-id="{{ $product->g_ID }}"
                     data-product-name="{{ $product->g_name }}" data-product-user-id="{{ $product->us_ID }}"

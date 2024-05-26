@@ -46,9 +46,9 @@ class ExchangeController extends Controller
     {
         $exchange = Exchange::find($exchangeId);
         if ($exchange && $exchange->goods_owner_ID == Auth::id()) {
-            $exchange->status = 'Confirmed';
+            $exchange->status = 'Accepted';
             $exchange->save();
-            return response()->json(['message' => 'Exchange confirmed']);
+            return response()->json(['message' => 'Exchange accepted']);
         }
         return response()->json(['message' => 'Unauthorized'], 403);
     }
@@ -63,6 +63,41 @@ class ExchangeController extends Controller
         }
         return response()->json(['message' => 'Unauthorized'], 403);
     }
+
+    public function updateStatus(Request $request, Exchange $exchange)
+    {
+        $request->validate([
+            'status' => 'required|string',
+            'meet_up_at' => 'nullable|date',
+            'exchanged_at' => 'nullable|date',
+            'reason_reject' => 'nullable|string',
+        ]);
+
+        $exchange->status = $request->status;
+
+        if ($request->status === 'Completed') {
+            $exchange->confirmed_at = now();
+            $exchange->meet_up_at = $request->meet_up_at;
+            $exchange->exchanged_at = $request->exchanged_at;
+            $exchange->reason_reject = null;
+        } elseif ($request->status === 'Rejected') {
+            $exchange->confirmed_at = now();
+            $exchange->meet_up_at = $request->meet_up_at;
+            $exchange->exchanged_at = $request->exchanged_at;
+            $exchange->reason_reject = $request->reason_reject;
+        } else {
+            $exchange->confirmed_at = null;
+            $exchange->meet_up_at = null;
+            $exchange->exchanged_at = null;
+            $exchange->reason_reject = null;
+        }
+
+        $exchange->save();
+
+        return response()->json(['success' => true, 'message' => 'Exchange status updated successfully.']);
+    }
+
+
     /**
      * Display the specified resource.
      */

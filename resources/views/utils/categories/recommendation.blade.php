@@ -15,7 +15,8 @@
         <div class="recommendation-card bg-gray-100 rounded-lg p-4 flex flex-col justify-between">
             <img src="{{ $imageUrl }}" alt="{{ $product->g_name }}" class="w-full h-64 object-cover object-center">
             <h3 class="mb-1 text-xl font-semibold">{{ $product->g_name }}</h3>
-            <p class="mb-1 text-lg">Price Prediction: Rp {{ number_format($product->g_price_prediction, 0, ',', '.') }}
+            <p class="mb-1 text-lg">Current Price Est.: Rp {{ number_format($product->g_price_prediction, 0, ',',
+                '.') }}
             </p>
             <p class="mb-4 text-lg">Category: {{ $product->g_category }}</p>
             @auth

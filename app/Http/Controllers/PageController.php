@@ -190,6 +190,7 @@ class PageController extends Controller
     public function communities()
     {
         $authenticatedUser = session('authenticatedUser');
+
         if ($authenticatedUser !== null) {
             $wishlistCount = Wishlist::where('us_ID', $authenticatedUser->us_ID)->count();
         } else {
@@ -199,12 +200,20 @@ class PageController extends Controller
         $communities = Communities::with('feedbacks')->withCount('likes')->orderByDesc('likes_count')->get();
 
         foreach ($communities as $community) {
-            $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
-                ->where('community_ID', $community->community_ID)
-                ->exists();
-            $community->isLikedByCurrentUser = $isLiked;
+            // Check if $authenticatedUser is not null before accessing its properties
+            if ($authenticatedUser !== null) {
+                $isLiked = Likes::where('user_ID', $authenticatedUser->us_ID)
+                    ->where('community_ID', $community->community_ID)
+                    ->exists();
+                $community->isLikedByCurrentUser = $isLiked;
+            } else {
+                // If $authenticatedUser is null, set isLikedByCurrentUser to false
+                $community->isLikedByCurrentUser = false;
+            }
         }
+
         $feedbacks = Feedbacks::all();
+
         return view('pages.communities', compact('communities', 'feedbacks', 'wishlistCount', 'authenticatedUser'));
     }
 
@@ -244,7 +253,7 @@ class PageController extends Controller
         $exchangedGoods = $exchangedGoodsAsOwner->merge($exchangedGoodsAsRequester);
 
         $pendingExchanges = Exchange::where('goods_owner_ID', $authenticatedUser->us_ID)
-            ->where('status', 'Pending')
+            ->where('status', 'Awaiting Confirmation')
             ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
             ->count();
 
@@ -292,7 +301,22 @@ class PageController extends Controller
         $product = Goods::findOrFail($g_ID);
         $userDetails = User::findOrFail($product->us_ID);
 
-        return view('pages.goodsDetail', compact('user', 'authenticatedUser', 'myGoods', 'wishlist', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails'));
+        // Get the predicted price of the current product
+        $predictedPrice = $product->g_price_prediction;
+
+        // Calculate price range for fetching similar products (e.g., +/- 20%)
+        $minPrice = $predictedPrice * 0.8;
+        $maxPrice = $predictedPrice * 1.2;
+
+        // Fetch similar products within the price range
+        $similarProducts = Goods::with('images')
+            ->whereBetween('g_price_prediction', [$minPrice, $maxPrice])
+            ->where('g_ID', '!=', $product->g_ID)
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
+
+        return view('pages.goodsDetail', compact('user', 'authenticatedUser','myGoods','wishlist', 'wishlistItems', 'wishlistCount', 'goods', 'product', 'userDetails', 'similarProducts'));
     }
 
     public function getUsersWishlistedItem($hashed_id)
@@ -322,11 +346,23 @@ class PageController extends Controller
             ->get();
 
         $pendingExchanges = Exchange::where('goods_owner_ID', $userId)
-            ->where('status', 'Pending')
+            ->where('status', 'Awaiting Confirmation')
             ->with(['userGoods.goodsImages', 'otherUserGoods.goodsImages'])
             ->orderByDesc('created_at')
             ->get();
 
         return view('pages.exchangeRequest', compact('requestExchanges', 'pendingExchanges'));
     }
+
+    public function showExchangeDetails($userGoodsId, $otherUserGoodsId)
+    {
+        $userGoods = Goods::with('images')->findOrFail($userGoodsId);
+        $otherUserGoods = Goods::with('images')->findOrFail($otherUserGoodsId);
+        $exchange = Exchange::where('my_goods', $userGoodsId)
+                        ->where('barter_with', $otherUserGoodsId)
+                        ->firstOrFail();
+
+        return view('pages.exchangeDetails', compact('userGoods', 'otherUserGoods', 'exchange'));
+    }
+
 }

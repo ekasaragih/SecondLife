@@ -50,8 +50,6 @@
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
             </a>
 
-
-
             <a href="{{ route('my_profile') }}" title="My Profile"
                 class="relative text-3xl text-gray-700 {{ Request::route()->getName() == 'user_profile' ? 'text-primary-content' : '' }}"
                 style="padding-right: 20px;">
@@ -82,7 +80,7 @@
 
             @else
             <a href="{{ route('login') }}" title="Sign In"
-                class="text-base text-gray-700 hover:text-gray-600 transition-all ease-in duration-300">Sign In</a>
+                class="text-base text-gray-700 hover:text-purple-600 hover:underline hover:text-xl transition-all ease-in duration-150">Login</a>
             @endauth
         </div>
     </div>

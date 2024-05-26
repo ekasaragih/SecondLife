@@ -27,4 +27,9 @@ class Wishlist extends Model
     {
         return $this->belongsTo(User::class, 'us_ID');
     }
+
+    public function exchanges(): HasMany
+    {
+        return $this->hasMany(Exchange::class, 'wishlist_ID', 'wishlist_ID');
+    }
 }

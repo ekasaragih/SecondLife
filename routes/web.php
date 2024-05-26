@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [PageController::class, 'my_profile'])->name('my_profile');
     Route::get('/wishlist', [PageController::class, 'wishlist'])->name('wishlist');
     Route::get('/exchange-request', [PageController::class, 'exchangeRequest'])->name('exchangeRequest');
+    Route::get('/exchange-details/{userGoodsId}/{otherUserGoodsId}', [PageController::class, 'showExchangeDetails'])->name('exchange.details');
     Route::get('/my-goods', [PageController::class, 'my_goods'])->name('my_goods');
     Route::get('/goods-detail/{hashed_id}', [PageController::class, 'goods_detail'])->name('goods_detail');
     Route::get('/goods/{hashed_id}/wishlisted-users', [PageController::class, 'getUsersWishlistedItem'])->name('goods.wishlisted.users');

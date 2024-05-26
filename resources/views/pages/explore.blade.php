@@ -1,18 +1,4 @@
 @include('utils.layouts.navbar.topnav')
-{{-- <style>
-    body {
-        background-image: url('/asset/img/bg3.gif');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        height: 300vh;
-        /* Mengatur tinggi body menjadi 300% tinggi layar (viewport height) */
-        margin: 0;
-        /* Menghapus margin default pada body */
-    }
-</style> --}}
-
-
 
 <head>
     @yield('head')
@@ -21,18 +7,40 @@
 
 <div class="flex justify-center h-screen pt-52 pb-64 font-rubik">
     <div class="container w-4/5">
+        <div class="flex justify-between items-center px-10 py-6 bg-gray-100 mb-6 rounded-2xl">
+            @auth
+            <div class="">
+                <p class="text-2xl text-secondary font-semibold"> Welcome back, {{ $user->us_name }}!</p>
+                <p class="italic">How can we assist you today?</p>
 
-        @auth
-        <div class="my-4 text-secondary font-semibold">
-            Olla, {{ $user->us_name }}!
+                <div class="flex justify-between items-center py-5 bg-gray-100 mb-6 gap-3">
+    <a href="/profile"
+        class="bg-primary hover:bg-white text-white hover:text-[#F12E52] duration-300 font-bold py-2 px-4 rounded shadow">
+        Update Profile
+    </a>
+    <a href="/exchange-request"
+        class="bg-primary hover:bg-white text-white hover:text-[#F12E52] duration-300 font-bold py-2 px-4 rounded shadow">
+        Exchange Request
+    </a>
+    <a href="/my-goods"
+        class="bg-primary hover:bg-white text-white hover:text-[#F12E52] duration-300 font-bold py-2 px-4 rounded shadow">
+        Upload New Goods
+    </a>
+</div>
+
+            </div>
+
+            @else
+            <div class="text-xl text-secondary">
+                <h2 class="text-2xl font-semibold">Welcome to SecondLife!</h2>
+                <p class="text-lg mb-5">Discover a new life for your preloved goods.</p>
+                <a href="{{ route('login') }}"
+                    class="bg-secondary text-white px-6 py-3 rounded-lg shadow-md hover:bg-opacity-80 transition duration-300">Login</a>
+            </div>
+            @endauth
+
+            <img src="/asset/img/main-logo.png" class="h-72 mr-20" alt="SecondLife logo">
         </div>
-        @else
-        <div class="my-4 text-secondary">
-            <h6 class="text-base">Hello, User!</h6>
-            <p>Welcome to SecondLife! Please log in.</p>
-            <span><a href="{{ route('login') }}" class="text-secondary hover:text-opacity-60"><u>Login</u></a></span>
-        </div>
-        @endauth
 
         @include('utils.explore.swape')
 

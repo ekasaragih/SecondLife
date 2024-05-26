@@ -141,7 +141,7 @@
                             <!-- Added classes to center content -->
                             <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" />
                             <!-- Added image -->
-                            <h2 class="text-xl md:text-2xl font-bold text-gray-800">Recommendation by Trend?</h2>
+                            <h2 class="text-xl md:text-2xl font-bold text-gray-800">Featured Products?</h2>
                         </div>
                         <div class="back p-6 bg-white">
                             <p class="text-gray-700 leading-relaxed">This feature helps barterers find products that are
@@ -157,7 +157,7 @@
                             <!-- Added classes to center content -->
                             <img class="mx-auto w-20 h-20 object-cover" src="/asset/img/barter_success_2.png" alt="" />
                             <!-- Added image -->
-                            <h2 class="text-xl md:text-2xl font-bold text-gray-800">Auto price prediction?</h2>
+                            <h2 class="text-xl md:text-2xl font-bold text-gray-800">Current Price Est.?</h2>
                         </div>
                         <div class="back p-6 bg-white">
                             <p class="text-gray-700 leading-relaxed">This feature assists barterers in estimating the

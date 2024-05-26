@@ -40,5 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/exchange/store', [ExchangeController::class, 'store'])->name('exchange.store');
     Route::post('/exchange/confirm/{id}', [ExchangeController::class, 'confirmExchange'])->name('exchange.confirm');
     Route::post('/exchange/reject/{id}', [ExchangeController::class, 'rejectExchange'])->name('exchange.reject');
+    Route::post('/exchange/{exchange}/updateStatus', [ExchangeController::class, 'updateStatus'])->name('exchange.updateStatus');
+
 
 });

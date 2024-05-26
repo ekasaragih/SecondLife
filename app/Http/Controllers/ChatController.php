@@ -16,23 +16,9 @@ class ChatController extends Controller
     
     public function index(Request $request)
     {
-        // Retrieve query parameters
-        // $hashedLoggedInUserId = $request->query('logged_in_user');
-        // $hashedOwnerUserId = $request->query('owner_user');
-
-        // // dd($hashedLoggedInUserId, $hashedOwnerUserId);
-
-        // // Decode hashed IDs to get the real user IDs
-        // $loggedInUserId = $this->decodeHashId($hashedLoggedInUserId);
-        // $ownerUserId = $this->decodeHashId($hashedOwnerUserId);
-
-        // dd($loggedInUserId, $ownerUserId);
-
-        // $loggedInUserId = $request->query('logged_in_user');
         $loggedInUserId = auth()->id();
         $ownerUserId = $request->query('owner_user');
-        // dd($ownerUserId);
-        // Fetch owner details
+     
         $ownerName = User::where('us_ID', $ownerUserId)->value('us_name');
         $ownerUsername = User::where('us_ID', $ownerUserId)->value('us_username');
         $ownerAvatar = User::where('us_ID', $ownerUserId)->value('avatar');
@@ -88,20 +74,32 @@ class ChatController extends Controller
         // Fetch recent exchange
         $recentExchange = Exchange::latest()->first();
 
-        $exchangedGoodsIds = Exchange::pluck('my_goods')->merge(Exchange::pluck('barter_with'))->unique();
-        $exchangedGoods = Exchange::where(function ($query) use ($ownerUserId, $loggedInUserId) {
-            $query->where('requested_by', $ownerUserId)
-                ->orWhere('goods_owner_ID', $ownerUserId);
-        })->where('status', 'Confirmed')->get();
-  
-        // dd($exchangedGoods);
-        // $loggedInUserGoods = Goods::where('us_ID', $loggedInUserId)
-        //     ->whereNotIn('g_ID', $exchangedGoodsIds)
-        //     ->get();
+        $exchangedGoodsIds = Exchange::whereNull('status')
+            ->orWhereIn('status', ['Shipping', 'Canceled Meeting', 'Goods Received', 'Completed'])
+            ->pluck('my_goods')
+            ->merge(Exchange::whereNull('status')
+                ->orWhereIn('status', ['Shipping', 'Canceled Meeting', 'Goods Received', 'Completed'])
+                ->pluck('barter_with'))
+            ->unique();
 
+        $exchangedGoods = Exchange::where(function ($query) use ($ownerUserId, $loggedInUserId) {
+            $query->where('status', )->where('requested_by', $ownerUserId)
+                ->orWhere('goods_owner_ID', $ownerUserId);
+        })->where('status', 'Completed')->get();
+  
         // Fetch user's wishlist
         $wishlist = Wishlist::where('us_ID', auth()->id())->get();
-        $wishlistGoodsIds = $wishlist->pluck('g_ID')->toArray();
+        $excludedGoodsIds = Exchange::whereIn('status', ['Shipping', 'Canceled Meeting', 'Goods Received', 'Completed'])
+            ->pluck('my_goods')
+            ->merge(Exchange::whereIn('status', ['Shipping', 'Canceled Meeting', 'Goods Received', 'Completed'])
+                ->pluck('barter_with'))
+            ->unique();
+
+        $wishlistGoodsIds = $wishlist->pluck('g_ID')
+            ->reject(function ($goodsId) use ($excludedGoodsIds) {
+                return $excludedGoodsIds->contains($goodsId);
+            })
+            ->toArray();
 
         // Fetch goods from the user's wishlist
         $wishlistGoods = Goods::whereIn('g_ID', $wishlistGoodsIds)
@@ -133,10 +131,6 @@ class ChatController extends Controller
             ->whereNotIn('g_ID', $exchangedGoodsIds)
             ->get();
 
-        // Merge wishlist goods with user's goods
-        $goods = $wishlistGoods->merge($loggedInUserGoods);
-
-
         $chattingUserGoods = Goods::where('us_ID', $ownerUserId)
             ->whereNotIn('g_ID', $exchangedGoodsIds)
             ->whereNotIn('g_ID', $wishlistGoodsIds)
@@ -161,20 +155,6 @@ class ChatController extends Controller
             'exchangedGoods' => $exchangedGoods,
         ]);
     }
-
-private function decodeHashId($hashedId) 
-{
-    try {
-        // Convert the hexadecimal representation to decimal
-        $userId = hexdec($hashedId);
-        
-        // Return the decrypted user ID
-        return $userId;
-    } catch (\Exception $e) {
-        // Handle decryption failure, maybe log an error
-        return null;
-    }
-}
 
 
 

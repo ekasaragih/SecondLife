@@ -3,7 +3,7 @@
 <div class="flex justify-center h-screen pt-48 pb-64 font-rubik">
     <div class="container w-4/5 mx-auto mt-10">
         <div class="text-3xl text-[#F12E52] mb-5"><b>Users Who Wishlisted This Item</b></div>
-        
+
         <!-- Display product details -->
         <div class="my-10 mx-auto">
             <div class="lg:w-4/5 mx-auto flex flex-wrap">
@@ -20,10 +20,10 @@
                     <h1 class="text-primary text-3xl title-font mb-1 font-semibold">{{ $product->g_name }}</h1>
                     <p class="leading-relaxed text-gray-600">{{ $product->g_desc }}</p>
                     <div class="flex items-center my-5 pb-5 font-medium text-sm border-b-2 border-primary-content">
-                            <h3 class="mr-2">{{ $product->g_category }}</h3>
-                            <div class="h-1 w-1 bg-primary-content rounded-full"></div>
-                            <p class="ml-2">{{ $product->g_type }}</p>
-                        </div>
+                        <h3 class="mr-2">{{ $product->g_category }}</h3>
+                        <div class="h-1 w-1 bg-primary-content rounded-full"></div>
+                        <p class="ml-2">{{ $product->g_type }}</p>
+                    </div>
 
                     <!-- Tambahkan tabel pengguna yang memasukkan item keinginan di bawah deskripsi produk -->
                     @if($users->isEmpty())
@@ -40,7 +40,8 @@
                             @foreach($users as $user)
                             <tr>
                                 <td class="border px-4 py-2">
-                                    <a href="{{ route('userProfile', ['username' => $user->us_username]) }}" class="text-blue-500 hover:underline">
+                                    <a href="{{ route('userProfile', ['username' => $user->us_username]) }}"
+                                        class="text-blue-500 hover:underline">
                                         {{ $user->us_username }}
                                     </a>
                                 </td>
