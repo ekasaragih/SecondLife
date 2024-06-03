@@ -192,12 +192,20 @@
             }
         })
         .then(response => {
-            alert('Exchange accepted');
-            location.reload();
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Exchange accepted',
+            }).then(() => {
+                location.reload();
+            });
         })
         .catch(error => {
-            console.error(error);
-            alert('An error occurred. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred. Please try again.',
+            });
         });
     }
 
@@ -209,12 +217,20 @@
             }
         })
         .then(response => {
-            alert('Exchange rejected');
-            location.reload();
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Exchange rejected',
+            }).then(() => {
+                location.reload();
+            });
         })
         .catch(error => {
-            console.error(error);
-            alert('An error occurred. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred. Please try again.',
+            });
         });
     }
 </script>

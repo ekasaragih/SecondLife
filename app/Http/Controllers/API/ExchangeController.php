@@ -67,25 +67,72 @@ class ExchangeController extends Controller
     public function updateStatus(Request $request, Exchange $exchange)
     {
         $request->validate([
-            'status' => 'required|string',
+            'status' => 'nullable|string',
             'meet_up_at' => 'nullable|date',
             'exchanged_at' => 'nullable|date',
             'reason_reject' => 'nullable|string',
+            'meeting_agree' => 'nullable|string',
         ]);
 
-        $exchange->status = $request->status;
+        if ($request->meeting_agree === 'Offline') {
+            $exchange->status = 'Accepted';
+            $exchange->meeting_agree = 'Offline';
+        }
+        
+        if ($request->meeting_agree === 'Online') {
+            if ($request->status === 'Shipping') {
+                $exchange->status = 'Shipping';
+                $exchange->meeting_agree = 'Online';
+            }
+            elseif ($request->status === 'Completed') {
+                $exchange->status = 'Completed';
+                $exchange->confirmed_at = now();
+                $exchange->meet_up_at = $request->meet_up_at;
+                $exchange->exchanged_at = $request->exchanged_at;
+                $exchange->reason_reject = null;
+                $exchange->meeting_agree = 'Online';
+            } elseif ($request->status === 'Rejected') {
+                $exchange->status = 'Rejected';
+                $exchange->confirmed_at = now();
+                $exchange->meet_up_at = $request->meet_up_at;
+                $exchange->exchanged_at = $request->exchanged_at;
+                $exchange->reason_reject = $request->reason_reject;
+                $exchange->meeting_agree = 'Online';
+            } else {
+                $exchange->status = 'Accepted';
+                $exchange->meeting_agree = 'Online';
+            }
+        }
 
         if ($request->status === 'Completed') {
+            $exchange->status = 'Completed';
             $exchange->confirmed_at = now();
             $exchange->meet_up_at = $request->meet_up_at;
             $exchange->exchanged_at = $request->exchanged_at;
             $exchange->reason_reject = null;
+            $exchange->meeting_agree = 'Offline';
         } elseif ($request->status === 'Rejected') {
+            $exchange->status = 'Rejected';
             $exchange->confirmed_at = now();
             $exchange->meet_up_at = $request->meet_up_at;
             $exchange->exchanged_at = $request->exchanged_at;
             $exchange->reason_reject = $request->reason_reject;
+            $exchange->meeting_agree = $request->meeting_agree;
+        } elseif ($request->status === 'Goods Received') {
+            $exchange->status = 'Goods Received';
+            $exchange->meeting_agree = 'Offline';
+        } elseif ($request->status === 'Canceled Meeting') {
+            $exchange->status = 'Canceled Meeting';
+            $exchange->meeting_agree = 'Offline';
+        } elseif ($request->status === 'Rejected') {
+            $exchange->status = 'Rejected';
+            $exchange->confirmed_at = now();
+            $exchange->meet_up_at = $request->meet_up_at;
+            $exchange->exchanged_at = $request->exchanged_at;
+            $exchange->reason_reject = $request->reason_reject;
+            $exchange->meeting_agree = $request->meeting_agree;
         } else {
+            $exchange->status = $request->status;
             $exchange->confirmed_at = null;
             $exchange->meet_up_at = null;
             $exchange->exchanged_at = null;
@@ -95,6 +142,18 @@ class ExchangeController extends Controller
         $exchange->save();
 
         return response()->json(['success' => true, 'message' => 'Exchange status updated successfully.']);
+    }
+
+    public function removeExchange(Request $request, Exchange $exchange)
+    {
+        try {
+            // Logic to remove the exchange from the database
+            $exchange->delete();
+
+            return response()->json(['success' => true, 'message' => 'Exchange canceled successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to remove exchange.']);
+        }
     }
 
 

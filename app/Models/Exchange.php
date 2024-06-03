@@ -22,6 +22,7 @@ class Exchange extends Model
         'exchanged_at',
         'reason_reject',
         'confirmed_at',
+        'meeting_agree',
     ];
 
     public function user()
