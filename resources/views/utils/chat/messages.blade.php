@@ -45,10 +45,11 @@
                     <span class="text-sm text-gray-500 dark:text-gray-400 mt-5">Please confirm this after you have done
                         the discussion.</span>
                     <div class="flex mt-4 md:mt-6">
-                        <a data-modal-target="modalExchangeBarter" data-modal-toggle="modalExchangeBarter"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                        <button
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                            data-modal-target="modalTermsAndCondition" data-modal-toggle="modalTermsAndCondition">
                             Accept barter
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

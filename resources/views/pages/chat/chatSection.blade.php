@@ -52,6 +52,7 @@
 
 {{-- Modal exchange goods (barter) -> if barter is accepted --}}
 @include('utils.chat.modalExchangeBarter')
+@include('utils.categories.modalTermsAndCondition')
 
 {{--
 |--------------------------------------------------------------------------

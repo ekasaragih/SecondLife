@@ -19,37 +19,71 @@
         <div class="text-xl font-semibold">Exchanged completed at:</div>
         <div class="mb-8">{{ $exchange->exchanged_at }}</div>
         @else
-        <div class="text-red-500 text-base">Exchanged is not happened yet.</div>
+        <div class="text-red-500 text-base mb-10">Exchanged is not happened yet.</div>
         @endif
 
         @if ($exchange->exchanged_at == null)
         <div class="container border border-1 px-4 py-6 mb-8 rounded-xl">
+            {{-- <div>Current status:</div>
+            <div>{{ $exchange->status }}</div> --}}
             <div class="font-semibold text-purple-500 text-lg pb-4">Update status:</div>
             <hr class="text-black">
             <div>
                 <form id="updateStatusForm" class="py-5">
                     @csrf
+                    @if ($exchange->meeting_agree == null || $exchange->status == 'Canceled Meeting')
+                    <div class="mb-4">
+                        <label for="meeting_agree" class="block text-gray-700 text-base">Meeting Agreements:</label>
+                        <select id="meeting_agree" name="meeting_agree"
+                            class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
+                            <option value="Online" {{ $exchange->meeting_agree == 'Online' ?
+                                'selected' : '' }}>Online</option>
+                            <option value="Offline" {{ $exchange->meeting_agree == 'Offline' ?
+                                'selected' : '' }}>Offline</option>
+                        </select>
+                    </div>
+                    @endif
 
+                    @if ($exchange->meeting_agree != null)
                     <div class="mb-4">
                         <label for="status" class="block text-gray-700 text-base">Status</label>
                         <select id="status" name="status"
                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
-                            <option value="Awaiting Confirmation" {{ $exchange->status == 'Accepted' ?
+                            @if ($exchange->status == 'Accepted' || $exchange->status != 'Goods Received')
+                            <option value="Accepted" {{ $exchange->status == 'Accepted' ?
                                 'selected' : '' }}>Accepted</option>
-                            <option value="Rejected" {{ $exchange->status == 'Rejected' ? 'selected' : '' }}>Rejected
-                            </option>
+                            @endif
+
+                            @if ($exchange->meeting_agree == 'Online' && $exchange->status != 'Goods Received')
                             <option value="Shipping" {{ $exchange->status == 'Shipping' ? 'selected' : '' }}>Shipping
                             </option>
+                            @endif
+
+                            @if ($exchange->meeting_agree != 'Online' && $exchange->status != 'Goods Received' )
                             <option value="Canceled Meeting" {{ $exchange->status == 'Canceled Meeting' ? 'selected' :
-                                ''
-                                }}>Canceled Meeting</option>
+                                '' }}>Canceled Meeting</option>
+                            @endif
+
                             <option value="Goods Received" {{ $exchange->status == 'Goods Received' ? 'selected' : ''
                                 }}>Goods Received
                             </option>
+
+                            @if ($exchange->status == 'Goods Received')
                             <option value="Completed" {{ $exchange->status == 'Completed' ? 'selected' : '' }}>Completed
                             </option>
+                            <option value="Rejected" {{ $exchange->status == 'Rejected' ? 'selected' : '' }}>Rejected
+                            </option>
+                            @endif
                         </select>
                     </div>
+                    @endif
+
+                    @if ($exchange->status == 'Canceled Meeting')
+                    <button id="cancel-meet" class="bg-red-500 text-white px-4 py-2 rounded-md mb-10"
+                        data-exchange-id="{{ $exchange->ex_ID }}">Don't want to
+                        continue the
+                        barter</button>
+                    @endif
 
                     <div class="mb-4 hidden" id="reason-reject-field">
                         <label for="reason_reject" class="block text-gray-700">Reason for Rejection</label>
@@ -109,13 +143,15 @@
                         </select>
                     </div>
 
-                    <div id="date-fields" class="hidden">
+                    <div id="meet-up" class="hidden">
                         <div class="mb-4">
                             <label for="meet_up_at" class="block text-gray-700">Meet Up Date</label>
                             <input type="date" id="meet_up_at" name="meet_up_at"
                                 class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
                         </div>
+                    </div>
 
+                    <div id="exchange-date" class="hidden">
                         <div class="mb-4">
                             <label for="exchanged_at" class="block text-gray-700">Exchange Date</label>
                             <input type="date" id="exchanged_at" name="exchanged_at"
@@ -196,7 +232,7 @@
         $('#status').on('change', function() {
             var status = $(this).val();
             if (status === 'Completed') {
-                $('#date-fields').removeClass('hidden');
+                $('#exchange-date').removeClass('hidden');
                 $('#reason-reject-field').addClass('hidden');
             } else if (status === 'Rejected') {
                 $('#date-fields').removeClass('hidden');
@@ -209,6 +245,48 @@
 
         // Trigger change event initially to set fields visibility based on the initial status
         $('#status').trigger('change');
+
+        $('#cancel-meet').on('click', function(e) {
+            e.preventDefault();
+
+            var exchangeId = "{{ $exchange->ex_ID }}";
+            var actionUrl = "/api/exchange/" + exchangeId + "/removeExchange";
+            var token = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: { ex_ID: exchangeId },
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'Authorization': 'Bearer ' + $('meta[name="api-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: response.message,
+                        }).then(() => {
+                            window.location.href = '/profile';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to update status.',
+                        });
+                    }
+                },
+                error: function(response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred.',
+                    });
+                }
+            });
+        });
 
         $('#updateStatusForm').on('submit', function(e) {
             e.preventDefault();

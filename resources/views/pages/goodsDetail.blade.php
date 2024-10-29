@@ -50,12 +50,12 @@
                                 </span>
                             </div>
                             <div class="flex">
-                                <button
-                                    class="text-white bg-red-500 border-0 py-2 px-2 text-sm focus:outline-none disabled:bg-slate-400 hover:bg-red-600 rounded transition duration-300"
-                                    data-modal-target="modalTermsAndCondition" @if ($product->us_ID === auth()->id())
+                                <button onclick="redirectToChat()" title="Messages" @if ($product->us_ID ===
+                                    auth()->id())
                                     data-popover-target="popoverDisabled" @endif
-                                    data-modal-toggle="modalTermsAndCondition"
-                                    {{ $product->us_ID === auth()->id() ? 'disabled' : '' }}>
+                                    class="text-white bg-red-500 border-0 py-2 px-2 text-sm focus:outline-none
+                                    disabled:bg-slate-400 hover:bg-red-600 rounded
+                                    transition duration-300" {{ $product->us_ID === auth()->id() ? 'disabled' : '' }}>
                                     Click to Barter
                                 </button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -303,11 +303,6 @@
 </div>
 
 
-@auth
-{{-- T&C Modal --}}
-@include('utils.categories.modalTermsAndCondition')
-@endauth
-
 {{--
 |--------------------------------------------------------------------------
 | SCRIPTS
@@ -406,4 +401,20 @@
 
         addToWishlist(productId, userId);
     });
+    
+</script>
+
+<script>
+    function redirectToChat() {
+    
+      const button = document.querySelector('button[title="Messages"]');
+      if (button.hasAttribute('disabled')) {
+         return; 
+      }
+    
+      const loggedInUser = "{{ Auth::id() }}";
+      const ownerUser = "{{ $product->us_ID }}";
+      const url = `{{ route('home_chat') }}?logged_in_user=${loggedInUser}&owner_user=${ownerUser}`;
+      window.location.href = url;
+   }
 </script>

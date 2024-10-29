@@ -92,7 +92,8 @@
             </div>
             <!-- Modal footer -->
             <div class="flex items-center space-x-4 p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <button type="button" onclick="continueToChat()" id="btn-accept"
+                <button type="button" id="btn-accept" data-modal-target="modalExchangeBarter"
+                    data-modal-toggle="modalExchangeBarter" data-modal-hide="modalTermsAndCondition"
                     class="text-black bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">I
                     accept</button>
                 <button type="button" data-modal-hide="modalTermsAndCondition"
@@ -109,66 +110,3 @@
         </div>
     </div>
 </div>
-
-{{-- <script>
-    // Function to continue to the chat page
-    
-    async function continueToChat() {
-        const loggedInUserId = await hashId("{{ $user->us_ID }}");
-        const ownerUserId = await hashId($('#productOwnerId').text());
-        const goodsId = await hashId($('#goodsId').text());
-        // const productDetailUrl = window.location.href;
-
-        const modal = document.getElementById('modalTermsAndCondition');
-        const ownerIdElement = modal.querySelector('#ownerId');
-        const goodsIdElement = modal.querySelector('#goods_ID');
-        if (ownerIdElement, goodsIdElement) {
-            ownerIdElement.textContent = ownerUserId;
-            goodsIdElement.textContent = goodsId;
-        }
-
-        const productDetailUrl = window.location.href; // Get the current page URL
-        sessionStorage.setItem('productDetailUrl', productDetailUrl);
-
-        window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId;
-    }
-
-    async function hashId(id) {
-        // You can use a cryptographic hashing algorithm like SHA-256
-        // This is a simple example, you should use a more secure hashing algorithm
-        const hashedId = await sha256(id.toString());
-        return hashedId;
-    }
-
-    // Example of SHA-256 hashing function (not secure for production)
-    function sha256(str) {
-        return crypto.subtle.digest("SHA-256", new TextEncoder().encode(str))
-            .then(buffer => {
-                return Array.prototype.map.call(new Uint8Array(buffer), x=>(('00'+x.toString(16)).slice(-2))).join('');
-            });
-    }
-</script> --}}
-
-<script>
-    // Function to continue to the chat page
-    
-    function continueToChat() {
-        const loggedInUserId = "{{ $user->us_ID }}";
-        const ownerUserId = $('#productOwnerId').text();
-        const goodsId = $('#goodsId').text();
-        // const productDetailUrl = window.location.href;
-
-        const modal = document.getElementById('modalTermsAndCondition');
-        const ownerIdElement = modal.querySelector('#ownerId');
-        const goodsIdElement = modal.querySelector('#goods_ID');
-        if (ownerIdElement, goodsIdElement) {
-            ownerIdElement.textContent = ownerUserId;
-            goodsIdElement.textContent = goodsId;
-        }
-
-        const productDetailUrl = window.location.href; // Get the current page URL
-        sessionStorage.setItem('productDetailUrl', productDetailUrl);
-
-        window.location.href = '{{ route('home_chat') }}?logged_in_user=' + loggedInUserId + '&owner_user=' + ownerUserId;
-    }
-</script>
